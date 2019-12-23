@@ -1,0 +1,219 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="6dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/factor_list_item_layout"
+        android:padding="1dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_centerInParent="true"
+        card_view:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/white"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/item_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:orientation="vertical"
+                android:layoutDirection="ltr"
+                android:padding="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    >
+
+                    <ui_elements.MyTextView
+                        android:textStyle="bold"
+                        android:id="@+id/aaaaaaa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/txt_freeprice_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text="شماره سیمکارت : "
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:weightSum="1">
+
+
+                    <ui_elements.MyTextView
+                        android:textStyle="bold"
+                        android:id="@+id/aaaaaaa1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:textColor="@color/greenDark"
+                        android:gravity="right"
+                        android:layout_weight="0.5"
+                        />
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/txt_price_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="اپراتور : "
+                        android:textSize="14sp"
+                        android:textColor="@color/greenDark"
+                        android:gravity="right"
+                        android:layout_weight="0.5"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    >
+                    <ui_elements.MyTextView
+                        android:textStyle="bold"
+                        android:id="@+id/aaaaaaa2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/txt_date_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text="مبلع شارژ : "
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    >
+
+                    <ui_elements.MyTextView
+                        android:textStyle="bold"
+                        android:id="@+id/aaaaaaa3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text=""
+                        android:textSize="12sp"
+                        android:gravity="right"
+                        android:textColor="@color/greenDark"
+                        android:layout_weight="0.5"/>
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/txt_type_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text="تاریخ : "
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textColor="@color/greenDark"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    >
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/aaaaaaa4"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+                    <ui_elements.MyTextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="marquee"
+                        android:text="شماره پیگیری  :"
+                        android:textSize="14sp"
+                        android:gravity="right"
+                        android:textStyle="bold"
+
+                        android:textColor="@color/red"
+                        android:layout_weight="0.5"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

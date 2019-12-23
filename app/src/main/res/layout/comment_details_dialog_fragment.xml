@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/comment_details_fragment_CV_card"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="2.0dip"
+        android:layout_marginLeft="6.0dip"
+        android:layout_marginRight="6.0dip"
+        android:layout_marginTop="2.0dip"
+        app:cardBackgroundColor="@color/digikala_white_pure"
+        app:cardCornerRadius="2.0dip"
+        app:cardElevation="2.0dip"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8.0dip">
+
+            <RelativeLayout
+                android:id="@+id/comment_details_fragment_rl_header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/back_gray">
+
+                <ImageView
+                    android:id="@+id/comment_details_fragment_header_logo"
+                    android:layout_width="34.0dip"
+                    android:layout_height="34.0dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="4.0dip"
+                    android:padding="4.0dip"
+                    android:src="@drawable/ic_forum_grey600_18dp" />
+
+                <TextView
+                    android:id="@+id/comment_details_fragment_tv_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/comment_details_fragment_header_logo"
+                    android:lines="1"
+                    android:text="gdfgd"
+                    android:textColor="#ff000000"
+                    android:textSize="20.0sp" />
+
+                <TextView
+                    android:id="@+id/comment_details_fragment_tv_postTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/comment_details_fragment_tv_userName"
+                    android:layout_toLeftOf="@+id/comment_details_fragment_header_logo"
+                    android:lines="1"
+                    android:text="12-15"
+                    android:textColor="@color/digikala_secondaryTextColor"
+                    android:textSize="10.0sp" />
+
+                <LinearLayout
+                    android:id="@+id/comment_details_fragment_linearLayout"
+                    android:layout_width="140.0dip"
+                    android:layout_height="30.0dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8.0dip"
+                    android:weightSum="2.0">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/border_comment_btn_filter_like">
+
+                        <ImageView
+                            android:layout_width="48.0dip"
+                            android:layout_height="48.0dip"
+                            android:layout_alignParentRight="true"
+                            android:padding="4.0dip"
+                            android:src="@drawable/ic_gift_grey600_24dp" />
+
+                        <TextView
+                            android:id="@+id/comment_details_fragment_tv_dislike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="4.0dip"
+                            android:text="3"
+                            android:textSize="18.0sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/border_comment_btn_filter_like">
+
+                        <ImageView
+                            android:layout_width="48.0dip"
+                            android:layout_height="48.0dip"
+                            android:layout_alignParentRight="true"
+                            android:padding="4.0dip"
+                            android:src="@drawable/ic_gift_grey600_24dp" />
+
+                        <TextView
+                            android:id="@+id/comment_details_fragment_tv_like"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="4.0dip"
+                            android:text="3"
+                            android:textSize="18.0sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/comment_details_fragment_rl_notify"
+                android:layout_width="fill_parent"
+                android:layout_height="48.0dip"
+                android:layout_below="@+id/comment_details_fragment_rl_header"
+                android:layout_margin="8.0dip"
+                android:background="@color/blue_semi_transparent_pressed">
+
+                <TextView
+                    android:id="@+id/comment_details_fragment_txt_notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="در موردخرید این محصول نظری ندارم" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/comment_details_fragment_txt_tajrobe"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_details_fragment_rl_notify"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginTop="8.0dip"
+                android:text="تجربه شخصب من..."
+                android:textColor="#ff000000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/comment_details_fragment_txt_advantage_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_details_fragment_txt_tajrobe"
+                android:layout_marginRight="8.0dip"
+                android:layout_marginTop="10.0dip"
+                android:gravity="right"
+                android:text="نقاط قوت"
+                android:textColor="@color/digikala_green_dark" />
+
+            <LinearLayout
+                android:id="@+id/comment_details_fragment_ll_advantage_context"
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:layout_below="@+id/comment_details_fragment_txt_advantage_title"
+                android:layout_margin="8.0dip"
+                android:background="#ff00ee00"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/comment_details_fragment_txt_disadvantage_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_details_fragment_ll_advantage_context"
+                android:layout_margin="8.0dip"
+                android:gravity="right"
+                android:text="نقاط ضعف"
+                android:textColor="@color/digikala_red_light" />
+
+            <LinearLayout
+                android:id="@+id/comment_details_fragment_ll_disadvantage_context"
+                android:layout_width="fill_parent"
+                android:layout_height="50.0dip"
+                android:layout_below="@+id/comment_details_fragment_txt_disadvantage_title"
+                android:layout_margin="8.0dip"
+                android:background="#ff00ee00"
+                android:orientation="vertical" />
+
+            <RelativeLayout
+                android:id="@+id/comment_details_fragment_rl_comment_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_details_fragment_ll_disadvantage_context"
+                android:layout_marginTop="8.0dip">
+
+                <View
+                    android:id="@+id/view_splitter_one"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:layout_marginBottom="10.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:background="@color/gray_500" />
+
+                <TextView
+                    android:id="@+id/comment_details_fragment_tv_context"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_splitter_one"
+                    android:layout_margin="8.0dip"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="4"
+                    android:text="کامنت کامنت کامنت"
+                    android:textColor="@color/digikala_black_light" />
+
+                <View
+                    android:id="@+id/view_splitter_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1.0dip"
+                    android:layout_below="@+id/comment_details_fragment_tv_context"
+                    android:layout_marginBottom="10.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:background="@color/gray_500" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_details_fragment_rl_comment_container"
+                android:layout_margin="8.0dip">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:layout_marginBottom="10.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:background="@color/gray_500" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

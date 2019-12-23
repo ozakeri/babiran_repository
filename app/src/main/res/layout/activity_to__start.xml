@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_to__start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".To_Start"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/red"
+        android:id="@+id/app_toolbar_home">
+
+        <ui_elements.MyTextView
+            android:textColor="@color/white"
+            android:text="ورود به بابیران"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btt"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_background_corner">
+
+        <RelativeLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+        </RelativeLayout>
+
+        <ui_elements.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="بعدی"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/not_valid"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        android:background="@drawable/btn_background_corner">
+
+        <RelativeLayout
+            android:id="@+id/BTNNotValidation"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+        </RelativeLayout>
+
+        <ui_elements.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="ورود بدون احراز هویت"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <ui_elements.MyTextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:text="کد فعالسازی را وارد کنید"
+        android:textStyle="bold"
+        android:textColor="@color/txt_color"
+        android:layout_below="@+id/app_toolbar_home"/>
+
+    <EditText
+        android:id="@+id/edt_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="100dp"
+        android:ems="4"
+        android:gravity="center"
+        android:hint="کد فعالسازی"
+        android:textColor="@color/txt_color"
+        android:inputType="number" />
+
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:background="#ffffff"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/progressBarCircularIndeterminate_to_start"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+</RelativeLayout>

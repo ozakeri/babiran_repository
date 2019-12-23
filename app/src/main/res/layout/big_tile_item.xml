@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="107dp"
+    android:layout_margin="6dp"
+    app:cardBackgroundColor="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/big_tile_list_item_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:padding="1dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/big_tile_item_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:layoutDirection="ltr">
+
+            <RelativeLayout
+                android:id="@+id/addToBig"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/basket_background"
+                android:gravity="center">
+
+                <ui_elements.MyTextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/add_to_basket"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/addToBig">
+
+                <ImageView
+                    android:id="@+id/big_tile_img"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logoloading" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/big_tile_img"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/big_tile_txt_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="false"
+                        android:layout_margin="2dp"
+                        android:ellipsize="marquee"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="فروش آپارتمان یک خوابه"
+                        android:textColor="#4c4c4c"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "605715957951",
+    "firebase_url": "https://babiran-3001292.firebaseio.com",
+    "project_id": "babiran-3001292",
+    "storage_bucket": "babiran-3001292.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605715957951:android:cb46f11b0b19ff03",
+        "android_client_info": {
+          "package_name": "net.babiran.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605715957951-51jljk3rfs9dj3beh85s5rpagsvn8582.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.babiran.app",
+            "certificate_hash": "9155dccc999fd80cfc1727333c7e7c3e43402a32"
+          }
+        },
+        {
+          "client_id": "605715957951-slbuqq10m887cqkh6urq6qp77vr1jmmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRR4bU2OoZ0svafAY6uBO_Dn8PB3n29hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605715957951-slbuqq10m887cqkh6urq6qp77vr1jmmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

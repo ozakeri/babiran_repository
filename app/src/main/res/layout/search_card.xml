@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_layout_main"
+    android:layout_margin="4dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layoutDirection="ltr">
+
+    <RelativeLayout
+        android:id="@+id/filter_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/corner_ronde_search">
+
+            <ui_elements.MyTextView
+                android:id="@+id/tag_txt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="پرفروش ترین"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
+    android:weightSum="1">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="1dp"
+        card_view:cardUseCompatPadding="true">
+
+
+        <LinearLayout
+            android:id="@+id/dis_pro_item_button"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/WHITE"
+
+            android:gravity="right"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <ui_elements.MyTextView
+                    android:id="@+id/dis_pro_txt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ellipsize="marquee"
+                    android:gravity="right"
+                    android:inputType="textMultiLine"
+                    android:singleLine="true"
+                    android:text="فروش آپارتمان یک خوابه"
+                    android:textColor="#4c4c4c"
+                    android:textSize="16sp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="2dp">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_percentage_discount"
+                        android:layout_width="70dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="3dp"
+                        android:orientation="vertical"
+                        android:padding="3dp"
+                        android:layout_alignParentLeft="true"
+                        android:background="@drawable/off_discount">
+
+                        <ui_elements.MyTextView
+                            android:id="@+id/txt_percentage_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_centerInParent="true"
+                            android:text="sdsdf"/>
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical"
+                            android:padding="3dp">
+
+                            <ui_elements.MyTextView
+                                android:id="@+id/dis_pro_txt_free_price"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:gravity="right"
+                                android:text="قیمت اصلی"
+                                android:textColor="@color/digikala_green_dark"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical"
+                            android:padding="3dp">
+
+
+                            <ui_elements.MyTextView
+                                android:id="@+id/dis_pro_txt_price"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:singleLine="true"
+                                android:text="قیمت"
+                                android:textColor="@color/digikala_green_light"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/addToSmall"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center">
+
+                        <ui_elements.MyTextView
+                            android:id="@+id/addToDis"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/add_to_basket"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/border_product_images">
+
+                <ImageView
+                    android:id="@+id/dis_pro_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logoloading" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

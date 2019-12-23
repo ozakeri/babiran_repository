@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/smoke"
+    android:layoutDirection="ltr"
+    android:padding="2dp">
+
+    <LinearLayout
+        android:id="@+id/payLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <!--  <LinearLayout
+            android:id="@+id/firstPayLinear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ui_elements.MyTextView
+                android:id="@+id/firstPay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="پرداخت با کارت خوان درب منزل"
+                android:textAlignment="center" />
+
+            <CheckBox
+                android:id="@+id/firstCheck_pay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end" />
+
+        </LinearLayout>
+-->
+        <LinearLayout
+            android:id="@+id/secondPayLinear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/secondPay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="پرداخت از طریق کارت خوان بی سیم"
+                android:textAlignment="center" />
+
+            <CheckBox
+                android:id="@+id/secondCheck_pay"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/_3PayLinear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/_3secondPay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="پرداخت آنلاین از درگاه بانکی"
+                android:textAlignment="center" />
+
+
+            <CheckBox
+                android:id="@+id/_3secondCheck_pay"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:layout_below="@+id/payLinear"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/cancel_icon"/>
+
+    <LinearLayout
+        android:id="@+id/confirmPay"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/payLinear"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ok_icon"
+        android:layout_margin="30dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+</RelativeLayout>

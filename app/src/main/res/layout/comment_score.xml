@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="4.0dip">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:weightSum="2.0">
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="4.0dip"
+            android:layout_weight="1.2"
+            android:weightSum="5.0">
+
+            <View
+                android:id="@+id/comment_score_view_five"
+                android:layout_width="0.0dip"
+                android:layout_height="8.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/digikala_green_light" />
+
+            <View
+                android:id="@+id/comment_score_view_four"
+                android:layout_width="0.0dip"
+                android:layout_height="8.0dip"
+                android:layout_marginLeft="2.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/digikala_green_light" />
+
+            <View
+                android:id="@+id/comment_score_view_three"
+                android:layout_width="0.0dip"
+                android:layout_height="8.0dip"
+                android:layout_marginLeft="2.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/green_500" />
+
+            <View
+                android:id="@+id/comment_score_view_two"
+                android:layout_width="0.0dip"
+                android:layout_height="8.0dip"
+                android:layout_marginLeft="2.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/green_500" />
+
+            <View
+                android:id="@+id/comment_score_view_one"
+                android:layout_width="0.0dip"
+                android:layout_height="8.0dip"
+                android:layout_marginLeft="2.0dip"
+                android:layout_weight="1.0"
+                android:background="@color/green_500" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/comment_score_txt"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="ارزش خرید به نسبت قیمت" />
+    </LinearLayout>
+</RelativeLayout>

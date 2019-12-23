@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_slides"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SlidesActivity"
+    android:layoutDirection="ltr">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/home_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_alignParentTop="true" />
+
+        <me.relex.circleindicator.CircleIndicator
+            android:layoutDirection="ltr"
+            android:id="@+id/product_indicator_custom"
+            app:ci_margin="10dp"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            app:ci_drawable="@drawable/black_radius_squareee"
+            android:layout_height="40dp"/>
+
+</RelativeLayout>

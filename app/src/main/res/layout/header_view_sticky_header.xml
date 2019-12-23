@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerInParent="true"
+        android:background="#E4E5E7"></View>
+
+    <ui_elements.MyTextView
+        android:layout_margin="6dp"
+        android:id="@+id/detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/stroke"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="چگونگی ارسال سفارشات"
+        android:textColor="#004FC3" />
+
+    <ui_elements.MyTextView
+        android:id="@+id/tv_for_click"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="for click"
+        android:visibility="gone" />
+
+</RelativeLayout>

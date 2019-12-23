@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="@drawable/gradianttwo"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:layout_margin="1dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nazarheadertwo"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/wizardfour"
+                android:scaleType="centerInside"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="60dp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            >
+            <ui_elements.MyTextView
+                android:id="@+id/fourthTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سفارش خود را به صورت صوتی ثبت کنید "
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:gravity="center"
+                />
+            <RelativeLayout
+                android:layout_above="@id/fourthTxt"
+                android:id="@+id/button"
+                android:layout_width="168dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/btnorder">
+
+                <ui_elements.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="16sp"
+                    android:text="شروع کنید"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/smsbackground"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

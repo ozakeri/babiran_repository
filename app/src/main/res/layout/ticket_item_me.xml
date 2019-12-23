@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_layout_main"
+    android:gravity="right">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/blueDark">
+
+    <ui_elements.MyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+        android:id="@+id/body"
+        android:text="یثاتذیثتذیت"/>
+
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

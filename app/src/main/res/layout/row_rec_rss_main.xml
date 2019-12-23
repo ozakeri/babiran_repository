@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@color/WHITE">
+
+        <TextView
+            android:id="@+id/txt_rc_rss_mainn_des"
+            android:layout_width="match_parent"
+
+            android:layout_margin="3dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            />
+        <TextView
+            android:id="@+id/txt_rc_rss_mainn_link"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+           android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

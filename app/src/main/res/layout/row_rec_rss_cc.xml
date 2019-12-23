@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@color/error">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ui_elements.MyTextView
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/txt_rc_rsddfgs"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center"
+                    android:textColor="@color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    />
+            </RelativeLayout>
+            <ui_elements.MyTextView
+                android:id="@+id/txt_rc_rsfgs"
+                android:layout_width="match_parent"
+                android:gravity="right|center"
+                android:textColor="@color/white"
+                android:layout_margin="3dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                />
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ui_elements.MyTextView
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/gghghgh"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center"
+                    android:textColor="@color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/jhdbfhrf"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/like"/>
+                <ImageView
+                    android:id="@+id/grg"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dilike"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+<TextView
+    android:layout_width="0.00000000dp"
+    android:layout_height="0.000000dp"
+    android:visibility="gone"
+    android:id="@+id/kjdefngkjf"/>
+
+    </LinearLayout>
+
+</LinearLayout>

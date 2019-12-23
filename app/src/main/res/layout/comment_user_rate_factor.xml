@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="2.0dip"
+    android:gravity="center|right"
+    android:weightSum="2.0">
+
+    <LinearLayout
+        android:id="@+id/comment_user_rate_ll"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.15"
+        android:orientation="horizontal"
+        android:weightSum="5.0">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0.0dip"
+            android:layout_height="7.0dip"
+            android:layout_below="@+id/rowLvRate_TV_ratingTitle"
+            android:layout_margin="1.0dip"
+            android:layout_weight="1.0"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:max="10"
+            android:progressDrawable="@drawable/greenprogress2" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0.0dip"
+            android:layout_height="7.0dip"
+            android:layout_below="@+id/rowLvRate_TV_ratingTitle"
+            android:layout_margin="1.0dip"
+            android:layout_weight="1.0"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:max="10"
+            android:progressDrawable="@drawable/greenprogress2" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0.0dip"
+            android:layout_height="7.0dip"
+            android:layout_below="@+id/rowLvRate_TV_ratingTitle"
+            android:layout_margin="1.0dip"
+            android:layout_weight="1.0"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:max="10"
+            android:progressDrawable="@drawable/greenprogress2" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0.0dip"
+            android:layout_height="7.0dip"
+            android:layout_below="@+id/rowLvRate_TV_ratingTitle"
+            android:layout_margin="1.0dip"
+            android:layout_weight="1.0"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:max="10"
+            android:progressDrawable="@drawable/greenprogress2" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0.0dip"
+            android:layout_height="7.0dip"
+            android:layout_below="@+id/rowLvRate_TV_ratingTitle"
+            android:layout_margin="1.0dip"
+            android:layout_weight="1.0"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:max="10"
+            android:progressDrawable="@drawable/greenprogress2" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_user_rate_txt"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.85"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/digikala_bluegrey_dark"
+        android:textSize="9.0sp" />
+</LinearLayout>

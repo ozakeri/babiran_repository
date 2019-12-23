@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:background="@color/white"
+    android:clickable="true">
+<LinearLayout
+    android:layout_above="@+id/ersal"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3.5"
+    android:background="@drawable/gradiant"
+    android:layout_marginBottom="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:layout_margin="1dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/nazarheader"
+            android:scaleType="fitXY"
+            android:layout_alignParentTop="true"
+            />
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/peykicon"/>
+        </RelativeLayout>
+    <ui_elements.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.6"
+        android:text="میزان رضایت شما از خدمات بابیران ؟"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1.1"
+        android:layout_margin="20dp"
+        android:weightSum="4"
+        >
+
+        <LinearLayout
+            android:id="@+id/LinearKheiliBad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2.8"
+            android:orientation="vertical">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="خیلی بد"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:padding="7dp"
+                android:src="@drawable/kheilibad"
+                />
+            <ImageView
+                android:id="@+id/kheilibad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:padding="4dp"
+                android:src="@drawable/deselect"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinearBad"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2.8"
+            android:orientation="vertical">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text=" بد"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:padding="7dp"
+                android:src="@drawable/bad"
+                />
+            <ImageView
+                android:id="@+id/bad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:padding="4dp"
+                android:src="@drawable/deselect"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearKhoob"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2.8"
+            android:orientation="vertical">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="خوب"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:padding="7dp"
+                android:src="@drawable/khub"
+                />
+            <ImageView
+                android:id="@+id/khoob"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:padding="4dp"
+                android:src="@drawable/deselect"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearAwli"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2.8"
+            android:orientation="vertical">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="عالی"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:padding="7dp"
+                android:src="@drawable/awli"
+                />
+            <ImageView
+                android:id="@+id/awli"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:padding="4dp"
+                android:src="@drawable/deselect"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ersal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradiant">
+        <ui_elements.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="ارسال"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+</RelativeLayout>

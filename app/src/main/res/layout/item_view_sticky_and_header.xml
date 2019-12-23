@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ui_elements.MyTextView
+                android:id="@+id/detail_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTint="#9c9c9c"
+                android:padding="5dp"
+                android:text="به چه روش‌هایی می‌توانم سفارش خود را تحویل بگیرم؟"
+                android:textColor="#3b3b3b"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_add_black_24dp"
+                android:tint="#666666" />
+
+        </LinearLayout>
+
+        <ui_elements.MyTextView
+            android:id="@+id/detail_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="در سرتاسر کشور سفارش‌‏ها با پست پیشتاز ارسال می‌‏شوند . شهرتبریز: تحویل اکسپرس رایگان ویژه سفارش‌هایی است که محل تحویل آنها تبریز است و فقط شامل سفارش‏‌هایی با ارزش بیش از یکصد هزار تومان می‌شود. سفارش‌‌‌‏هایی با ارزش کمتر از یکصد هزار تومان نیز توسط مامور تحویل سفارش بابیران تحویل ولی مشمول هزینه ارسال می‌‏شوند."
+            android:textColor="#6c6c6c"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="?android:attr/listDivider" />
+</LinearLayout>

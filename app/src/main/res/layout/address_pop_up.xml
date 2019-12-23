@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/smoke"
+    android:layoutDirection="ltr"
+    android:padding="2dp">
+
+    <LinearLayout
+        android:id="@+id/addLinear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/firstAddLinear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ui_elements.MyTextView
+                android:id="@+id/firstAdd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="8"
+                android:text="خالی"
+                android:textAlignment="center" />
+
+            <CheckBox
+                android:id="@+id/firstCheck"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondAddLinear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/secondAdd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="خالی"
+                android:gravity="center"
+                android:textAlignment="center" />
+
+            <CheckBox
+                android:id="@+id/secondCheck"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/addLinear1"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/cancel_icon"
+        android:padding="10dp" />
+
+    <LinearLayout
+        android:id="@+id/confirmAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/addLinear1"
+        android:layout_alignParentRight="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/ok_icon"
+        android:orientation="horizontal" />
+
+</RelativeLayout>

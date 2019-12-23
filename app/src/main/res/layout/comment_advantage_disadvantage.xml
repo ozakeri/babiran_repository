@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:id="@+id/comment_advantage_img"
+        android:layout_width="24.0dip"
+        android:layout_height="24.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8.0dip"
+        android:src="@drawable/ic_check_green_24dp" />
+
+    <TextView
+        android:id="@+id/comment_advantage_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="14.0dip"
+        android:layout_toLeftOf="@id/comment_advantage_img"
+        android:text="همین که هنگ نمیکنه"
+        android:textColor="#ff4a4a4a"
+        android:textSize="12.0sp" />
+</RelativeLayout>

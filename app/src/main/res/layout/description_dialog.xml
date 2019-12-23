@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="320dp"
+    android:layoutDirection="ltr">
+
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/blueDark"
+        >
+
+        <ui_elements.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="زمان ارسال سفارش :"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="right|center"
+            android:layout_marginRight="12dp"/>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fori"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="فوری"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="right|center"
+                />
+            <CheckBox
+                android:clickable="false"
+                android:id="@+id/foricheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/yeksaat"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/fori">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="یک ساعت"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="right|center"
+                />
+            <CheckBox
+                android:id="@+id/yeksaatcheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:clickable="false"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dosaat"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/yeksaat">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="دو ساعت"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="right|center"
+                />
+            <CheckBox
+                android:id="@+id/dosaatcheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:clickable="false"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/yekrooz"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/dosaat">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="یک روز"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="right|center"
+                />
+            <CheckBox
+                android:id="@+id/yekroozcheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:clickable="false"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sayer"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/yekrooz">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ui_elements.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:text="تماس با روابط عمومی "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:gravity="right|center"
+                />
+            <CheckBox
+                android:id="@+id/sayercheck"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.85"
+                android:clickable="false"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- <ui_elements.MyEditText
+         android:layout_below="@+id/title"
+         android:hint="اگر در مورد سفارش توضیحی دارید بنویسید(اختیاری)"
+         android:id="@+id/description_main"
+         android:layout_width="match_parent"
+         android:layout_height="120dp"
+         android:layout_margin="8dp"/>-->
+
+    <RelativeLayout
+        android:id="@+id/submitDes"
+        android:layout_below="@+id/sayer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/blueDark">
+        <ui_elements.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ادامه "
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:id="@+id/progressLayout"
+        android:visibility="gone"
+        android:gravity="center"
+        >
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progressBarCircularIndeterminate"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>
