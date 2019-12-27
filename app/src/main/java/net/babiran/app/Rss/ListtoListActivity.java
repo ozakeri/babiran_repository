@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.babiran.app.AppController;
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETINGBlog;
 import net.babiran.app.Servic.MyInterFace;
@@ -27,6 +28,7 @@ import java.util.List;
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
+import tools.GlobalValues;
 
 public class ListtoListActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -38,6 +40,7 @@ public class ListtoListActivity extends AppCompatActivity {
     String title = null;
     String id = null;
     private AlertDialog prograsDialog;
+    private AppController appController = AppController.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -111,6 +114,7 @@ public class ListtoListActivity extends AppCompatActivity {
 
                     prograsDialog.dismiss();
                     List<GETINGBlog> s = response.body();
+                    appController.setResponse(response);
                     for (int i = 0; i < s.size(); i++) {
 
                         Log.e("FFD", "" + Integer.parseInt(id));
@@ -118,10 +122,6 @@ public class ListtoListActivity extends AppCompatActivity {
 
                         if (s.get(i).getCategoryId() == Integer.parseInt(id)) {
                             list.add(new BLOGME(String.valueOf(s.get(i).getId()), s.get(i).getTitr(), s.get(i).getImageLink(), String.valueOf(s.get(i).getCategoryId())));
-                            System.out.println("ssssssss====" + String.valueOf(s.get(i).getId()));
-                            System.out.println("ssssssss====" + s.get(i).getTitr());
-                            System.out.println("ssssssss====" + s.get(i).getImageLink());
-                            System.out.println("ssssssss====" + String.valueOf(s.get(i).getCategoryId()));
                         }
                     }
 

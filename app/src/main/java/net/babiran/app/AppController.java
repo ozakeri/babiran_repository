@@ -12,7 +12,12 @@ import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
 
 
+import net.babiran.app.Servic.GETINGBlog;
+
+import java.util.List;
+
 import io.fabric.sdk.android.Fabric;
+import retrofit2.Response;
 
 /**
  * Created by Alireza on 1/20/2017.
@@ -22,6 +27,7 @@ public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private static AppController mInstance;
+    private retrofit2.Response<List<GETINGBlog>> response;
 
     @Override
     public void onCreate() {
@@ -71,4 +77,11 @@ public class AppController extends Application {
         return PreferenceManager.getDefaultSharedPreferences(this);
     }
 
+    public Response<List<GETINGBlog>> getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response<List<GETINGBlog>> response) {
+        this.response = response;
+    }
 }
