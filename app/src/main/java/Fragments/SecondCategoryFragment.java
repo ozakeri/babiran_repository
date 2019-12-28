@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -52,7 +55,7 @@ public class SecondCategoryFragment extends Fragment {
 
     View v;
     RequestQueue queue;
-    ListView listView;
+    //ListView listView;
     String prev = "" ;
     String Mainprev = "" ;
     Category category,parent_category;
@@ -88,8 +91,8 @@ public class SecondCategoryFragment extends Fragment {
         v = inflater.inflate(R.layout.second_category_fragment, container, false);
 
         MainActivity.secondcategory.setVisibility(View.VISIBLE);
-        //  recyclerView = (RecyclerView) v.findViewById(R.id.other_category_list_grid);
-        listView = (ListView) v.findViewById(R.id.category_listView);
+        recyclerView = (RecyclerView) v.findViewById(R.id.other_category_list_grid);
+        //listView = (ListView) v.findViewById(R.id.category_listView);
 
 
         //    AppConfig.frag = SecondCategoryFragment.this;
@@ -98,7 +101,7 @@ public class SecondCategoryFragment extends Fragment {
         if(Mainprev.equals("backInSecond")) {
             if(categoryArrayList!= null){
                 CategoryListAdapter adp = new CategoryListAdapter(getActivity(),categoryArrayList);
-                listView.setAdapter(adp);
+                //listView.setAdapter(adp);
                 adp.notifyDataSetChanged();
             }
 
@@ -107,7 +110,7 @@ public class SecondCategoryFragment extends Fragment {
             if(prev.equals("backToSecond")){
                 if(getCategory(getCategoryID(id)).size()>0){
                     CategoryListAdapter adp = new CategoryListAdapter(getActivity(),getCategory(getCategoryID(id)));
-                    listView.setAdapter(adp);
+                    //listView.setAdapter(adp);
                     adp.notifyDataSetChanged();
                 }
                 else{
@@ -144,15 +147,15 @@ public class SecondCategoryFragment extends Fragment {
                     if(getCategory(id).size() > 0)
                     {
                         Log.e("111","here");
-            /*categoryAdapter = new CategoryAdapter(getCategory(id),getActivity());
+            categoryAdapter = new CategoryAdapter(getCategory(id),getActivity());
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity() , 2 , LinearLayoutManager.VERTICAL , false);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(categoryAdapter);
-            categoryAdapter.notifyDataSetChanged();*/
+            categoryAdapter.notifyDataSetChanged();
 
                         CategoryListAdapter adp = new CategoryListAdapter(getActivity(),getCategory(id));
-                        listView.setAdapter(adp);
+                        //listView.setAdapter(adp);
                         adp.notifyDataSetChanged();
                     }
                     else{
