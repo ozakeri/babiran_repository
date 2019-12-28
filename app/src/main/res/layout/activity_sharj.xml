@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Sharj.SharjHistoryActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".FactorList"
-        >
+        tools:context=".FactorList">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -28,9 +27,8 @@
                 <RelativeLayout
                     android:id="@+id/llContainer"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
                     android:layout_height="match_parent"
-                    >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/btn_back"
@@ -49,13 +47,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="3dp"
+                        android:gravity="center_vertical"
                         android:text="تاریخچه شارژ"
                         android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:layout_centerVertical="true"
-                        android:gravity="center_vertical"
-                        android:layout_margin="3dp"
-                        />
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 
@@ -64,9 +61,10 @@
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <androidx.cardview.widget.CardView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wfefwsfswf"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/wfefwsfswf"></androidx.cardview.widget.CardView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

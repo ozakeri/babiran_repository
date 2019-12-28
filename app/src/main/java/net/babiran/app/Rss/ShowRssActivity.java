@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import net.babiran.app.AppController;
 import net.babiran.app.AppStore;
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETINGBlog;
@@ -77,7 +80,10 @@ public class ShowRssActivity extends AppCompatActivity {
 
     int size = 13;
 
+    private AppController appController = AppController.getInstance();
 
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,9 +149,38 @@ public class ShowRssActivity extends AppCompatActivity {
         txt = (MyTextView) findViewById(R.id.txt_html_show);
         titl = (MyTextView) findViewById(R.id.txt_html_tit);
 
+        txt.setText(SSS);
+        txt.setTypeface(font);
+        titl.setTypeface(font);
+        titl.setText(Titlea);
+
         if (!TextUtils.isEmpty(ListtoListActivity.ID_ME)) {
             ln.setVisibility(View.VISIBLE);
-            Listed();
+
+            if (appController.getResponse() != null){
+                List<GETINGBlog> s = appController.getResponse().body();
+                for (int i = 0; i < s.size(); i++) {
+                    prograsDialog.dismiss();
+                    if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
+                        txt_html_ffff.setVisibility(View.VISIBLE);
+                        txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                        txtLike.setText(s.get(i).getLike() + 1 + "");
+                        titl.setText(s.get(i).getSubject());
+                        txt.setText(s.get(i).getBody());
+                        Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
+                        imgUrl = s.get(i).getImageLink();
+                        id_blog = s.get(i).getId();
+                        ListedGetLike();
+                        ListedGetCommet();
+
+                        LISTFILL();
+
+                    }
+                }
+            }else {
+                Listed();
+            }
+
 
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -194,12 +229,6 @@ public class ShowRssActivity extends AppCompatActivity {
         } else {
             new Title().execute((Void) null);
         }
-
-
-        txt.setText(SSS);
-        txt.setTypeface(font);
-        titl.setTypeface(font);
-        titl.setText(Titlea);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recccccc);

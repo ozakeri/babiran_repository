@@ -4,13 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.volley.*;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,8 +105,7 @@ public class RequestHandler {
         return url;
     }
 
-    public static String getToken(final GetTokenCallback callback)
-    {
+    public static String getToken(final GetTokenCallback callback) {
         final String url = "http://ws.sms.ir/api/Token";
         JSONObject jsonObject = new JSONObject();
         try {
@@ -151,6 +150,7 @@ public class RequestHandler {
 
         };
         AppController.getInstance().addToRequestQueue(jsonObjectRequest, url);
+        System.out.println("url====" + url);
         return url;
     }
 
@@ -212,34 +212,30 @@ public class RequestHandler {
         final String url = "http://RestfulSms.com/api/UltraFastSend";
 
 
-
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonObject2 = new JSONObject();
-        JSONArray jsonArray =new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         try {
             jsonObject.put("Parameter", "VerificationCode");
             jsonObject.put("ParameterValue", code);
 
 
             jsonArray.put(jsonObject);
-        }catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        try
-        {
-            jsonObject2.put("ParameterArray",jsonArray);
-            jsonObject2.put("TemplateId","1233 ");
+        try {
+            jsonObject2.put("ParameterArray", jsonArray);
+            jsonObject2.put("TemplateId", "1233 ");
 
-            jsonObject2.put("Mobile",mobile);
+            jsonObject2.put("Mobile", mobile);
 
 
             //
-            Log.e("STR",jsonObject2.toString());
+            Log.e("STR", jsonObject2.toString());
 
-        } catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -256,7 +252,7 @@ public class RequestHandler {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject2, new Response.Listener<JSONObject>() {
 
 
-      //  JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+            //  JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -292,6 +288,9 @@ public class RequestHandler {
 
         };
         AppController.getInstance().addToRequestQueue(jsonObjectRequest, url);
+
+        System.out.println("jsonObjectRequest====" + jsonObjectRequest);
+        System.out.println("jsonObjectRequest====" + url);
         return url;
     }
 }

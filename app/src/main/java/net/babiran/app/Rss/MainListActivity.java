@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.JsonObject;
+
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETING;
 import net.babiran.app.Servic.MyInterFace;
@@ -159,7 +161,6 @@ public class MainListActivity extends AppCompatActivity
                 Intent intent =new Intent(MainListActivity.this,ListActivity.class);
                 intent.putExtra("id",Link);
                 intent.putExtra("title",title);
-                System.out.println("Link===111" + Link);
                 startActivity(intent);
 
                /* if(b1)
@@ -169,7 +170,6 @@ public class MainListActivity extends AppCompatActivity
 
                     Intent intent =new Intent(MainListActivity.this,ListActivity.class);
                     intent.putExtra("id",Link);
-                    System.out.println("Link===111" + Link);
                     startActivity(intent);
                     b1=false;
                 }
@@ -180,8 +180,6 @@ public class MainListActivity extends AppCompatActivity
 
                     Intent intent =new Intent(MainListActivity.this,ListRssActivity.class);
                     intent.putExtra("link",Link);
-
-                    System.out.println("Link===222" + Link);
 
                     startActivity(intent);
                 }*/
@@ -235,6 +233,7 @@ public class MainListActivity extends AppCompatActivity
                 {
 
                     List<GETING> s = response.body();
+
                     for(int i = 0 ; i< s.size() ; i++)
                     {
                         if(s.get(i).getParentId()==0)

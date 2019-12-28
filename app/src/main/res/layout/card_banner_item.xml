@@ -29,12 +29,11 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:background="@drawable/basket_background">
+                android:gravity="center">
 
                 <ui_elements.MyTextView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:background="@drawable/add_to_basket"
