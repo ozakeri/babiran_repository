@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-import net.babiran.app.AppController;
 import net.babiran.app.DownLoadImageTask;
 import net.babiran.app.OrderList;
 import net.babiran.app.R;
@@ -40,7 +39,6 @@ import Models.Factor;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
-import static tools.AppConfig.products;
 
 
 /**
@@ -214,30 +212,19 @@ public class FactorListAdapter extends BaseAdapter {
                     mainId = userDetailsHashMap.get("id");
                     System.out.println("mainId===" + mainId);
 
-                    if (factors.get(i).products != null) {
-                        if (factors.get(i).products.size() > 0) {
-                            for (int i = 0; i < factors.get(i).products.size(); i++) {
-                                Basket basket = new Basket(factors.get(i).products.get(i).id, factors.get(i).products.get(i).count);
-                                baskets.add(basket);
-                            }
-                            Gson gson = new Gson();
-                            basketjson = gson.toJson(baskets);
-                            System.out.println("basketjson2===" + basketjson);
+                    if (factors.get(i).products != null && factors.get(i).products.size() > 0) {
+                        for (int i = 0; i < factors.get(i).products.size(); i++) {
+                            Basket basket = new Basket(factors.get(i).products.get(i).id, factors.get(i).products.get(i).count);
+                            baskets.add(basket);
                         }
+                        Gson gson = new Gson();
+                        basketjson = gson.toJson(baskets);
+                        System.out.println("basketjson2===" + basketjson);
+
+                        FragmentManager fm = ((Activity) context).getFragmentManager();
+                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, "", basketjson, factors.get(i).type, editor);
+                        descriptionDialog.show(fm, "DescriptionDialog");
                     }
-
-                    System.out.println("editor===" + editor);
-
-                    String selectedAdd = AppController.getInstance().getSharedPreferences().getString("selectedAdd" + basketjson, null);
-                    String selectedPay = AppController.getInstance().getSharedPreferences().getString("selectedPay" + basketjson, null);
-
-                    System.out.println("selectedAdd===" + selectedAdd);
-                    System.out.println("selectedPay===" + selectedPay);
-
-                    FragmentManager fm = ((Activity) context).getFragmentManager();
-                    DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, selectedAdd, basketjson, selectedPay, editor);
-                    descriptionDialog.show(fm, "DescriptionDialog");
-
                 }
 
             }

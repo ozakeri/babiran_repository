@@ -516,22 +516,6 @@ public class BasketListFragment extends Fragment implements
                                     DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, editor);
                                     descriptionDialog.show(fm, "DescriptionDialog");
 
-                                    System.out.println("id=====" + id);
-                                    System.out.println("selectedAdd=====" + selectedAdd);
-                                    System.out.println("basketjson=====" + basketjson);
-                                    System.out.println("selectedPay=====" + selectedPay);
-                                    System.out.println("editor=====" + editor);
-
-
-                                    SharedPreferences.Editor editor1 = AppController.getInstance().getSharedPreferences().edit();
-                                    editor1.putString("selectedAdd" + basketjson, selectedAdd);
-                                    editor1.apply();
-
-                                    SharedPreferences.Editor editor2 = AppController.getInstance().getSharedPreferences().edit();
-                                    editor2.putString("selectedPay" + basketjson, selectedPay);
-                                    editor2.apply();
-
-
                                 } else {
                                     Toast.makeText(getActivity(), "لطفا نوع پرداخت را انتخاب نمایید", Toast.LENGTH_LONG).show();
                                 }

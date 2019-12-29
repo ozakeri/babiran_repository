@@ -122,6 +122,8 @@ public class FactorList extends AppCompatActivity {
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" +id + "/10/0";
        // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
 
+        System.out.println("url===" + url);
+
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
