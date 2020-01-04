@@ -213,8 +213,8 @@ public class FactorListAdapter extends BaseAdapter {
                     System.out.println("mainId===" + mainId);
 
                     if (factors.get(i).products != null && factors.get(i).products.size() > 0) {
-                        for (int i = 0; i < factors.get(i).products.size(); i++) {
-                            Basket basket = new Basket(factors.get(i).products.get(i).id, factors.get(i).products.get(i).count);
+                        for (int j = 0; j < factors.get(i).products.size(); j++) {
+                            Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count);
                             baskets.add(basket);
                         }
                         Gson gson = new Gson();
@@ -222,7 +222,7 @@ public class FactorListAdapter extends BaseAdapter {
                         System.out.println("basketjson2===" + basketjson);
 
                         FragmentManager fm = ((Activity) context).getFragmentManager();
-                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, "", basketjson, factors.get(i).type, editor);
+                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, editor);
                         descriptionDialog.show(fm, "DescriptionDialog");
                     }
                 }

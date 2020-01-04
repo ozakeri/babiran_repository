@@ -33,27 +33,20 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/btt"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_below="@+id/edt_start"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
                 android:background="@drawable/btn_background_corner">
 
                 <RelativeLayout
                     android:id="@+id/button"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true">
+                    android:layout_height="35dp">
 
                 </RelativeLayout>
 
@@ -100,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/app_toolbar_home"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="43dp"
+                android:layout_marginTop="100dp"
                 android:text="کد فعالسازی را وارد کنید"
                 android:textColor="@color/txt_color"
                 android:textStyle="bold" />
