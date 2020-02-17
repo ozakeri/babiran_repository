@@ -294,6 +294,12 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("selected_pay", selected_Pay);
                 params.put("productsArray", productArray);
 
+                System.out.println("user_id==" + user_id);
+                System.out.println("description==" + description);
+                System.out.println("address==" + address);
+                System.out.println("selected_Pay==" + selected_Pay);
+                System.out.println("productArray==" + productArray);
+
                 return params;
             }
 

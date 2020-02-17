@@ -964,7 +964,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
         menu.add(new Menu("اشتراک گذاری", R.drawable.babiran));
         menu.add(new Menu("سوالات متداول", R.drawable.ic_ansqus));
-        menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
+        //menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
         menu.add(new Menu("درباره ما", R.drawable.babiran));
         // menu.add(new Menu("تنظیمات", R.drawable.ic_info_outline_black_24dp));
         menu.add(new Menu("خروج از حساب کاربری", R.drawable.ic_exit___));
@@ -1096,7 +1096,7 @@ public class MainActivity extends AppCompatActivity {
                             i.setType("text/plain");
                             i.putExtra(Intent.EXTRA_SUBJECT, "بابیران");
                             String sAux = "\n اپلیکشن بابیران \n\n";
-                            sAux = sAux + "https://play.google.com/store/apps/details?id=the.package.id \n\n";
+                            sAux = sAux + "https://cafebazaar.ir/app/net.babiran.app \n\n";
                             i.putExtra(Intent.EXTRA_TEXT, sAux);
                             startActivity(Intent.createChooser(i, "choose one"));
                         } catch (Exception e) {
@@ -1111,14 +1111,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
-                    case 10:
+                    ///case 10:
 
                         //rahnama
-                        drawerLayout.closeDrawer(Gravity.RIGHT);
-                        startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
+                        /*drawerLayout.closeDrawer(Gravity.RIGHT);
+                        startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));*/
 
-                        break;
-                    case 11:
+                       // break;
+                    case 10:
                         //about
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.AboutContainer, new AboutFragment()).commit();
@@ -1136,7 +1136,7 @@ public class MainActivity extends AppCompatActivity {
                       //  startActivity(new Intent(MainActivity.this, SettingActivity.class));
 
                         break;*/
-                    case 12:
+                    case 11:
 
                         //khoroj
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
