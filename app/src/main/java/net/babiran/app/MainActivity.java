@@ -1091,18 +1091,11 @@ public class MainActivity extends AppCompatActivity {
                         //kif pool
                         break;
                     case 8:
-                        try {
-                            Intent i = new Intent(Intent.ACTION_SEND);
-                            i.setType("text/plain");
-                            i.putExtra(Intent.EXTRA_SUBJECT, "بابیران");
-                            String sAux = "\n اپلیکشن بابیران \n\n";
-                            sAux = sAux + "https://cafebazaar.ir/app/net.babiran.app \n\n";
-                            i.putExtra(Intent.EXTRA_TEXT, sAux);
-                            startActivity(Intent.createChooser(i, "choose one"));
-                        } catch (Exception e) {
-                            //e.toString();
-                        }
-                        //kharid sharj
+
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
+                        startActivity(intent);
+
                         break;
                     case 9:
                         // solat motedavel

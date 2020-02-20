@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/blueDark"
+        android:visibility="gone"
         >
 
         <ui_elements.MyTextView
@@ -27,7 +28,8 @@
         android:id="@+id/fori"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/title">
+        android:layout_below="@+id/title"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +59,8 @@
         android:id="@+id/yeksaat"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/fori">
+        android:layout_below="@+id/fori"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,7 +90,8 @@
         android:id="@+id/dosaat"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/yeksaat">
+        android:layout_below="@+id/yeksaat"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,12 +117,12 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/yekrooz"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/dosaat">
+        android:layout_below="@+id/dosaat"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,12 +148,12 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/sayer"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/yekrooz">
+        android:layout_below="@+id/yekrooz"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -190,12 +194,13 @@
         android:layout_below="@+id/sayer"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_centerInParent="true"
         android:background="@color/blueDark">
         <ui_elements.MyTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="ادامه "
-            android:textSize="15sp"
+            android:text="ادامه و تکمیل خرید "
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:gravity="center"/>
     </RelativeLayout>

@@ -172,13 +172,14 @@
                         android:id="@+id/btn_type_state_peygiri"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5"
                         android:layout_gravity="center"
-                        android:text="پرداخت مجدد"
-                        android:textColor="@color/Black"
                         android:layout_marginLeft="20dp"
-                        android:visibility="gone"
-                        android:textSize="14sp" />
+                        android:layout_weight="0.5"
+                        android:background="@color/blueDark"
+                        android:text="پرداخت مجدد"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
 
                     <ui_elements.MyTextView
                         android:id="@+id/txt_type_state_sefartesh"

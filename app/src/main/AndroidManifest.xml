@@ -91,7 +91,19 @@
         <activity
             android:name=".FactorList"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="example.com"
+                    android:pathPattern="/succeeded"
+                    android:scheme="http" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ActivityPay"
             android:screenOrientation="portrait"

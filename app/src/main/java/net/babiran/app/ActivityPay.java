@@ -1,5 +1,6 @@
 package net.babiran.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -44,8 +45,9 @@ public class ActivityPay extends AppCompatActivity
 {
 
     private ProgressBar progressBar;
-    private String SHARJ;
+    //private String SHARJ;
 
+    @SuppressLint("JavascriptInterface")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -79,7 +81,7 @@ public class ActivityPay extends AppCompatActivity
 
         });
         webView.loadUrl(getIntent().getStringExtra("url"));
-        SHARJ = getIntent().getStringExtra("sharj");
+        //SHARJ = getIntent().getStringExtra("sharj");
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +98,7 @@ public class ActivityPay extends AppCompatActivity
             this.ctx = ctx;
         }
 
-        @android.webkit.JavascriptInterface
+       /* @android.webkit.JavascriptInterface
         public void showHTML(String html)
         {
             Log.e("~!~!loaded", "$$$ html: " + html);
@@ -171,7 +173,7 @@ public class ActivityPay extends AppCompatActivity
 
 
             }
-        }
+        }*/
     }
 
     public class PayResponse {

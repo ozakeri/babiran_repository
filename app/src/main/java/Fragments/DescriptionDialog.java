@@ -1,11 +1,13 @@
 package Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,6 +57,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Mohammad on 7/26/2017.
  */
 
+@SuppressLint("ValidFragment")
 public class DescriptionDialog extends DialogFragment {
 
     View v;
@@ -209,7 +212,7 @@ public class DescriptionDialog extends DialogFragment {
                     descriptionFactor = "سایر";
                 }
                 Log.e("descript", descriptionFactor);
-                completeBUY(id, address, productArray, selected_Pay, descriptionFactor);
+                completeBUY(id, address, productArray, selected_Pay, "");
             }
         });
 
@@ -246,9 +249,9 @@ public class DescriptionDialog extends DialogFragment {
 //                                editor.putString("products", proObj);
 //                                editor.commit();
 
-                                Intent intent = new Intent(context, ActivityPay.class);
-                                intent.putExtra("url", jsonObject.getString("url"));
-                                startActivityForResult(intent, REQUEST_CODE_PAY);
+                               // Intent intent = new Intent(context, ActivityPay.class);
+                                //intent.putExtra("url", jsonObject.getString("url"));
+                               // startActivityForResult(intent, REQUEST_CODE_PAY);
 //                                AppConfig.products.clear();
 //                                MainActivity.basketlist.setVisibility(View.INVISIBLE);
 //                                SharedPreferences.Editor edit = context.getSharedPreferences("factor", MODE_PRIVATE).edit();
@@ -259,6 +262,11 @@ public class DescriptionDialog extends DialogFragment {
 //                                edit.commit();
 //                                MainActivity.factorcontainer.setVisibility(View.VISIBLE);
 //                                AppConfig.fragmentManager.beginTransaction().replace(R.id.Factorcontainer, new FactorFragment()).commit();
+
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
+                                startActivity(browserIntent);
+
+
 
                             }
 
@@ -367,7 +375,7 @@ public class DescriptionDialog extends DialogFragment {
 
         final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         editor.putString("products", "");
-        editor.commit();
+        editor.apply();
 
 
 

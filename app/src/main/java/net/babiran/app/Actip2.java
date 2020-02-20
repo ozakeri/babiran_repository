@@ -23,7 +23,7 @@ public class Actip2 extends AppCompatActivity
 {
 
     private ProgressBar progressBar;
-    private String SHARJ;
+    //private String SHARJ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -54,7 +54,7 @@ public class Actip2 extends AppCompatActivity
 
         });
         webView.loadUrl(getIntent().getStringExtra("url"));
-        SHARJ = getIntent().getStringExtra("sharj");
+        //SHARJ = getIntent().getStringExtra("sharj");
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +71,7 @@ public class Actip2 extends AppCompatActivity
             this.ctx = ctx;
         }
 
-        @android.webkit.JavascriptInterface
+       /* @android.webkit.JavascriptInterface
         public void showHTML(String html)
         {
 
@@ -117,15 +117,15 @@ public class Actip2 extends AppCompatActivity
 
 
             }
-        }
+        }*/
     }
 
-    public class PayResponse {
+   /* public class PayResponse {
         @SerializedName("success")
         public int success;
         @SerializedName("message")
         public String message;
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
