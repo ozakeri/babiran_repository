@@ -189,17 +189,40 @@
          android:layout_height="120dp"
          android:layout_margin="8dp"/>-->
 
+
+    <ui_elements.MyTextView
+        android:id="@+id/txt_title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="با تشکر از انتخاب شما"/>
+
+    <ui_elements.MyTextView
+        android:id="@+id/txt_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@+id/txt_title1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="سفارش شما پس از تایید، با هماهنگی ارسال خواهد شد."/>
+
     <RelativeLayout
         android:id="@+id/submitDes"
-        android:layout_below="@+id/sayer"
+        android:layout_below="@+id/txt_title2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
         android:background="@color/blueDark">
         <ui_elements.MyTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="ادامه و تکمیل خرید "
+            android:text="متوجه شدم"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:gravity="center"/>
