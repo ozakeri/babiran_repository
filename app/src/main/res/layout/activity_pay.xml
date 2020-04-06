@@ -17,7 +17,8 @@
             android:background="@color/blueDark"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/llContainer"
@@ -60,7 +61,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:visibility="gone"/>
 
     <WebView
         android:id="@+id/webview"

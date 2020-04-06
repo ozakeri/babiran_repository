@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -22,6 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.babiran.app.MainActivity;
+import net.babiran.app.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Adapters.ProductListAdapter;
-
 import Models.Category;
-
-import net.babiran.app.MainActivity;
-import net.babiran.app.R;
-
 import Models.Feature;
 import Models.Image;
 import Models.Product;
@@ -47,14 +46,13 @@ import static tools.AppConfig.categories;
 
 public class ProductListFragment extends Fragment {
 
-    public String category_id = "0";
-    static public String category_parent_id = "-1";
-    public ArrayList<Product> products = new ArrayList<>();
-    View v;
-    RequestQueue queue;
-    ListView listView;
-    String prev = "";
-    String id;
+    private String category_parent_id = "-1";
+    private ArrayList<Product> products = new ArrayList<>();
+    private View v;
+    private RequestQueue queue;
+    private String prev = "";
+    private String id;
+    private SwipeRefreshLayout categorySwipeRefreshLayout;
 
     Category category;
 
@@ -92,9 +90,16 @@ public class ProductListFragment extends Fragment {
         v = inflater.inflate(R.layout.pro_list_fragment, container, false);
 
         AppConfig.tempActivity = (MainActivity) getActivity();
-        listView = (ListView) v.findViewById(R.id.category_listView);
-
+        ListView listView = (ListView) v.findViewById(R.id.category_listView);
+        categorySwipeRefreshLayout = v.findViewById(R.id.categorySwipeRefreshLayout);
         //Toast.makeText(getActivity(),category_id,Toast.LENGTH_SHORT).show();
+
+        categorySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCatOnResume();
+            }
+        });
 
         if (products.size() > 0) {
             v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
@@ -103,138 +108,132 @@ public class ProductListFragment extends Fragment {
             listView.setAdapter(adp);
         } else if (prev.equals("category")) {
             //Volley Start
-            v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-            MainActivity.productlist.setVisibility(View.VISIBLE);
-
-            queue = Volley.newRequestQueue(getActivity());
-            final ProgressDialog d = new ProgressDialog(getActivity());
-            d.setMessage("چند لحظه صبرکنید ...");
-            d.setIndeterminate(true);
-            d.setCancelable(false);
-            d.show();
-
-            String url = AppConfig.BASE_URL + "api/main/search";
-            // Request a string response from the provided URL.
-
-            StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            d.dismiss();
-                            try {
-                                ArrayList<Product> products = new ArrayList<>();
-                                JSONArray jsonArray = new JSONArray(response);
-                                for (int i = 0; i < jsonArray.length(); i++) {
-
-                                    ArrayList<Feature> featuresArray = new ArrayList<>();
-                                    ArrayList<Image> imagesArray = new ArrayList<>();
-                                    JSONObject c = jsonArray.getJSONObject(i);
-
-                                    JSONArray features = c.getJSONArray("features");
-                                    for (int fea = 0; fea < features.length(); fea++) {
-                                        try {
-                                            JSONObject f = features.getJSONObject(fea);
-                                            Feature feature = new Feature(
-                                                    f.getString("value"), f.getString("name"));
-                                            featuresArray.add(fea, feature);
-                                        } catch (JSONException ex) {
-
-                                        }
-                                    }
-
-                                    JSONArray images = c.getJSONArray("images");
-                                    ;
-                                    for (int img = 0; img < images.length(); img++) {
-
-                                        try {
-                                            JSONObject im = images.getJSONObject(img);
-                                            Image image = new Image(
-                                                    im.getString("image_link"));
-                                            imagesArray.add(img, image);
-                                        } catch (JSONException ex) {
-
-                                        }
-                                    }
-                                    Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
-
-
-                                    products.add(product);
-                                }
-                                if (products.size() > 0) {
-                                    v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-
-                                    AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products)).commit();
-
-                                } else {
-                                    v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-                                    //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
-
-                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                    alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
-                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-
-                                                }
-                                            });
-                                    alertDialog.show();
-
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("Volley", error.toString());
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-
-                    Map<String, String> params = new HashMap<String, String>();
-
-                    if (id != null) {
-                        Log.d("cat id", id);
-                        params.put("category_id", id);
-                        System.out.println("category_id===" + id);
-
-                    }
-
-                    return params;
-                }
-
-            };
-
-            jsonArrayRequest.setTag(TAG);
-            jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    400000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            // Add the request to the RequestQueue.
-            queue.add(jsonArrayRequest);
-
-            //Volley End
-
-
-        } else {
-            /////////////////////
-            // refresh favs
-            //getFavsFromServer();
-
-            ///////////////////////////
+            getCategory();
         }
 
         return v;
 
+    }
+
+    private void getCategory() {
+        products = null;
+        v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+        MainActivity.productlist.setVisibility(View.VISIBLE);
+        queue = Volley.newRequestQueue(getActivity());
+        String url = AppConfig.BASE_URL + "api/main/search";
+        final ProgressDialog d = new ProgressDialog(getActivity());
+        d.setMessage("چند لحظه صبرکنید ...");
+        d.setIndeterminate(true);
+        d.setCancelable(false);
+        d.show();
+
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        d.dismiss();
+                        try {
+                            ArrayList<Product> products = new ArrayList<>();
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                ArrayList<Feature> featuresArray = new ArrayList<>();
+                                ArrayList<Image> imagesArray = new ArrayList<>();
+                                JSONObject c = jsonArray.getJSONObject(i);
+
+                                JSONArray features = c.getJSONArray("features");
+                                for (int fea = 0; fea < features.length(); fea++) {
+                                    try {
+                                        JSONObject f = features.getJSONObject(fea);
+                                        Feature feature = new Feature(
+                                                f.getString("value"), f.getString("name"));
+                                        featuresArray.add(fea, feature);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+
+                                JSONArray images = c.getJSONArray("images");
+                                ;
+                                for (int img = 0; img < images.length(); img++) {
+
+                                    try {
+                                        JSONObject im = images.getJSONObject(img);
+                                        Image image = new Image(
+                                                im.getString("image_link"));
+                                        imagesArray.add(img, image);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+
+
+                                products.add(product);
+                            }
+                            if (products.size() > 0) {
+                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+
+                                AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products)).commit();
+
+                            } else {
+                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+                                //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
+
+                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+                                alertDialog.show();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                if (id != null) {
+                    Log.d("cat id", id);
+                    params.put("category_id", id);
+                    System.out.println("category_id===" + id);
+
+                }
+
+                return params;
+            }
+
+        };
+
+        jsonArrayRequest.setTag(TAG);
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                400000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+
+        //Volley End
     }
 
     @Override
@@ -264,8 +263,12 @@ public class ProductListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        MainActivity.viewLogo.setVisibility(View.GONE);
+        getCatOnResume();
 
+    }
+
+    private void getCatOnResume() {
+        MainActivity.viewLogo.setVisibility(View.GONE);
         MainActivity.btnBack.setVisibility(View.VISIBLE);
         MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,7 +276,8 @@ public class ProductListFragment extends Fragment {
 
                 Log.e("Resume", category_parent_id);
                 MainActivity.productlist.setVisibility(View.INVISIBLE);
-                Log.e("previous", prev);
+                Log.e("previous111111", prev);
+                System.out.println("previous111111====");
                 if (category_parent_id != null) {
                     if (category_parent_id.equals("0") || category_parent_id.equals("-1")) {
                         MainActivity.secondcategory.setVisibility(View.INVISIBLE);
@@ -284,8 +288,10 @@ public class ProductListFragment extends Fragment {
 
                             } else {
                                 if (prev.equals("second")) {
+                                    System.out.println("=====second====");
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id, "backToSecond")).commit();
                                 } else {
+                                    System.out.println("=====second111====");
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id)).commit();
                                 }
                             }
@@ -308,7 +314,7 @@ public class ProductListFragment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-                    Log.e("Resume", category_parent_id);
+                    System.out.println("category_parent_id====" + category_parent_id);
                     MainActivity.productlist.setVisibility(View.INVISIBLE);
                     Log.e("previous", prev);
                     if (category_parent_id != null) {
@@ -321,8 +327,10 @@ public class ProductListFragment extends Fragment {
 
                                 } else {
                                     if (prev.equals("second")) {
+                                        System.out.println("=====111111111=======");
                                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id, "backToSecond")).commit();
                                     } else {
+                                        System.out.println("=====2222222=======");
                                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id)).commit();
                                     }
                                 }
@@ -340,6 +348,7 @@ public class ProductListFragment extends Fragment {
             }
         });
 
+        categorySwipeRefreshLayout.setRefreshing(false);
     }
 
     public String getCategoryID(String ID) {

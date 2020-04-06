@@ -354,6 +354,7 @@
                                     android:gravity="center"
                                     android:text="نا موجود"
                                     android:textColor="@color/red"
+                                    android:layout_below="@id/countpicker"
                                     android:visibility="gone" />
                             </RelativeLayout>
 

@@ -28,7 +28,6 @@ import java.util.List;
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
-import tools.GlobalValues;
 
 public class ListtoListActivity extends AppCompatActivity {
     private Toolbar toolbar;

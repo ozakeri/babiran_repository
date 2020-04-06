@@ -3,7 +3,9 @@ package Fragments;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,12 +24,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 
-import net.babiran.app.AppController;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
@@ -100,6 +102,19 @@ public class BasketListFragment extends Fragment implements
         v = inflater.inflate(R.layout.basket_list_fragment, container, false);
 
         //  getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+
+        Intent in = getActivity().getIntent();
+        Uri data = in.getData();
+        if (data != null) {
+
+            String rdata = data.toString().replace("http://", "");
+
+            if (rdata.equals("1")) {
+                System.out.println("111111111");
+            } else {
+                System.out.println("222222");
+            }
+        }
 
 
         final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
@@ -484,7 +499,7 @@ public class BasketListFragment extends Fragment implements
 
             if (rawPrice > 0) {
                 totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
-            }else {
+            } else {
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
@@ -644,6 +659,5 @@ public class BasketListFragment extends Fragment implements
         }
         return priceString.substring(0, priceString.length() - 1);
     }
-
 
 }

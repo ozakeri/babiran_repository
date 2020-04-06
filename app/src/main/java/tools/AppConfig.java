@@ -4,6 +4,7 @@ package tools;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import net.babiran.app.Servic.GETING;
 
@@ -22,6 +23,7 @@ public class AppConfig {
 
     public static String BASE_URL = "http://babiran.net/";
     public static FragmentManager fragmentManager;
+    public static FragmentTransaction ft;
     public static ArrayList<Category> total_categories = new ArrayList<>();
 
     public static String NULLBASKET = "";

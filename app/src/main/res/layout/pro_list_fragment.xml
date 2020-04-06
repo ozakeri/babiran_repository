@@ -8,13 +8,22 @@
     android:background="@color/white">
 
 
-    <ListView
-        android:id="@+id/category_listView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/categorySwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_margin="10dp"
-        android:divider="@null"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout2">
+
+        <ListView
+            android:id="@+id/category_listView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:divider="@null"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"

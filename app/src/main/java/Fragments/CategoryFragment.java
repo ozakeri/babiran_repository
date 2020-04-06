@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.RequestQueue;
 
@@ -37,21 +38,18 @@ import tools.AppConfig;
 
 public class CategoryFragment extends Fragment {
 
-    View v;
 
-    RequestQueue queue;
-    CategoryAdapter categoryAdapter ;
-    RecyclerView recyclerView ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_category_frgment, container, false);
+        View v = inflater.inflate(R.layout.fragment_category_frgment, container, false);
 
         MainActivity.category.setVisibility(View.VISIBLE);
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.category_list_grid);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.category_list_grid);
+
         if(getCategory()!= null){
-            categoryAdapter = new CategoryAdapter(getCategory(),getActivity());
+            CategoryAdapter categoryAdapter = new CategoryAdapter(getCategory(), getActivity());
             RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity() , 2 , LinearLayoutManager.VERTICAL , false);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -60,7 +58,7 @@ public class CategoryFragment extends Fragment {
 
         }
 
-        return v ;
+        return v;
     }
 
     public ArrayList<Category> getCategory(){
@@ -100,11 +98,11 @@ public class CategoryFragment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-
+                    System.out.println("===MainActivity=====");
                     if(MainActivity.productlist.getVisibility() == View.VISIBLE){
                         MainActivity.productlist.setVisibility(View.INVISIBLE);
-                        MainActivity.secondcategory.setVisibility(View.INVISIBLE);
-                        AppConfig.fragmentManager.beginTransaction().replace(R.id.Categorycontainer,new CategoryFragment()).commit();
+                        MainActivity.secondcategory.setVisibility(View.VISIBLE);
+                        //AppConfig.fragmentManager.beginTransaction().replace(R.id.Categorycontainer,new CategoryFragment()).commit();
                     }
                     else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);

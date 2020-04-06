@@ -1,6 +1,9 @@
 package net.babiran.app;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,8 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import net.babiran.app.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import Adapters.FactorListAdapter;
-import Fragments.BasketListFragment;
 import Models.Factor;
 import Models.Feature;
 import Models.Image;
@@ -49,7 +50,7 @@ public class FactorList extends AppCompatActivity {
     String id = "-1";
     ArrayList<Product> productArrayList;
     ArrayList<Factor> factorArrayList;
-    private String What= AppConfig.NULLBASKET;
+    private String What = AppConfig.NULLBASKET;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -58,18 +59,16 @@ public class FactorList extends AppCompatActivity {
         setContentView(R.layout.factor_list);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        nMgr.cancel(1);
+
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                if(TextUtils.isEmpty(What))
-                {
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(What)) {
                     finish();
-                }
-                else
-                {
+                } else {
                     AppConfig.NULLBASKET = "";
                     Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
 
@@ -81,7 +80,7 @@ public class FactorList extends AppCompatActivity {
         });
         factorList = (ListView) findViewById(R.id.factor_listView);
 
-    //    toolbar = (Toolbar) findViewById(R.id.toolbarFactor);
+        //    toolbar = (Toolbar) findViewById(R.id.toolbarFactor);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -91,7 +90,7 @@ public class FactorList extends AppCompatActivity {
 
         if (extras != null) {
             id = extras.getString("id");
-          //  id="55";
+            //  id="55";
             getFactor();
         }
 
@@ -122,10 +121,8 @@ public class FactorList extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
 
-        final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" +id + "/10/0";
-       // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
-
-        System.out.println("url===" + url);
+        final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
+        // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -149,25 +146,35 @@ public class FactorList extends AppCompatActivity {
                                     Object A4 = jsonObject.get("track_code");
                                     Object A5 = jsonObject.get("ref_id");
 
-                                    String A11 =A1.toString();
-                                    String A22 =A2.toString();
-                                    String A33 =A3.toString();
+                                    String A11 = A1.toString();
+                                    String A22 = A2.toString();
+                                    String A33 = A3.toString();
 
-                                    String A44 =A4.toString();
-                                    String A55 =A5.toString();
+                                    String A44 = A4.toString();
+                                    String A55 = A5.toString();
 
-                                    if(TextUtils.isEmpty(A11)) {A11="null";}
-                                    if(TextUtils.isEmpty(A22)) {A22="null";}
-                                    if(TextUtils.isEmpty(A33)) {A33="null";}
+                                    if (TextUtils.isEmpty(A11)) {
+                                        A11 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A22)) {
+                                        A22 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A33)) {
+                                        A33 = "null";
+                                    }
 
-                                   if(TextUtils.isEmpty(A44)) {A44="null";}
-                                   if(TextUtils.isEmpty(A55)) {A55="null";}
+                                    if (TextUtils.isEmpty(A44)) {
+                                        A44 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A55)) {
+                                        A55 = "null";
+                                    }
 
-                                   String Full=A11+"##"+A22+"##"+A33+"##"+A44+"##"+A55;
+                                    String Full = A11 + "##" + A22 + "##" + A33 + "##" + A44 + "##" + A55;
 
-                                  //  String Full=A11+"##"+A22+"##"+A33;
+                                    //  String Full=A11+"##"+A22+"##"+A33;
 
-                                   Log.e("SASASSAS", status_name.toString());
+                                    Log.e("SASASSAS", status_name.toString());
 
                                     Log.e("Full", Full);
                                     ArrayList<Feature> featuresArray;
@@ -223,8 +230,8 @@ public class FactorList extends AppCompatActivity {
 
                                     if (productArrayList != null) {
 
-                                        Factor factor = new Factor(Full,status_name.toString(),jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
-                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList,jsonObject.getString("address"));
+                                        Factor factor = new Factor(Full, status_name.toString(), jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
+                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"));
 
                                         factorArrayList.add(factor);
                                     }
@@ -285,26 +292,36 @@ public class FactorList extends AppCompatActivity {
                                     Object A3 = jsonObject.get("carrierMobile");
 
                                     Object A4 = jsonObject.get("track_code");
-                                   Object A5 = jsonObject.get("ref_id");
+                                    Object A5 = jsonObject.get("ref_id");
 
-                                    String A11 =A1.toString();
-                                    String A22 =A2.toString();
-                                    String A33 =A3.toString();
+                                    String A11 = A1.toString();
+                                    String A22 = A2.toString();
+                                    String A33 = A3.toString();
 
-                                   String A44 =A4.toString();
-                                  String A55 =A5.toString();
+                                    String A44 = A4.toString();
+                                    String A55 = A5.toString();
 
-                                    if(TextUtils.isEmpty(A11)) {A11="null";}
-                                    if(TextUtils.isEmpty(A22)) {A22="null";}
-                                    if(TextUtils.isEmpty(A33)) {A33="null";}
+                                    if (TextUtils.isEmpty(A11)) {
+                                        A11 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A22)) {
+                                        A22 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A33)) {
+                                        A33 = "null";
+                                    }
 
-                                    if(TextUtils.isEmpty(A44)) {A44="null";}
-                                    if(TextUtils.isEmpty(A55)) {A55="null";}
+                                    if (TextUtils.isEmpty(A44)) {
+                                        A44 = "null";
+                                    }
+                                    if (TextUtils.isEmpty(A55)) {
+                                        A55 = "null";
+                                    }
 
-                                   String Full=A11+"##"+A22+"##"+A33+"##"+A44+"##"+A55;
+                                    String Full = A11 + "##" + A22 + "##" + A33 + "##" + A44 + "##" + A55;
 
 
-                                   // String Full=A11+"##"+A22+"##"+A33;
+                                    // String Full=A11+"##"+A22+"##"+A33;
 
                                     Log.e("orderAArray", orderArray.length() + "");
                                     for (int p = 0; p < orderArray.length(); p++) {
@@ -354,8 +371,8 @@ public class FactorList extends AppCompatActivity {
 
                                     if (productArrayList != null) {
 
-                                        Factor factor = new Factor(Full,status_name.toString(),jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
-                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList,jsonObject.getString("address"));
+                                        Factor factor = new Factor(Full, status_name.toString(), jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
+                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"));
 
                                         factorArrayList.add(factor);
                                         factorListAdapter.notifyDataSetChanged();
@@ -386,15 +403,11 @@ public class FactorList extends AppCompatActivity {
 
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
-        if(TextUtils.isEmpty(What))
-        {
+        if (TextUtils.isEmpty(What)) {
             finish();
-        }
-        else
-        {
+        } else {
             AppConfig.NULLBASKET = "";
             Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
 
@@ -402,4 +415,11 @@ public class FactorList extends AppCompatActivity {
             finish();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
 }

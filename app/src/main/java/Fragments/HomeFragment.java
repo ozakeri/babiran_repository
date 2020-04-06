@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
@@ -66,7 +67,6 @@ import static tools.AppConfig.smallTile;
 
 
 public class HomeFragment extends Fragment {
-
     ViewPager viewPager, viewPager2;
     CircleIndicator customIndicator, customIndicator2;
     CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
@@ -110,6 +110,8 @@ public class HomeFragment extends Fragment {
 
 
     DatabaseHandler db;
+
+    private SwipeRefreshLayout disSwipeRefreshLayout,proSwipeRefreshLayout,topSwipeRefreshLayout;
 
 
     public HomeFragment() {
@@ -197,6 +199,10 @@ public class HomeFragment extends Fragment {
         HourTxt = (MyTextView) v.findViewById(R.id.hourTxt);
         MinTxt = (MyTextView) v.findViewById(R.id.minTxt);
         SecTxt = (MyTextView) v.findViewById(R.id.secTxt);
+
+        disSwipeRefreshLayout = v.findViewById(R.id.disSwipeRefreshLayout);
+        proSwipeRefreshLayout = v.findViewById(R.id.proSwipeRefreshLayout);
+        topSwipeRefreshLayout = v.findViewById(R.id.topSwipeRefreshLayout);
 
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -381,6 +387,9 @@ public class HomeFragment extends Fragment {
         }
 
         specialRelative.setVisibility(View.VISIBLE);
+        proSwipeRefreshLayout.setVisibility(View.GONE);
+        topSwipeRefreshLayout.setVisibility(View.GONE);
+        disSwipeRefreshLayout.setVisibility(View.GONE);
         TopProList.setVisibility(View.INVISIBLE);
         NewProList.setVisibility(View.INVISIBLE);
         laytopsell.setVisibility(View.INVISIBLE);
@@ -425,6 +434,9 @@ public class HomeFragment extends Fragment {
                 DisProList.setVisibility(View.INVISIBLE);
                 NewProList.setVisibility(View.INVISIBLE);
                 TopProList.setVisibility(View.INVISIBLE);
+                proSwipeRefreshLayout.setVisibility(View.GONE);
+                topSwipeRefreshLayout.setVisibility(View.GONE);
+                disSwipeRefreshLayout.setVisibility(View.GONE);
 
             }
         });
@@ -438,6 +450,9 @@ public class HomeFragment extends Fragment {
                 laynew.setVisibility(View.INVISIBLE);
                 laydiscount.setVisibility(View.VISIBLE);
 
+                proSwipeRefreshLayout.setVisibility(View.GONE);
+                topSwipeRefreshLayout.setVisibility(View.GONE);
+                disSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 NewProList.setVisibility(View.INVISIBLE);
                 TopProList.setVisibility(View.INVISIBLE);
                 DisProList.setVisibility(View.VISIBLE);
@@ -495,6 +510,9 @@ public class HomeFragment extends Fragment {
                 laynew.setVisibility(View.VISIBLE);
                 laydiscount.setVisibility(View.INVISIBLE);
 
+                proSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                topSwipeRefreshLayout.setVisibility(View.GONE);
+                disSwipeRefreshLayout.setVisibility(View.GONE);
                 DisProList.setVisibility(View.INVISIBLE);
                 TopProList.setVisibility(View.INVISIBLE);
                 NewProList.setVisibility(View.VISIBLE);
@@ -544,6 +562,9 @@ public class HomeFragment extends Fragment {
                 laynew.setVisibility(View.INVISIBLE);
                 laydiscount.setVisibility(View.INVISIBLE);
 
+                proSwipeRefreshLayout.setVisibility(View.GONE);
+                topSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                disSwipeRefreshLayout.setVisibility(View.GONE);
                 DisProList.setVisibility(View.INVISIBLE);
                 NewProList.setVisibility(View.INVISIBLE);
                 TopProList.setVisibility(View.VISIBLE);
@@ -573,6 +594,27 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        disSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDisPro();
+            }
+        });
+
+        proSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getNewPro();
+            }
+        });
+
+        topSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getTopPro();
+            }
+        });
+
         MainActivity.wait.setVisibility(View.INVISIBLE);
         return v;
 
@@ -590,6 +632,7 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + Newproducts.size() + "/" + "20";
+        System.out.println("getNewPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -649,7 +692,9 @@ public class HomeFragment extends Fragment {
                                 }
                             }
 
-
+                            proSwipeRefreshLayout.setRefreshing(false);
+                            disSwipeRefreshLayout.setRefreshing(false);
+                            topSwipeRefreshLayout.setRefreshing(false);
                         } catch (Exception e) {
 
                             AppConfig.error(e);
@@ -686,6 +731,7 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSells/" + Topproducts.size() + "/" + "20";
+        System.out.println("getTopPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -744,6 +790,10 @@ public class HomeFragment extends Fragment {
                                 }
                             }
 
+                            proSwipeRefreshLayout.setRefreshing(false);
+                            disSwipeRefreshLayout.setRefreshing(false);
+                            topSwipeRefreshLayout.setRefreshing(false);
+
                         } catch (Exception e) {
 
                             AppConfig.error(e);
@@ -779,6 +829,7 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSeenLazy/20/" + Disproducts.size();
+        System.out.println("getDisPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -836,6 +887,10 @@ public class HomeFragment extends Fragment {
 
                                 }
                             }
+
+                            disSwipeRefreshLayout.setRefreshing(false);
+                            proSwipeRefreshLayout.setRefreshing(false);
+                            topSwipeRefreshLayout.setRefreshing(false);
 
                         } catch (Exception e) {
 

@@ -5,17 +5,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.*;
@@ -45,9 +49,8 @@ public class ActivityPay extends AppCompatActivity
 {
 
     private ProgressBar progressBar;
-    //private String SHARJ;
+    private String SHARJ;
 
-    @SuppressLint("JavascriptInterface")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -62,7 +65,8 @@ public class ActivityPay extends AppCompatActivity
         final WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new MyJavaScriptInterface(this), "HtmlViewer");
-        webView.setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new MyWebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url)
             {
@@ -77,11 +81,11 @@ public class ActivityPay extends AppCompatActivity
                 progressBar.setProgress(progress);
 
             }
-
-
         });
+
+
         webView.loadUrl(getIntent().getStringExtra("url"));
-        //SHARJ = getIntent().getStringExtra("sharj");
+        SHARJ = getIntent().getStringExtra("sharj");
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +102,7 @@ public class ActivityPay extends AppCompatActivity
             this.ctx = ctx;
         }
 
-       /* @android.webkit.JavascriptInterface
+        @android.webkit.JavascriptInterface
         public void showHTML(String html)
         {
             Log.e("~!~!loaded", "$$$ html: " + html);
@@ -173,7 +177,7 @@ public class ActivityPay extends AppCompatActivity
 
 
             }
-        }*/
+        }
     }
 
     public class PayResponse {
@@ -196,5 +200,15 @@ public class ActivityPay extends AppCompatActivity
         finish();
     }
 
+    public class MyWebViewClient extends WebViewClient {
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Intent i = new Intent(Intent.ACTION_VIEW, request.getUrl());
+            startActivity(i);
+            return true;
+        }
+
+    }
 }

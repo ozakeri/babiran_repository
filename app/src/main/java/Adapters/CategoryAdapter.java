@@ -86,6 +86,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
                     Intent intent = new Intent(context, ListFoodActivity.class);
                     intent.putExtra("IDD","1196");
                     context.startActivity(intent);
+                    System.out.println("test====1196===");
 
                   //  AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer,new SecondCategoryFragmentNew(mDataset.get(position).id)).commit();
 
@@ -96,9 +97,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.DataOb
                     Intent intent = new Intent(context, ListFoodActivity.class);
                     intent.putExtra("IDD","1197");
                     context.startActivity(intent);
+                    System.out.println("test====1197===");
                 }
 
-
+                System.out.println("test====null===");
                 AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer,new SecondCategoryFragment(mDataset.get(position).id)).commit();
 
                /* Intent intent = new Intent(context,SecondCategory.class);

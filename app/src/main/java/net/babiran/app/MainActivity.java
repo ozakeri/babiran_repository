@@ -93,6 +93,8 @@ import tools.AppConfig;
 import tools.NotificationUtils;
 import ui_elements.MyTextView;
 
+import static tools.AppConfig.id;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     String image_from_notif = "";
     DatabaseHandler db;
     private RelativeLayout layout_favorite;
-
+    public static final String TAG = "TAG";
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         Pushe.initialize(this, true);
+
         //  registerInBackground();
 //        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
 //        status.getSubscriptionStatus().getUserId();
@@ -380,7 +383,8 @@ public class MainActivity extends AppCompatActivity {
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
 
                     homeGetRequest();
-                } else {
+                }
+                else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
@@ -433,6 +437,7 @@ public class MainActivity extends AppCompatActivity {
         if (b){
             notif_Relative.setVisibility(View.GONE);
         }
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////Token $ RegId
 //    private void registerInBackground()
@@ -683,6 +688,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void homeGetRequest() {
+
+        sendToken();
 
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
@@ -964,7 +971,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
         menu.add(new Menu("اشتراک گذاری", R.drawable.babiran));
         menu.add(new Menu("سوالات متداول", R.drawable.ic_ansqus));
-        //menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
+        menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
         menu.add(new Menu("درباره ما", R.drawable.babiran));
         // menu.add(new Menu("تنظیمات", R.drawable.ic_info_outline_black_24dp));
         menu.add(new Menu("خروج از حساب کاربری", R.drawable.ic_exit___));
@@ -1104,14 +1111,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
-                    ///case 10:
+
+                        case 10:
 
                         //rahnama
-                        /*drawerLayout.closeDrawer(Gravity.RIGHT);
-                        startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));*/
+                        drawerLayout.closeDrawer(Gravity.RIGHT);
+                        startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
 
                        // break;
-                    case 10:
+                    case 11:
                         //about
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.AboutContainer, new AboutFragment()).commit();
@@ -1129,7 +1137,7 @@ public class MainActivity extends AppCompatActivity {
                       //  startActivity(new Intent(MainActivity.this, SettingActivity.class));
 
                         break;*/
-                    case 11:
+                    case 12:
 
                         //khoroj
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
@@ -1530,4 +1538,64 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void sendToken() {
+
+        SharedPreferences load = getSharedPreferences("NUMBER",0);
+        final String PhonePreferences = load.getString("TKN","");
+        System.out.println("Phone=======" + PhonePreferences);
+
+        try {
+
+            //Volley Start
+            queue = Volley.newRequestQueue(getBaseContext());
+            String url = AppConfig.BASE_URL + "api/user/insertNewUser";
+            // Request a string response from the provided URL.
+            Log.e("request", "start");
+            StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            System.out.println("===response===" + response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Toast.makeText(getApplicationContext(), error.toString() + "", Toast.LENGTH_SHORT).show();
+                            System.out.println("error=======" + error.toString());
+
+
+                            AppConfig.error(error);
+                            queue.cancelAll(this);
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("phone1", PhonePreferences);
+                    Log.e("toooooook", AppConfig.token);
+                    params.put("code", "");
+                    params.put("reg_id", Pushe.getPusheId(MainActivity.this));
+                    System.out.println("reg_id====" + Pushe.getPusheId(MainActivity.this));
+                    System.out.println("phone====" + phone);
+                    // params.put("reg_id",status.getSubscriptionStatus().getUserId());
+                    return params;
+                }
+            };
+            strRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    400000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            strRequest.setTag(TAG);
+            // Add the request to the RequestQueue.
+            queue.add(strRequest);
+            //Volley End
+        } catch (Exception ex) {
+
+            AppConfig.error(ex);
+
+        }
+    }
 }

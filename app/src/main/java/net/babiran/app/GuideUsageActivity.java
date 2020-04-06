@@ -45,7 +45,7 @@ public class GuideUsageActivity extends AppCompatActivity {
         WebView webView = (WebView) findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://babiran.net/api/app-guide.html");
+        webView.loadUrl("http://babiran.net/api/app-guide");
     }
     @Override
     public void onBackPressed() {

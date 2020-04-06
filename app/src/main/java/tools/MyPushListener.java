@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import com.android.volley.RequestQueue;
 
 import net.babiran.app.AppController;
+import net.babiran.app.FactorList;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.Rss.ListtoListActivity;
@@ -25,21 +26,51 @@ import net.babiran.app.Sefaresh.ShowActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import Handlers.DatabaseHandler;
 import co.ronash.pushe.PusheListenerService;
 
 public class MyPushListener extends PusheListenerService {
     private NotificationManager mNotificationManager;
     private SharedPreferences.Editor editor;
     private RequestQueue queue;
+    private DatabaseHandler db;
 
     @Override
-    public void onMessageReceived(final JSONObject message, JSONObject content) {
+    public void onMessageReceived(final JSONObject message, final JSONObject content) {
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
-                System.out.println("message===" + message.toString());
+
+
+                try {
+                    JSONObject contentJson = new JSONObject(String.valueOf(content));
+                    System.out.println("contentJson=====" + contentJson);
+                    if (!contentJson.isNull("content")) {
+                        JSONObject successJson = contentJson.getJSONObject("content");
+                        if (!successJson.isNull("success")) {
+                            String successStr = successJson.getString("success");
+                            System.out.println("successStr=====" + successStr);
+                            if (successStr != null) {
+                                db = new DatabaseHandler(getApplicationContext());
+                                if (db.getRowCount() > 0) {
+                                    HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+                                    String id = userDetailsHashMap.get("id");
+                                    Intent intent = new Intent(getApplicationContext(), FactorList.class);
+                                    intent.putExtra("id", id);
+                                    startActivity(intent);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
                 try {
                     JSONObject resultJson = new JSONObject(message.toString());
@@ -52,6 +83,7 @@ public class MyPushListener extends PusheListenerService {
                     String catId = null;
                     String proId = null;
 
+                    System.out.println("resultJson====" + resultJson);
                     if (!resultJson.isNull("title")) {
                         title = resultJson.getString("title");
                     } else {
@@ -149,8 +181,8 @@ public class MyPushListener extends PusheListenerService {
                             }
                         }
                     } else {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        showNotification(getApplicationContext(), intent, title, body);
+                        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                       // showNotification(getApplicationContext(), intent, title, body);
                     }
 
 
@@ -176,9 +208,6 @@ public class MyPushListener extends PusheListenerService {
                     channelId, channelName, importance);
             notificationManager.createNotificationChannel(mChannel);
         }
-
-        System.out.println("title111====" + title);
-        System.out.println("body111====" + body);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.applogo)

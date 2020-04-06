@@ -29,14 +29,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import net.babiran.app.ActivityPay;
 import net.babiran.app.BlankAcct;
 import net.babiran.app.R;
 import net.babiran.app.commnets.UNIQ;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +86,10 @@ public class DescriptionDialog extends DialogFragment {
         this.selected_Pay = selected_pay;
         this.editor = editor;
         this.context = context;
+    }
+
+    public DescriptionDialog() {
+
     }
 
     @Override
@@ -213,6 +215,10 @@ public class DescriptionDialog extends DialogFragment {
                 }
                 Log.e("descript", descriptionFactor);
                 completeBUY(id, address, productArray, selected_Pay, "");
+                //DescriptionDialog descriptionDialog = new DescriptionDialog();
+                //descriptionDialog.dismiss();
+                //getDialog().dismiss();
+
             }
         });
 
@@ -249,9 +255,9 @@ public class DescriptionDialog extends DialogFragment {
 //                                editor.putString("products", proObj);
 //                                editor.commit();
 
-                               // Intent intent = new Intent(context, ActivityPay.class);
+                                //Intent intent = new Intent(context, ActivityPay.class);
                                 //intent.putExtra("url", jsonObject.getString("url"));
-                               // startActivityForResult(intent, REQUEST_CODE_PAY);
+                                // startActivityForResult(intent, REQUEST_CODE_PAY);
 //                                AppConfig.products.clear();
 //                                MainActivity.basketlist.setVisibility(View.INVISIBLE);
 //                                SharedPreferences.Editor edit = context.getSharedPreferences("factor", MODE_PRIVATE).edit();
@@ -263,9 +269,10 @@ public class DescriptionDialog extends DialogFragment {
 //                                MainActivity.factorcontainer.setVisibility(View.VISIBLE);
 //                                AppConfig.fragmentManager.beginTransaction().replace(R.id.Factorcontainer, new FactorFragment()).commit();
 
+                                System.out.println("url-=-=-=-=-=-" + url);
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
                                 startActivity(browserIntent);
-
+                                getDialog().dismiss();
 
 
                             }
@@ -277,6 +284,7 @@ public class DescriptionDialog extends DialogFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println("error=====" + error);
                 Log.e("Volley", error.toString());
                 Toast.makeText(context, error != null && !TextUtils.isEmpty(error.getMessage()) ? error.getMessage() : "خطای سرور رخ داده است. لطفا دوباره تلاش کنید.", Toast.LENGTH_LONG)
                         .show();
@@ -339,51 +347,38 @@ public class DescriptionDialog extends DialogFragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REQUEST_CODE_PAY)
-        {
-            if (resultCode == Activity.RESULT_OK )
-            {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PAY) {
+            if (resultCode == Activity.RESULT_OK) {
 
                 NullBasket();
                 getDialog().dismiss();
-                AppConfig.NULLBASKET=UNIQ.BASKET_NULL;
+                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
                 startActivity(intent);
 
-            }
-            else
-            {
-
+            } else {
 
                 NullBasket();
                 getDialog().dismiss();
-                AppConfig.NULLBASKET=UNIQ.BASKET_NULL;
+                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
                 startActivity(intent);
-
-
 
 
             }
         }
     }
 
-    public void NullBasket()
-    {
+    public void NullBasket() {
 
         final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         editor.putString("products", "");
         editor.apply();
 
 
-
-
-
         SharedPreferences pro_prefs;
         pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-
 
 
         Gson gson = new Gson();

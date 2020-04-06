@@ -102,46 +102,44 @@
                 android:id="@+id/Categorycontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"></FrameLayout>
+                android:layout_above="@+id/opp"/>
 
             <FrameLayout
                 android:id="@+id/Homecontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"></FrameLayout>
+                android:layout_above="@+id/opp"/>
 
 
             <FrameLayout
                 android:id="@+id/SecondCategorycontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"></FrameLayout>
+                android:layout_above="@+id/opp"/>
 
             <FrameLayout
                 android:id="@+id/Searchcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/BasketListcontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/opp"
-                android:layout_marginBottom="0dp"></FrameLayout>
+                android:layout_marginBottom="0dp"/>
 
             <FrameLayout
                 android:id="@+id/ProductListcontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"
-
-                ></FrameLayout>
+                android:layout_above="@+id/opp"/>
 
             <FrameLayout
                 android:id="@+id/Productcontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"></FrameLayout>
+                android:layout_above="@+id/opp"/>
 
             <RelativeLayout
                 android:id="@+id/opp"
@@ -300,57 +298,57 @@
                 android:layout_height="1dp"
                 android:layout_above="@id/opp"
                 android:background="@drawable/gradiant"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"/>
 
             <FrameLayout
                 android:id="@+id/Factorcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/Nazarcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/Editcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/SettingContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/AboutContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/FullbannerContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/CardbannerContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/BigTileContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/SmallTileContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <FrameLayout
                 android:id="@+id/SupportContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
+                android:layout_height="match_parent"/>
 
             <RelativeLayout
                 android:id="@+id/motor"
