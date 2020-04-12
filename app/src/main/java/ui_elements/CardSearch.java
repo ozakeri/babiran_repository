@@ -31,9 +31,6 @@ import Models.Image;
 import Models.Product;
 import tools.AppConfig;
 
-import static Fragments.SearchFrgment.ed_name;
-import static Fragments.SearchFrgment.searchResult;
-
 
 public class CardSearch extends RelativeLayout {
 
@@ -95,7 +92,7 @@ public class CardSearch extends RelativeLayout {
     public void submit(){
 
 
-        SearchFrgment.progressLayout.setVisibility(View.VISIBLE);
+        //SearchFrgment.progressLayout.setVisibility(View.VISIBLE);
         //Volley Start
 
 
@@ -150,10 +147,10 @@ public class CardSearch extends RelativeLayout {
                                 products.add(product);
                             }
                             if(products.size()>0){
-                              SearchFrgment.progressLayout.setVisibility(View.GONE);
+                              //SearchFrgment.progressLayout.setVisibility(View.GONE);
 
                                 adp = new ProductListAdapter(contex, products);
-                                searchResult.setAdapter(adp);
+                               // searchResult.setAdapter(adp);
                             }
 
 
@@ -175,11 +172,11 @@ public class CardSearch extends RelativeLayout {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                Log.e("searchKey",ed_name.getText().toString());
+              /*  Log.e("searchKey",ed_name.getText().toString());
                 Log.e("tag",tag.getText().toString());
                 if(ed_name.getText().toString().length()>0){
                     params.put("key", ed_name.getText().toString());
-                }
+                }*/
 
 
                 if(tag.getText().toString().equals("پر فروش ترین")){
@@ -303,11 +300,11 @@ public class CardSearch extends RelativeLayout {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                Log.e("searchKey",ed_name.getText().toString());
+               /* Log.e("searchKey",ed_name.getText().toString());
                 Log.e("tag",tag.getText().toString());
                 if(ed_name.getText().toString().length()>0){
                     params.put("key", ed_name.getText().toString());
-                }
+                }*/
 
 
                 if(tag.getText().toString().equals("پر فروش ترین")){

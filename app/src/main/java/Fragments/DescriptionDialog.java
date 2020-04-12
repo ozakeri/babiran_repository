@@ -392,4 +392,9 @@ public class DescriptionDialog extends DialogFragment {
         //  getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("====dialog onResume====");
+    }
 }

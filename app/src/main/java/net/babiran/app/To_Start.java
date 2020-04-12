@@ -60,8 +60,6 @@ public class To_Start extends AppCompatActivity {
 
 //         status = OneSignal.getPermissionSubscriptionState();
 //        status.getSubscriptionStatus().getUserId();
-//        Log.e("Dsdssssss",status.getSubscriptionStatus().getUserId()); Pushe.getPusheId(To_Start.this)
-        Log.e("Pusheeeeee", Pushe.getPusheId(To_Start.this));
         NotValidButton = (RelativeLayout) findViewById(R.id.not_valid);
         new CountDownTimer(5000, 1000) {
 

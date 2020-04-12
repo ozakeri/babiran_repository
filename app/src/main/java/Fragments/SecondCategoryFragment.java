@@ -2,7 +2,6 @@ package Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -52,19 +51,14 @@ import static tools.AppConfig.restaurants_info;
 
 public class SecondCategoryFragment extends Fragment {
 
-    public String id;
+    private String id;
+    private View v;
+    private RequestQueue queue;
+    private String prev = "";
+    private String Mainprev = "";
+    private ArrayList<Category> categoryArrayList;
 
-    View v;
-    RequestQueue queue;
-    ListView listView;
-    String prev = "";
-    String Mainprev = "";
-    Category category, parent_category;
-    RecyclerView recyclerView;
-    CategoryAdapter categoryAdapter;
-    ArrayList<Category> categoryArrayList;
-
-    ArrayList<CategoryInfo> categoriesInfos = null;
+    private ArrayList<CategoryInfo> categoriesInfos = null;
     public static final String TAG = "TAG";
 
     private GlobalValues globalValues = new GlobalValues();
@@ -96,8 +90,8 @@ public class SecondCategoryFragment extends Fragment {
         v = inflater.inflate(R.layout.second_category_fragment, container, false);
 
         MainActivity.secondcategory.setVisibility(View.VISIBLE);
-        recyclerView = (RecyclerView) v.findViewById(R.id.other_category_list_grid);
-        listView = (ListView) v.findViewById(R.id.category_listView);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.other_category_list_grid);
+        ListView listView = (ListView) v.findViewById(R.id.category_listView);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -119,7 +113,7 @@ public class SecondCategoryFragment extends Fragment {
 
             if (categoryArrayList != null) {
 
-               // CategoryListAdapter adp = new CategoryListAdapter(getActivity(), categoryArrayList);
+                // CategoryListAdapter adp = new CategoryListAdapter(getActivity(), categoryArrayList);
                 //listView.setAdapter(adp);
                 //recyclerView.setAdapter(adp);
                 //adp.notifyDataSetChanged();
@@ -340,6 +334,7 @@ public class SecondCategoryFragment extends Fragment {
 
                                 //  MainActivity.secondcategory.setVisibility(View.VISIBLE);
 
+                                System.out.println("id=======" + id);
                                 AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products, id, "second")).commit();
 
                             } else {
@@ -422,6 +417,11 @@ public class SecondCategoryFragment extends Fragment {
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
             }
         });
+        backpress();
+
+    }
+
+    public void backpress() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -466,7 +466,6 @@ public class SecondCategoryFragment extends Fragment {
                 return false;
             }
         });
-
     }
 
 

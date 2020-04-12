@@ -169,8 +169,6 @@ public class ActivityPay extends AppCompatActivity
                             setResult(Activity.RESULT_CANCELED,intent);
 
                             finish();
-
-
                         }
                     }
 

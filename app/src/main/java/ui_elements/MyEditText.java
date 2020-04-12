@@ -8,7 +8,7 @@ import android.widget.EditText;
 import net.babiran.app.R;
 
 
-public class MyEditText extends EditText {
+public class MyEditText extends androidx.appcompat.widget.AppCompatEditText {
 
     public MyEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

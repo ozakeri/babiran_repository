@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,6 +31,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.babiran.app.MainActivity;
+import net.babiran.app.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,29 +47,24 @@ import Models.Category;
 import Models.Feature;
 import Models.Image;
 import Models.Product;
-
-import net.babiran.app.MainActivity;
-import net.babiran.app.R;
 import tools.AppConfig;
 import ui_elements.CardSearch;
 import ui_elements.MyEditText;
 
 public class SearchFrgment extends Fragment {
 
-    View v;
+    private View v;
 
-    Category category;
-    public static MyEditText ed_name;
-    ImageView searchImg ;
-    RelativeLayout RelativeLayout_search ;
-    public static RelativeLayout  progressLayout ;
-    LinearLayout searchTag ;
-    public static ListView searchResult ;
-
-    RequestQueue queue;
+    private Category category;
+    private MyEditText ed_name;
+    private RelativeLayout progressLayout;
+    private ListView searchResult;
+    private RequestQueue queue;
     public static final String TAG = "TAG";
+    private ProductListAdapter adp;
+    private ArrayList<Product> products = new ArrayList<>();
 
-    String[] filter = { "پر فروش ترین", "جدید ترین", "ارزان ترین" , "گران ترین"};
+    String[] filter = {"پر فروش ترین", "جدید ترین", "ارزان ترین", "گران ترین"};
 
     public SearchFrgment() {
 
@@ -89,32 +89,47 @@ public class SearchFrgment extends Fragment {
 
 
         ed_name = (MyEditText) v.findViewById(R.id.search);
-        searchImg = (ImageView) v.findViewById(R.id.searchImage) ;
-        RelativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
+        ImageView searchImg = (ImageView) v.findViewById(R.id.searchImage);
+        RelativeLayout relativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
 
-        searchResult = (ListView) v.findViewById(R.id.search_product) ;
+        searchResult = (ListView) v.findViewById(R.id.search_product);
 
-        searchTag =(LinearLayout) v.findViewById(R.id.searchtag);
-        progressLayout =(RelativeLayout) v.findViewById(R.id.progressLayout);
+        //searchTag = (LinearLayout) v.findViewById(R.id.searchtag);
+        progressLayout = (RelativeLayout) v.findViewById(R.id.progressLayout);
 
-        RelativeLayout_search.getLayoutParams().height = (int)(width *0.15) ;
-        searchResult.getLayoutParams().height = (int)(width *1) ;
+        relativeLayout_search.getLayoutParams().height = (int) (width * 0.15);
+        // searchResult.getLayoutParams().height = (int)(width *1) ;
 
         //getRandomPro();
 
+        ed_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                submit();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         ed_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     ed_name.clearFocus();
-                    InputMethodManager in = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(ed_name.getWindowToken(), 0);
 
                     try {
                         submit();
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
 
                     }
 
@@ -126,22 +141,19 @@ public class SearchFrgment extends Fragment {
 
         searchImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Log.d("search","here");
-                if (ed_name.getText().length() == 0  )
-                {
+            public void onClick(View v) {
+                Log.d("search", "here");
+                if (ed_name.getText().length() == 0) {
 
                 } else {
 
                     ed_name.clearFocus();
-                    InputMethodManager in = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     in.hideSoftInputFromWindow(ed_name.getWindowToken(), 0);
 
                     try {
                         submit();
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
 
                     }
 
@@ -150,10 +162,10 @@ public class SearchFrgment extends Fragment {
         });
 
 
-        for(int i = 0 ; i < filter.length ; i++){
-            CardSearch cardSearch = new CardSearch(getActivity(),filter[i],i);
+        /*for (int i = 0; i < filter.length; i++) {
+            CardSearch cardSearch = new CardSearch(getActivity(), filter[i], i);
             searchTag.addView(cardSearch);
-        }
+        }*/
 
         return v;
 
@@ -178,12 +190,11 @@ public class SearchFrgment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    if(MainActivity.productlist.getVisibility() == View.VISIBLE){
+                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
 
                         MainActivity.productlist.setVisibility(View.INVISIBLE);
 
-                    }
-                    else {
+                    } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
                         builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
@@ -227,7 +238,7 @@ public class SearchFrgment extends Fragment {
         }
     }
 
-    public void submit(){
+    public void submit() {
 
 
         progressLayout.setVisibility(View.VISIBLE);
@@ -243,55 +254,54 @@ public class SearchFrgment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            ArrayList<Product> products = new ArrayList<>();
-                            JSONArray jsonArray =  new JSONArray(response);
-                            for(int i= 0 ; i < jsonArray.length(); i++){
+                            products = null;
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
-                                ArrayList<Image> imagesArray  = new ArrayList<>();
+                                ArrayList<Image> imagesArray = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
-                                JSONArray features = c.getJSONArray("features") ;
-                                for(int fea = 0 ; fea < features.length() ; fea ++){
-                                    try{
+                                JSONArray features = c.getJSONArray("features");
+                                for (int fea = 0; fea < features.length(); fea++) {
+                                    try {
                                         JSONObject f = features.getJSONObject(fea);
                                         Feature feature = new Feature(
-                                                f.getString("value"),f.getString("name"));
-                                        featuresArray.add(fea,feature);
-                                    }
-                                    catch (JSONException ex){
+                                                f.getString("value"), f.getString("name"));
+                                        featuresArray.add(fea, feature);
+                                    } catch (JSONException ex) {
 
                                     }
                                 }
 
-                                JSONArray images = c.getJSONArray("images") ; ;
-                                for(int img = 0 ; img < images.length() ; img ++){
+                                JSONArray images = c.getJSONArray("images");
 
-                                    try{
+                                for (int img = 0; img < images.length(); img++) {
+
+                                    try {
                                         JSONObject im = images.getJSONObject(img);
                                         Image image = new Image(
                                                 im.getString("image_link"));
-                                        imagesArray.add(img,image);
-                                    }
-                                    catch (JSONException ex){
+                                        imagesArray.add(img, image);
+                                    } catch (JSONException ex) {
 
                                     }
                                 }
 
-                                Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray);
+                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
                                 products.add(product);
                             }
-                            if(products.size()>0){
+                            if (products.size() > 0) {
                                 progressLayout.setVisibility(View.GONE);
 
                                 //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
 
-                                ProductListAdapter adp = new ProductListAdapter(getActivity(), products);
-                                searchResult.setAdapter(adp);
+                                adp = new ProductListAdapter(getActivity(), products);
                                 adp.notifyDataSetChanged();
-                            }else{
+                                searchResult.setAdapter(adp);
+                            } else {
                                 v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
                                 // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
                                 //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
@@ -317,7 +327,7 @@ public class SearchFrgment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Volley",error.toString());
+                Log.e("Volley", error.toString());
             }
         }) {
 
@@ -327,17 +337,18 @@ public class SearchFrgment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                if(ed_name.getText().toString().length()>0){
+                System.out.println("key====" + ed_name.getText().toString());
+
+                if (ed_name.getText().toString().length() > 0) {
                     params.put("key", ed_name.getText().toString());
                 }
 
 
-                if(category !=null){
+                System.out.println("category====" + category);
+                if (category != null) {
                     params.put("category_id", category.id);
 
                 }
-
-
 
 
                 return params;
@@ -353,12 +364,11 @@ public class SearchFrgment extends Fragment {
         queue.add(jsonArrayRequest);
 
 
-
         //Volley End
     }
 
 
-    public void getRandomPro(){
+    public void getRandomPro() {
 
         queue = Volley.newRequestQueue(getActivity());
         String url = "http://tondmarket.com/api/main/getRandomProducts/0/20";
@@ -369,48 +379,47 @@ public class SearchFrgment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.e("randomRes",response);
+                            Log.e("randomRes", response);
                             ArrayList<Product> products = new ArrayList<>();
-                            JSONArray jsonArray =  new JSONArray(response);
-                            for(int i= 0 ; i < jsonArray.length(); i++){
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
-                                ArrayList<Image> imagesArray  = new ArrayList<>();
+                                ArrayList<Image> imagesArray = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
-                                JSONArray features = c.getJSONArray("features") ;
-                                for(int fea = 0 ; fea < features.length() ; fea ++){
-                                    try{
+                                JSONArray features = c.getJSONArray("features");
+                                for (int fea = 0; fea < features.length(); fea++) {
+                                    try {
                                         JSONObject f = features.getJSONObject(fea);
                                         Feature feature = new Feature(
-                                                f.getString("value"),f.getString("name"));
-                                        featuresArray.add(fea,feature);
-                                    }
-                                    catch (JSONException ex){
+                                                f.getString("value"), f.getString("name"));
+                                        featuresArray.add(fea, feature);
+                                    } catch (JSONException ex) {
 
                                     }
                                 }
 
-                                JSONArray images = c.getJSONArray("images") ; ;
-                                for(int img = 0 ; img < images.length() ; img ++){
+                                JSONArray images = c.getJSONArray("images");
+                                ;
+                                for (int img = 0; img < images.length(); img++) {
 
-                                    try{
+                                    try {
                                         JSONObject im = images.getJSONObject(img);
                                         Image image = new Image(
                                                 im.getString("image_link"));
-                                        imagesArray.add(img,image);
-                                    }
-                                    catch (JSONException ex){
+                                        imagesArray.add(img, image);
+                                    } catch (JSONException ex) {
 
                                     }
                                 }
 
-                                Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray);
+                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
                                 products.add(product);
                             }
-                            if(products.size()>0){
+                            if (products.size() > 0) {
 
                                 ProductListAdapter adp = new ProductListAdapter(getActivity(), products);
                                 searchResult.setAdapter(adp);
@@ -425,9 +434,9 @@ public class SearchFrgment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Volley",error.toString());
+                Log.e("Volley", error.toString());
             }
-        }) ;
+        });
         jsonArrayRequest.setTag(TAG);
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 400000,

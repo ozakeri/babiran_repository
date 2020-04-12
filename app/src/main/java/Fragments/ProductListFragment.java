@@ -275,9 +275,9 @@ public class ProductListFragment extends Fragment {
             public void onClick(View view) {
 
                 Log.e("Resume", category_parent_id);
+
                 MainActivity.productlist.setVisibility(View.INVISIBLE);
                 Log.e("previous111111", prev);
-                System.out.println("previous111111====");
                 if (category_parent_id != null) {
                     if (category_parent_id.equals("0") || category_parent_id.equals("-1")) {
                         MainActivity.secondcategory.setVisibility(View.INVISIBLE);
@@ -288,10 +288,8 @@ public class ProductListFragment extends Fragment {
 
                             } else {
                                 if (prev.equals("second")) {
-                                    System.out.println("=====second====");
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id, "backToSecond")).commit();
                                 } else {
-                                    System.out.println("=====second111====");
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id)).commit();
                                 }
                             }
@@ -305,6 +303,12 @@ public class ProductListFragment extends Fragment {
                 MainActivity.btnBack.setVisibility(View.GONE);
             }
         });
+        backpress();
+
+        categorySwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void backpress() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -347,8 +351,6 @@ public class ProductListFragment extends Fragment {
                 return false;
             }
         });
-
-        categorySwipeRefreshLayout.setRefreshing(false);
     }
 
     public String getCategoryID(String ID) {

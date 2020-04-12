@@ -22,9 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
@@ -40,6 +40,7 @@ import Adapters.BasketListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Basket;
 import tools.AppConfig;
+import tools.GlobalValues;
 import ui_elements.MyTextView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -52,6 +53,7 @@ public class BasketListFragment extends Fragment implements
 
     public String category_id = "0";
     public String category_parent_id = "-1";
+    private GlobalValues globalValues = new GlobalValues();
 
     String[] payment = {"پرداخت با کارت خوان درب منزل", "پرداخت نقدی در محل تحویل", "پرداخت آنلاین از درگاه بانکی"};
     View v;
@@ -245,6 +247,27 @@ public class BasketListFragment extends Fragment implements
                 public void onClick(View v) {
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
 
+                    if ((address1.equals("") && address2.equals("")) || (address1.equals("null") && address2.equals("null")) || (address1 == null && address2 == null)) {
+                        EditProfileFrgment.prev_edit = "basket";
+
+
+                        //Toast.makeText(getActivity(), "لطفا مشخصات خود را تکمیل کنید", Toast.LENGTH_LONG).show();
+                        LayoutInflater inflaterToast = getLayoutInflater();
+                        View layout = inflaterToast.inflate(R.layout.toast, (ViewGroup) getActivity().findViewById(R.id.toast_layout_root));
+
+                        TextView text = (TextView) layout.findViewById(R.id.text);
+                        text.setText("لطفا پروفایل کاربری خود را تکمیل کنید");
+
+                        Toast toast = new Toast(getActivity());
+                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+                        //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment(EditProfileFrgment.prev_edit, true)).commit();
+                        //MainActivity.basketlist.setVisibility(View.INVISIBLE);
+                        return;
+                    }
+
                     // Inflate the custom layout/view
                     View customView = inflater.inflate(R.layout.address_pop_up, null);
 
@@ -306,6 +329,7 @@ public class BasketListFragment extends Fragment implements
                         }
                     });
 
+
                     secondChk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -317,10 +341,13 @@ public class BasketListFragment extends Fragment implements
                     if (!address1.equals("null") && !address1.equals("") && address1.length() > 0) {
                         firstAdd.setText(address1);
                     } else {
+                        firstAddLinear.setVisibility(View.GONE);
 
                     }
                     if (!address2.equals("null") && !address2.equals("") && address2.length() > 0) {
                         secondAdd.setText(address2);
+                    } else {
+                        secondAddLinear.setVisibility(View.GONE);
                     }
 
                     // Set a click listener for the popup window close button
@@ -518,9 +545,9 @@ public class BasketListFragment extends Fragment implements
                     if (products.size() > 0) {
                         if ((address1.equals("") && address2.equals("")) || (address1.equals("null") && address2.equals("null")) || (address1 == null && address2 == null)) {
                             EditProfileFrgment.prev_edit = "basket";
-                            Toast.makeText(getActivity(), "لطفا مشخصات خود را تکمیل کنید", Toast.LENGTH_LONG).show();
-                            AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment(EditProfileFrgment.prev_edit)).commit();
-                            MainActivity.basketlist.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getActivity(), "لطفا پروفایل کاربری خود را تکمیل کنید", Toast.LENGTH_LONG).show();
+                            //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment(EditProfileFrgment.prev_edit,true)).commit();
+                            //MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
                         } else {
                             if (AddValue.getText().toString() != null && !AddValue.getText().toString().equals("") && !AddValue.getText().toString().equals("null")) {
@@ -546,35 +573,6 @@ public class BasketListFragment extends Fragment implements
             });
 
         }
-
-        return v;
-
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (queue != null) {
-            queue.cancelAll(TAG);
-        }
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
@@ -630,7 +628,35 @@ public class BasketListFragment extends Fragment implements
 
         });
 
+        return v;
 
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("====basket onResume====");
     }
 
     public String ConvertEnToPe(String value) {
