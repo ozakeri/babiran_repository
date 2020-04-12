@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import net.babiran.app.Servic.MyInterFace;
@@ -35,6 +38,7 @@ public class SharjActivity extends AppCompatActivity {
     private TextView tx;
     public static final int REQUEST_CODE_PAY = 101;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,11 +187,14 @@ public class SharjActivity extends AppCompatActivity {
                         Integer fetching = response.body().getSuccess();
 
                         if (fetching == 1) {
-                            Log.e("URL  ", response.body().getUrl());
+                          /*  Log.e("URL  ", response.body().getUrl());
                             Intent intent = new Intent(SharjActivity.this, Actip2.class);
                             intent.putExtra("url", response.body().getUrl());
-                            intent.putExtra("sharj", "sharj");
-                            startActivityForResult(intent, REQUEST_CODE_PAY);
+                            intent.putExtra("sharj", "sharj");*/
+
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
+                            //startActivityForResult(intent, REQUEST_CODE_PAY);
+                            startActivity(browserIntent);
 
                         } else {
                             Toast.makeText(SharjActivity.this, "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
