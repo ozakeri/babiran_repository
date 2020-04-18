@@ -271,8 +271,8 @@ public class DescriptionDialog extends DialogFragment {
 
                                 System.out.println("url-=-=-=-=-=-" + url);
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
-                                startActivity(browserIntent);
-                                getDialog().dismiss();
+                                startActivityForResult(browserIntent,REQUEST_CODE_PAY);
+                                //getDialog().dismiss();
 
 
                             }
@@ -349,6 +349,7 @@ public class DescriptionDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAY) {
+            System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
                 NullBasket();

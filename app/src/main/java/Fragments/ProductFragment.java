@@ -2,6 +2,7 @@ package Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,8 +20,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
@@ -213,17 +216,6 @@ public class ProductFragment extends Fragment {
                 noStock.setVisibility(View.VISIBLE);
             }
 
-            //  numberpicker.setMinValue(1);
-                /*numberpicker.setMaxValue(900);
-                if(product.id.equals(prefs.getString("pro_id","-1"))){
-                    if(!prefs.getString("count","1").equals("null")){
-                        numberpicker.setValue(Integer.parseInt(prefs.getString("count","1")));
-                    }
-                }
-                else{
-                    numberpicker.setValue(1);
-                }
-*/
             try {
                 numberpicker.setValue(SetCount());
             } catch (Exception e) {
@@ -231,7 +223,6 @@ public class ProductFragment extends Fragment {
             }
 
             Count = String.valueOf(numberpicker.getValue());
-            //numberpicker.setWrapSelectorWheel(false);
 
             numberpicker.setValueChangedListener(new ValueChangedListener() {
                 @Override
@@ -239,13 +230,6 @@ public class ProductFragment extends Fragment {
                     Count = String.valueOf(value);
                 }
             });
-
-            /*numberpicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
-                @Override
-                public void onScrollStateChange(NumberPicker view, int scrollState) {
-                    // startSound("Tick.mp3");
-                }
-            });*/
 
 
             comment.setOnClickListener(new View.OnClickListener() {
@@ -310,7 +294,7 @@ public class ProductFragment extends Fragment {
                         if (!product.getStock().equals("") && !product.getStock().equals("null") && product.getStock() != null && Integer.parseInt(product.getStock()) < 1) {
                             Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();
                         } else {
-                            addtoBasket();
+                            showGuideDialog();
                         }
 
 
@@ -372,7 +356,7 @@ public class ProductFragment extends Fragment {
             }
 
             description.setText(product.description);
-            if (description.getText().toString().equals("") || description.getText().toString().isEmpty()){
+            if (description.getText().toString().equals("") || description.getText().toString().isEmpty()) {
                 v.findViewById(R.id.linearLayout_description).setBackground(null);
             }
 
@@ -578,5 +562,52 @@ public class ProductFragment extends Fragment {
         return priceString.substring(0, priceString.length() - 1);
     }
 
+
+    public void showGuideDialog() {
+        final Dialog alert = new Dialog(getActivity());
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.setContentView(R.layout.custom_dialog_select_count);
+        NumberPicker numberPicker = alert.findViewById(R.id.numberPicker);
+        TextView txt_action = alert.findViewById(R.id.txt_action);
+
+
+        numberPicker.setMin(1);
+        if (Integer.parseInt(product.getStock()) > 0) {
+            noStock.setVisibility(View.INVISIBLE);
+            numberPicker.setVisibility(View.VISIBLE);
+            Log.e("stock", product.getStock());
+            numberPicker.setMax(Integer.parseInt(product.getStock()));
+        } else {
+            numberPicker.setVisibility(View.INVISIBLE);
+            noStock.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            numberPicker.setValue(SetCount());
+        } catch (Exception e) {
+
+        }
+
+        Count = String.valueOf(numberPicker.getValue());
+
+        numberPicker.setValueChangedListener(new ValueChangedListener() {
+            @Override
+            public void valueChanged(int value, ActionEnum action) {
+                Count = String.valueOf(value);
+            }
+        });
+
+
+        txt_action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addtoBasket();
+                alert.dismiss();
+            }
+        });
+
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+    }
 
 }

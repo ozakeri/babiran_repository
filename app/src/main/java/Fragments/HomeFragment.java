@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import Adapters.DisProListAdapter;
 import Adapters.NewProListAdapter;
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment {
 
     DatabaseHandler db;
 
-    private SwipeRefreshLayout disSwipeRefreshLayout,proSwipeRefreshLayout,topSwipeRefreshLayout;
+    private SwipeRefreshLayout disSwipeRefreshLayout, proSwipeRefreshLayout, topSwipeRefreshLayout;
 
 
     public HomeFragment() {
@@ -214,14 +215,18 @@ public class HomeFragment extends Fragment {
         secondrelative.getLayoutParams().height = width / 3;
         dualcardrelative.getLayoutParams().height = (int) (width * 0.50);
 
-        firstBanner.getLayoutParams().height = (int) (width * 0.28);
-        firstBanner.getLayoutParams().width = (int) (width * 0.92);
-        secondbanner.getLayoutParams().height = (int) (width * 0.28);
+        firstBanner.getLayoutParams().height = width / 2;
+       // firstBanner.getLayoutParams().width = (int) (width * 0.92);
+        secondbanner.getLayoutParams().height = width / 2;
         secondbanner.getLayoutParams().width = (int) (width * 0.92);
 
 
-        FullfirstBanner.getLayoutParams().height = (int) (width * 0.28);
-        FullSecondBanner.getLayoutParams().height = (int) (width * 0.28);
+        FullfirstBanner.getLayoutParams().height = width / 2;
+
+        FullSecondBanner.getLayoutParams().height = width / 2;
+        FullSecondBanner.getLayoutParams().width = (int) (width * 0.92);
+       // FullSecondBanner.getLayoutParams().height = width / 2;
+        //FullSecondBanner.getLayoutParams().height = width / 2;
 
 
         final String fullbannerList = getFirstFullBanner();
@@ -957,10 +962,9 @@ public class HomeFragment extends Fragment {
             customIndicator.setViewPager(viewPager);
 
 
-            final Handler handler = new Handler();
-            final Runnable Update = new Runnable() {
+             final Handler handler = new Handler();
+             final Runnable Update = new Runnable() {
                 public void run() {
-
                     if (first) {
                         first = false;
                     } else if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1) {
@@ -971,6 +975,15 @@ public class HomeFragment extends Fragment {
 
                 }
             };
+
+            new Timer().schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    handler.post(Update);
+                }
+            }, 100, 5000);
+
 
         } catch (Exception ex) {
             Log.e("slides fucking ... ", ex.getMessage());

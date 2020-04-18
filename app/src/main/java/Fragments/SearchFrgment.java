@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +40,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import Adapters.ProductListAdapter;
 import Models.Category;
@@ -53,18 +54,26 @@ import ui_elements.MyEditText;
 
 public class SearchFrgment extends Fragment {
 
-    private View v;
+    View v;
 
-    private Category category;
-    private MyEditText ed_name;
-    private RelativeLayout progressLayout;
-    private ListView searchResult;
-    private RequestQueue queue;
+    Category category;
+    public static MyEditText ed_name;
+    ImageView searchImg;
+    RelativeLayout RelativeLayout_search;
+    public static RelativeLayout progressLayout;
+    LinearLayout searchTag;
+    public static ListView searchResult;
+
+    RequestQueue queue;
     public static final String TAG = "TAG";
-    private ProductListAdapter adp;
-    private ArrayList<Product> products = new ArrayList<>();
 
     String[] filter = {"پر فروش ترین", "جدید ترین", "ارزان ترین", "گران ترین"};
+
+
+    private Timer timer;
+    private TimerTask timerTask;
+    private SearchView searchView;
+
 
     public SearchFrgment() {
 
@@ -89,35 +98,19 @@ public class SearchFrgment extends Fragment {
 
 
         ed_name = (MyEditText) v.findViewById(R.id.search);
-        ImageView searchImg = (ImageView) v.findViewById(R.id.searchImage);
-        RelativeLayout relativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
+        searchImg = (ImageView) v.findViewById(R.id.searchImage);
+        RelativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
 
         searchResult = (ListView) v.findViewById(R.id.search_product);
 
-        //searchTag = (LinearLayout) v.findViewById(R.id.searchtag);
+        searchTag = (LinearLayout) v.findViewById(R.id.searchtag);
         progressLayout = (RelativeLayout) v.findViewById(R.id.progressLayout);
 
-        relativeLayout_search.getLayoutParams().height = (int) (width * 0.15);
-        // searchResult.getLayoutParams().height = (int)(width *1) ;
+        RelativeLayout_search.getLayoutParams().height = (int) (width * 0.15);
+        searchResult.getLayoutParams().height = (int) (width * 1);
 
         //getRandomPro();
 
-        ed_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                submit();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         ed_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -162,10 +155,10 @@ public class SearchFrgment extends Fragment {
         });
 
 
-        /*for (int i = 0; i < filter.length; i++) {
+        for (int i = 0; i < filter.length; i++) {
             CardSearch cardSearch = new CardSearch(getActivity(), filter[i], i);
             searchTag.addView(cardSearch);
-        }*/
+        }
 
         return v;
 
@@ -254,7 +247,7 @@ public class SearchFrgment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            products = null;
+                            ArrayList<Product> products = new ArrayList<>();
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -275,7 +268,7 @@ public class SearchFrgment extends Fragment {
                                 }
 
                                 JSONArray images = c.getJSONArray("images");
-
+                                ;
                                 for (int img = 0; img < images.length(); img++) {
 
                                     try {
@@ -298,9 +291,9 @@ public class SearchFrgment extends Fragment {
 
                                 //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
 
-                                adp = new ProductListAdapter(getActivity(), products);
-                                adp.notifyDataSetChanged();
+                                ProductListAdapter adp = new ProductListAdapter(getActivity(), products);
                                 searchResult.setAdapter(adp);
+                                adp.notifyDataSetChanged();
                             } else {
                                 v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
                                 // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
@@ -337,14 +330,11 @@ public class SearchFrgment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                System.out.println("key====" + ed_name.getText().toString());
-
                 if (ed_name.getText().toString().length() > 0) {
                     params.put("key", ed_name.getText().toString());
                 }
 
 
-                System.out.println("category====" + category);
                 if (category != null) {
                     params.put("category_id", category.id);
 
@@ -445,6 +435,45 @@ public class SearchFrgment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
 
+    }
+
+    private void startTask() {
+        cancelTimers();
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                initSearch();
+            }
+        };
+        timer.schedule(timerTask, 500);
+    }
+
+    private void initSearch() {
+        if (searchView != null && searchView.getQuery() != null) {
+            String query = ed_name.getText().toString();
+            setupAdapter(query);
+        } else {
+            setupAdapter(null);
+        }
+    }
+
+    private void setupAdapter(String query) {
+        if (query != null) {
+            submit();
+        } else {
+            //clearResults();
+        }
+    }
+
+    private void cancelTimers() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
     }
 
 

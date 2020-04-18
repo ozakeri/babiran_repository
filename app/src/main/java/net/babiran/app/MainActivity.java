@@ -958,7 +958,7 @@ public class MainActivity extends AppCompatActivity {
         //   menu.add(new Menu("افزایش اعتبار کیف پول", R.drawable.kif));
         menu.add(new Menu("پروفایل من", R.drawable.prof));
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
-        menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
+        //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
         menu.add(new Menu("خرید شارژ", R.drawable.tanzim));
         menu.add(new Menu("دسته بندی", R.drawable.cats));
         menu.add(new Menu("سبد خرید", R.drawable.sabad2));
@@ -1039,13 +1039,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
-                    case 2:
+                    /*case 2:
                         //  startActivity(new Intent(MainActivity.this,MainTabs.class));
                         Toast.makeText(MainActivity.this, "بزودی در نسخه بعدی...", Toast.LENGTH_SHORT).show();
 //
                         //ticket
-                        break;
-                    case 3:
+                        break;*/
+                    case 2:
 
                         startActivity(new Intent(MainActivity.this, SharjActivity.class));
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.SupportContainer, new SupportFragment()).commit();
@@ -1059,7 +1059,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
-                    case 4:
+                    case 3:
                         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1072,7 +1072,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 5:
+                    case 4:
                         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1084,23 +1084,23 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.basketlist.setVisibility(View.VISIBLE);
 
                         break;
-                    case 6:
+                    case 5:
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, MainListActivity.class));
 
                         break;
-                    case 7:
+                    case 6:
                         Di();
                         //kif pool
                         break;
-                    case 8:
+                    case 7:
 
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
                         startActivity(intent);
 
                         break;
-                    case 9:
+                    case 8:
                         // solat motedavel
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, CommonQuestionActivity.class));
@@ -1108,14 +1108,14 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 10:
+                    case 9:
 
                         //rahnama
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
 
                         // break;
-                    case 11:
+                    case 10:
                         //about
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.AboutContainer, new AboutFragment()).commit();

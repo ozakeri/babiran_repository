@@ -574,7 +574,7 @@ public class BasketListFragment extends Fragment implements
 
         }
 
-        getView().setFocusableInTouchMode(true);
+        /*getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -586,10 +586,10 @@ public class BasketListFragment extends Fragment implements
                         MainActivity.product.setVisibility(View.INVISIBLE);
 
                     }
-                   /* if(prev.equals("category")){
+                   *//* if(prev.equals("category")){
                         OtherCategoryActivity.productContainer.setVisibility(View.INVISIBLE);
 
-                    }*/
+                    }*//*
                     else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
@@ -618,15 +618,15 @@ public class BasketListFragment extends Fragment implements
                         AlertDialog dialog = builder.create();
                         dialog.show();
 
-                    }
-                    return true;
+                    }*/
+                   // return true;
 
-                }
+                //}
 
-                return false;
-            }
+               // return false;
+            //}
 
-        });
+       // });
 
         return v;
 

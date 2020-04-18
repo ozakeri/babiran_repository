@@ -39,6 +39,24 @@ public class MyPushListener extends PusheListenerService {
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
+
+       /* JSONObject resultJson = null;
+        try {
+            resultJson = new JSONObject(message.toString());
+            if (!resultJson.isNull("type")) {
+                String type = resultJson.getString("type");
+                if (type.equals("123")){
+                    System.out.println("resultJson====" + resultJson);
+                    new Thread(new Task()).start();
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+
+
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -55,14 +73,7 @@ public class MyPushListener extends PusheListenerService {
                             String successStr = successJson.getString("success");
                             System.out.println("successStr=====" + successStr);
                             if (successStr != null) {
-                                db = new DatabaseHandler(getApplicationContext());
-                                if (db.getRowCount() > 0) {
-                                    HashMap<String, String> userDetailsHashMap = db.getUserDetails();
-                                    String id = userDetailsHashMap.get("id");
-                                    Intent intent = new Intent(getApplicationContext(), FactorList.class);
-                                    intent.putExtra("id", id);
-                                    startActivity(intent);
-                                }
+                                new Thread(new Task()).start();
                                 return;
                             }
                         }
@@ -83,7 +94,16 @@ public class MyPushListener extends PusheListenerService {
                     String catId = null;
                     String proId = null;
 
-                    System.out.println("resultJson====" + resultJson);
+
+                    if (!resultJson.isNull("type")) {
+                        String type123 = resultJson.getString("type");
+                        if (type123.equals("123")){
+                            System.out.println("resultJson====" + resultJson);
+                            new Thread(new Task()).start();
+                        }
+                    }
+
+
                     if (!resultJson.isNull("title")) {
                         title = resultJson.getString("title");
                     } else {
@@ -179,13 +199,10 @@ public class MyPushListener extends PusheListenerService {
 
                                 break;
                             }
+
+
                         }
-                    } else {
-                        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                       // showNotification(getApplicationContext(), intent, title, body);
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -225,5 +242,20 @@ public class MyPushListener extends PusheListenerService {
         notificationManager.notify(notificationId, mBuilder.build());
     }
 
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+
+            db = new DatabaseHandler(getApplicationContext());
+            if (db.getRowCount() > 0) {
+                HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+                String id = userDetailsHashMap.get("id");
+                Intent intent = new Intent(getApplicationContext(), FactorList.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        }
+    }
 
 }

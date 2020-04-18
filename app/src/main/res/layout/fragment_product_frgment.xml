@@ -328,7 +328,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.6"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:visibility="gone
+">
 
                                 <ui_elements.MyTextView
                                     android:id="@+id/countpicker"
@@ -344,17 +346,18 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/countpicker"
-                                    android:gravity="center" />
+                                    android:gravity="center"
+                                    android:visibility="gone" />
 
                                 <ui_elements.MyTextView
                                     android:id="@+id/nostock"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@id/countpicker"
                                     android:layout_centerInParent="true"
                                     android:gravity="center"
                                     android:text="نا موجود"
                                     android:textColor="@color/red"
-                                    android:layout_below="@id/countpicker"
                                     android:visibility="gone" />
                             </RelativeLayout>
 
