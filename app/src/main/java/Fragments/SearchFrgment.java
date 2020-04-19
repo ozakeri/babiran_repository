@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,6 +21,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
@@ -50,16 +54,15 @@ import Models.Image;
 import Models.Product;
 import tools.AppConfig;
 import ui_elements.CardSearch;
-import ui_elements.MyEditText;
 
 public class SearchFrgment extends Fragment {
 
     View v;
 
     Category category;
-    public static MyEditText ed_name;
+    public static AppCompatEditText ed_name;
     ImageView searchImg;
-    RelativeLayout RelativeLayout_search;
+    //RelativeLayout RelativeLayout_search;
     public static RelativeLayout progressLayout;
     LinearLayout searchTag;
     public static ListView searchResult;
@@ -73,6 +76,7 @@ public class SearchFrgment extends Fragment {
     private Timer timer;
     private TimerTask timerTask;
     private SearchView searchView;
+    private Handler handler;
 
 
     public SearchFrgment() {
@@ -92,24 +96,46 @@ public class SearchFrgment extends Fragment {
         v = inflater.inflate(R.layout.fragment_search_frgment, container, false);
 
         AppConfig.frag = SearchFrgment.this;
+        handler = new Handler();
 
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
 
 
-        ed_name = (MyEditText) v.findViewById(R.id.search);
+        ed_name = v.findViewById(R.id.search);
         searchImg = (ImageView) v.findViewById(R.id.searchImage);
-        RelativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
+        // RelativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
 
         searchResult = (ListView) v.findViewById(R.id.search_product);
 
         searchTag = (LinearLayout) v.findViewById(R.id.searchtag);
         progressLayout = (RelativeLayout) v.findViewById(R.id.progressLayout);
 
-        RelativeLayout_search.getLayoutParams().height = (int) (width * 0.15);
-        searchResult.getLayoutParams().height = (int) (width * 1);
+        //RelativeLayout_search.getLayoutParams().height = (int) (width * 0.15);
+        //searchResult.getLayoutParams().height = (int) (width * 1);
 
         //getRandomPro();
+
+        ed_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                System.out.println("beforeTextChanged=====" + s.toString());
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                System.out.println("onTextChanged=====" + s.toString());
+                if (s.length() > 0){
+                    detect();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println("afterTextChanged=====" + s.toString());
+            }
+        });
 
 
         ed_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -247,6 +273,7 @@ public class SearchFrgment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
+
                             ArrayList<Product> products = new ArrayList<>();
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -312,6 +339,8 @@ public class SearchFrgment extends Fragment {
 
                             }
 
+                            ed_name.setEnabled(true);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -331,6 +360,7 @@ public class SearchFrgment extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
 
                 if (ed_name.getText().toString().length() > 0) {
+                    ed_name.setEnabled(false);
                     params.put("key", ed_name.getText().toString());
                 }
 
@@ -476,5 +506,15 @@ public class SearchFrgment extends Fragment {
         }
     }
 
+    private void detect() {
+        //final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Waite...", true);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //dialog.dismiss();
+                submit();
+            }
+        }, 2000);
+    }
 
 }

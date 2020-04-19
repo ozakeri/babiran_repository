@@ -356,7 +356,8 @@
                 android:layout_height="75dp"
                 android:layout_above="@+id/opp"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"

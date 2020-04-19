@@ -333,9 +333,9 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences prefs = getSharedPreferences("factor", MODE_PRIVATE);
 
                     if (prefs.getString("motor", "deactive").equals("active")) {
-                        deliver.setVisibility(View.VISIBLE);
+                        //deliver.setVisibility(View.VISIBLE);
                     } else {
-                        deliver.setVisibility(View.INVISIBLE);
+                       // deliver.setVisibility(View.INVISIBLE);
                     }
 
                     home = (FrameLayout) findViewById(R.id.Homecontainer);
