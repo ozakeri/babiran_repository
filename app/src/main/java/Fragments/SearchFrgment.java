@@ -69,6 +69,8 @@ public class SearchFrgment extends Fragment {
 
     RequestQueue queue;
     public static final String TAG = "TAG";
+    private ProductListAdapter adp = null;
+    private ArrayList<Product> products = new ArrayList<>();
 
     String[] filter = {"پر فروش ترین", "جدید ترین", "ارزان ترین", "گران ترین"};
 
@@ -119,26 +121,27 @@ public class SearchFrgment extends Fragment {
         ed_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                System.out.println("beforeTextChanged=====" + s.toString());
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("onTextChanged=====" + s.toString());
-                if (s.length() > 0){
-                    detect();
+
+                if (ed_name.length() > 1) {
+                    System.out.println("sssssssssssssssss" + s);
+                    new Thread(new Search()).start();
+                }else {
+                    progressLayout.setVisibility(View.GONE);
                 }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println("afterTextChanged=====" + s.toString());
             }
         });
 
 
-        ed_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*ed_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -156,9 +159,9 @@ public class SearchFrgment extends Fragment {
                 }
                 return false;
             }
-        });
+        });*/
 
-        searchImg.setOnClickListener(new View.OnClickListener() {
+       /* searchImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("search", "here");
@@ -178,13 +181,13 @@ public class SearchFrgment extends Fragment {
 
                 }
             }
-        });
+        });*/
 
 
-        for (int i = 0; i < filter.length; i++) {
+        /*for (int i = 0; i < filter.length; i++) {
             CardSearch cardSearch = new CardSearch(getActivity(), filter[i], i);
             searchTag.addView(cardSearch);
-        }
+        }*/
 
         return v;
 
@@ -274,7 +277,6 @@ public class SearchFrgment extends Fragment {
                     public void onResponse(String response) {
                         try {
 
-                            ArrayList<Product> products = new ArrayList<>();
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -311,33 +313,38 @@ public class SearchFrgment extends Fragment {
                                 Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
-                                products.add(product);
-                            }
-                            if (products.size() > 0) {
-                                progressLayout.setVisibility(View.GONE);
-
-                                //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
-
-                                ProductListAdapter adp = new ProductListAdapter(getActivity(), products);
-                                searchResult.setAdapter(adp);
-                                adp.notifyDataSetChanged();
-                            } else {
-                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-                                // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
-                                //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
-
-                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
-                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-
-                                            }
-                                        });
-                                alertDialog.show();
+                                    products.add(product);
 
                             }
+
+                            if (products != null){
+                                if (products.size() > 0) {
+                                    progressLayout.setVisibility(View.GONE);
+
+                                    //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
+
+                                    adp = new ProductListAdapter(getActivity(), products);
+                                    searchResult.setAdapter(adp);
+                                    adp.notifyDataSetChanged();
+                                } else {
+                                    v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+                                    // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
+                                    //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
+
+                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                    alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
+                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+
+                                                }
+                                            });
+                                    alertDialog.show();
+
+                                }
+                            }
+
 
                             ed_name.setEnabled(true);
 
@@ -359,7 +366,7 @@ public class SearchFrgment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                if (ed_name.getText().toString().length() > 0) {
+                if (ed_name.length() > 1) {
                     ed_name.setEnabled(false);
                     params.put("key", ed_name.getText().toString());
                 }
@@ -441,7 +448,7 @@ public class SearchFrgment extends Fragment {
                             }
                             if (products.size() > 0) {
 
-                                ProductListAdapter adp = new ProductListAdapter(getActivity(), products);
+                                adp = new ProductListAdapter(getActivity(), products);
                                 searchResult.setAdapter(adp);
                                 adp.notifyDataSetChanged();
                             }
@@ -467,17 +474,7 @@ public class SearchFrgment extends Fragment {
 
     }
 
-    private void startTask() {
-        cancelTimers();
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                initSearch();
-            }
-        };
-        timer.schedule(timerTask, 500);
-    }
+
 
     private void initSearch() {
         if (searchView != null && searchView.getQuery() != null) {
@@ -496,25 +493,17 @@ public class SearchFrgment extends Fragment {
         }
     }
 
-    private void cancelTimers() {
-        if (timer != null) {
-            timer.cancel();
-            timer.purge();
-        }
-        if (timerTask != null) {
-            timerTask.cancel();
-        }
-    }
 
-    private void detect() {
-        //final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Waite...", true);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //dialog.dismiss();
-                submit();
-            }
-        }, 2000);
+    private class Search implements Runnable {
+        @Override
+        public void run() {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    submit();
+                }
+            }, 2000);
+        }
     }
 
 }

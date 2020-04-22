@@ -68,14 +68,7 @@ public class FullBanner extends Fragment {
 
         if (!id.equals("") && !id.equals("null") && id != null) {
             MainActivity.fullbanner.setVisibility(View.VISIBLE);
-            if(prev.equals("first")){
-
-                submit();
-            }
-            else if(prev.equals("second")){
-
-                submit();
-            }
+            submit();
         }
 
 

@@ -70,7 +70,7 @@ import static tools.AppConfig.smallTile;
 public class HomeFragment extends Fragment {
     ViewPager viewPager, viewPager2;
     CircleIndicator customIndicator, customIndicator2;
-    CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
+    CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, footerBanner,footerBannerTwo, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
     RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative;
 
     public LinearLayout horizontal1, horizontal2, secondHorizontal;
@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
     MyTextView cardTextHome, HourTxt, MinTxt, SecTxt;
     RelativeLayout specialRelative;
     LinearLayout layspecial, laynew, laydiscount, laytopsell;
-    ImageView firstFullBannerImg, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage, firstBigTile, secondBigTile, firstSmallTile, secondSmallTile, thirdSmallTile, fourthSmallTile;
+    ImageView firstFullBannerImg,img_footerBanner,img_footerBannerTwo, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage, firstBigTile, secondBigTile, firstSmallTile, secondSmallTile, thirdSmallTile, fourthSmallTile;
 
     public ArrayList<Product> Newproducts = new ArrayList<>();
     public ArrayList<Product> Topproducts = new ArrayList<>();
@@ -94,6 +94,8 @@ public class HomeFragment extends Fragment {
 
 
     String firstslideImage = "";
+    String footerBannerImage = "";
+    String footerBannerImageTwo = "";
     String secondslideImage = "";
     String firstCardImage = "";
     String secondCardImage = "";
@@ -166,6 +168,8 @@ public class HomeFragment extends Fragment {
         specialLayout = (CardView) v.findViewById(R.id.specialLayout);
 
         firstFullBannerImg = (ImageView) v.findViewById(R.id.imgfirstFullban1);
+        img_footerBanner = (ImageView) v.findViewById(R.id.img_footerBanner);
+        img_footerBannerTwo = (ImageView) v.findViewById(R.id.img_footerBannerTwo);
         secondFullBannerImg = (ImageView) v.findViewById(R.id.imgsecondFullban1);
         firstCardBannerImage = (ImageView) v.findViewById(R.id.imgfirstban1);
         secondCardBannerImage = (ImageView) v.findViewById(R.id.imgsecondban2);
@@ -179,6 +183,8 @@ public class HomeFragment extends Fragment {
         fourthSmallTile = (ImageView) v.findViewById(R.id.imgban4);
 
         FullfirstBanner = (CardView) v.findViewById(R.id.Fullfirstbanner);
+        footerBanner = (CardView) v.findViewById(R.id.footerBanner);
+        footerBannerTwo = (CardView) v.findViewById(R.id.footerBannerTwo);
         FullSecondBanner = (CardView) v.findViewById(R.id.Fullsecondbanner);
 
         specialRelative = (RelativeLayout) v.findViewById(R.id.specialRelative);
@@ -222,6 +228,8 @@ public class HomeFragment extends Fragment {
 
 
         FullfirstBanner.getLayoutParams().height = width / 2;
+        footerBanner.getLayoutParams().height = width / 2;
+        footerBannerTwo.getLayoutParams().height = width / 2;
 
         FullSecondBanner.getLayoutParams().height = width / 2;
         FullSecondBanner.getLayoutParams().width = (int) (width * 0.92);
@@ -234,11 +242,47 @@ public class HomeFragment extends Fragment {
             Glide.with(getActivity()).load(firstslideImage).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(firstFullBannerImg);
         }
+
         FullfirstBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("fullListener", "here");
                 fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(fullbannerList, "first")).commit();
+            }
+        });
+
+
+        final String footerBannerListOne = getfooterBannerOne();
+
+        if (footerBannerImage != null && !footerBannerImage.equals("") && !footerBannerImage.equals("null")) {
+            System.out.println("footerBannerImage=====" + footerBannerImage);
+            Glide.with(getActivity()).load(footerBannerImage).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img_footerBanner);
+        }
+
+        footerBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("fullListener", "here");
+                System.out.println("footerBannerImage=====" + footerBannerListOne);
+                fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(footerBannerListOne, "first")).commit();
+            }
+        });
+
+        final String footerBannerListTwo =getfooterBannerTwo();
+
+        if (footerBannerImageTwo != null && !footerBannerImageTwo.equals("") && !footerBannerImageTwo.equals("null")) {
+            System.out.println("footerBannerImageTwo=====" + footerBannerImageTwo);
+            Glide.with(getActivity()).load(footerBannerImageTwo).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img_footerBannerTwo);
+        }
+
+        footerBannerTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("fullListener", "here");
+                System.out.println("footerBannerImageTwo=====" + footerBannerListTwo);
+                fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(footerBannerListTwo, "second")).commit();
             }
         });
 
@@ -421,6 +465,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 specialRelative.setVisibility(View.VISIBLE);
                 FullfirstBanner.setVisibility(View.VISIBLE);
+                footerBanner.setVisibility(View.VISIBLE);
                 firstBanner.setVisibility(View.VISIBLE);
                 secondbanner.setVisibility(View.VISIBLE);
                 relativebanner.setVisibility(View.VISIBLE);
@@ -1000,6 +1045,51 @@ public class HomeFragment extends Fragment {
         try {
             JSONObject c = AppConfig.fullbanner.getJSONObject(0);
             firstslideImage = c.getString("slide_image");
+
+
+            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                    , c.getString("icon"), c.getString("slide_image"));
+        } catch (JSONException e) {
+            AppConfig.error(e);
+        }
+        if (category != null) {
+            id = category.id;
+        }
+
+        return id;
+    }
+
+    public String getfooterBannerOne() {
+
+        String id = "";
+        Category category = null;
+
+        try {
+            JSONObject c = AppConfig.footerBanner.getJSONObject(0);
+            footerBannerImage = c.getString("slide_image");
+
+
+            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                    , c.getString("icon"), c.getString("slide_image"));
+        } catch (JSONException e) {
+            AppConfig.error(e);
+        }
+        if (category != null) {
+            id = category.id;
+        }
+
+        return id;
+    }
+
+    public String getfooterBannerTwo() {
+
+        String id = "";
+        Category category = null;
+
+        try {
+            JSONObject c = AppConfig.footerBanner.getJSONObject(1);
+            footerBannerImageTwo = c.getString("slide_image");
+
 
             category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
                     , c.getString("icon"), c.getString("slide_image"));

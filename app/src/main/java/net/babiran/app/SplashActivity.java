@@ -91,6 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
         animationView.setAnimation("data.json");
 
+
         animationView.setImageAssetsFolder("images");
 
 

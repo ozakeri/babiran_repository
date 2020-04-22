@@ -47,7 +47,7 @@ public class AppConfig {
 
     public static boolean checkReciveSms = false, btnSubmitOk = false, checkExistDb = false;
     public static JSONObject myJsonObject = null;
-    public static JSONArray slides1 = null, slides2 = null, categories = null,restaurants_info=null, topsellpro = null, topseenPro = null, newPro = null, NewPro = null, specialPro = null, discountpro = null, basket = null, mostorder = null, fullbanner = null, cardbanner = null,
+    public static JSONArray slides1 = null, slides2 = null, categories = null, restaurants_info = null, topsellpro = null, topseenPro = null, newPro = null, NewPro = null, specialPro = null, discountpro = null, basket = null, mostorder = null, fullbanner = null, footerBanner = null, cardbanner = null,
             smallTile = null, bigTile = null, getproduct = null;
     public static boolean isEnter = false;
     public static final int NOTIFICATION_ID = 100;
@@ -65,7 +65,7 @@ public class AppConfig {
     public static Fragment frag;
 
     private static Exception exception;
-    public static String REFRESH="";
+    public static String REFRESH = "";
 
     public static void error(Exception ex) {
 

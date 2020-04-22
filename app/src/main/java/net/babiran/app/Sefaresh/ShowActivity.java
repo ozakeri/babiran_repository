@@ -2,6 +2,7 @@ package net.babiran.app.Sefaresh;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import net.babiran.app.AppController;
 import net.babiran.app.DownLoadImageTask;
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
 import org.json.JSONArray;
@@ -50,6 +52,7 @@ public class ShowActivity extends AppCompatActivity {
     private String endTime = null;
     private SharedPreferences.Editor editor;
     private SharedPreferences pro_prefs;
+    private boolean isPush = false;
 
 
     @Override
@@ -66,6 +69,12 @@ public class ShowActivity extends AppCompatActivity {
         MySetClickToolbar();
         setSupportActionBar(mtoolbar);
         pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);
+
+        Bundle pudhBndle = getIntent().getExtras();
+        if (pudhBndle != null) {
+            isPush = pudhBndle.getBoolean("isPush");
+        }
+
         final boolean b = AppController.getInstance().getSharedPreferences().getBoolean("productFood", false);
         if (b) {
             getNewPro();
@@ -81,8 +90,12 @@ public class ShowActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                //   startActivity(new Intent(SerachResActivity.this,MainActivity.class));
+                if (isPush) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -218,5 +231,12 @@ public class ShowActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isPush) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
 }

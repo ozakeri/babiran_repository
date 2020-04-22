@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 import net.babiran.app.AppController;
 import net.babiran.app.AppStore;
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETINGBlog;
 import net.babiran.app.Servic.GetComm;
@@ -52,6 +53,7 @@ import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
+import tools.GlobalValues;
 import ui_elements.MyButton;
 import ui_elements.MyEditText;
 import ui_elements.MyTextView;
@@ -72,6 +74,8 @@ public class ShowRssActivity extends AppCompatActivity {
     boolean LikeDisLike = false;
     ImageView imgzoom, imgzoomOut;
     LinearLayout likeLn, lnComment;
+    private GlobalValues globalValues = new GlobalValues();
+    private boolean isPush = false;
 
     ImageView SaveAImg, Sahe;
     List<String> listC = new ArrayList<>();
@@ -89,6 +93,10 @@ public class ShowRssActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rss);
 
+        Bundle pudhBndle = getIntent().getExtras();
+        if (pudhBndle != null) {
+            isPush = pudhBndle.getBoolean("isPush");
+        }
         SaveAImg = (ImageView) findViewById(R.id.img_like_);
         Sahe = (ImageView) findViewById(R.id.img_share);
 
@@ -111,8 +119,12 @@ public class ShowRssActivity extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-
+                if (isPush) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -157,7 +169,7 @@ public class ShowRssActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(ListtoListActivity.ID_ME)) {
             ln.setVisibility(View.VISIBLE);
 
-            if (appController.getResponse() != null){
+            if (appController.getResponse() != null) {
                 List<GETINGBlog> s = appController.getResponse().body();
                 for (int i = 0; i < s.size(); i++) {
                     prograsDialog.dismiss();
@@ -177,7 +189,7 @@ public class ShowRssActivity extends AppCompatActivity {
 
                     }
                 }
-            }else {
+            } else {
                 Listed();
             }
 
@@ -805,4 +817,12 @@ public class ShowRssActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isPush) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
 }

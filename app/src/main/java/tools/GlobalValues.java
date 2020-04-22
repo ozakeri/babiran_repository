@@ -10,6 +10,7 @@ public class GlobalValues {
 
     private static String firstId;
     private static String secondId;
+    private boolean isPush;
 
     public String getFirstId() {
         return firstId;
@@ -35,5 +36,13 @@ public class GlobalValues {
 
     public void setResponse(Response<List<GETINGBlog>> response) {
         this.response = response;
+    }
+
+    public boolean isPush() {
+        return isPush;
+    }
+
+    public void setPush(boolean push) {
+        isPush = push;
     }
 }

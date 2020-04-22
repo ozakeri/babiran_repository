@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
+import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -36,6 +37,7 @@ public class MyPushListener extends PusheListenerService {
     private SharedPreferences.Editor editor;
     private RequestQueue queue;
     private DatabaseHandler db;
+    private GlobalValues globalValues = new GlobalValues();
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
@@ -54,7 +56,6 @@ public class MyPushListener extends PusheListenerService {
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
-
 
 
         Handler handler = new Handler(getMainLooper());
@@ -97,7 +98,7 @@ public class MyPushListener extends PusheListenerService {
 
                     if (!resultJson.isNull("type")) {
                         String type123 = resultJson.getString("type");
-                        if (type123.equals("123")){
+                        if (type123.equals("123")) {
                             System.out.println("resultJson====" + resultJson);
                             new Thread(new Task()).start();
                         }
@@ -138,12 +139,14 @@ public class MyPushListener extends PusheListenerService {
 
 
                     if (type != null) {
+                        globalValues.setPush(true);
                         switch (type) {
-                            case "0": {
+                            case "111": {
 
                                 if (id != null) {
                                     ListtoListActivity.ID_ME = id;
                                     Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
+                                    intent.putExtra("isPush", true);
                                     showNotification(getApplicationContext(), intent, title, body);
                                 } else {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -171,6 +174,7 @@ public class MyPushListener extends PusheListenerService {
                                     Intent intent = new Intent(getApplicationContext(), ShowActivity.class);
                                     intent.putExtra("IDDD", id);
                                     intent.putExtra("IsdfDDD", image);
+                                    intent.putExtra("isPush", true);
                                     showNotification(getApplicationContext(), intent, title, body);
                                 } else {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -226,10 +230,16 @@ public class MyPushListener extends PusheListenerService {
             notificationManager.createNotificationChannel(mChannel);
         }
 
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push);
+        contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+        contentView.setTextViewText(R.id.title, title);
+        contentView.setTextViewText(R.id.body, body);
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.applogo)
                 .setContentTitle(title)
-                .setContentText(body);
+                .setContentText(body)
+                .setContent(contentView);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);

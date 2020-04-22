@@ -711,6 +711,7 @@ public class MainActivity extends AppCompatActivity {
                             AppConfig.discountpro = response.getJSONArray("discountProducts");
                             AppConfig.mostorder = response.getJSONArray("mostOrders");
                             AppConfig.fullbanner = response.getJSONArray("fullBannerCategory");
+                            AppConfig.footerBanner = response.getJSONArray("footerBannerCategory");
                             AppConfig.getproduct = response.getJSONArray("product");
                             AppConfig.restaurants_info = response.getJSONArray("restaurants_info");
                             AppConfig.cardbanner = response.getJSONArray("cardBannerCategory");
