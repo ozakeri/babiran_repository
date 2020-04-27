@@ -1,7 +1,6 @@
 package Fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,13 +12,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SearchView;
@@ -48,18 +45,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Adapters.ProductListAdapter;
-import Models.Category;
 import Models.Feature;
 import Models.Image;
 import Models.Product;
 import tools.AppConfig;
-import ui_elements.CardSearch;
 
 public class SearchFrgment extends Fragment {
 
     View v;
 
-    Category category;
     public static AppCompatEditText ed_name;
     ImageView searchImg;
     //RelativeLayout RelativeLayout_search;
@@ -79,6 +73,13 @@ public class SearchFrgment extends Fragment {
     private TimerTask timerTask;
     private SearchView searchView;
     private Handler handler;
+
+    private int offset = 1;
+    private int limit = 10;
+    private boolean isLoadMore = false;
+    private Handler mHandler = new Handler();
+    private boolean flag_loading = false;
+
 
 
     public SearchFrgment() {
@@ -118,6 +119,47 @@ public class SearchFrgment extends Fragment {
 
         //getRandomPro();
 
+        searchResult.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
+                    if (flag_loading == false)
+                        flag_loading = true;
+                    submit();
+                    offset += 1;
+                    limit += offset * 2;
+                }
+
+            /*    Log.d("TEST", "first : " + firstVisibleItem);
+                Log.d("TEST", "visible : " + visibleItemCount);
+                Log.d("TEST", "total : " + totalItemCount);
+
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                if ((lastInScreen == totalItemCount) && !isLoadMore && (firstVisibleItem != 0)) {
+                    isLoadMore = true;
+                    progressLayout.setVisibility(View.VISIBLE);
+
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            submit();
+                            adp.notifyDataSetChanged();
+                            isLoadMore = false;
+                            progressLayout.setVisibility(View.GONE);
+                            offset += 1;
+                            limit += offset * 2;
+                        }
+                    }, 1500);
+                }*/
+            }
+        });
+
         ed_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -129,7 +171,7 @@ public class SearchFrgment extends Fragment {
                 if (ed_name.length() > 1) {
                     System.out.println("sssssssssssssssss" + s);
                     new Thread(new Search()).start();
-                }else {
+                } else {
                     progressLayout.setVisibility(View.GONE);
                 }
 
@@ -192,13 +234,6 @@ public class SearchFrgment extends Fragment {
         return v;
 
     }
-
-    public void onUserSelectValue(Category category) {
-        // TODO add your implementation.
-        // Toast.makeText(getActivity(),"oooops "+ category.name,Toast.LENGTH_SHORT).show();
-        this.category = category;
-    }
-
 
     @Override
     public void onResume() {
@@ -270,6 +305,7 @@ public class SearchFrgment extends Fragment {
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
+        System.out.println("url=====" + url);
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -278,6 +314,7 @@ public class SearchFrgment extends Fragment {
                         try {
 
                             JSONArray jsonArray = new JSONArray(response);
+                            System.out.println("jsonArray====" + jsonArray.length());
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
@@ -313,36 +350,33 @@ public class SearchFrgment extends Fragment {
                                 Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
-                                    products.add(product);
+                                products.add(product);
 
                             }
 
-                            if (products != null){
-                                if (products.size() > 0) {
-                                    progressLayout.setVisibility(View.GONE);
+                            if (products != null && products.size() > 0) {
+                                progressLayout.setVisibility(View.GONE);
 
-                                    //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
+                                //   AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer,new ProductListFragment(products)).commit();
 
-                                    adp = new ProductListAdapter(getActivity(), products);
-                                    searchResult.setAdapter(adp);
-                                    adp.notifyDataSetChanged();
-                                } else {
-                                    v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-                                    // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
-                                    //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
+                                adp = new ProductListAdapter(getActivity(), products);
+                                searchResult.setAdapter(adp);
+                                adp.notifyDataSetChanged();
+                            } else {
+                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+                                // v.findViewById(R.id.goosh).setVisibility(View.VISIBLE);
+                                //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
 
-                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                    alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
-                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
+                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
 
-                                                }
-                                            });
-                                    alertDialog.show();
-
-                                }
+                                            }
+                                        });
+                                alertDialog.show();
                             }
 
 
@@ -366,16 +400,12 @@ public class SearchFrgment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                if (ed_name.length() > 1) {
-                    ed_name.setEnabled(false);
-                    params.put("key", ed_name.getText().toString());
-                }
-
-
-                if (category != null) {
-                    params.put("category_id", category.id);
-
-                }
+                ed_name.setEnabled(false);
+                params.put("offset", String.valueOf(offset));
+                params.put("limit", String.valueOf(limit));
+                params.put("key", ed_name.getText().toString());
+                JSONObject obj = new JSONObject(params);
+                System.out.println("params====" + obj);
 
 
                 return params;
@@ -473,7 +503,6 @@ public class SearchFrgment extends Fragment {
         queue.add(jsonArrayRequest);
 
     }
-
 
 
     private void initSearch() {
