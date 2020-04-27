@@ -349,7 +349,8 @@ public class ShowRssActivity extends AppCompatActivity {
         //String p = getIntent().getExtras().getString("id");
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<List<GETINGBlog>> call = n.getBlogs();
+            Call<List<GETINGBlog>> call = n.getBlogById(Integer.parseInt(ListtoListActivity.ID_ME));
+            System.out.println("ID_ME====" + Integer.parseInt(ListtoListActivity.ID_ME));
 
             call.enqueue(new Callback<List<GETINGBlog>>() {
                 @SuppressLint("SetTextI18n")

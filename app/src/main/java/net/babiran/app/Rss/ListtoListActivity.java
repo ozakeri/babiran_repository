@@ -37,7 +37,7 @@ public class ListtoListActivity extends AppCompatActivity {
     AdapterUserListToTo adapterUserListToTo;
     public static String ID_ME = "";
     String title = null;
-    String id = null;
+    String cat_id = null;
     private AlertDialog prograsDialog;
     private AppController appController = AppController.getInstance();
 
@@ -67,7 +67,7 @@ public class ListtoListActivity extends AppCompatActivity {
 ////////////////////////////////////////////
 
         if (getIntent().getExtras() != null){
-            id = getIntent().getExtras().getString("id");
+            cat_id = getIntent().getExtras().getString("id");
             title = getIntent().getExtras().getString("title");
         }
 
@@ -105,7 +105,7 @@ public class ListtoListActivity extends AppCompatActivity {
         //String p = getIntent().getExtras().getString("id");
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<List<GETINGBlog>> call = n.getBlogs();
+            Call<List<GETINGBlog>> call = n.getBlogCatById(Integer.parseInt(cat_id));
 
             call.enqueue(new Callback<List<GETINGBlog>>() {
                 @Override
@@ -116,10 +116,11 @@ public class ListtoListActivity extends AppCompatActivity {
                     appController.setResponse(response);
                     for (int i = 0; i < s.size(); i++) {
 
-                        Log.e("FFD", "" + Integer.parseInt(id));
+                        Log.e("cat_id===", "" + Integer.parseInt(cat_id));
                         Log.e("FFD", "" + s.get(i).getCategoryId());
+                        Log.e("FFD", "" + s.get(i).getId());
 
-                        if (s.get(i).getCategoryId() == Integer.parseInt(id)) {
+                        if (s.get(i).getCategoryId() == Integer.parseInt(cat_id)) {
                             list.add(new BLOGME(String.valueOf(s.get(i).getId()), s.get(i).getTitr(), s.get(i).getImageLink(), String.valueOf(s.get(i).getCategoryId())));
                         }
                     }

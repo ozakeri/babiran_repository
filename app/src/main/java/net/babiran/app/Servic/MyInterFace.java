@@ -34,6 +34,12 @@ public interface MyInterFace {
     @GET("blog/getBlogs/")
     Call<List<GETINGBlog>> getBlogs();
 
+    @GET("blog/getBlogs/{id}/")
+    Call<List<GETINGBlog>> getBlogById(@Path("id") int id);
+
+    @GET("blog/getBlogCat/{id}/")
+    Call<List<GETINGBlog>> getBlogCatById(@Path("id") int id);
+
     @FormUrlEncoded
     @POST("blog/setLike")
     Call<GetSucc> setLike(@Field("blog_id") int blog_id, @Field("user_id") int user_id, @Field("like") int like);
