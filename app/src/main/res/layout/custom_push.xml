@@ -17,7 +17,7 @@
                 android:layout_margin="10dp"
                 android:src="@drawable/applogo" />
 
-            <TextView
+            <ui_elements.MyTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:layout_marginRight="10dp"
                 android:textSize="20sp" />
 
-            <TextView
+            <ui_elements.MyTextView
                 android:id="@+id/body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

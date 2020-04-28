@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Fragments.CountDialog;
 
@@ -32,11 +33,11 @@ import ui_elements.MyTextView;
 
 public class ProductListAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Product> categories = new ArrayList<>();
+    List<Product> categories = new ArrayList<>();
     LayoutInflater inflater;
 
 
-    public ProductListAdapter(Context context, ArrayList<Product> categories){
+    public ProductListAdapter(Context context, List<Product> categories){
         this.context = context;
         this.categories = categories;
         this.inflater = LayoutInflater.from(context);

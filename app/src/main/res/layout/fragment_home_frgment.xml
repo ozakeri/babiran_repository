@@ -581,41 +581,25 @@
                     </RelativeLayout>
                 </RelativeLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/footerBanner"
+                <RelativeLayout
+                    android:id="@+id/footer_relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:layout_marginBottom="4dp">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/img_footerBanner"
+                    <LinearLayout
+                        android:id="@+id/footer_linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/logoloading" />
+                        android:orientation="vertical"/>
 
-                </androidx.cardview.widget.CardView>
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/LinearLayoutProgressBar"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/footerBannerTwo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:layout_marginBottom="4dp">
-
-                    <ImageView
-                        android:id="@+id/img_footerBannerTwo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/logoloading" />
-
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
             </LinearLayout>
 

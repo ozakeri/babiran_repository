@@ -359,6 +359,8 @@ public class ShowRssActivity extends AppCompatActivity {
                     prograsDialog.dismiss();
                     List<GETINGBlog> s = response.body();
                     System.out.println("s.size()====" + s.size());
+
+
                     for (int i = 0; i < s.size(); i++) {
 
                         if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {

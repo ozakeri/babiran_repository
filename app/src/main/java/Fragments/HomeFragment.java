@@ -61,6 +61,7 @@ import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterByUrlMain;
 import ui_elements.Card;
+import ui_elements.FooterCard;
 import ui_elements.MyTextView;
 
 import static tools.AppConfig.fragmentManager;
@@ -70,13 +71,14 @@ import static tools.AppConfig.smallTile;
 public class HomeFragment extends Fragment {
     ViewPager viewPager, viewPager2;
     CircleIndicator customIndicator, customIndicator2;
-    CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, footerBanner,footerBannerTwo, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
-    RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative;
+    CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
+    RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative, footer_relativeLayout;
 
-    public LinearLayout horizontal1, horizontal2, secondHorizontal;
+    public LinearLayout horizontal1, horizontal2, secondHorizontal, footer_linearLayout;
 
 
     public ArrayList<Card> cards;
+    public ArrayList<FooterCard> footerCards;
     public CustomPagerAdapterByUrlMain mCustomPagerAdapterByUrlMain, mCustomPagerAdapterByUrlMain2;
 
     NewProListAdapter adp;
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment {
     MyTextView cardTextHome, HourTxt, MinTxt, SecTxt;
     RelativeLayout specialRelative;
     LinearLayout layspecial, laynew, laydiscount, laytopsell;
-    ImageView firstFullBannerImg,img_footerBanner,img_footerBannerTwo, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage, firstBigTile, secondBigTile, firstSmallTile, secondSmallTile, thirdSmallTile, fourthSmallTile;
+    ImageView firstFullBannerImg, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage, firstBigTile, secondBigTile, firstSmallTile, secondSmallTile, thirdSmallTile, fourthSmallTile;
 
     public ArrayList<Product> Newproducts = new ArrayList<>();
     public ArrayList<Product> Topproducts = new ArrayList<>();
@@ -94,8 +96,6 @@ public class HomeFragment extends Fragment {
 
 
     String firstslideImage = "";
-    String footerBannerImage = "";
-    String footerBannerImageTwo = "";
     String secondslideImage = "";
     String firstCardImage = "";
     String secondCardImage = "";
@@ -152,6 +152,7 @@ public class HomeFragment extends Fragment {
         dualcardrelative = (RelativeLayout) v.findViewById(R.id.DualCard);
 
         specialTondMarketRelative = (RelativeLayout) v.findViewById(R.id.specialTondMarketRelative);
+        footer_relativeLayout = (RelativeLayout) v.findViewById(R.id.footer_relativeLayout);
 
         firstBanner = (CardView) v.findViewById(R.id.firstbanner);
         secondbanner = (CardView) v.findViewById(R.id.secondbanner);
@@ -168,8 +169,6 @@ public class HomeFragment extends Fragment {
         specialLayout = (CardView) v.findViewById(R.id.specialLayout);
 
         firstFullBannerImg = (ImageView) v.findViewById(R.id.imgfirstFullban1);
-        img_footerBanner = (ImageView) v.findViewById(R.id.img_footerBanner);
-        img_footerBannerTwo = (ImageView) v.findViewById(R.id.img_footerBannerTwo);
         secondFullBannerImg = (ImageView) v.findViewById(R.id.imgsecondFullban1);
         firstCardBannerImage = (ImageView) v.findViewById(R.id.imgfirstban1);
         secondCardBannerImage = (ImageView) v.findViewById(R.id.imgsecondban2);
@@ -183,8 +182,6 @@ public class HomeFragment extends Fragment {
         fourthSmallTile = (ImageView) v.findViewById(R.id.imgban4);
 
         FullfirstBanner = (CardView) v.findViewById(R.id.Fullfirstbanner);
-        footerBanner = (CardView) v.findViewById(R.id.footerBanner);
-        footerBannerTwo = (CardView) v.findViewById(R.id.footerBannerTwo);
         FullSecondBanner = (CardView) v.findViewById(R.id.Fullsecondbanner);
 
         specialRelative = (RelativeLayout) v.findViewById(R.id.specialRelative);
@@ -200,6 +197,7 @@ public class HomeFragment extends Fragment {
 
         horizontal1 = (LinearLayout) v.findViewById(R.id.horizontal1);
         secondHorizontal = (LinearLayout) v.findViewById(R.id.secondhorizontal);
+        footer_linearLayout = (LinearLayout) v.findViewById(R.id.footer_linearLayout);
 
 
         cardTextHome = (MyTextView) v.findViewById(R.id.cardtextHome);
@@ -222,18 +220,16 @@ public class HomeFragment extends Fragment {
         dualcardrelative.getLayoutParams().height = (int) (width * 0.50);
 
         firstBanner.getLayoutParams().height = width / 2;
-       // firstBanner.getLayoutParams().width = (int) (width * 0.92);
+        // firstBanner.getLayoutParams().width = (int) (width * 0.92);
         secondbanner.getLayoutParams().height = width / 2;
         secondbanner.getLayoutParams().width = (int) (width * 0.92);
 
 
         FullfirstBanner.getLayoutParams().height = width / 2;
-        footerBanner.getLayoutParams().height = width / 2;
-        footerBannerTwo.getLayoutParams().height = width / 2;
 
         FullSecondBanner.getLayoutParams().height = width / 2;
         FullSecondBanner.getLayoutParams().width = (int) (width * 0.92);
-       // FullSecondBanner.getLayoutParams().height = width / 2;
+        // FullSecondBanner.getLayoutParams().height = width / 2;
         //FullSecondBanner.getLayoutParams().height = width / 2;
 
 
@@ -250,42 +246,6 @@ public class HomeFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(fullbannerList, "first")).commit();
             }
         });
-
-
-        final String footerBannerListOne = getfooterBannerOne();
-
-        if (footerBannerImage != null && !footerBannerImage.equals("") && !footerBannerImage.equals("null")) {
-            System.out.println("footerBannerImage=====" + footerBannerImage);
-            Glide.with(getActivity()).load(footerBannerImage).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img_footerBanner);
-        }
-
-        footerBanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("fullListener", "here");
-                System.out.println("footerBannerImage=====" + footerBannerListOne);
-                fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(footerBannerListOne, "first")).commit();
-            }
-        });
-
-        final String footerBannerListTwo =getfooterBannerTwo();
-
-        if (footerBannerImageTwo != null && !footerBannerImageTwo.equals("") && !footerBannerImageTwo.equals("null")) {
-            System.out.println("footerBannerImageTwo=====" + footerBannerImageTwo);
-            Glide.with(getActivity()).load(footerBannerImageTwo).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img_footerBannerTwo);
-        }
-
-        footerBannerTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("fullListener", "here");
-                System.out.println("footerBannerImageTwo=====" + footerBannerListTwo);
-                fragmentManager.beginTransaction().replace(R.id.FullbannerContainer, new FullBanner(footerBannerListTwo, "second")).commit();
-            }
-        });
-
 
         final String fullbannerList_second = getSecondFullBanner();
         if (secondslideImage != null && !secondslideImage.equals("") && !secondslideImage.equals("null")) {
@@ -453,6 +413,7 @@ public class HomeFragment extends Fragment {
         getCardsNewPro();
         getCardsTopSell();
         getCardsTopSeen();
+        getFooterCards();
         getCardsSpecialPro();
         getCardsDiscountPro();
 
@@ -465,7 +426,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 specialRelative.setVisibility(View.VISIBLE);
                 FullfirstBanner.setVisibility(View.VISIBLE);
-                footerBanner.setVisibility(View.VISIBLE);
                 firstBanner.setVisibility(View.VISIBLE);
                 secondbanner.setVisibility(View.VISIBLE);
                 relativebanner.setVisibility(View.VISIBLE);
@@ -474,6 +434,7 @@ public class HomeFragment extends Fragment {
                 FullSecondBanner.setVisibility(View.VISIBLE);
                 specialLayout.setVisibility(View.VISIBLE);
                 specialTondMarketRelative.setVisibility(View.VISIBLE);
+                footer_relativeLayout.setVisibility(View.VISIBLE);
 
                 cardTextHome.setText("شاید جالب باشد");
                 laytopsell.setVisibility(View.INVISIBLE);
@@ -1007,8 +968,8 @@ public class HomeFragment extends Fragment {
             customIndicator.setViewPager(viewPager);
 
 
-             final Handler handler = new Handler();
-             final Runnable Update = new Runnable() {
+            final Handler handler = new Handler();
+            final Runnable Update = new Runnable() {
                 public void run() {
                     if (first) {
                         first = false;
@@ -1045,50 +1006,6 @@ public class HomeFragment extends Fragment {
         try {
             JSONObject c = AppConfig.fullbanner.getJSONObject(0);
             firstslideImage = c.getString("slide_image");
-
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-        if (category != null) {
-            id = category.id;
-        }
-
-        return id;
-    }
-
-    public String getfooterBannerOne() {
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = AppConfig.footerBanner.getJSONObject(0);
-            footerBannerImage = c.getString("slide_image");
-
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-        if (category != null) {
-            id = category.id;
-        }
-
-        return id;
-    }
-
-    public String getfooterBannerTwo() {
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = AppConfig.footerBanner.getJSONObject(1);
-            footerBannerImageTwo = c.getString("slide_image");
 
 
             category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
@@ -1579,6 +1496,33 @@ public class HomeFragment extends Fragment {
 
     }
 
+    public String getFooterCards() {
+
+        String id = "";
+        Category category = null;
+
+        for (int i = 0; i < AppConfig.footerBanner.length(); i++) {
+            try {
+                JSONObject c = AppConfig.footerBanner.getJSONObject(i);
+                firstCardImage = c.getString("slide_image");
+
+                category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                        , c.getString("icon"), c.getString("slide_image"));
+
+                FooterCard card = new FooterCard(AppConfig.act, category);
+                footer_linearLayout.addView(card);
+
+            } catch (JSONException e) {
+
+                AppConfig.error(e);
+            }
+        }
+        if (category != null) {
+            id = category.id;
+        }
+
+        return id;
+    }
 
     @Override
     public void onResume() {

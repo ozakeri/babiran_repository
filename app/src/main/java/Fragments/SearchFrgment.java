@@ -40,6 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,12 +65,11 @@ public class SearchFrgment extends Fragment {
     RequestQueue queue;
     public static final String TAG = "TAG";
     private ProductListAdapter adp = null;
-    private ArrayList<Product> products = new ArrayList<>();
+    private JSONArray jsonArray;
 
     String[] filter = {"پر فروش ترین", "جدید ترین", "ارزان ترین", "گران ترین"};
 
 
-    private Timer timer;
     private TimerTask timerTask;
     private SearchView searchView;
     private Handler handler;
@@ -80,6 +80,8 @@ public class SearchFrgment extends Fragment {
     private Handler mHandler = new Handler();
     private boolean flag_loading = false;
 
+    private Timer timer = new Timer();
+    private final long DELAY = 1000; // in ms
 
 
     public SearchFrgment() {
@@ -128,34 +130,25 @@ public class SearchFrgment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
-                    if (flag_loading == false)
-                        flag_loading = true;
-                    submit();
-                    offset += 1;
-                    limit += offset * 2;
-                }
+               /* int lastInScreen = firstVisibleItem + visibleItemCount;
 
-            /*    Log.d("TEST", "first : " + firstVisibleItem);
+                Log.d("TEST", "first : " + firstVisibleItem);
                 Log.d("TEST", "visible : " + visibleItemCount);
                 Log.d("TEST", "total : " + totalItemCount);
 
-                int lastInScreen = firstVisibleItem + visibleItemCount;
+
                 if ((lastInScreen == totalItemCount) && !isLoadMore && (firstVisibleItem != 0)) {
                     isLoadMore = true;
-                    progressLayout.setVisibility(View.VISIBLE);
 
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            submit();
+                            submit(ed_name.getText().toString());
                             adp.notifyDataSetChanged();
                             isLoadMore = false;
-                            progressLayout.setVisibility(View.GONE);
-                            offset += 1;
-                            limit += offset * 2;
                         }
                     }, 1500);
+
                 }*/
             }
         });
@@ -167,18 +160,33 @@ public class SearchFrgment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if (ed_name.length() > 1) {
-                    System.out.println("sssssssssssssssss" + s);
-                    new Thread(new Search()).start();
-                } else {
-                    progressLayout.setVisibility(View.GONE);
-                }
-
+                progressLayout.setVisibility(View.VISIBLE);
+                if (timer != null)
+                    timer.cancel();
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(final Editable s) {
+                System.out.println("afterTextChanged===" + s);
+                if (s.length() >= 2) {
+
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            // TODO: do what you need here (refresh list)
+                            // you will probably need to use
+                            // runOnUiThread(Runnable action) for some specific
+                            // actions
+                            if (jsonArray != null && jsonArray.length() == 0) {
+                                return;
+                            }
+                            submit(s.toString());
+                            System.out.println("ssssssss======" + s.toString());
+                        }
+
+                    }, DELAY);
+                }
             }
         });
 
@@ -295,10 +303,9 @@ public class SearchFrgment extends Fragment {
         }
     }
 
-    public void submit() {
+    public void submit(final String s) {
 
 
-        progressLayout.setVisibility(View.VISIBLE);
         //Volley Start
 
 
@@ -312,8 +319,8 @@ public class SearchFrgment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-
-                            JSONArray jsonArray = new JSONArray(response);
+                            List<Product> products = new ArrayList<>();
+                            jsonArray = new JSONArray(response);
                             System.out.println("jsonArray====" + jsonArray.length());
                             for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -334,7 +341,6 @@ public class SearchFrgment extends Fragment {
                                 }
 
                                 JSONArray images = c.getJSONArray("images");
-                                ;
                                 for (int img = 0; img < images.length(); img++) {
 
                                     try {
@@ -401,9 +407,9 @@ public class SearchFrgment extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
 
                 ed_name.setEnabled(false);
-                params.put("offset", String.valueOf(offset));
-                params.put("limit", String.valueOf(limit));
-                params.put("key", ed_name.getText().toString());
+                //params.put("offset", String.valueOf(offset));
+                //params.put("limit", String.valueOf(limit));
+                params.put("key", s);
                 JSONObject obj = new JSONObject(params);
                 System.out.println("params====" + obj);
 
@@ -505,7 +511,7 @@ public class SearchFrgment extends Fragment {
     }
 
 
-    private void initSearch() {
+  /*  private void initSearch() {
         if (searchView != null && searchView.getQuery() != null) {
             String query = ed_name.getText().toString();
             setupAdapter(query);
@@ -520,7 +526,7 @@ public class SearchFrgment extends Fragment {
         } else {
             //clearResults();
         }
-    }
+    }*/
 
 
     private class Search implements Runnable {
@@ -529,7 +535,7 @@ public class SearchFrgment extends Fragment {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    submit();
+
                 }
             }, 2000);
         }
