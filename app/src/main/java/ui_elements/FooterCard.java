@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import net.babiran.app.R;
 
+import Fragments.CardBanner;
 import Fragments.ProductFragment;
 import Models.Category;
 import Models.Product;
@@ -69,6 +70,7 @@ public class FooterCard extends RelativeLayout {
             public void onClick(View v) {
 
                // AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(product)).commit();
+                AppConfig.fragmentManager.beginTransaction().replace(R.id.CardbannerContainer, new CardBanner(category.id, "first")).commit();
 
             }
         });
