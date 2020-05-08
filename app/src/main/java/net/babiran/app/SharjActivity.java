@@ -178,28 +178,33 @@ public class SharjActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
+            System.out.println("---------" + editText.getText().toString() + " - " + Mablagh + " - " + Type + " - " + operator);
             Call<MyMesa> call = n.BuySahrj(editText.getText().toString(), Mablagh, Type, operator);
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
                     try {
-                        Integer fetching = response.body().getSuccess();
+                        if (response.body() != null) {
+                            System.out.println("response======" + response.body());
+                            Integer fetching = response.body().getSuccess();
 
-                        if (fetching == 1) {
+                            if (fetching == 1) {
+
+                                Log.e("URL  ", response.body().getUrl());
                           /*  Log.e("URL  ", response.body().getUrl());
                             Intent intent = new Intent(SharjActivity.this, Actip2.class);
                             intent.putExtra("url", response.body().getUrl());
                             intent.putExtra("sharj", "sharj");*/
 
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
-                            //startActivityForResult(intent, REQUEST_CODE_PAY);
-                            startActivity(browserIntent);
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
+                                //startActivityForResult(intent, REQUEST_CODE_PAY);
+                                startActivity(browserIntent);
 
-                        } else {
-                            Toast.makeText(SharjActivity.this, "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(SharjActivity.this, "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
+                            }
                         }
-
 
                     } catch (Exception e) {
                         Log.e("EX", e.getMessage());
@@ -240,7 +245,7 @@ public class SharjActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_PAY) {
             if (resultCode == Activity.RESULT_OK) {
                 //Toast.makeText(SharjHistoryActivity.this,"ok",Toast.LENGTH_LONG).show();
-                if (data != null){
+                if (data != null) {
                     String s = data.getStringExtra("msg");
                     Log.e("RESULT", s);
                     Dilago(s);
@@ -248,7 +253,7 @@ public class SharjActivity extends AppCompatActivity {
 
             } else {
                 // Toast.makeText(SharjHistoryActivity.this,"not",Toast.LENGTH_LONG).show();
-                if (data != null){
+                if (data != null) {
                     String s = data.getStringExtra("msg");
                     Log.e("RESULT", s);
                     Toast.makeText(SharjActivity.this, s, Toast.LENGTH_SHORT).show();

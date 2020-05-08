@@ -191,6 +191,7 @@
         <activity android:name=".Rss.ListtoListActivity" />
         <activity android:name=".Rss.FavListActivity" />
         <activity android:name=".Rss.LastListActivity"/>
+        <activity android:name=".CreditActivity" />
 
         <service
             android:name="tools.MyPushListener"

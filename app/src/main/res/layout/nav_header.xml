@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:paddingTop="20dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/blueDark"
     android:layout_height="235dp"
-    android:layoutDirection="ltr">
+    android:background="@color/blueDark"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,13 +13,13 @@
         android:orientation="vertical"
 
         >
+
         <LinearLayout
             android:id="@+id/mainLinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:weightSum="8"
-            >
+            android:weightSum="8">
 
 
             <LinearLayout
@@ -35,61 +34,66 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2"
-                    android:src="@drawable/ic_person"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_person" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3">
+
                     <ui_elements.MyTextView
                         android:id="@+id/name_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
                         android:text="بدون نام"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentTop="true"
-                        android:gravity="center"
-                        />
+                        android:textSize="18sp" />
+
                     <ui_elements.MyTextView
                         android:id="@+id/phonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name_header"
-                        android:text="بدون شماره"
-                        android:textColor="@color/white"
                         android:gravity="center"
-                        />
+                        android:text="بدون شماره"
+                        android:textColor="@color/white" />
+
+
                     <RelativeLayout
                         android:id="@+id/layout"
-                        android:layout_below="@+id/phonenumber"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"></RelativeLayout>
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/phonenumber"/>
+
                     <LinearLayout
                         android:id="@+id/linearEtebar"
-                        android:layout_below="@+id/layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout"
                         android:orientation="horizontal"
                         android:weightSum="1">
+
                         <ui_elements.MyTextView
                             android:id="@+id/balance"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="0 تومان"
+                            android:layout_weight="0.5"
                             android:gravity="center"
-                            android:textColor="@color/white"
-                            android:layout_weight="0.5"/>
+                            android:text="0 تومان"
+                            android:textColor="@color/white" />
+
                         <ui_elements.MyTextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="میزان اعتبار :"
-                            android:gravity="center"
-                            android:textColor="@color/white"
                             android:layout_marginRight="4dp"
                             android:layout_weight="0.5"
-                            />
+                            android:gravity="center"
+                            android:text="میزان اعتبار :"
+                            android:textColor="@color/white" />
 
                     </LinearLayout>
 
@@ -100,11 +104,19 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
     </LinearLayout>
+
+
+
+    <ui_elements.MyTextView
+        android:id="@+id/txt_credit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

@@ -99,8 +99,13 @@ public class CategoryFragment extends Fragment {
                         System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
-                        ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
-                        fragm.backpress();
+                        if (fm != null) {
+                            ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
+                            if (fragm != null) {
+                                fragm.backpress();
+                            }
+                        }
+
 
                     } else {
                         System.out.println("===MainActivity==333===");

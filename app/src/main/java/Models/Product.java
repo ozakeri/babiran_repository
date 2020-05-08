@@ -1,7 +1,5 @@
 package Models;
 
-import android.media.Image;
-
 import java.util.ArrayList;
 
 /**
@@ -22,6 +20,7 @@ public class Product {
     public int rate;
     public ArrayList<Feature> features;
     public ArrayList<Models.Image> images;
+    private String category_id;
 
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
@@ -38,9 +37,25 @@ public class Product {
         this.features = features;
     }
 
+    public Product(String category_id, String id, String name, String description, String price, String stock, String count, String dis_price
+            , ArrayList<Models.Image> images,
+                   ArrayList<Feature> features) {
+
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.count = count;
+        this.dis_price = dis_price;
+        this.images = images;
+        this.features = features;
+        this.category_id = category_id;
+    }
+
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
-                   ArrayList<Feature> features,String providerName) {
+                   ArrayList<Feature> features, String providerName) {
 
         this.id = id;
         this.name = name;
@@ -144,5 +159,13 @@ public class Product {
 
     public void setProviderName(String providerName) {
         this.providerName = providerName;
+    }
+
+    public String getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
     }
 }

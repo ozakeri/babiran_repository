@@ -97,6 +97,9 @@ public class SecondCategoryFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+        System.out.println("=-=-=-=-id=-=-=-=-=-" + id);
+
         //    AppConfig.frag = SecondCategoryFragment.this;
         // calcute();
 
@@ -271,6 +274,8 @@ public class SecondCategoryFragment extends Fragment {
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
 
+        System.out.println("=====url=========" + url);
+
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -316,7 +321,7 @@ public class SecondCategoryFragment extends Fragment {
                                     }
                                 }
 
-                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
 

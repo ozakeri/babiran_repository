@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     public String id = "";
     public String nameHeader = "";
     String tab_situation = "home";
-    public static MyTextView nameHeaderTxt;
+    public static MyTextView nameHeaderTxt, txt_credit;
     String category_id_notif = "";
     String image_from_notif = "";
     DatabaseHandler db;
@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
                     if (prefs.getString("motor", "deactive").equals("active")) {
                         //deliver.setVisibility(View.VISIBLE);
                     } else {
-                       // deliver.setVisibility(View.INVISIBLE);
+                        // deliver.setVisibility(View.INVISIBLE);
                     }
 
                     home = (FrameLayout) findViewById(R.id.Homecontainer);
@@ -380,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
 
                     homeGetRequest();
+                    getCreditRequest();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
@@ -754,6 +755,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void getCreditRequest() {
+
+        //sendToken();
+
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        if (id.equals("")) {
+            id = "-1";
+        }
+        Log.d("idd", id);
+
+        final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
+        System.out.println("getCredit=====" + url);
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            try {
+                                String credit = response.getString("credit");
+                                SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+                                editor.putString("credit", credit);
+                                editor.apply();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+
+    }
+
     private void loadfragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.Homecontainer, new HomeFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
@@ -958,6 +1001,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         //   menu.add(new Menu("افزایش اعتبار کیف پول", R.drawable.kif));
         menu.add(new Menu("پروفایل من", R.drawable.prof));
+        menu.add(new Menu("کیف پول", R.drawable.credit));
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
         menu.add(new Menu("خرید شارژ", R.drawable.tanzim));
@@ -1025,7 +1069,11 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
+
                     case 1:
+                        startActivity(new Intent(MainActivity.this, CreditActivity.class));
+                        break;
+                    case 2:
                         Intent intent = new Intent(MainActivity.this, FactorList.class);
                         intent.putExtra("id", userID);
 
@@ -1046,7 +1094,7 @@ public class MainActivity extends AppCompatActivity {
 //
                         //ticket
                         break;*/
-                    case 2:
+                    case 3:
 
                         startActivity(new Intent(MainActivity.this, SharjActivity.class));
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.SupportContainer, new SupportFragment()).commit();
@@ -1060,7 +1108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
-                    case 3:
+                    case 4:
                         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1073,7 +1121,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 4:
+                    case 5:
                         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1085,23 +1133,23 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.basketlist.setVisibility(View.VISIBLE);
 
                         break;
-                    case 5:
+                    case 6:
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, MainListActivity.class));
 
                         break;
-                    case 6:
+                    case 7:
                         Di();
                         //kif pool
                         break;
-                    case 7:
+                    case 8:
 
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
                         startActivity(intent);
 
                         break;
-                    case 8:
+                    case 9:
                         // solat motedavel
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, CommonQuestionActivity.class));
@@ -1109,14 +1157,14 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 9:
+                    case 10:
 
                         //rahnama
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
 
                         // break;
-                    case 10:
+                    case 11:
                         //about
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.AboutContainer, new AboutFragment()).commit();
@@ -1171,6 +1219,10 @@ public class MainActivity extends AppCompatActivity {
         if (!phone.equals("null") && !phone.equals("")) {
             phone_txt.setText(ConvertEnToPe(phone));
         }
+
+        String credit = AppController.getInstance().getSharedPreferences().getString("credit", "");
+        txt_credit = (MyTextView) findViewById(R.id.txt_credit);
+        txt_credit.setText(" اعتبار شما " + credit + " تومان ");
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);

@@ -169,6 +169,7 @@ public class ProductFragment extends Fragment {
         MyTextView price = (MyTextView) v.findViewById(R.id.pricepro);
         MyTextView price_free = (MyTextView) v.findViewById(R.id.pricefree);
         MyTextView providerName = (MyTextView) v.findViewById(R.id.providerName);
+        MyTextView providerCategory = (MyTextView) v.findViewById(R.id.providerCategory);
 
 
         final CardView addToBasket = (CardView) v.findViewById(R.id.addtobasket);
@@ -182,6 +183,7 @@ public class ProductFragment extends Fragment {
 
         if (product != null) {
 
+            System.out.println("product=====" + product.toString());
             this.id = product.id;
             DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
@@ -334,6 +336,7 @@ public class ProductFragment extends Fragment {
 
             name.setText(product.name);
             providerName.setText(product.providerName);
+            providerCategory.setText(product.getCategory_id());
             System.out.println("providerName====" + product.providerName);
             //discount.setText(product.discountName1);
             // price.setText(ConvertEnToPe(convertToFormalString(product.price)) + " تومان ");

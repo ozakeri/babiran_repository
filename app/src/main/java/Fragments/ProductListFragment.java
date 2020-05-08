@@ -127,6 +127,7 @@ public class ProductListFragment extends Fragment {
         d.setCancelable(false);
         d.show();
 
+        System.out.println("ProductListFragment==="+url);
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

@@ -433,6 +433,7 @@ public class ShowRssActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
+            System.out.println("AppConfig.id======" + AppConfig.id);
             Call<GetSucc> call = n.setLike(id_blog, Integer.parseInt(AppConfig.id), like);
 
             call.enqueue(new Callback<GetSucc>() {
