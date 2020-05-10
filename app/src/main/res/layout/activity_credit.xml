@@ -187,6 +187,7 @@
                     android:focusable="true"
                     android:gravity="center"
                     android:inputType="number"
+                    android:maxLength="9"
                     android:textCursorDrawable="@null"
                     android:textSize="32sp"
                     android:textStyle="bold" />
