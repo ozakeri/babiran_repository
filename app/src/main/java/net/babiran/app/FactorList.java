@@ -267,6 +267,7 @@ public class FactorList extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/" + factorArrayList.size();
+        System.out.println("url=====" + url);
         //final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/" + factorArrayList.size();
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,

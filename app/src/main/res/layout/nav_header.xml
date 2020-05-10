@@ -110,13 +110,42 @@
 
 
 
-    <ui_elements.MyTextView
-        android:id="@+id/txt_credit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:textColor="@color/white" />
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center_horizontal"
+       android:orientation="horizontal">
+
+
+       <ui_elements.MyTextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:gravity="center"
+           android:text=" تومان "
+           android:textColor="@color/white" />
+
+
+       <ui_elements.MyTextView
+           android:id="@+id/txt_credit"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:gravity="center"
+           android:text="5000"
+           android:textColor="@color/white" />
+
+
+       <ui_elements.MyTextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:gravity="center"
+           android:text=" اعتبار شما "
+           android:textColor="@color/white" />
+
+
+   </LinearLayout>
 
 
 </LinearLayout>

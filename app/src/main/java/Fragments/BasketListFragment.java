@@ -1,8 +1,6 @@
 package Fragments;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,12 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +28,6 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 
-import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
 import java.util.ArrayList;
@@ -39,7 +36,6 @@ import java.util.HashMap;
 import Adapters.BasketListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Basket;
-import tools.AppConfig;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
 
@@ -71,6 +67,7 @@ public class BasketListFragment extends Fragment implements
 
     String selectedAdd = "";
     String selectedPay = "";
+    private int credit = 0;
 
     PopupWindow mPopupWindow;
     int TotalPrice = 0;
@@ -414,13 +411,16 @@ public class BasketListFragment extends Fragment implements
                     //       final MyTextView firstPay = (MyTextView) customView.findViewById(R.id.firstPay);
                     final MyTextView secondPay = (MyTextView) customView.findViewById(R.id.secondPay);
                     final MyTextView _3secondPay = (MyTextView) customView.findViewById(R.id._3secondPay);
+                    final MyTextView txt_credit = (MyTextView) customView.findViewById(R.id.txt_credit);
                     //    final CheckBox firstChk = (CheckBox) customView.findViewById(R.id.firstCheck_pay);
                     final CheckBox secondChk = (CheckBox) customView.findViewById(R.id.secondCheck_pay);
                     final CheckBox _3Chk = (CheckBox) customView.findViewById(R.id._3secondCheck_pay);
+                    final CheckBox checkbox_credit = (CheckBox) customView.findViewById(R.id.checkbox_credit);
 
                     //   final LinearLayout firstPayLinear = (LinearLayout) customView.findViewById(R.id.firstPayLinear);
                     final LinearLayout secondPayLinear = (LinearLayout) customView.findViewById(R.id.secondPayLinear);
                     final LinearLayout _3PayLinear = (LinearLayout) customView.findViewById(R.id._3PayLinear);
+                    final LinearLayout layout_credit = (LinearLayout) customView.findViewById(R.id.layout_credit);
 
 
                     // Get a reference for the custom view close button
@@ -456,6 +456,49 @@ public class BasketListFragment extends Fragment implements
                             //           firstChk.setChecked(false);
                             //           secondChk.setChecked(false);
                             _3Chk.setChecked(true);
+                            checkbox_credit.setChecked(false);
+
+                        }
+                    });
+
+                    checkbox_credit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        }
+                    });
+
+                    checkbox_credit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked){
+                                _3Chk.setChecked(false);
+                            }else {
+                                _3Chk.setChecked(true);
+                            }
+
+                        }
+                    });
+
+                    _3Chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked){
+                                checkbox_credit.setChecked(false);
+                            }else {
+                                checkbox_credit.setChecked(true);
+                            }
+
+                        }
+                    });
+
+                    layout_credit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //           firstChk.setChecked(false);
+                            //           secondChk.setChecked(false);
+                            checkbox_credit.setChecked(true);
+                            _3Chk.setChecked(false);
 
                         }
                     });
@@ -463,7 +506,7 @@ public class BasketListFragment extends Fragment implements
 
                     secondChk.setClickable(false);
                     //     firstChk.setClickable(false);
-                    _3Chk.setClickable(false);
+                    //_3Chk.setClickable(false);
 
 //                    firstChk.setOnClickListener(new View.OnClickListener() {
 //                        @Override
@@ -511,8 +554,15 @@ public class BasketListFragment extends Fragment implements
                                     if (_3Chk.isChecked()) {
                                         selectedPay = "2";
                                         PayValue.setText(_3secondPay.getText().toString());
-
                                         mPopupWindow.dismiss();
+                                    }
+
+                                    if (checkbox_credit.isChecked()) {
+                                        credit = 1;
+                                        PayValue.setText(txt_credit.getText().toString());
+                                        mPopupWindow.dismiss();
+                                    } else {
+                                        credit = 0;
                                     }
 
                                 }
@@ -554,8 +604,9 @@ public class BasketListFragment extends Fragment implements
 
                                 if (PayValue.getText().toString() != null && !PayValue.getText().toString().equals("") && !PayValue.getText().toString().equals("null")) {
 
+                                    System.out.println("credit=====" + credit);
                                     FragmentManager fm = getActivity().getFragmentManager();
-                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, editor);
+                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor);
                                     descriptionDialog.show(fm, "DescriptionDialog");
 
                                 } else {
@@ -619,14 +670,14 @@ public class BasketListFragment extends Fragment implements
                         dialog.show();
 
                     }*/
-                   // return true;
+        // return true;
 
-                //}
+        //}
 
-               // return false;
-            //}
+        // return false;
+        //}
 
-       // });
+        // });
 
         return v;
 

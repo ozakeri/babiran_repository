@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btn_back"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -67,19 +67,52 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_validity"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="موجودی کیف پول شما : 10000 تومان"
-                android:textSize="18sp"
-                android:textColor="@color/Black"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
                 android:layout_gravity="right"
-                android:gravity="right"/>
+                android:orientation="horizontal">
+
+                <ui_elements.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="right"
+                    android:text="موجودی کیف پول شما : "
+                    android:textColor="@color/Black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ui_elements.MyTextView
+                    android:id="@+id/txt_validity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="right"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ui_elements.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="right"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="تومان"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,12 +122,12 @@
                 android:layout_marginBottom="50dp"
                 android:gravity="right">
 
-                <TextView
+                <ui_elements.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="لطفا مبلغ مورد نظز خود را وارد نمایید"
-                    android:textSize="18sp"
+                    android:text="لطفا مبلغ مورد نظر خود را وارد نمایید"
                     android:textColor="@color/Black"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -148,22 +181,24 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edt_price"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:gravity="center"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
+                    android:ellipsize="end"
                     android:focusable="true"
-                    android:background="@drawable/border_comment_btn_filter_like" />
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="7"
+                    android:textCursorDrawable="@null"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <ui_elements.MyTextView
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="تومان"
                     android:textColor="@color/black"
-                    android:background="@drawable/border_comment_btn_filter_like"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 

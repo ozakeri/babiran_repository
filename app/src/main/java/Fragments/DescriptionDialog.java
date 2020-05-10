@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.babiran.app.BlankAcct;
+import net.babiran.app.FactorList;
 import net.babiran.app.R;
 import net.babiran.app.commnets.UNIQ;
 
@@ -44,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Handlers.DatabaseHandler;
 import Models.Product;
 import tools.AppConfig;
 import tools.AudioRecorder;
@@ -60,32 +62,29 @@ public class DescriptionDialog extends DialogFragment {
 
     View v;
     RequestQueue queue;
-
     MyEditText description;
     RelativeLayout progressbar;
-
     RelativeLayout submit;
     String id, address, productArray, selected_Pay;
-
     CardView fori, yeksaat, dosaat, yekrooz, sayer;
-
     CheckBox forichck, yeksaatchck, dosaatchck, yekroozchck, sayerchck;
-
     SharedPreferences.Editor editor;
     Context context;
-
     String descriptionFactor = "";
+    private int credit;
+    private DatabaseHandler db;
 
     AudioRecorder audioRecorder;
     public static final int REQUEST_CODE_PAY = 1001;
 
-    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, SharedPreferences.Editor editor) {
+    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, int credit, SharedPreferences.Editor editor) {
         this.id = id;
         this.address = address;
         this.productArray = productsArray;
         this.selected_Pay = selected_pay;
         this.editor = editor;
         this.context = context;
+        this.credit = credit;
     }
 
     public DescriptionDialog() {
@@ -214,7 +213,7 @@ public class DescriptionDialog extends DialogFragment {
                     descriptionFactor = "سایر";
                 }
                 Log.e("descript", descriptionFactor);
-                completeBUY(id, address, productArray, selected_Pay, "");
+                completeBUY(id, address, productArray, selected_Pay, credit, "");
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
                 //getDialog().dismiss();
@@ -226,7 +225,7 @@ public class DescriptionDialog extends DialogFragment {
 
     }
 
-    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final String description) {
+    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final int credit, final String description) {
         queue = Volley.newRequestQueue(getActivity());
 //        getDialog().dismiss();
         final ProgressDialog d = new ProgressDialog(getActivity());
@@ -246,35 +245,19 @@ public class DescriptionDialog extends DialogFragment {
                         d.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            Log.e("~!@~!@", jsonObject.toString());
+                            Log.e("jsonObject====", jsonObject.toString());
                             if (jsonObject.getString("success").equals("1")) {
-
-//                                ArrayList<Product> productArrayList = new ArrayList<>();
-//                                Gson gson = new Gson();
-//                                String proObj = gson.toJson(productArrayList);
-//                                editor.putString("products", proObj);
-//                                editor.commit();
-
-                                //Intent intent = new Intent(context, ActivityPay.class);
-                                //intent.putExtra("url", jsonObject.getString("url"));
-                                // startActivityForResult(intent, REQUEST_CODE_PAY);
-//                                AppConfig.products.clear();
-//                                MainActivity.basketlist.setVisibility(View.INVISIBLE);
-//                                SharedPreferences.Editor edit = context.getSharedPreferences("factor", MODE_PRIVATE).edit();
-//                                edit.putString("factor_id", jsonObject.getString("factor_id"));
-//                                edit.putString("motor", "active");
-//                                long time = System.currentTimeMillis();
-//                                edit.putLong("currentTime", time);
-//                                edit.commit();
-//                                MainActivity.factorcontainer.setVisibility(View.VISIBLE);
-//                                AppConfig.fragmentManager.beginTransaction().replace(R.id.Factorcontainer, new FactorFragment()).commit();
-
                                 System.out.println("url-=-=-=-=-=-" + url);
+                                System.out.println("credit-=-=-=-=-=-" + credit);
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
-                                startActivityForResult(browserIntent,REQUEST_CODE_PAY);
-                                //getDialog().dismiss();
+                                startActivityForResult(browserIntent, REQUEST_CODE_PAY);
+                            }
 
-
+                            if (jsonObject.getString("success").equals("3")) {
+                                System.out.println("url-=-=-=-=-=-" + url);
+                                System.out.println("credit-=-=-=-=-=-" + credit);
+                                getDialog().dismiss();
+                                getFactorId();
                             }
 
                         } catch (JSONException e) {
@@ -308,6 +291,7 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("description", description);
                 params.put("address", address);
                 params.put("selected_pay", selected_Pay);
+                params.put("credit", String.valueOf(credit));
                 params.put("productsArray", productArray);
 
                 System.out.println("user_id==" + user_id);
@@ -397,5 +381,17 @@ public class DescriptionDialog extends DialogFragment {
     public void onResume() {
         super.onResume();
         System.out.println("====dialog onResume====");
+    }
+
+    public void getFactorId() {
+        db = new DatabaseHandler(context);
+        if (db.getRowCount() > 0) {
+            HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+            String id = userDetailsHashMap.get("id");
+            Intent intent = new Intent(context, FactorList.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("id", id);
+            startActivity(intent);
+        }
     }
 }

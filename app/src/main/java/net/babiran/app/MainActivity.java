@@ -71,6 +71,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Adapters.MenuAdapter;
 import Fragments.AboutFragment;
@@ -90,6 +92,7 @@ import Models.Product;
 import co.ronash.pushe.Pushe;
 import tools.AppConfig;
 import tools.NotificationUtils;
+import tools.Util;
 import ui_elements.MyTextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -757,14 +760,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void getCreditRequest() {
 
-        //sendToken();
-
+        txt_credit = (MyTextView) findViewById(R.id.txt_credit);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
         if (id.equals("")) {
             id = "-1";
         }
-        Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
         System.out.println("getCredit=====" + url);
@@ -776,9 +777,14 @@ public class MainActivity extends AppCompatActivity {
                         if (response != null) {
                             try {
                                 String credit = response.getString("credit");
-                                SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
-                                editor.putString("credit", credit);
-                                editor.apply();
+                                if (response.getString("credit") == null){
+                                    credit = "0";
+                                }
+                                Pattern p = Pattern.compile("\\d+");
+                                Matcher m = p.matcher(credit);
+                                while (m.find()) {
+                                    txt_credit.setText(Util.latinNumberToPersian(Util.convertToFormalString((m.group()))));
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -1072,6 +1078,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case 1:
                         startActivity(new Intent(MainActivity.this, CreditActivity.class));
+                        drawerLayout.closeDrawer(Gravity.RIGHT);
                         break;
                     case 2:
                         Intent intent = new Intent(MainActivity.this, FactorList.class);
@@ -1220,10 +1227,6 @@ public class MainActivity extends AppCompatActivity {
             phone_txt.setText(ConvertEnToPe(phone));
         }
 
-        String credit = AppController.getInstance().getSharedPreferences().getString("credit", "");
-        txt_credit = (MyTextView) findViewById(R.id.txt_credit);
-        txt_credit.setText(" اعتبار شما " + credit + " تومان ");
-
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
@@ -1246,6 +1249,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                     } else {
                         drawerLayout.openDrawer(Gravity.RIGHT);
+                        getCreditRequest();
                     }
 
                 }

@@ -85,6 +85,30 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_credit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/txt_credit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="پرداخت از طریق کیف پول"
+                android:textAlignment="center" />
+
+
+            <CheckBox
+                android:id="@+id/checkbox_credit"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

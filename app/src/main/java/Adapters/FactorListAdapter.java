@@ -222,7 +222,7 @@ public class FactorListAdapter extends BaseAdapter {
                         System.out.println("basketjson2===" + basketjson);
 
                         FragmentManager fm = ((Activity) context).getFragmentManager();
-                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, editor);
+                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type,0, editor);
                         descriptionDialog.show(fm, "DescriptionDialog");
                     }
                 }
