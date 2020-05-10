@@ -115,7 +115,7 @@ public class CreditActivity extends AppCompatActivity {
                     String englishNums=new BigDecimal(textWithoutComma).toString();//****
                     double number = Double.valueOf(englishNums);//****
                     String formattedNumber=formatNumber(number);
-                    edt_price.setText(formattedNumber);
+                    edt_price.setText(Util.latinNumberToPersian(formattedNumber));
                     edt_price.setSelection(formattedNumber.length());
                 }
 
