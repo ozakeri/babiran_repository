@@ -91,6 +91,7 @@ public class CreditActivity extends AppCompatActivity {
 
         //edt_price.setText(Util.PersianNumber("10000"));
         edt_price.setText(Util.latinNumberToPersian("10000"));
+        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
         radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
         radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("30000"))));
         radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
@@ -108,6 +109,9 @@ public class CreditActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (edt_price.length() > 10){
+                    return;
+                }
                 edt_price.removeTextChangedListener(this);
                 String text=edt_price.getText().toString();
                 if (!TextUtils.isEmpty(text)) {
@@ -118,7 +122,6 @@ public class CreditActivity extends AppCompatActivity {
                     edt_price.setText(Util.latinNumberToPersian(formattedNumber));
                     edt_price.setSelection(formattedNumber.length());
                 }
-
                 edt_price.addTextChangedListener(this);
             }
         });
