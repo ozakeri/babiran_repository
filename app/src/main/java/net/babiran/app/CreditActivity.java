@@ -58,6 +58,7 @@ public class CreditActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_PAY = 101;
     private AppCompatImageView btn_back;
     private String id = "";
+    private String price = "";
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -90,8 +91,8 @@ public class CreditActivity extends AppCompatActivity {
         radioButton1.setChecked(true);
 
         //edt_price.setText(Util.PersianNumber("10000"));
-        edt_price.setText(Util.latinNumberToPersian("10000"));
-        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
+        price = "20000";
+        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(price)));
         radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
         radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("30000"))));
         radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
@@ -104,21 +105,22 @@ public class CreditActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               // edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString((s.toString()))));
+                price = s.toString();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edt_price.length() > 10){
+
+                if (edt_price.length() > 10) {
                     return;
                 }
                 edt_price.removeTextChangedListener(this);
-                String text=edt_price.getText().toString();
+                String text = edt_price.getText().toString();
                 if (!TextUtils.isEmpty(text)) {
                     String textWithoutComma = text.replaceAll(",", "");
-                    String englishNums=new BigDecimal(textWithoutComma).toString();//****
+                    String englishNums = new BigDecimal(textWithoutComma).toString();//****
                     double number = Double.valueOf(englishNums);//****
-                    String formattedNumber=formatNumber(number);
+                    String formattedNumber = formatNumber(number);
                     edt_price.setText(Util.latinNumberToPersian(formattedNumber));
                     edt_price.setSelection(formattedNumber.length());
                 }
@@ -134,6 +136,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton3.setChecked(false);
                 //edt_price.setText(Util.PersianNumber("15000"));
                 edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
+                price = "20000";
             }
         });
 
@@ -145,6 +148,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton3.setChecked(false);
                 //edt_price.setText(Util.PersianNumber("30000"));
                 edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("30000"))));
+                price = "30000";
             }
         });
 
@@ -156,6 +160,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton2.setChecked(false);
                 //edt_price.setText(Util.PersianNumber("50000"));
                 edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
+                price = "50000";
             }
         });
 
@@ -179,7 +184,9 @@ public class CreditActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), edt_price.getText().toString());
+            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), price);
+            System.out.println("response======" + Integer.parseInt(AppConfig.id));
+            System.out.println("response======" + price);
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
@@ -298,6 +305,7 @@ public class CreditActivity extends AppCompatActivity {
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();
             id = userDetailsHashMap.get("id");
+            System.out.println("id=====" + id);
             if (id != null) {
                 getCreditRequest();
             }
@@ -305,8 +313,8 @@ public class CreditActivity extends AppCompatActivity {
         }
     }
 
-    public String formatNumber(double number){
-        DecimalFormat format=new DecimalFormat("#,###");
+    public String formatNumber(double number) {
+        DecimalFormat format = new DecimalFormat("#,###");
         return format.format(number);
     }
 }

@@ -30,11 +30,10 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-
 
         <activity
             android:name=".BlankAcct"
@@ -85,9 +84,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name=".MainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -98,15 +97,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.ALTERNATIVE" />
-                <data
-                    android:host="example.com"
-                    android:pathPattern="/succeeded"
-                    android:scheme="http" />
+                <data android:host="www.babiran.net" android:scheme="http" />
             </intent-filter>
 
         </activity>
@@ -119,11 +113,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
-   <!--     <receiver android:name=".SMSReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>-->
+        <!--     <receiver android:name=".SMSReceiver">
+                 <intent-filter>
+                     <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                 </intent-filter>
+             </receiver>-->
 
         <activity
             android:name=".Rss.ListRssActivity"
@@ -190,7 +184,7 @@
 
         <activity android:name=".Rss.ListtoListActivity" />
         <activity android:name=".Rss.FavListActivity" />
-        <activity android:name=".Rss.LastListActivity"/>
+        <activity android:name=".Rss.LastListActivity" />
         <activity android:name=".CreditActivity" />
 
         <service
@@ -201,10 +195,11 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="receiver.SMSListener"
+        <receiver
+            android:name="receiver.SMSListener"
             android:enabled="true"
-            android:permission="android.permission.BROADCAST_SMS"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="2147483647">
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

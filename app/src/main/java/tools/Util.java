@@ -51,6 +51,20 @@ public class Util {
         return output;
     }
 
+    public static String persianNumberToLatin(String input) {
+        String output = input.replaceAll("۰", "0");
+        output = output.replaceAll("۱", "1");
+        output = output.replaceAll("۲", "2");
+        output = output.replaceAll("۳", "3");
+        output = output.replaceAll("۴", "4");
+        output = output.replaceAll("۵", "5");
+        output = output.replaceAll("۶", "6");
+        output = output.replaceAll("۷", "7");
+        output = output.replaceAll("۸", "8");
+        output = output.replaceAll("۹", "9");
+        return output;
+    }
+
     public static String farsiNumberReplacement(String text) {
         text = text.replaceAll("۰", "0");
         text = text.replaceAll("۱", "1");

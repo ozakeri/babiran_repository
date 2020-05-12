@@ -141,7 +141,7 @@ public class MyPushListener extends PusheListenerService {
                     if (type != null) {
                         globalValues.setPush(true);
                         switch (type) {
-                            case "111": {
+                            case "0": {
 
                                 if (id != null) {
                                     ListtoListActivity.ID_ME = id;
@@ -183,7 +183,7 @@ public class MyPushListener extends PusheListenerService {
 
                                 break;
                             }
-                            case "3": {
+                            case "333": {
 
 
                                 if (catId != null && proId != null) {
