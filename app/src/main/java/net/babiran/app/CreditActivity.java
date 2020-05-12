@@ -105,12 +105,11 @@ public class CreditActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                price = s.toString();
+                // edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString((s.toString()))));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 if (edt_price.length() > 10) {
                     return;
                 }
@@ -184,9 +183,11 @@ public class CreditActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), price);
+            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), Util.farsiNumberReplacement(edt_price.getText().toString()));
             System.out.println("response======" + Integer.parseInt(AppConfig.id));
-            System.out.println("response======" + price);
+            String str = edt_price.getText().toString();
+            str = str.replace(",", " ");
+            System.out.println("response======" + Util.persianNumberToLatin(str));
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
