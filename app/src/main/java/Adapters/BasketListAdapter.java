@@ -13,14 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 
 import Fragments.BasketListFragment;
 import Handlers.DatabaseHandler;
 import Models.Category;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 

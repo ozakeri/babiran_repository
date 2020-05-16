@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Paint;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -40,7 +39,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.Feature;
 import com.google.gson.Gson;
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
@@ -66,6 +64,8 @@ import java.util.TimerTask;
 import Handlers.AdvertisingDatabaseHandler;
 import Handlers.DatabaseHandler;
 import Models.Category;
+import Models.Feature;
+import Models.Image;
 import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
@@ -74,6 +74,7 @@ import ui_elements.CardFeature;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
+import static tools.AppConfig.products;
 
 public class ProductFragment extends Fragment {
 
@@ -418,7 +419,6 @@ public class ProductFragment extends Fragment {
                 featureCard.addView(cardFeature);
             }
 
-
         }
 
         return v;
@@ -428,11 +428,11 @@ public class ProductFragment extends Fragment {
 
     public void UpdateCount() {
         int count = 0;
-        if (AppConfig.products != null) {
-            for (int i = 0; i < AppConfig.products.size(); i++) {
-                if (this.product.getId().equals(AppConfig.products.get(i).getId())) {
-                    count = Integer.parseInt(AppConfig.products.get(i).count) + Integer.parseInt(Count);
-                    AppConfig.products.get(i).count = String.valueOf(count);
+        if (products != null) {
+            for (int i = 0; i < products.size(); i++) {
+                if (this.product.getId().equals(products.get(i).getId())) {
+                    count = Integer.parseInt(products.get(i).count) + Integer.parseInt(Count);
+                    products.get(i).count = String.valueOf(count);
                     IsUpdateCount = true;
                 }
             }
@@ -441,9 +441,9 @@ public class ProductFragment extends Fragment {
 
     public int SetCount() {
         int count = 1;
-        for (int i = 0; i < AppConfig.products.size(); i++) {
-            if (this.product.id.equals(AppConfig.products.get(i).id)) {
-                Count = AppConfig.products.get(i).count;
+        for (int i = 0; i < products.size(); i++) {
+            if (this.product.id.equals(products.get(i).id)) {
+                Count = products.get(i).count;
                 count = Integer.parseInt(Count);
             }
         }
@@ -521,7 +521,7 @@ public class ProductFragment extends Fragment {
 
             try {
                 Gson gson = new Gson();
-                String proObj = gson.toJson(AppConfig.products);
+                String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
             } catch (Exception e) {
@@ -532,9 +532,9 @@ public class ProductFragment extends Fragment {
 
             try {
                 product.count = Count;
-                AppConfig.products.add(this.product);
+                products.add(this.product);
                 Gson gson = new Gson();
-                String proObj = gson.toJson(AppConfig.products);
+                String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
             } catch (Exception e) {
