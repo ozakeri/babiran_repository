@@ -1,14 +1,12 @@
 package net.babiran.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +36,6 @@ import net.babiran.app.Servic.MyServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -48,18 +46,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
 import tools.Util;
+import ui_elements.MyTextView;
 
 public class CreditActivity extends AppCompatActivity {
 
     private EditText edt_price;
     private RadioButton radioButton1, radioButton2, radioButton3;
-    private TextView txt_validity;
+    private MyTextView txt_validity;
     private RelativeLayout btn_pay;
     public static final int REQUEST_CODE_PAY = 101;
     private AppCompatImageView btn_back;
     private String id = "";
-    private String price = "";
+    private int price = 0;
+    private CardView card_left, card_right;
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,11 @@ public class CreditActivity extends AppCompatActivity {
         radioButton1 = findViewById(R.id.option_first);
         radioButton2 = findViewById(R.id.option_second);
         radioButton3 = findViewById(R.id.option_third);
-        txt_validity = findViewById(R.id.txt_validity);
         btn_back = findViewById(R.id.btn_back);
         btn_pay = findViewById(R.id.btn_pay);
+        card_left = findViewById(R.id.card_left);
+        card_right = findViewById(R.id.card_right);
+        edt_price.setEnabled(false);
 
 
         getUserId();
@@ -84,48 +87,15 @@ public class CreditActivity extends AppCompatActivity {
         radioButton2.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
         radioButton3.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
 
-        if (credit.isEmpty() || credit.equals("")) {
-            credit = "0";
-        }
-
         radioButton1.setChecked(true);
 
         //edt_price.setText(Util.PersianNumber("10000"));
-        price = "20000";
-        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(price)));
-        radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
-        radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("30000"))));
-        radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
+        price = 50000;
+        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
+        radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
+        radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("100000"))));
+        radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("150000"))));
 
-        edt_price.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString((s.toString()))));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (edt_price.length() > 10) {
-                    return;
-                }
-                edt_price.removeTextChangedListener(this);
-                String text = edt_price.getText().toString();
-                if (!TextUtils.isEmpty(text)) {
-                    String textWithoutComma = text.replaceAll(",", "");
-                    String englishNums = new BigDecimal(textWithoutComma).toString();//****
-                    double number = Double.valueOf(englishNums);//****
-                    String formattedNumber = formatNumber(number);
-                    edt_price.setText(Util.latinNumberToPersian(formattedNumber));
-                    edt_price.setSelection(formattedNumber.length());
-                }
-                edt_price.addTextChangedListener(this);
-            }
-        });
 
         radioButton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,9 +103,8 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton1.setChecked(true);
                 radioButton2.setChecked(false);
                 radioButton3.setChecked(false);
-                //edt_price.setText(Util.PersianNumber("15000"));
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("20000"))));
-                price = "20000";
+                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("50000")));
+                price = 50000;
             }
         });
 
@@ -145,9 +114,8 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton2.setChecked(true);
                 radioButton1.setChecked(false);
                 radioButton3.setChecked(false);
-                //edt_price.setText(Util.PersianNumber("30000"));
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("30000"))));
-                price = "30000";
+                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("100000")));
+                price = 100000;
             }
         });
 
@@ -157,9 +125,31 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton3.setChecked(true);
                 radioButton1.setChecked(false);
                 radioButton2.setChecked(false);
-                //edt_price.setText(Util.PersianNumber("50000"));
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
-                price = "50000";
+                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("150000")));
+                price = 150000;
+            }
+        });
+
+
+        card_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("price111===" + price);
+                if (price <= 10000) {
+                    return;
+                }
+                price -= 10000;
+                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
+            }
+        });
+
+        card_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("price222===" + price);
+                price += 10000;
+                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
             }
         });
 
@@ -183,11 +173,9 @@ public class CreditActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), Util.farsiNumberReplacement(edt_price.getText().toString()));
-            System.out.println("response======" + Integer.parseInt(AppConfig.id));
-            String str = edt_price.getText().toString();
-            str = str.replace(",", " ");
-            System.out.println("response======" + Util.persianNumberToLatin(str));
+            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), String.valueOf(price));
+
+            System.out.println("edt_price=====" + edt_price.getText().toString().replaceAll(",", ""));
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
@@ -253,39 +241,34 @@ public class CreditActivity extends AppCompatActivity {
 
     public void getCreditRequest() {
 
-        //sendToken();
-
+        txt_validity = (MyTextView) findViewById(R.id.txt_validity);
         RequestQueue queue = Volley.newRequestQueue(CreditActivity.this);
 
         if (id.equals("")) {
             id = "-1";
         }
-        Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
         System.out.println("getCredit=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new com.android.volley.Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response != null) {
-                            String credit = null;
                             try {
-                                credit = response.getString("credit");
-                                if (response.getString("credit") == null) {
+                                String credit = response.getString("credit");
+                                if (response.getString("credit") == null){
                                     credit = "0";
                                 }
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
-                                    txt_validity.setText(Util.PersianNumber(m.group()));
                                     txt_validity.setText(Util.latinNumberToPersian(Util.convertToFormalString((m.group()))));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     }
                 },
