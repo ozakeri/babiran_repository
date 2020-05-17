@@ -89,6 +89,7 @@
                     android:layout_margin="10dp"
                     android:gravity="center"
                     android:text="5000"
+                    android:textSize="24sp"
                     android:textColor="@color/black" />
 
                 <ui_elements.MyTextView
@@ -136,7 +137,9 @@
                     android:text="20,000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_comment_btn_filter_like"/>
 
                 <RadioButton
                     android:id="@+id/option_second"
@@ -146,7 +149,9 @@
                     android:text="50,000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_comment_btn_filter_like"/>
 
                 <RadioButton
                     android:id="@+id/option_third"
@@ -156,7 +161,9 @@
                     android:text="100,000"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_comment_btn_filter_like"/>
 
             </LinearLayout>
 
@@ -164,48 +171,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_right"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/add"/>
-
-                </androidx.cardview.widget.CardView>
-
-
+                android:layout_marginRight="30dp"
+                android:background="@drawable/border_comment_btn_filter_like">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edt_price"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
                     android:focusable="true"
                     android:gravity="center"
                     android:inputType="number"
                     android:maxLength="9"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/black"/>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_left"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/mines"/>
-
-                </androidx.cardview.widget.CardView>
+                <ui_elements.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:focusable="true"
+                    android:gravity="bottom"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="تومان"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"/>
 
 
             </LinearLayout>

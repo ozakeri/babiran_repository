@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.cardview.widget.CardView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,6 +43,7 @@ import Handlers.DatabaseHandler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
+import tools.NumberTextWatcherForThousand;
 import tools.Util;
 import ui_elements.MyTextView;
 
@@ -57,8 +56,6 @@ public class CreditActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_PAY = 101;
     private AppCompatImageView btn_back;
     private String id = "";
-    private int price = 0;
-    private CardView card_left, card_right;
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -75,26 +72,26 @@ public class CreditActivity extends AppCompatActivity {
         radioButton3 = findViewById(R.id.option_third);
         btn_back = findViewById(R.id.btn_back);
         btn_pay = findViewById(R.id.btn_pay);
-        card_left = findViewById(R.id.card_left);
-        card_right = findViewById(R.id.card_right);
-        edt_price.setEnabled(false);
+        //edt_price.setEnabled(false);
 
 
         getUserId();
 
-        edt_price.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
-        radioButton1.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
-        radioButton2.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
-        radioButton3.setTypeface(Typeface.createFromAsset(getAssets(), "iransans.ttf"));
+        edt_price.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+        radioButton1.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+        radioButton2.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+        radioButton3.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+        txt_validity.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
 
         radioButton1.setChecked(true);
 
         //edt_price.setText(Util.PersianNumber("10000"));
-        price = 50000;
-        edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
+        edt_price.setText(Util.convertToFormalString(String.valueOf((10000))));
         radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
         radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("100000"))));
         radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("150000"))));
+        edt_price.addTextChangedListener(new NumberTextWatcherForThousand(edt_price));
+        edt_price.setSelection(edt_price.getText().length());
 
 
         radioButton1.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +100,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton1.setChecked(true);
                 radioButton2.setChecked(false);
                 radioButton3.setChecked(false);
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("50000")));
-                price = 50000;
+                edt_price.setText(Util.convertToFormalString(String.valueOf((50000))));
             }
         });
 
@@ -114,8 +110,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton2.setChecked(true);
                 radioButton1.setChecked(false);
                 radioButton3.setChecked(false);
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("100000")));
-                price = 100000;
+                edt_price.setText(Util.convertToFormalString(String.valueOf((100000))));
             }
         });
 
@@ -125,31 +120,7 @@ public class CreditActivity extends AppCompatActivity {
                 radioButton3.setChecked(true);
                 radioButton1.setChecked(false);
                 radioButton2.setChecked(false);
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString("150000")));
-                price = 150000;
-            }
-        });
-
-
-        card_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("price111===" + price);
-                if (price <= 10000) {
-                    return;
-                }
-                price -= 10000;
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
-            }
-        });
-
-        card_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("price222===" + price);
-                price += 10000;
-                edt_price.setText(Util.latinNumberToPersian(Util.convertToFormalString(String.valueOf(price))));
+                edt_price.setText(Util.convertToFormalString(String.valueOf((150000))));
             }
         });
 
@@ -173,7 +144,7 @@ public class CreditActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), String.valueOf(price));
+            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), edt_price.getText().toString().replaceAll(",", ""));
 
             System.out.println("edt_price=====" + edt_price.getText().toString().replaceAll(",", ""));
 
@@ -258,13 +229,13 @@ public class CreditActivity extends AppCompatActivity {
                         if (response != null) {
                             try {
                                 String credit = response.getString("credit");
-                                if (response.getString("credit") == null){
+                                if (response.getString("credit") == null) {
                                     credit = "0";
                                 }
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
-                                    txt_validity.setText(Util.latinNumberToPersian(Util.convertToFormalString((m.group()))));
+                                    txt_validity.setText(Util.convertToFormalString((m.group())));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
