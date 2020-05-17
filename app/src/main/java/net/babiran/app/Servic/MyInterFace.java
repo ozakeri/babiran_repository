@@ -29,6 +29,7 @@ public interface MyInterFace {
     @POST("creditPardakht")
     Call<MyMesa> BuyCredit(@Field("user_id") int user_id, @Field("price") String price);
 
+
     @GET("factor/chargeFactorList/{id}/")
     Call<List<MyModelQu>> HistorySharj(@Path("id") int id);
 

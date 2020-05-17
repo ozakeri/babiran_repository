@@ -65,6 +65,20 @@ public class CreditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credit);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
+
+        Intent intent = getIntent();
+        //if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = Uri.parse("babiran.net.app://1/movafag");
+            String lastPathSegment = uri.getLastPathSegment();
+            if (lastPathSegment.equals("movafag")){
+                Toast.makeText(CreditActivity.this, "movafag", Toast.LENGTH_LONG).show();
+            }else if (lastPathSegment.equals("namovafag")){
+                Toast.makeText(CreditActivity.this, "namovafag", Toast.LENGTH_LONG).show();
+            }
+
+            System.out.println("====uri====" + lastPathSegment);
+       // }
+
         String credit = AppController.getInstance().getSharedPreferences().getString("credit", "");
         edt_price = findViewById(R.id.edt_price);
         radioButton1 = findViewById(R.id.option_first);

@@ -27,7 +27,6 @@ public class MyServices {
 
     public static <S> S createService(Class<S> serviceClass) {
         Retrofit retrofit = builder.client(httpClient).build();
-        System.out.println("retrofit======" + retrofit.baseUrl());
         return retrofit.create(serviceClass);
 
     }

@@ -97,16 +97,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="result"
-                    android:scheme="babiran.net.app" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".ActivityPay"
@@ -189,7 +179,14 @@
         <activity android:name=".Rss.ListtoListActivity" />
         <activity android:name=".Rss.FavListActivity" />
         <activity android:name=".Rss.LastListActivity" />
-        <activity android:name=".CreditActivity" />
+        <activity android:name=".CreditActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="babiran.net.app" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name="tools.MyPushListener"
