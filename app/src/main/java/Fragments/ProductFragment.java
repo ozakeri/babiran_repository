@@ -3,6 +3,7 @@ package Fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,14 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.travijuu.numberpicker.library.Enums.ActionEnum;
 import com.travijuu.numberpicker.library.Interface.ValueChangedListener;
@@ -42,15 +50,22 @@ import net.babiran.app.R;
 import net.babiran.app.Sms_Register;
 import net.babiran.app.productInfo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import Handlers.AdvertisingDatabaseHandler;
 import Handlers.DatabaseHandler;
 import Models.Category;
+import Models.Feature;
+import Models.Image;
 import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
@@ -59,6 +74,7 @@ import ui_elements.CardFeature;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
+import static tools.AppConfig.products;
 
 public class ProductFragment extends Fragment {
 
@@ -337,9 +353,12 @@ public class ProductFragment extends Fragment {
             name.setText(product.name);
             providerName.setText(product.providerName);
             providerCategory.setText(product.getCategory_id());
-            System.out.println("providerName====" + product.providerName);
-            //discount.setText(product.discountName1);
-            // price.setText(ConvertEnToPe(convertToFormalString(product.price)) + " تومان ");
+            providerCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products, "notcat")).commit();
+                }
+            });
 
             if (!product.getDis_price().equals("null") && !product.getDis_price().equals("") && product.getDis_price() != null) {
 
@@ -400,7 +419,6 @@ public class ProductFragment extends Fragment {
                 featureCard.addView(cardFeature);
             }
 
-
         }
 
         return v;
@@ -410,11 +428,11 @@ public class ProductFragment extends Fragment {
 
     public void UpdateCount() {
         int count = 0;
-        if (AppConfig.products != null) {
-            for (int i = 0; i < AppConfig.products.size(); i++) {
-                if (this.product.getId().equals(AppConfig.products.get(i).getId())) {
-                    count = Integer.parseInt(AppConfig.products.get(i).count) + Integer.parseInt(Count);
-                    AppConfig.products.get(i).count = String.valueOf(count);
+        if (products != null) {
+            for (int i = 0; i < products.size(); i++) {
+                if (this.product.getId().equals(products.get(i).getId())) {
+                    count = Integer.parseInt(products.get(i).count) + Integer.parseInt(Count);
+                    products.get(i).count = String.valueOf(count);
                     IsUpdateCount = true;
                 }
             }
@@ -423,9 +441,9 @@ public class ProductFragment extends Fragment {
 
     public int SetCount() {
         int count = 1;
-        for (int i = 0; i < AppConfig.products.size(); i++) {
-            if (this.product.id.equals(AppConfig.products.get(i).id)) {
-                Count = AppConfig.products.get(i).count;
+        for (int i = 0; i < products.size(); i++) {
+            if (this.product.id.equals(products.get(i).id)) {
+                Count = products.get(i).count;
                 count = Integer.parseInt(Count);
             }
         }
@@ -503,7 +521,7 @@ public class ProductFragment extends Fragment {
 
             try {
                 Gson gson = new Gson();
-                String proObj = gson.toJson(AppConfig.products);
+                String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
             } catch (Exception e) {
@@ -514,9 +532,9 @@ public class ProductFragment extends Fragment {
 
             try {
                 product.count = Count;
-                AppConfig.products.add(this.product);
+                products.add(this.product);
                 Gson gson = new Gson();
-                String proObj = gson.toJson(AppConfig.products);
+                String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
             } catch (Exception e) {
@@ -613,4 +631,125 @@ public class ProductFragment extends Fragment {
         alert.show();
     }
 
+    private void getCategory() {
+        products = null;
+        v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+        MainActivity.productlist.setVisibility(View.VISIBLE);
+        queue = Volley.newRequestQueue(getActivity());
+        String url = AppConfig.BASE_URL + "api/main/search";
+        final ProgressDialog d = new ProgressDialog(getActivity());
+        d.setMessage("چند لحظه صبرکنید ...");
+        d.setIndeterminate(true);
+        d.setCancelable(false);
+        d.show();
+
+        System.out.println("ProductListFragment==="+url);
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        d.dismiss();
+                        try {
+                            ArrayList<Product> products = new ArrayList<>();
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                ArrayList<Feature> featuresArray = new ArrayList<>();
+                                ArrayList<Image> imagesArray = new ArrayList<>();
+                                JSONObject c = jsonArray.getJSONObject(i);
+
+                                JSONArray features = c.getJSONArray("features");
+                                for (int fea = 0; fea < features.length(); fea++) {
+                                    try {
+                                        JSONObject f = features.getJSONObject(fea);
+                                        Feature feature = new Feature(
+                                                f.getString("value"), f.getString("name"));
+                                        featuresArray.add(fea, feature);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+
+                                JSONArray images = c.getJSONArray("images");
+                                ;
+                                for (int img = 0; img < images.length(); img++) {
+
+                                    try {
+                                        JSONObject im = images.getJSONObject(img);
+                                        Image image = new Image(
+                                                im.getString("image_link"));
+                                        imagesArray.add(img, image);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+
+
+                                products.add(product);
+                            }
+                            if (products.size() > 0) {
+                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+
+                                AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products)).commit();
+
+                            } else {
+                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+                                //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
+
+                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+                                alertDialog.show();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                Map<String, String> params = new HashMap<String, String>();
+
+                if (id != null) {
+                    Log.d("cat id", id);
+                    params.put("category_id", id);
+                    System.out.println("category_id===" + id);
+
+                }
+
+                return params;
+            }
+
+        };
+
+        jsonArrayRequest.setTag(TAG);
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                400000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
+
+        //Volley End
+    }
 }

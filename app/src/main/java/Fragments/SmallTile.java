@@ -41,6 +41,7 @@ import tools.AppConfig;
  * Created by Mohammad on 6/28/2017.
  */
 
+@SuppressWarnings("ALL")
 public class SmallTile extends Fragment {
 
     ListView smalltile ;
@@ -115,6 +116,7 @@ public class SmallTile extends Fragment {
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
+                    @SuppressWarnings("MagicConstant")
                     @Override
                     public void onResponse(String response) {
                         d.dismiss();
@@ -155,7 +157,8 @@ public class SmallTile extends Fragment {
                                     }
                                 }
 
-                                Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                //noinspection MagicConstant
+                                @SuppressWarnings("MagicConstant") Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray);
 
                                 products.add(product);

@@ -1010,7 +1010,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("کیف پول", R.drawable.credit));
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
-        menu.add(new Menu("خرید شارژ", R.drawable.tanzim));
+        menu.add(new Menu("خرید شارژ", R.drawable.shaje_icon));
         menu.add(new Menu("دسته بندی", R.drawable.cats));
         menu.add(new Menu("سبد خرید", R.drawable.sabad2));
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
@@ -1474,7 +1474,6 @@ public class MainActivity extends AppCompatActivity {
                         //d.dismiss();
                         Log.e("responseINCat", response);
 
-                        logLargeString(response);
                         try {
 
                             ArrayList<Product> products = new ArrayList<>();
@@ -1580,17 +1579,5 @@ public class MainActivity extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
     }
-
-    @SuppressLint("LongLogTag")
-    public void logLargeString(String str) {
-        String Tag = "Prooooooo=";
-        if (str.length() > 3000) {
-            Log.i(Tag, str.substring(0, 3000));
-            logLargeString(str.substring(3000));
-        } else {
-            Log.i(Tag, str); // continuation
-        }
-    }
-
 
 }

@@ -30,7 +30,7 @@ public class MyNumberWatcher implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         editText.removeTextChangedListener(this);
 
-        String s = editText.getText().toString();
+        String s = Util.PersianNumber(editText.getText().toString());
 
         s = s.replace(",", "");
         if (s.length() > 0) {
@@ -41,8 +41,6 @@ public class MyNumberWatcher implements TextWatcher {
             editText.setText(format);
             editText.setSelection(format.length());
 
-        }else {
-            editText.setText(0);
         }
         editText.addTextChangedListener(this);
     }

@@ -65,23 +65,26 @@ public class MyPushListener extends PusheListenerService {
             public void run() {
 
 
-                try {
+                /*try {
                     JSONObject contentJson = new JSONObject(String.valueOf(content));
                     System.out.println("contentJson=====" + contentJson);
                     if (!contentJson.isNull("content")) {
-                        JSONObject successJson = contentJson.getJSONObject("content");
-                        if (!successJson.isNull("success")) {
-                            String successStr = successJson.getString("success");
-                            System.out.println("successStr=====" + successStr);
-                            if (successStr != null) {
-                                new Thread(new Task()).start();
-                                return;
+                        if (contentJson.getJSONObject("content") != null){
+                            JSONObject successJson = contentJson.getJSONObject("content");
+                            if (!successJson.isNull("success")) {
+                                String successStr = successJson.getString("success");
+                                System.out.println("successStr=====" + successStr);
+                                if (successStr != null) {
+                                    new Thread(new Task()).start();
+                                    return;
+                                }
                             }
                         }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
                 try {
@@ -141,7 +144,7 @@ public class MyPushListener extends PusheListenerService {
                     if (type != null) {
                         globalValues.setPush(true);
                         switch (type) {
-                            case "0": {
+                            case "111": {
 
                                 if (id != null) {
                                     ListtoListActivity.ID_ME = id;
