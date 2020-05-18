@@ -1,6 +1,7 @@
 package tools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
-
+import net.babiran.app.SharjActivity;
 
 
 /**
@@ -78,6 +79,15 @@ public class CustomPagerAdapterByUrlMain extends PagerAdapter {
 
         Glide.with(mContext).load(imageLink.get(position)).into(imageView);
         container.addView(itemView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position == 0){
+                    mContext.startActivity(new Intent(mContext, SharjActivity.class));
+                }
+            }
+        });
 
         return itemView;
     }

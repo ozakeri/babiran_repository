@@ -2,6 +2,7 @@ package ui_elements;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import net.babiran.app.R;
 
 import Models.Product;
 import tools.AppConfig;
+import tools.Util;
 
 import static java.lang.Integer.parseInt;
 
@@ -24,12 +26,13 @@ import static java.lang.Integer.parseInt;
 public class Card extends RelativeLayout {
 
 
-    public Context contex;
+    public Context context;
 	public ImageView productThumbnailImage;
     public String productId;
-    public TextView name;
-    public TextView price_dis;
-    public TextView price_free;
+    public TextView name,price_dis,price_free;
+    private int Percentage1 = 0;
+    private int Percentage2 = 0;
+    private int result = 0;
 
 
     public Product product;
@@ -66,7 +69,7 @@ public class Card extends RelativeLayout {
     public void init(final Context context, final Product product) {
 
 
-        contex = context;
+        this.context = context;
         this.product = product;
         inflate(getContext(), R.layout.card, this);
 
@@ -74,11 +77,13 @@ public class Card extends RelativeLayout {
         this.name = (TextView) findViewById(R.id.card_name);
         this.price_dis = (TextView) findViewById(R.id.card_price_dis);
         this.price_free = (TextView) findViewById(R.id.card_price);
+        RelativeLayout layout_percentage_discount = findViewById(R.id.layout_percentage_discount);
+        MyTextView txt_percentage_discount = findViewById(R.id.txt_percentage_discount);
 
         //  AppConfig.BASE_URL+product.images.get(0)
         //   if(product.images.get(0)!= null)
         if (product.images.size() > 0) {
-            Glide.with(contex).load(product.images.get(0).image_link).diskCacheStrategy( DiskCacheStrategy.NONE )
+            Glide.with(context).load(product.images.get(0).image_link).diskCacheStrategy( DiskCacheStrategy.NONE )
                     .skipMemoryCache( true ).placeholder(R.drawable.logoloading).into(productThumbnailImage);
         }
 
@@ -112,6 +117,17 @@ public class Card extends RelativeLayout {
 
                 }
             });
+
+        Percentage1 = Integer.parseInt(product.dis_price);
+        Percentage2 = Integer.parseInt(product.price);
+        result = ((Percentage1 - Percentage2) * 100) / Percentage2;
+
+        if (result == 0) {
+            layout_percentage_discount.setVisibility(View.INVISIBLE);
+        } else {
+            txt_percentage_discount.setText(Util.latinNumberToPersian(String.valueOf(result)) + "%" + "OFF");
+            layout_percentage_discount.setVisibility(View.VISIBLE);
+        }
 
 
 

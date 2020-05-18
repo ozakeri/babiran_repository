@@ -25,6 +25,7 @@ import Fragments.ProductFragment;
 import Handlers.DatabaseHandler;
 import Models.Product;
 import tools.AppConfig;
+import tools.Util;
 import ui_elements.MyTextView;
 
 public class TopProListAdapter extends BaseAdapter {
@@ -138,7 +139,7 @@ public class TopProListAdapter extends BaseAdapter {
         if (result == 0) {
             holder.layout_percentage_discount.setVisibility(View.INVISIBLE);
         } else {
-            holder.txt_percentage_discount.setText(result + "%" + "OFF");
+            holder.txt_percentage_discount.setText(Util.latinNumberToPersian(String.valueOf(result)) + "%" + "OFF");
             holder.layout_percentage_discount.setVisibility(View.VISIBLE);
         }
 

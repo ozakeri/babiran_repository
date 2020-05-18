@@ -1024,10 +1024,10 @@ public class MainActivity extends AppCompatActivity {
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
         menu.add(new Menu("رویداد ها و مطالب گوناگون", R.drawable.ic_news));
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
-        menu.add(new Menu("اشتراک گذاری", R.drawable.babiran));
+        menu.add(new Menu("اشتراک گذاری", R.drawable.share));
         menu.add(new Menu("سوالات متداول", R.drawable.ic_ansqus));
         menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
-        menu.add(new Menu("درباره ما", R.drawable.babiran));
+        //menu.add(new Menu("درباره ما", R.drawable.babiran));
         // menu.add(new Menu("تنظیمات", R.drawable.ic_info_outline_black_24dp));
         menu.add(new Menu("خروج از حساب کاربری", R.drawable.ic_exit___));
         adapter = new MenuAdapter(menu, getApplicationContext());
@@ -1178,8 +1178,8 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
 
-                        // break;
-                    case 11:
+                         break;
+                    /*case 11:
                         //about
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.AboutContainer, new AboutFragment()).commit();
@@ -1192,12 +1192,12 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
 
-                        break;
+                        break;*/
                    /* case 12:
                       //  startActivity(new Intent(MainActivity.this, SettingActivity.class));
 
                         break;*/
-                    case 12:
+                    case 11:
 
                         //khoroj
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
