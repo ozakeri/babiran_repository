@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
         editor1.putBoolean("getProduct", false);
         editor1.apply();*/
 
+        txt_credit = findViewById(R.id.txt_credit);
+        txt_credit.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+
         AppConfig.fragmentManager = this.getSupportFragmentManager();
         final boolean b = AppController.getInstance().getSharedPreferences().getBoolean("getProduct", false);
         if (b) {
@@ -760,7 +763,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void getCreditRequest() {
 
-        txt_credit = (MyTextView) findViewById(R.id.txt_credit);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
         if (id.equals("")) {
@@ -783,7 +785,7 @@ public class MainActivity extends AppCompatActivity {
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
-                                    txt_credit.setText(Util.latinNumberToPersian(Util.convertToFormalString((m.group()))));
+                                    txt_credit.setText(Util.convertToFormalString((m.group())));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

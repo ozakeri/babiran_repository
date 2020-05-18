@@ -356,7 +356,7 @@ public class ProductFragment extends Fragment {
             providerCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products, "notcat")).commit();
+                    getCategory(product.getCategory_id());
                 }
             });
 
@@ -631,26 +631,29 @@ public class ProductFragment extends Fragment {
         alert.show();
     }
 
-    private void getCategory() {
-        products = null;
-        v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-        MainActivity.productlist.setVisibility(View.VISIBLE);
-        queue = Volley.newRequestQueue(getActivity());
-        String url = AppConfig.BASE_URL + "api/main/search";
+    public void getCategory(final String category_id) {
+
+
+        //  getActivity().findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
+        //Volley Start
+
         final ProgressDialog d = new ProgressDialog(getActivity());
         d.setMessage("چند لحظه صبرکنید ...");
         d.setIndeterminate(true);
         d.setCancelable(false);
         d.show();
 
-        System.out.println("ProductListFragment==="+url);
+        queue = Volley.newRequestQueue(getActivity());
+        String url = AppConfig.BASE_URL + "api/main/search";
+        System.out.println("url=====" + url);
+
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        d.dismiss();
                         try {
+                            d.dismiss();
+                            Log.e("response=========", response);
                             ArrayList<Product> products = new ArrayList<>();
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -684,23 +687,23 @@ public class ProductFragment extends Fragment {
 
                                     }
                                 }
-                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
 
+                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
                                 products.add(product);
                             }
                             if (products.size() > 0) {
-                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-
-                                AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products)).commit();
+                                //   getActivity().findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+                                MainActivity.product.setVisibility(View.INVISIBLE);
+                                AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products, "notcat")).commit();
 
                             } else {
-                                v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
-                                //Toast.makeText(getActivity(),"آگهی با ویژگی های مشخص شده پیدا نشد",Toast.LENGTH_SHORT).show();
+                                //   getActivity().findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
+
 
                                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                                alertDialog.setTitle("محصول با ویژگی های مشخص شده پیدا نشد");
+                                alertDialog.setTitle("محصولِی در این دسته بندی موجود نیست ");
                                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
@@ -730,25 +733,23 @@ public class ProductFragment extends Fragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-                if (id != null) {
-                    Log.d("cat id", id);
-                    params.put("category_id", id);
-                    System.out.println("category_id===" + id);
-
+                if (category_id != null && !category_id.equals("") && !category_id.equals("null")) {
+                    params.put("category_id", category_id);
                 }
+
 
                 return params;
             }
 
         };
-
-        jsonArrayRequest.setTag(TAG);
+        jsonArrayRequest.setTag("TAG");
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 400000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Add the request to the RequestQueue.
         queue.add(jsonArrayRequest);
+
 
         //Volley End
     }

@@ -132,6 +132,7 @@
            android:layout_height="wrap_content"
            android:layout_marginTop="30dp"
            android:gravity="center"
+           android:textSize="18sp"
            android:text="5000"
            android:textColor="@color/white" />
 
