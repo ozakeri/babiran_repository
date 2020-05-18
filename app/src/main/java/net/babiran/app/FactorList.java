@@ -1,5 +1,6 @@
 package net.babiran.app;
 
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +10,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
@@ -37,6 +41,7 @@ import Models.Feature;
 import Models.Image;
 import Models.Product;
 import tools.AppConfig;
+import ui_elements.MyTextView;
 
 /**
  * Created by Mohammad on 7/15/2017.
@@ -62,6 +67,18 @@ public class FactorList extends AppCompatActivity {
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(1);
+
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            System.out.println("===uri===" + uri);
+            if (uri != null) {
+                String success = uri.getQueryParameter("success");
+                showGuideDialog(success);
+                System.out.println("===success===" + success);
+            }
+        }
+
 
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -422,5 +439,31 @@ public class FactorList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+    public void showGuideDialog(String success) {
+        final Dialog alert = new Dialog(FactorList.this);
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.setContentView(R.layout.custom_dialog_after_pay);
+        TextView buttonTextView = alert.findViewById(R.id.txt_action);
+        MyTextView txt_status = alert.findViewById(R.id.txt_status);
+        AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
 
+
+        if (success != null && success.equals("1")) {
+            statusIcon.setBackgroundResource(R.drawable.success);
+            txt_status.setText("پرداخت با موفقیت انجام شد");
+
+        } else {
+            statusIcon.setBackgroundResource(R.drawable.unsucceess);
+            txt_status.setText("پرداخت نا موفق");
+        }
+
+        buttonTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+    }
 }

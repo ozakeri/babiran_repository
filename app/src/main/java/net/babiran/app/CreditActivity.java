@@ -2,6 +2,7 @@ package net.babiran.app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -9,9 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,20 +68,6 @@ public class CreditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credit);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
-
-        Intent intent = getIntent();
-        //if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-            Uri uri = Uri.parse("babiran.net.app://1/movafag");
-            String lastPathSegment = uri.getLastPathSegment();
-            if (lastPathSegment.equals("movafag")){
-                Toast.makeText(CreditActivity.this, "movafag", Toast.LENGTH_LONG).show();
-            }else if (lastPathSegment.equals("namovafag")){
-                Toast.makeText(CreditActivity.this, "namovafag", Toast.LENGTH_LONG).show();
-            }
-
-            System.out.println("====uri====" + lastPathSegment);
-       // }
-
         String credit = AppController.getInstance().getSharedPreferences().getString("credit", "");
         edt_price = findViewById(R.id.edt_price);
         radioButton1 = findViewById(R.id.option_first);
@@ -87,6 +76,17 @@ public class CreditActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         btn_pay = findViewById(R.id.btn_pay);
         //edt_price.setEnabled(false);
+
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            System.out.println("===uri===" + uri);
+            if (uri != null) {
+                String success = uri.getQueryParameter("success");
+                showGuideDialog(success);
+                System.out.println("===success===" + success);
+            }
+        }
 
 
         getUserId();
@@ -285,6 +285,34 @@ public class CreditActivity extends AppCompatActivity {
     public String formatNumber(double number) {
         DecimalFormat format = new DecimalFormat("#,###");
         return format.format(number);
+    }
+
+    public void showGuideDialog(String success) {
+        final Dialog alert = new Dialog(CreditActivity.this);
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.setContentView(R.layout.custom_dialog_after_pay);
+        TextView buttonTextView = alert.findViewById(R.id.txt_action);
+        MyTextView txt_status = alert.findViewById(R.id.txt_status);
+        AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
+
+
+        if (success != null && success.equals("1")) {
+            statusIcon.setBackgroundResource(R.drawable.success);
+            txt_status.setText("پرداخت با موفقیت انجام شد");
+
+        } else {
+            statusIcon.setBackgroundResource(R.drawable.unsucceess);
+            txt_status.setText("پرداخت نا موفق");
+        }
+
+        buttonTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
     }
 }
 

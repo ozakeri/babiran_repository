@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyMesa;
@@ -29,6 +30,7 @@ import net.babiran.app.Sharj.SharjHistoryActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import ui_elements.MyTextView;
 
 public class SharjActivity extends AppCompatActivity {
     private String Mablagh = "88", Type = "88", operator = "88"; //Type=1=>mostaghim   && operator= 1 =>irancel ,2=>hamrahaval ,3=>rightel
@@ -57,6 +59,18 @@ public class SharjActivity extends AppCompatActivity {
 
 ////////////////////////////////////////////
         INIT();
+
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            System.out.println("===uri===" + uri);
+            if (uri != null) {
+                String success = uri.getQueryParameter("success");
+                showGuideDialog(success);
+                System.out.println("===success===" + success);
+            }
+        }
+
     }
 
 
@@ -263,6 +277,34 @@ public class SharjActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void showGuideDialog(String success) {
+        final Dialog alert = new Dialog(SharjActivity.this);
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.setContentView(R.layout.custom_dialog_after_pay);
+        TextView buttonTextView = alert.findViewById(R.id.txt_action);
+        MyTextView txt_status = alert.findViewById(R.id.txt_status);
+        AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
+
+
+        if (success != null && success.equals("1")) {
+            statusIcon.setBackgroundResource(R.drawable.success);
+            txt_status.setText("پرداخت با موفقیت انجام شد");
+
+        } else {
+            statusIcon.setBackgroundResource(R.drawable.unsucceess);
+            txt_status.setText("پرداخت نا موفق");
+        }
+
+        buttonTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
     }
 }
 
