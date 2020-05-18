@@ -27,20 +27,26 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Adapters.FactorListAdapter;
+import Handlers.DatabaseHandler;
+import Models.EventbusModel;
 import Models.Factor;
 import Models.Feature;
 import Models.Image;
 import Models.Product;
 import tools.AppConfig;
+import tools.MyPushListener;
 import ui_elements.MyTextView;
 
 /**
@@ -56,6 +62,7 @@ public class FactorList extends AppCompatActivity {
     ArrayList<Product> productArrayList;
     ArrayList<Factor> factorArrayList;
     private String What = AppConfig.NULLBASKET;
+    private DatabaseHandler db;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -70,6 +77,7 @@ public class FactorList extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            new Thread(new Task()).start();
             Uri uri = intent.getData();
             System.out.println("===uri===" + uri);
             if (uri != null) {
@@ -131,6 +139,8 @@ public class FactorList extends AppCompatActivity {
 
             }
         });
+
+        getCreditRequest();
     }
 
 
@@ -439,6 +449,7 @@ public class FactorList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
     public void showGuideDialog(String success) {
         final Dialog alert = new Dialog(FactorList.this);
         alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -465,5 +476,57 @@ public class FactorList extends AppCompatActivity {
         });
         alert.setCanceledOnTouchOutside(false);
         alert.show();
+    }
+
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+            db = new DatabaseHandler(getApplicationContext());
+            if (db.getRowCount() > 0) {
+                HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+                id = userDetailsHashMap.get("id");
+            }
+        }
+    }
+
+    public void getCreditRequest() {
+
+        RequestQueue queue = Volley.newRequestQueue(FactorList.this);
+
+        if (id.equals("")) {
+            id = "-1";
+        }
+
+        final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            try {
+                                String credit = response.getString("credit");
+
+                                if (response.getString("credit") == null){
+                                    credit = "0";
+                                }
+                                EventBus.getDefault().post(new EventbusModel(credit));
+                                System.out.println("====credit====" + credit);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+
     }
 }

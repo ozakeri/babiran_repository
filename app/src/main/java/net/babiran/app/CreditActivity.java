@@ -34,6 +34,7 @@ import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,9 +44,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Handlers.DatabaseHandler;
+import Models.EventbusModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
+import tools.GlobalValues;
 import tools.NumberTextWatcherForThousand;
 import tools.Util;
 import ui_elements.MyTextView;
@@ -243,13 +246,16 @@ public class CreditActivity extends AppCompatActivity {
                         if (response != null) {
                             try {
                                 String credit = response.getString("credit");
+
                                 if (response.getString("credit") == null) {
                                     credit = "0";
                                 }
+                                EventBus.getDefault().post(new EventbusModel(credit));
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
                                     txt_validity.setText(Util.convertToFormalString((m.group())));
+
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

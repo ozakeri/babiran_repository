@@ -62,6 +62,8 @@ import com.google.gson.reflect.TypeToken;
 import net.babiran.app.Rss.FavListActivity;
 import net.babiran.app.Rss.MainListActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,12 +87,14 @@ import Fragments.ProductFragment;
 import Fragments.ProductListFragment;
 import Fragments.SearchFrgment;
 import Handlers.DatabaseHandler;
+import Models.EventbusModel;
 import Models.Feature;
 import Models.Image;
 import Models.Menu;
 import Models.Product;
 import co.ronash.pushe.Pushe;
 import tools.AppConfig;
+import tools.GlobalValues;
 import tools.NotificationUtils;
 import tools.Util;
 import ui_elements.MyTextView;
@@ -779,9 +783,11 @@ public class MainActivity extends AppCompatActivity {
                         if (response != null) {
                             try {
                                 String credit = response.getString("credit");
+
                                 if (response.getString("credit") == null){
                                     credit = "0";
                                 }
+                                EventBus.getDefault().post(new EventbusModel(credit));
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
@@ -1251,9 +1257,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                     } else {
                         drawerLayout.openDrawer(Gravity.RIGHT);
-                        getCreditRequest();
                     }
-
                 }
                 return false;
             }
@@ -1332,20 +1336,27 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Subscribe
+    public void getEvent(EventbusModel model) {
+        System.out.println("=====getCredit=====" + model.getCredit());
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(model.getCredit());
+        while (m.find()) {
+            txt_credit.setText(Util.convertToFormalString((m.group())));
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

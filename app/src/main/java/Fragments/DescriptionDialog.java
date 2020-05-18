@@ -27,6 +27,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -34,9 +35,11 @@ import com.google.gson.reflect.TypeToken;
 
 import net.babiran.app.BlankAcct;
 import net.babiran.app.FactorList;
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.commnets.UNIQ;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,11 +47,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Handlers.DatabaseHandler;
+import Models.EventbusModel;
 import Models.Product;
 import tools.AppConfig;
 import tools.AudioRecorder;
+import tools.Util;
 import ui_elements.MyEditText;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -245,20 +252,16 @@ public class DescriptionDialog extends DialogFragment {
                         d.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            Log.e("jsonObject====", jsonObject.toString());
                             if (jsonObject.getString("success").equals("1")) {
-                                System.out.println("url-=-=-=-=-=-" + url);
-                                System.out.println("credit-=-=-=-=-=-" + credit);
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
                                 startActivityForResult(browserIntent, REQUEST_CODE_PAY);
                             }
 
                             if (jsonObject.getString("success").equals("3")) {
-                                System.out.println("url-=-=-=-=-=-" + url);
-                                System.out.println("credit-=-=-=-=-=-" + credit);
                                 getDialog().dismiss();
                                 getFactorId();
                             }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
