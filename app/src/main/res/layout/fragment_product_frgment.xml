@@ -278,23 +278,15 @@
                                     android:orientation="horizontal">
 
                                     <ui_elements.MyTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:inputType="textMultiLine"
-                                        android:text="دسته بندی : "
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
-
-                                    <ui_elements.MyTextView
                                         android:id="@+id/providerCategory"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="6dp"
                                         android:inputType="textMultiLine"
-                                        android:text="---"
+                                        android:text="دسته بندی این محصول"
                                         android:textColor="@color/blueDark"
-                                        android:textSize="12sp" />
+                                        android:textStyle="bold"
+                                        android:textSize="14sp" />
 
                                 </LinearLayout>
 

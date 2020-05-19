@@ -3,6 +3,7 @@ package net.babiran.app;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +15,9 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ public class SharjActivity extends AppCompatActivity {
     private EditText editText;
     private TextView tx;
     public static final int REQUEST_CODE_PAY = 101;
+    private RelativeLayout layout_irancell, layout_hamrah, layout_ritel;
+    private LinearLayout layout_afterSelect;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -75,13 +80,16 @@ public class SharjActivity extends AppCompatActivity {
 
 
     private void INIT() {
-        Irancell = (ImageView) findViewById(R.id.irancel);
-        Hamrah = (ImageView) findViewById(R.id.hamrahaval);
-        Righttel = (ImageView) findViewById(R.id.righttel);
-
+        Irancell = findViewById(R.id.irancel);
+        Hamrah = findViewById(R.id.hamrahaval);
+        Righttel = findViewById(R.id.righttel);
+        layout_irancell = findViewById(R.id.layout_irancell);
+        layout_hamrah = findViewById(R.id.layout_hamrah);
+        layout_ritel = findViewById(R.id.layout_ritel);
+        layout_afterSelect = findViewById(R.id.layout_afterSelect);
         editText = (EditText) findViewById(R.id.ed_number);
         tx = (TextView) findViewById(R.id.txt_show_op);
-
+        editText.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
         History = (LinearLayout) findViewById(R.id.kdjfnbgkjdfnkj);
         History.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +122,18 @@ public class SharjActivity extends AppCompatActivity {
 
     private void RadioBTNMablagh() {
         RadioGroup rg = (RadioGroup) findViewById(R.id.myRadioGroup);
+        RadioButton r1 = findViewById(R.id.hezar);
+        RadioButton r2 = findViewById(R.id.dohezar);
+        RadioButton r3 = findViewById(R.id.hezar5);
+        RadioButton r4 = findViewById(R.id.hezar10);
+        RadioButton mostaghim = findViewById(R.id.mostaghim);
+        RadioButton ghiremostaghim = findViewById(R.id.ghiremostaghim);
+        r1.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
+        r2.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
+        r3.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
+        r4.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
+        mostaghim.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
+        ghiremostaghim.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -161,28 +181,40 @@ public class SharjActivity extends AppCompatActivity {
     }
 
     private void opretator() {
-        Irancell.setOnClickListener(new View.OnClickListener() {
+        layout_irancell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                layout_afterSelect.setVisibility(View.VISIBLE);
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
+                layout_irancell.setBackgroundResource(R.color.green_transparent);
+                layout_hamrah.setBackgroundResource(0);
+                layout_ritel.setBackgroundResource(0);
             }
         });
-        Hamrah.setOnClickListener(new View.OnClickListener() {
+        layout_hamrah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                layout_afterSelect.setVisibility(View.VISIBLE);
                 operator = "2";
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
+                layout_hamrah.setBackgroundResource(R.color.green_transparent);
+                layout_irancell.setBackgroundResource(0);
+                layout_ritel.setBackgroundResource(0);
             }
         });
-        Righttel.setOnClickListener(new View.OnClickListener() {
+        layout_ritel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                layout_afterSelect.setVisibility(View.VISIBLE);
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
+                layout_ritel.setBackgroundResource(R.color.green_transparent);
+                layout_irancell.setBackgroundResource(0);
+                layout_hamrah.setBackgroundResource(0);
             }
         });
     }

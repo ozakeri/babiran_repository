@@ -88,7 +88,13 @@ public class NewProListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText(productArray.get(i).name);
+        String s =productArray.get(i).name;
+        if (s.length() <= 20) {
+            holder.name.setText(s);
+        } else {
+            holder.name.setText(s.substring(0,20)+"...");
+        }
+
         if(isEven(i))
         {
             holder.item_Button.setBackgroundResource(R.color.bac);

@@ -21,6 +21,7 @@
     <color name="yellow">#d9d24c</color>
     <color name="orange">#FFD76F07</color>
     <color name="green">#13ae2d</color>
+    <color name="green_transparent">#7C13AE2D</color>
     <color name="greenDark">#035311</color>
     <color name="blueDark">#DD2C00</color>
     <color name="txt_color">#6f6f6f</color>

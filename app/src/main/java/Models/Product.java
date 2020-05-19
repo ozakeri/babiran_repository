@@ -70,6 +70,23 @@ public class Product {
         this.providerName = providerName;
     }
 
+    public Product(String category_id, String id, String name, String description, String price, String stock, String count, String dis_price
+            , ArrayList<Models.Image> images,
+                   ArrayList<Feature> features, String providerName) {
+
+        this.id = id;
+        this.category_id = category_id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.count = count;
+        this.dis_price = dis_price;
+        this.images = images;
+        this.features = features;
+        this.providerName = providerName;
+    }
+
     public Product() {
 
     }

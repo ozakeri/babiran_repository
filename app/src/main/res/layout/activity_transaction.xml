@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
@@ -117,35 +116,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/Black"
-                        android:textStyle="bold"
-                        android:text="شماره همراه خود را وارد نمایید :"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp">
-                    <EditText
-                        android:id="@+id/ed_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="09123456789"
-                        android:gravity="right"
-                        android:maxLength="11"
-                        android:inputType="number"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
@@ -170,7 +140,7 @@
                         android:textColor="@color/blueDark"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="10dp"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:layout_marginRight="10dp"
                         android:textStyle="bold"
                         android:visibility="invisible"
@@ -184,149 +154,270 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    >
-                    <ImageView
-                        android:id="@+id/irancel"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/irancell"/>
-                    <ImageView
-                        android:id="@+id/hamrahaval"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/hamrahaval"/>
-                    <ImageView
-                        android:id="@+id/righttel"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_margin="5dp"
-                        android:src="@drawable/ritell"/>
+                    android:orientation="vertical">
+                   <androidx.cardview.widget.CardView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_margin="10dp">
+                       <RelativeLayout
+                           android:id="@+id/layout_irancell"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content">
+                           <ImageView
+                               android:id="@+id/irancel"
+                               android:layout_width="60dp"
+                               android:layout_height="60dp"
+                               android:layout_margin="5dp"
+                               android:src="@drawable/irancell"
+                               android:layout_alignParentRight="true"/>
+
+                           <ui_elements.MyTextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_centerInParent="true"
+                               android:textColor="@color/black"
+                               android:textSize="18sp"
+                               android:text="شارژ ایرانسل"/>
+                       </RelativeLayout>
+
+                   </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
+                        <RelativeLayout
+                            android:id="@+id/layout_hamrah"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/hamrahaval"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/hamrahaval"
+                                android:layout_alignParentRight="true"/>
+
+                            <ui_elements.MyTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:text="شارژ همراه اول"/>
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
+                        <RelativeLayout
+                            android:id="@+id/layout_ritel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/righttel"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_margin="5dp"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/ritell" />
+
+                            <ui_elements.MyTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:text="شارژ رایتل"/>
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_afterSelect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:layout_margin="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/Black"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="10dp"
+                        android:gravity="right"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/Black"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textStyle="bold"
+                            android:text="مقدار شارژ خود را انتخاب نمایید : "/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:textStyle="bold"
-                        android:text="مقدار شارژ خود را انتخاب نمایید : "/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-                    <RadioGroup
-                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/text"
+                            android:id="@+id/myRadioGroup"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/hezar"
+                                android:textSize="18sp"
+                                android:text="1,000" />
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/dohezar"
+                                android:textSize="18sp"
+                                android:text="2,000" />
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/hezar5"
+                                android:textSize="18sp"
+                                android:text="5,000" />
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:id="@+id/hezar10"
+                                android:textSize="18sp"
+                                android:text="10,000" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/text"
-                        android:id="@+id/myRadioGroup"
-                        android:orientation="horizontal"
-                        >
-
-                        <RadioButton
+                        android:gravity="right"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="10dp">
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/hezar"
-                            android:text="1,000" />
+                            android:textColor="@color/Black"
+                            android:textStyle="bold"
+                            android:text="شماره همراه خود را وارد نمایید :"/>
+                    </LinearLayout>
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/dohezar"
-                            android:text="2,000" />
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/hezar5"
-                            android:text="5,000" />
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/hezar10"
-                            android:text="10,000" />
-
-                    </RadioGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
-                    <RadioGroup
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/text"
-                        android:id="@+id/myRadi"
-                        android:orientation="horizontal"
-                        >
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp">
 
-                        <RadioButton
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/ed_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_margin="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:hint="*********09"
+                            android:textColorHint="@color/gray_light"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+                        <RadioGroup
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/mostaghim"
-                            android:layout_margin="10dp"
-                            android:text="شارژ  مستقیم"  />
+                            android:layout_below="@+id/text"
+                            android:id="@+id/myRadi"
+                            android:orientation="horizontal"
+                            >
 
-                        <RadioButton
-                            android:enabled="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/ghiremostaghim"
-                            android:layout_margin="10dp"
-                            android:text="شارژ غیر مستقیم" />
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/mostaghim"
+                                android:layout_margin="10dp"
+                                android:text="شارژ  مستقیم"  />
+
+                            <RadioButton
+                                android:enabled="false"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ghiremostaghim"
+                                android:layout_margin="10dp"
+                                android:text="شارژ غیر مستقیم" />
 
 
 
-                    </RadioGroup>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/pymeny_sharj"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center">
+                        <RelativeLayout
+                            android:background="@color/blueDark"
+                            android:id="@+id/compelete"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_margin="5dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true">
+
+                            <ui_elements.MyTextView
+                                android:id="@+id/FinishText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="پرداخت"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:layout_centerInParent="true"/>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
 
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/pymeny_sharj"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="40dp"
-                android:gravity="center">
-                <RelativeLayout
-                    android:background="@color/blueDark"
-                    android:id="@+id/compelete"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true">
 
-                    <ui_elements.MyTextView
-                        android:id="@+id/FinishText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="پرداخت"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:layout_centerInParent="true"/>
-
-                </RelativeLayout>
-            </LinearLayout>
 
 
         </LinearLayout>

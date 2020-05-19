@@ -89,7 +89,12 @@ public class DisProListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText(products.get(i).name);
+        String s =products.get(i).name;
+        if (s.length() <= 20) {
+            holder.name.setText(s);
+        } else {
+            holder.name.setText(s.substring(0,20)+"...");
+        }
 
         Log.e("Pos","P  "+i);
 
