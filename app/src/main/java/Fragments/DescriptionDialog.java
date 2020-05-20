@@ -220,6 +220,7 @@ public class DescriptionDialog extends DialogFragment {
                     descriptionFactor = "سایر";
                 }
                 Log.e("descript", descriptionFactor);
+                Log.e("selected_Pay==", selected_Pay);
                 completeBUY(id, address, productArray, selected_Pay, credit, "");
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
