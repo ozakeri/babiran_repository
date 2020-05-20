@@ -351,6 +351,7 @@ public class ProductFragment extends Fragment {
 
 
             name.setText(product.name);
+            System.out.println("getCategory_id========="+product.getCategory_id());
             providerName.setText(product.providerName);
             //providerCategory.setText(product.getCategory_id());
             if (product.getCategory_id() != null){

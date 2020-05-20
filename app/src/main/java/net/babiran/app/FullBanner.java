@@ -102,7 +102,7 @@ public class FullBanner extends Fragment {
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray  = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
-                                Log.e("response ==cccc ====",response);
+                                Log.e("responsecccc====",response);
                                 JSONArray features = c.getJSONArray("features") ;
                                 for(int fea = 0 ; fea < features.length() ; fea ++){
                                     try{
@@ -130,7 +130,8 @@ public class FullBanner extends Fragment {
                                     }
                                 }
 
-                                Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                System.out.println("category_id1=====" + c.getString("category_id1"));
+                                Product  product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray);
 
                                 products.add(product);

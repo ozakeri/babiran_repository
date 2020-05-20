@@ -15,9 +15,7 @@ public class Product {
     public String stock;
     public String count;
     public String dis_price;
-
     public String providerName;
-
     public int rate;
     public ArrayList<Feature> features;
     public ArrayList<Models.Image> images;

@@ -93,6 +93,7 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
+                System.out.println("getCategory_id=-=-=-=" + categories.get(i).getCategory_id());
                AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
                 System.out.println("iiiii====" + i);
 
