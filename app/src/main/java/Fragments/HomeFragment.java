@@ -1398,7 +1398,7 @@ public class HomeFragment extends Fragment {
             imagesArray = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.specialPro.getJSONObject(i);
-                System.out.println("ccccccccccc" + c.toString());
+                System.out.println("Special=====" + c.toString());
 
                 JSONArray features = c.getJSONArray("features");
                 for (int fea = 0; fea < features.length(); fea++) {

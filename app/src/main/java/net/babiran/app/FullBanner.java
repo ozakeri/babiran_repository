@@ -102,7 +102,7 @@ public class FullBanner extends Fragment {
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray  = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
-
+                                Log.e("response ==cccc ====",response);
                                 JSONArray features = c.getJSONArray("features") ;
                                 for(int fea = 0 ; fea < features.length() ; fea ++){
                                     try{

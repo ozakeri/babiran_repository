@@ -444,9 +444,9 @@ public class BasketListFragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
                             //    firstChk.setChecked(false);
-                            //secondChk.setChecked(true);
-                            //_3Chk.setChecked(false);
-                            Toast.makeText(getActivity(), "فعلا امکان پرداخت از طریق کارتخوان بی سیم مقدور نمی باشد", Toast.LENGTH_LONG).show();
+                            secondChk.setChecked(true);
+                            _3Chk.setChecked(false);
+                           // Toast.makeText(getActivity(), "فعلا امکان پرداخت از طریق کارتخوان بی سیم مقدور نمی باشد", Toast.LENGTH_LONG).show();
 
                         }
                     });
@@ -454,7 +454,7 @@ public class BasketListFragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
                             //           firstChk.setChecked(false);
-                            //           secondChk.setChecked(false);
+                            secondChk.setChecked(false);
                             _3Chk.setChecked(true);
                             checkbox_credit.setChecked(false);
 
@@ -496,7 +496,7 @@ public class BasketListFragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
                             //           firstChk.setChecked(false);
-                            //           secondChk.setChecked(false);
+                            secondChk.setChecked(false);
                             checkbox_credit.setChecked(true);
                             _3Chk.setChecked(false);
 
@@ -504,7 +504,6 @@ public class BasketListFragment extends Fragment implements
                     });
 
 
-                    secondChk.setClickable(false);
                     //     firstChk.setClickable(false);
                     //_3Chk.setClickable(false);
 
@@ -518,8 +517,8 @@ public class BasketListFragment extends Fragment implements
                     secondChk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //_3Chk.setChecked(false);
-                            Toast.makeText(getActivity(), "فعلا امکان پرداخت از طریق کارتخوان بی سیم مقدور نمی باشد", Toast.LENGTH_LONG).show();
+                            _3Chk.setChecked(false);
+                            //Toast.makeText(getActivity(), "فعلا امکان پرداخت از طریق کارتخوان بی سیم مقدور نمی باشد", Toast.LENGTH_LONG).show();
                         }
                     });
 

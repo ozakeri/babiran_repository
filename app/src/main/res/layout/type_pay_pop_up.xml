@@ -56,8 +56,7 @@
                 android:id="@+id/secondCheck_pay"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="2"
-                android:enabled="false"/>
+                android:layout_weight="2" />
 
         </LinearLayout>
 

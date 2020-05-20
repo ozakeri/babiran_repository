@@ -1018,7 +1018,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("کیف پول", R.drawable.credit));
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
-        menu.add(new Menu("خرید شارژ", R.drawable.shaje_icon));
+        menu.add(new Menu("شارژ سیمکارت اعتباری", R.drawable.shaje_icon));
         menu.add(new Menu("دسته بندی", R.drawable.cats));
         menu.add(new Menu("سبد خرید", R.drawable.sabad2));
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
