@@ -142,7 +142,7 @@ public class BigTile extends Fragment {
                                     }
                                 }
 
-                                Product  product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                                Product  product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray);
 
                                 products.add(product);

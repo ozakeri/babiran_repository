@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager, viewPager2;
     CircleIndicator customIndicator, customIndicator2;
     CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
-    RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative, footer_relativeLayout;
+    RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative, footer_relativeLayout,special,discount,newpro,selltop;
 
     public LinearLayout horizontal1, horizontal2, secondHorizontal, footer_linearLayout;
 
@@ -153,6 +153,10 @@ public class HomeFragment extends Fragment {
 
         specialTondMarketRelative = (RelativeLayout) v.findViewById(R.id.specialTondMarketRelative);
         footer_relativeLayout = (RelativeLayout) v.findViewById(R.id.footer_relativeLayout);
+        special = v.findViewById(R.id.special);
+        discount = v.findViewById(R.id.discount);
+        newpro = v.findViewById(R.id.newpro);
+        selltop = v.findViewById(R.id.selltop);
 
         firstBanner = (CardView) v.findViewById(R.id.firstbanner);
         secondbanner = (CardView) v.findViewById(R.id.secondbanner);
@@ -401,10 +405,14 @@ public class HomeFragment extends Fragment {
         disSwipeRefreshLayout.setVisibility(View.GONE);
         TopProList.setVisibility(View.INVISIBLE);
         NewProList.setVisibility(View.INVISIBLE);
-        laytopsell.setVisibility(View.INVISIBLE);
-        layspecial.setVisibility(View.VISIBLE);
-        laynew.setVisibility(View.INVISIBLE);
-        laydiscount.setVisibility(View.INVISIBLE);
+       // laytopsell.setVisibility(View.INVISIBLE);
+        selltop.setBackgroundResource(R.drawable.tab_background);
+        //layspecial.setVisibility(View.VISIBLE);
+        special.setBackgroundResource(R.drawable.tab_background_selected);
+        //laynew.setVisibility(View.INVISIBLE);
+        newpro.setBackgroundResource(R.drawable.tab_background);
+        //laydiscount.setVisibility(View.INVISIBLE);
+        discount.setBackgroundResource(R.drawable.tab_background);
 
 
         getSlide1();
@@ -421,7 +429,7 @@ public class HomeFragment extends Fragment {
         v.findViewById(R.id.progressLayout).setVisibility(View.INVISIBLE);
 
 
-        v.findViewById(R.id.special).setOnClickListener(new View.OnClickListener() {
+        special.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 specialRelative.setVisibility(View.VISIBLE);
@@ -437,10 +445,14 @@ public class HomeFragment extends Fragment {
                 footer_relativeLayout.setVisibility(View.VISIBLE);
 
                 cardTextHome.setText("شاید جالب باشد");
-                laytopsell.setVisibility(View.INVISIBLE);
-                layspecial.setVisibility(View.VISIBLE);
-                laynew.setVisibility(View.INVISIBLE);
-                laydiscount.setVisibility(View.INVISIBLE);
+                //laytopsell.setVisibility(View.INVISIBLE);
+                selltop.setBackgroundResource(R.drawable.tab_background);
+                //layspecial.setVisibility(View.VISIBLE);
+                special.setBackgroundResource(R.drawable.tab_background_selected);
+                //laynew.setVisibility(View.INVISIBLE);
+                newpro.setBackgroundResource(R.drawable.tab_background);
+                //laydiscount.setVisibility(View.INVISIBLE);
+                discount.setBackgroundResource(R.drawable.tab_background);
 
                 DisProList.setVisibility(View.INVISIBLE);
                 NewProList.setVisibility(View.INVISIBLE);
@@ -452,14 +464,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        v.findViewById(R.id.discount).setOnClickListener(new View.OnClickListener() {
+        discount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                laytopsell.setVisibility(View.INVISIBLE);
-                layspecial.setVisibility(View.INVISIBLE);
-                laynew.setVisibility(View.INVISIBLE);
-                laydiscount.setVisibility(View.VISIBLE);
+               // laytopsell.setVisibility(View.INVISIBLE);
+                selltop.setBackgroundResource(R.drawable.tab_background);
+                //layspecial.setVisibility(View.INVISIBLE);
+                special.setBackgroundResource(R.drawable.tab_background);
+               // laynew.setVisibility(View.INVISIBLE);
+                newpro.setBackgroundResource(R.drawable.tab_background);
+                //laydiscount.setVisibility(View.VISIBLE);
+                discount.setBackgroundResource(R.drawable.tab_background_selected);
 
                 proSwipeRefreshLayout.setVisibility(View.GONE);
                 topSwipeRefreshLayout.setVisibility(View.GONE);
@@ -511,15 +527,19 @@ public class HomeFragment extends Fragment {
         }
 
 
-        v.findViewById(R.id.newpro).setOnClickListener(new View.OnClickListener() {
+        newpro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                laytopsell.setVisibility(View.INVISIBLE);
-                layspecial.setVisibility(View.INVISIBLE);
-                laynew.setVisibility(View.VISIBLE);
-                laydiscount.setVisibility(View.INVISIBLE);
+                //laytopsell.setVisibility(View.INVISIBLE);
+                selltop.setBackgroundResource(R.drawable.tab_background);
+                //layspecial.setVisibility(View.INVISIBLE);
+                special.setBackgroundResource(R.drawable.tab_background);
+                //laynew.setVisibility(View.VISIBLE);
+                newpro.setBackgroundResource(R.drawable.tab_background_selected);
+                //laydiscount.setVisibility(View.INVISIBLE);
+                discount.setBackgroundResource(R.drawable.tab_background);
 
                 proSwipeRefreshLayout.setVisibility(View.VISIBLE);
                 topSwipeRefreshLayout.setVisibility(View.GONE);
@@ -555,7 +575,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        v.findViewById(R.id.selltop).setOnClickListener(new View.OnClickListener() {
+       selltop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -568,10 +588,14 @@ public class HomeFragment extends Fragment {
                 cardTextHome.setText("پر فروش ترین ها");
 
                 */
-                laytopsell.setVisibility(View.VISIBLE);
-                layspecial.setVisibility(View.INVISIBLE);
-                laynew.setVisibility(View.INVISIBLE);
-                laydiscount.setVisibility(View.INVISIBLE);
+                //laytopsell.setVisibility(View.VISIBLE);
+                selltop.setBackgroundResource(R.drawable.tab_background_selected);
+                //layspecial.setVisibility(View.INVISIBLE);
+                special.setBackgroundResource(R.drawable.tab_background);
+                //laynew.setVisibility(View.INVISIBLE);
+                newpro.setBackgroundResource(R.drawable.tab_background);
+               // laydiscount.setVisibility(View.INVISIBLE);
+                discount.setBackgroundResource(R.drawable.tab_background);
 
                 proSwipeRefreshLayout.setVisibility(View.GONE);
                 topSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -1426,6 +1450,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+
+                //System.out.println("homecategory_id1==" + c.getString("category_id1"));
                 Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 

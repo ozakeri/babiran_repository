@@ -354,7 +354,7 @@ public class ProductFragment extends Fragment {
             System.out.println("getCategory_id========="+product.getCategory_id());
             providerName.setText(product.providerName);
             //providerCategory.setText(product.getCategory_id());
-            if (product.getCategory_id() != null){
+            if (product.getCategory_id() == null){
                 providerCategory.setVisibility(View.GONE);
             }else {
                 providerCategory.setVisibility(View.VISIBLE);
