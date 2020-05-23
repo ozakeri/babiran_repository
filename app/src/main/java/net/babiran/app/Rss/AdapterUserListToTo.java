@@ -1,6 +1,7 @@
 package net.babiran.app.Rss;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,6 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
     {
         this.mContext = mContext;
         this.listProducts = listProducts;
-
-
-        ;
-
     }
 
 
@@ -57,6 +54,17 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
         BLOGME list = listProducts.get(position);
         Picasso.with(mContext).load(list.image_link).into(holder.imageView);
         holder.SeenP.setText(list.titr);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListtoListActivity.ID_ME = list.id;
+                Intent intent = new Intent(mContext, ShowRssActivity.class);
+                mContext.startActivity(intent);
+                System.out.println("ID_ME====" + ListtoListActivity.ID_ME);
+            }
+        });
+
 
     }
 

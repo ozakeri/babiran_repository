@@ -103,7 +103,7 @@ public class CreditActivity extends AppCompatActivity {
         radioButton1.setChecked(true);
 
         //edt_price.setText(Util.PersianNumber("10000"));
-        edt_price.setText(Util.convertToFormalString(String.valueOf((10000))));
+        //edt_price.setText(Util.convertToFormalString(String.valueOf((10000))));
         radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
         radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("100000"))));
         radioButton3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("150000"))));

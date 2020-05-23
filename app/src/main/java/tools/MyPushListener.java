@@ -42,21 +42,40 @@ public class MyPushListener extends PusheListenerService {
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
 
-       /* JSONObject resultJson = null;
+        System.out.println("resultJson====" + message.toString());
+        System.out.println("content====" + content.toString());
+
         try {
-            resultJson = new JSONObject(message.toString());
-            if (!resultJson.isNull("type")) {
-                String type = resultJson.getString("type");
-                if (type.equals("123")){
-                    System.out.println("resultJson====" + resultJson);
-                    new Thread(new Task()).start();
+            JSONObject contentJson = new JSONObject(String.valueOf(content));
+            System.out.println("contentJson=====" + contentJson);
+            if (!contentJson.isNull("content")) {
+                JSONObject jsonObject = contentJson.getJSONObject("content");
+                if (!jsonObject.isNull("pro_id") && !jsonObject.isNull("cat_id")) {
+                    String pro_idStr = jsonObject.getString("pro_id");
+                    String cat_idStr = jsonObject.getString("cat_id");
+                    String titleStr = jsonObject.getString("title");
+                    String bodyStr = jsonObject.getString("body");
+                    System.out.println("pro_idStr=====" + pro_idStr);
+                    System.out.println("cat_id=====" + cat_idStr);
+                    System.out.println("titleStr=====" + titleStr);
+                    System.out.println("bodyStr=====" + bodyStr);
+                    if (pro_idStr != null && cat_idStr != null) {
+                        editor = AppController.getInstance().getSharedPreferences().edit();
+                        editor.putBoolean("getProduct", true);
+                        editor.apply();
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("cat_id", pro_idStr);
+                        intent.putExtra("pro_id", cat_idStr);
+                        showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                    }
                 }
+
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
-
+        }
 
         Handler handler = new Handler(getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -65,29 +84,12 @@ public class MyPushListener extends PusheListenerService {
             public void run() {
 
 
+              //  "{pro_id=3738, cat_id=1185, title=شامپو بدن مای, body=شامپو بدن مای مدل Sugar Candy حجم 420 میلی لیتر}"
+
+
+
+
                 /*try {
-                    JSONObject contentJson = new JSONObject(String.valueOf(content));
-                    System.out.println("contentJson=====" + contentJson);
-                    if (!contentJson.isNull("content")) {
-                        if (contentJson.getJSONObject("content") != null){
-                            JSONObject successJson = contentJson.getJSONObject("content");
-                            if (!successJson.isNull("success")) {
-                                String successStr = successJson.getString("success");
-                                System.out.println("successStr=====" + successStr);
-                                if (successStr != null) {
-                                    new Thread(new Task()).start();
-                                    return;
-                                }
-                            }
-                        }
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
-
-
-                try {
                     JSONObject resultJson = new JSONObject(message.toString());
 
                     String title = null;
@@ -212,7 +214,7 @@ public class MyPushListener extends PusheListenerService {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
             }

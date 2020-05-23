@@ -1,7 +1,6 @@
 package net.babiran.app.Rss;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +22,7 @@ import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyServices;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -66,7 +66,7 @@ public class ListtoListActivity extends AppCompatActivity {
         }
 ////////////////////////////////////////////
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             cat_id = getIntent().getExtras().getString("id");
             title = getIntent().getExtras().getString("title");
         }
@@ -79,25 +79,6 @@ public class ListtoListActivity extends AppCompatActivity {
         label_title.setText(title);
 
         Listed();
-
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(ListtoListActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                ListtoListActivity.ID_ME = list.get(position).id;
-                Intent intent = new Intent(ListtoListActivity.this, ShowRssActivity.class);
-                startActivity(intent);
-
-                System.out.println("ID_ME====" + ListtoListActivity.ID_ME);
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
-
-
     }
 
 
@@ -127,7 +108,7 @@ public class ListtoListActivity extends AppCompatActivity {
 
 
                     if (list.size() > 0) {
-                        adapterUserListToTo = new AdapterUserListToTo(ListtoListActivity.this, list);
+                        adapterUserListToTo = new AdapterUserListToTo(ListtoListActivity.this, reverseListOrder(list));
 
                         recyclerView.setAdapter(adapterUserListToTo);
                     }
@@ -145,5 +126,15 @@ public class ListtoListActivity extends AppCompatActivity {
 
 
         //    prograsDialog.dismiss();
+    }
+
+    private List<BLOGME> reverseListOrder(List<BLOGME> status) {
+        Iterator<BLOGME> it = status.iterator();
+        List<BLOGME> destination = new ArrayList<>();
+        while (it.hasNext()) {
+            destination.add(0, it.next());
+            it.remove();
+        }
+        return destination;
     }
 }

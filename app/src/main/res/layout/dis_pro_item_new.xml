@@ -59,7 +59,8 @@
                         android:orientation="vertical"
                         android:padding="3dp"
                         android:layout_alignParentLeft="true"
-                        android:background="@drawable/circle_discount_background">
+                        android:rotation="-25"
+                        android:background="@drawable/off_discount">
 
                         <ui_elements.MyTextView
                             android:id="@+id/txt_percentage_discount"

@@ -54,6 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
 import tools.GlobalValues;
+import tools.Util;
 import ui_elements.MyButton;
 import ui_elements.MyEditText;
 import ui_elements.MyTextView;
@@ -62,7 +63,7 @@ public class ShowRssActivity extends AppCompatActivity {
     private AlertDialog prograsDialog;
     ImageView img;
     MyTextView txt, txt_html_ffff;
-    MyTextView titl;
+    MyTextView titl, txt_newsDate;
     String SSS, Url, RRR, Titlea = null;
     private Toolbar toolbar;
     Typeface font;
@@ -109,7 +110,7 @@ public class ShowRssActivity extends AppCompatActivity {
 
         Log.e("ID", AppConfig.id + "");
 
-        font = Typeface.createFromAsset(getAssets(), "iransans.ttf");
+        font = Typeface.createFromAsset(getAssets(), "IRANSansMobile_Light.ttf");
         prograsDialog = new SpotsDialog(ShowRssActivity.this);
         prograsDialog.show();
         /////////////////////////////////////
@@ -160,6 +161,7 @@ public class ShowRssActivity extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.img_html_show);
         txt = (MyTextView) findViewById(R.id.txt_html_show);
         titl = (MyTextView) findViewById(R.id.txt_html_tit);
+        txt_newsDate = (MyTextView) findViewById(R.id.txt_newsDate);
 
         txt.setText(SSS);
         txt.setTypeface(font);
@@ -174,8 +176,10 @@ public class ShowRssActivity extends AppCompatActivity {
                 for (int i = 0; i < s.size(); i++) {
                     prograsDialog.dismiss();
                     if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
-                        txt_html_ffff.setVisibility(View.VISIBLE);
-                        txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                        //txt_html_ffff.setVisibility(View.VISIBLE);
+                        //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                        txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
+                        System.out.println("---------------" + s.get(i).getCreatedAtInt());
                         txtLike.setText(s.get(i).getLike() + 1 + "");
                         titl.setText(s.get(i).getSubject());
                         txt.setText(s.get(i).getBody());
@@ -364,13 +368,15 @@ public class ShowRssActivity extends AppCompatActivity {
                     for (int i = 0; i < s.size(); i++) {
 
                         if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
-                            txt_html_ffff.setVisibility(View.VISIBLE);
-                            txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                            //txt_html_ffff.setVisibility(View.VISIBLE);
+                            //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                            System.out.println("---------------" + s.get(i).getCreatedAtInt());
                             txtLike.setText(s.get(i).getLike() + 1 + "");
                             titl.setText(s.get(i).getSubject());
                             txt.setText(s.get(i).getBody());
                             Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
                             imgUrl = s.get(i).getImageLink();
+                            txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
                             System.out.println("img====" + s.get(i).getImageLink());
 
                             id_blog = s.get(i).getId();
