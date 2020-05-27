@@ -123,7 +123,7 @@ public class Card extends RelativeLayout {
         if (result == 0) {
             layout_percentage_discount.setVisibility(View.INVISIBLE);
         } else {
-            txt_percentage_discount.setText(Util.latinNumberToPersian(String.valueOf(result)) + "%" + "OFF");
+            txt_percentage_discount.setText(Util.latinNumberToPersian(String.valueOf(result)) + "% " + "OFF");
             layout_percentage_discount.setVisibility(View.VISIBLE);
         }
 

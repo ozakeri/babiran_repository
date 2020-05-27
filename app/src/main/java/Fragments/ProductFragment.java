@@ -185,7 +185,8 @@ public class ProductFragment extends Fragment {
         MyTextView price = (MyTextView) v.findViewById(R.id.pricepro);
         MyTextView price_free = (MyTextView) v.findViewById(R.id.pricefree);
         MyTextView providerName = (MyTextView) v.findViewById(R.id.providerName);
-        MyTextView providerCategory = (MyTextView) v.findViewById(R.id.providerCategory);
+        ImageView providerCategory = v.findViewById(R.id.providerCategory);
+        MyTextView txt_category = v.findViewById(R.id.txt_category);
 
 
         final CardView addToBasket = (CardView) v.findViewById(R.id.addtobasket);
@@ -351,13 +352,20 @@ public class ProductFragment extends Fragment {
 
 
             name.setText(product.name);
-            System.out.println("getCategory_id========="+product.getCategory_id());
-            providerName.setText(product.providerName);
+            System.out.println("providerName=========" + product.providerName);
+            if (product.providerName != null) {
+                providerName.setText(product.providerName);
+            } else {
+                providerName.setText("فاقد اطلاعات");
+            }
+
             //providerCategory.setText(product.getCategory_id());
-            if (product.getCategory_id() == null){
+            if (product.getCategory_id() == null) {
                 providerCategory.setVisibility(View.GONE);
-            }else {
+                txt_category.setVisibility(View.GONE);
+            } else {
                 providerCategory.setVisibility(View.VISIBLE);
+                txt_category.setVisibility(View.VISIBLE);
             }
             providerCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -695,7 +703,7 @@ public class ProductFragment extends Fragment {
                                 }
 
                                 //c.getString("category_id1")
-                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
+                                Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
                                 products.add(product);

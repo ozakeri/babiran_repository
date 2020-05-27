@@ -1531,6 +1531,7 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < AppConfig.footerBanner.length(); i++) {
             try {
                 JSONObject c = AppConfig.footerBanner.getJSONObject(i);
+                System.out.println("getFooterCards=" + c);
                 firstCardImage = c.getString("slide_image");
 
                 category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")

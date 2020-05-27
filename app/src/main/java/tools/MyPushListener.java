@@ -7,12 +7,15 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.widget.RemoteViews;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.RequestQueue;
 
@@ -20,9 +23,6 @@ import net.babiran.app.AppController;
 import net.babiran.app.FactorList;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
-import net.babiran.app.Rss.ListtoListActivity;
-import net.babiran.app.Rss.ShowRssActivity;
-import net.babiran.app.Sefaresh.ShowActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,18 +47,39 @@ public class MyPushListener extends PusheListenerService {
 
         try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
-            System.out.println("contentJson=====" + contentJson);
+            // System.out.println("contentJson=====" + contentJson);
             if (!contentJson.isNull("content")) {
-                JSONObject jsonObject = contentJson.getJSONObject("content");
+
+                String jsonObjectStr = contentJson.getString("content");
+                System.out.println("jsonObjectStr=====" + jsonObjectStr);
+                String[] kvPairs = jsonObjectStr.split(",");
+
+                for (String kvPair : kvPairs) {
+                    String[] kv = kvPair.split("=");
+                    String key = kv[0];
+                    String value = kv[1];
+
+                    System.out.println("key=====" + key.replaceAll("[{]", ""));
+                    System.out.println("key=====" + key.replaceAll("[}]", ""));
+                    System.out.println("value=====" + value);
+                }
+
+                JSONObject jsonObject = new JSONObject(jsonObjectStr);
                 if (!jsonObject.isNull("pro_id") && !jsonObject.isNull("cat_id")) {
+
                     String pro_idStr = jsonObject.getString("pro_id");
-                    String cat_idStr = jsonObject.getString("cat_id");
-                    String titleStr = jsonObject.getString("title");
-                    String bodyStr = jsonObject.getString("body");
                     System.out.println("pro_idStr=====" + pro_idStr);
+
+                    String cat_idStr = jsonObject.getString("cat_id");
                     System.out.println("cat_id=====" + cat_idStr);
+
+                    String titleStr = jsonObject.getString("title");
                     System.out.println("titleStr=====" + titleStr);
+
+                    String bodyStr = jsonObject.getString("body");
                     System.out.println("bodyStr=====" + bodyStr);
+
+
                     if (pro_idStr != null && cat_idStr != null) {
                         editor = AppController.getInstance().getSharedPreferences().edit();
                         editor.putBoolean("getProduct", true);
@@ -67,7 +88,8 @@ public class MyPushListener extends PusheListenerService {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("cat_id", pro_idStr);
                         intent.putExtra("pro_id", cat_idStr);
-                        showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                        // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                        showNotification(getApplicationContext(), titleStr, bodyStr, intent);
                     }
                 }
 
@@ -84,7 +106,7 @@ public class MyPushListener extends PusheListenerService {
             public void run() {
 
 
-              //  "{pro_id=3738, cat_id=1185, title=شامپو بدن مای, body=شامپو بدن مای مدل Sugar Candy حجم 420 میلی لیتر}"
+                //  "{pro_id=3738, cat_id=1185, title=شامپو بدن مای, body=شامپو بدن مای مدل Sugar Candy حجم 420 میلی لیتر}"
 
 
 
@@ -255,6 +277,38 @@ public class MyPushListener extends PusheListenerService {
         mBuilder.setContentIntent(resultPendingIntent);
         mBuilder.setAutoCancel(true);
         notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+    private void showNotification(Context context, String title, String body, Intent intent) {
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        String channelId = "default_notification_channel_id";
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(context, channelId)
+                        .setSmallIcon(R.drawable.applogo)
+                        .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                        .setContentTitle(title)
+                        .setContentText(body)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
     private class Task implements Runnable {

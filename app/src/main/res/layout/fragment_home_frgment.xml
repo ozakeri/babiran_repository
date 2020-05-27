@@ -26,10 +26,10 @@
                 android:id="@+id/special"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_margin="1dp"
-                android:background="@drawable/tab_background">
+                android:layout_weight="1"
+                android:background="@drawable/tab_background"
+                android:orientation="vertical">
 
                 <ui_elements.MyTextView
                     android:layout_width="wrap_content"
@@ -47,18 +47,18 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/digikala_white_pure"
                     android:orientation="vertical"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:background="@drawable/tab_background"
                 android:id="@+id/discount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/tab_background"
                 android:orientation="vertical">
 
                 <ui_elements.MyTextView
@@ -77,17 +77,17 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/digikala_white_pure"
                     android:orientation="vertical"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:background="@drawable/tab_background"
                 android:id="@+id/newpro"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/tab_background"
                 android:orientation="vertical">
 
                 <ui_elements.MyTextView
@@ -106,7 +106,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/digikala_white_pure"
                     android:orientation="vertical"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -114,10 +114,10 @@
                 android:id="@+id/selltop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_margin="1dp"
-                android:background="@drawable/tab_background">
+                android:layout_weight="1"
+                android:background="@drawable/tab_background"
+                android:orientation="vertical">
 
                 <ui_elements.MyTextView
                     android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/digikala_white_pure"
                     android:orientation="vertical"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </RelativeLayout>
 
 
@@ -179,155 +179,145 @@
 
                 </RelativeLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ui_elements.MyTextView
-                            android:id="@+id/cardtextHome"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:text="پیشنهاد ویژه"
-                            android:textColor="@color/colorPrimaryDark" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:visibility="gone">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardhour"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_alignParentLeft="true"
-                                android:backgroundTint="@color/gray_lighter">
-
-                                <ui_elements.MyTextView
-                                    android:id="@+id/hourTxt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="00"
-                                    android:textColor="@color/black"
-                                    android:textSize="17sp" />
-
-                            </androidx.cardview.widget.CardView>
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/firstpoint"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_toRightOf="@+id/cardhour"
-                                android:gravity="center"
-                                android:text=" : "
-                                android:textColor="@color/black" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardmin"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_toRightOf="@+id/firstpoint"
-                                android:backgroundTint="@color/gray_lighter">
-
-                                <ui_elements.MyTextView
-                                    android:id="@+id/minTxt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="00"
-                                    android:textColor="@color/black"
-                                    android:textSize="17sp" />
-                            </androidx.cardview.widget.CardView>
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/secondpoint"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_toRightOf="@+id/cardmin"
-                                android:gravity="center"
-                                android:text=" : "
-                                android:textColor="@color/black" />
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardsec"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_toRightOf="@+id/secondpoint"
-                                android:backgroundTint="@color/gray_lighter">
-
-                                <ui_elements.MyTextView
-                                    android:id="@+id/secTxt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="00"
-                                    android:textColor="@color/black"
-                                    android:textSize="17sp" />
-
-                            </androidx.cardview.widget.CardView>
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/root_view"
+                    android:id="@+id/specialRelative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@drawable/back_one">
 
-                    <RelativeLayout
-                        android:id="@+id/specialRelative"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-                            <HorizontalScrollView
-                                android:id="@+id/horizontalScrollView"
+                            <ui_elements.MyTextView
+                                android:id="@+id/cardtextHome"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:text="پیشنهاد ویژه"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                            <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentRight="true"
-                                android:layoutDirection="ltr"
-                                android:scrollbars="none">
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:visibility="gone">
 
-                                <LinearLayout
-                                    android:id="@+id/horizontal1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardhour"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_alignParentLeft="true"
+                                    android:backgroundTint="@color/gray_lighter">
 
-                                </LinearLayout>
+                                    <ui_elements.MyTextView
+                                        android:id="@+id/hourTxt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="00"
+                                        android:textColor="@color/black"
+                                        android:textSize="17sp" />
 
-                            </HorizontalScrollView>
+                                </androidx.cardview.widget.CardView>
 
-                            <androidx.core.widget.ContentLoadingProgressBar
-                                android:id="@+id/progressBarCircularIndeterminate1"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_centerInParent="true"
-                                android:visibility="visible" />
+                                <ui_elements.MyTextView
+                                    android:id="@+id/firstpoint"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_toRightOf="@+id/cardhour"
+                                    android:gravity="center"
+                                    android:text=" : "
+                                    android:textColor="@color/black" />
 
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardmin"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_toRightOf="@+id/firstpoint"
+                                    android:backgroundTint="@color/gray_lighter">
 
-                        </RelativeLayout>
-                    </RelativeLayout>
+                                    <ui_elements.MyTextView
+                                        android:id="@+id/minTxt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="00"
+                                        android:textColor="@color/black"
+                                        android:textSize="17sp" />
+                                </androidx.cardview.widget.CardView>
 
+                                <ui_elements.MyTextView
+                                    android:id="@+id/secondpoint"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_toRightOf="@+id/cardmin"
+                                    android:gravity="center"
+                                    android:text=" : "
+                                    android:textColor="@color/black" />
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardsec"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_toRightOf="@+id/secondpoint"
+                                    android:backgroundTint="@color/gray_lighter">
+
+                                    <ui_elements.MyTextView
+                                        android:id="@+id/secTxt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="00"
+                                        android:textColor="@color/black"
+                                        android:textSize="17sp" />
+
+                                </androidx.cardview.widget.CardView>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layoutDirection="ltr"
+                        android:layout_below="@+id/card1"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/horizontal1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"/>
+
+                    </HorizontalScrollView>
+
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/progressBarCircularIndeterminate1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
 
                 </RelativeLayout>
 
@@ -371,80 +361,92 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <RelativeLayout
-                    android:id="@+id/relativebanner"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:orientation="vertical"
+                    android:background="@drawable/back_three">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/ban1"
+                    <RelativeLayout
+                        android:id="@+id/relativebanner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp">
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp">
 
-                        <ImageView
-                            android:id="@+id/imgban1"
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/ban1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/logoloading" />
-                    </androidx.cardview.widget.CardView>
+                            android:layout_margin="4dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/ban2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_toRightOf="@id/ban1">
+                            <ImageView
+                                android:id="@+id/imgban1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/logoloading" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imgban2"
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/ban2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/logoloading" />
-                    </androidx.cardview.widget.CardView>
+                            android:layout_margin="4dp"
+                            android:layout_toRightOf="@id/ban1">
 
-                </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/imgban2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/logoloading" />
+                        </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
-                    android:id="@+id/secondrelativebanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    </RelativeLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/ban3"
+                    <RelativeLayout
+                        android:id="@+id/secondrelativebanner"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center">
 
-                        <ImageView
-                            android:id="@+id/imgban3"
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/ban3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/logoloading" />
+                            android:layout_margin="4dp">
 
-                    </androidx.cardview.widget.CardView>
+                            <ImageView
+                                android:id="@+id/imgban3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/logoloading" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/ban4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_toRightOf="@id/ban3">
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imgban4"
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/ban4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/logoloading" />
+                            android:layout_margin="4dp"
+                            android:layout_toRightOf="@id/ban3">
 
-                    </androidx.cardview.widget.CardView>
-                </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/imgban4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/logoloading" />
+
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+
+                </LinearLayout>
 
 
                 <androidx.cardview.widget.CardView
@@ -529,60 +531,60 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/specialLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp">
-
-                    <ui_elements.MyTextView
-                        android:id="@+id/specialtondmarket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="center"
-                        android:text="ویژه تر از ویژه"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </androidx.cardview.widget.CardView>
-
                 <RelativeLayout
                     android:id="@+id/specialTondMarketRelative"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back_two">
 
-                    <RelativeLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/specialLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp">
 
-                        <HorizontalScrollView
-                            android:id="@+id/SecondhorizontalScrollView"
+                        <ui_elements.MyTextView
+                            android:id="@+id/specialtondmarket"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:layoutDirection="ltr"
-                            android:scrollbars="none">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:text="ویژه تر از ویژه"
+                            android:textColor="@color/colorPrimaryDark" />
 
-                            <LinearLayout
-                                android:id="@+id/secondhorizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                    </androidx.cardview.widget.CardView>
 
-                            </LinearLayout>
+                    <HorizontalScrollView
+                        android:id="@+id/SecondhorizontalScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layoutDirection="ltr"
+                        android:scrollbars="none"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@+id/specialLayout">
 
-                        </HorizontalScrollView>
+                        <LinearLayout
+                            android:id="@+id/secondhorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"/>
 
-                        <androidx.core.widget.ContentLoadingProgressBar
-                            android:id="@+id/SecondprogressBarCircularIndeterminate"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerInParent="true"
-                            android:visibility="visible" />
+                    </HorizontalScrollView>
 
-                    </RelativeLayout>
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/SecondprogressBarCircularIndeterminate"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -590,11 +592,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:id="@+id/footer_linearLayout"
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"/>
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="ltr"
+                        android:scrollbars="none"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/footer_linearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+                    </ScrollView>
+
 
                     <androidx.core.widget.ContentLoadingProgressBar
                         android:id="@+id/LinearLayoutProgressBar"
@@ -657,7 +669,6 @@
                 android:visibility="invisible" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
 
     </RelativeLayout>

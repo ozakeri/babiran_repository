@@ -30,7 +30,7 @@ public class MyTextView extends AppCompatTextView {
     private void setType(Context context)
     {
         this.setTypeface(Typeface.createFromAsset(context.getAssets(),
-                "iransans.ttf"));
+                "IRANSansMobile_Bold.ttf"));
 
      //   this.setShadowLayer(0f, 5, 5, getContext().getResources().getColor(R.color.green));
 

@@ -52,9 +52,9 @@
             android:id="@+id/favorite"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_toRightOf="@+id/share"
             android:scaleType="centerInside"
             android:src="@drawable/unfavorite" />
@@ -81,329 +81,315 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
-                <RelativeLayout
-                    android:id="@+id/view_pager_RelativeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="57dp"
-
-                    android:layoutDirection="ltr">
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/home_viewpager"
-                        android:layout_width="match_parent"
-
-
-                        android:layout_height="300dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_gravity="center_horizontal|top" />
-
-                    <me.relex.circleindicator.CircleIndicator
-                        android:id="@+id/product_indicator_custom"
-                        android:layout_width="fill_parent"
-                        android:layout_height="20dp"
-                        android:layout_below="@+id/home_viewpager"
-                        android:layout_marginTop="-25dp"
-                        app:ci_drawable="@drawable/black_radius_square"
-                        app:ci_margin="4dp" />
-
-
-                </RelativeLayout>
-
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/addtobasket"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="30dp"
-                    android:weightSum="1"
-                    app:cardBackgroundColor="@color/blueDark">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                    <RelativeLayout
+                        android:id="@+id/view_pager_RelativeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="57dp"
+                        android:layoutDirection="ltr">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/home_viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="center_horizontal|top" />
+
+                        <me.relex.circleindicator.CircleIndicator
+                            android:id="@+id/product_indicator_custom"
+                            android:layout_width="fill_parent"
+                            android:layout_height="20dp"
+                            android:layout_below="@+id/home_viewpager"
+                            android:layout_marginTop="-25dp"
+                            app:ci_drawable="@drawable/black_radius_square"
+                            app:ci_margin="4dp" />
 
 
-                    <ui_elements.MyTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:scaleType="centerInside"
-                        android:text="افزودن به سبد خرید"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                    </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/information"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="15dp"
-
-                        android:layout_marginRight="28dp"
-                        card_view:cardUseCompatPadding="true"
-
-                        >
-
-                        <ui_elements.MyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="مشخصات"
-                            android:textAlignment="center"
-                            android:textColor="@color/white" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="28dp"
-                        card_view:cardUseCompatPadding="true">
-
-                        <ui_elements.MyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="نظرات"
-                            android:textAlignment="center"
-                            android:textColor="@color/white" />
-                    </androidx.cardview.widget.CardView>
-                </RelativeLayout>
-
-                <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:id="@+id/relativeLayout">
+                    android:layout_marginTop="-5dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/procard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        card_view:cardUseCompatPadding="true"
-
-                        >
+                        android:layout_marginBottom="10dp"
+                        card_view:cardUseCompatPadding="true">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                        <LinearLayout
-                            android:id="@+id/linearLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="1">
-
                             <LinearLayout
+                                android:id="@+id/linearLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.4"
-                                android:orientation="vertical">
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="end"
-                                    android:orientation="horizontal"
-                                    android:weightSum="1">
-
-                                    <ui_elements.MyTextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:layout_weight="0.65"
-                                        android:text="نام محصول : "
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
-
-                                    <ui_elements.MyTextView
-                                        android:id="@+id/proname"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:layout_weight="0.35"
-                                        android:text="نوتلا"
-                                        android:textColor="@color/blueDark"
-
-                                        />
-
-
-                                </LinearLayout>
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:orientation="horizontal">
-
-                                    <ui_elements.MyTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:inputType="textMultiLine"
-                                        android:text="نام تامین کننده : "
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
-
-                                    <ui_elements.MyTextView
-                                        android:id="@+id/providerName"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:inputType="textMultiLine"
-                                        android:text="---"
-                                        android:textColor="@color/blueDark"
-                                        android:textSize="12sp" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:orientation="horizontal">
-
-                                    <ui_elements.MyTextView
-                                        android:id="@+id/providerCategory"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:inputType="textMultiLine"
-                                        android:text="دسته بندی این محصول"
-                                        android:textColor="@color/blueDark"
-                                        android:textStyle="bold"
-                                        android:textSize="14sp" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="end"
-                                    android:orientation="horizontal"
-                                    android:weightSum="1">
-
-                                    <ui_elements.MyTextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:layout_weight="0.65"
-                                        android:text="قیمت : "
-                                        android:textColor="@color/black"
-                                        android:textSize="22sp" />
-
-                                    <ui_elements.MyTextView
-                                        android:id="@+id/pricepro"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:layout_weight="0.35"
-                                        android:text="10000 تومان"
-                                        android:textColor="@color/greenDark"
-                                        android:textSize="25sp" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="end"
-                                    android:orientation="horizontal"
-                                    android:weightSum="1">
+                                    android:layout_weight="0.4"
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="0.65"/>
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
 
-                                    <ui_elements.MyTextView
-                                        android:id="@+id/pricefree"
+                                        <ui_elements.MyTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:text="نام محصول : "
+                                            android:textColor="@color/black"
+                                            android:textSize="12sp" />
+
+                                        <ui_elements.MyTextView
+                                            android:id="@+id/proname"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:text="نوتلا"
+                                            android:textColor="@color/black_lighter" />
+
+
+                                    </LinearLayout>
+
+
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="6dp"
-                                        android:layout_weight="0.35"
-                                        android:text="10000 تومان"
-                                        android:textColor="@color/gray_dark"
-                                        android:textSize="24sp" />
+                                        android:layout_marginLeft="5dp"
+                                        android:orientation="horizontal">
+
+                                        <ui_elements.MyTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:inputType="textMultiLine"
+                                            android:text="نام تامین کننده : "
+                                            android:textColor="@color/black"
+                                            android:textSize="12sp" />
+
+                                        <ui_elements.MyTextView
+                                            android:id="@+id/providerName"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:inputType="textMultiLine"
+                                            android:text="---"
+                                            android:textColor="@color/black_lighter"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:gravity="left"
+                                        android:orientation="vertical">
+
+                                        <RelativeLayout
+                                            android:layout_width="50dp"
+                                            android:layout_height="wrap_content">
+
+                                            <androidx.appcompat.widget.AppCompatImageView
+                                                android:id="@+id/providerCategory"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_centerHorizontal="true"
+                                                android:layout_marginStart="6dp"
+                                                android:layout_marginLeft="6dp"
+                                                android:layout_marginTop="6dp"
+                                                android:layout_marginEnd="6dp"
+                                                android:layout_marginRight="6dp"
+                                                android:background="@drawable/category_blue" />
+
+                                            <ui_elements.MyTextView
+                                                android:id="@+id/txt_category"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/providerCategory"
+                                                android:layout_centerHorizontal="true"
+                                                android:text="دسته بندی"
+                                                android:textColor="@color/organizationColor"
+                                                android:textSize="8sp" />
+                                        </RelativeLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="vertical">
+
+                                        <ui_elements.MyTextView
+                                            android:id="@+id/pricepro"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:text="10000 تومان"
+                                            android:textColor="@color/greenDark"
+                                            android:textSize="18sp" />
+
+                                        <ui_elements.MyTextView
+                                            android:id="@+id/pricefree"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="6dp"
+                                            android:text="10000 تومان"
+                                            android:textColor="@color/gray_dark"
+                                            android:textSize="14sp" />
+
+                                    </LinearLayout>
+
 
                                 </LinearLayout>
 
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.6"
-                                android:orientation="vertical"
-                                android:visibility="gone
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.6"
+                                    android:orientation="vertical"
+                                    android:visibility="gone
 ">
 
-                                <ui_elements.MyTextView
-                                    android:id="@+id/countpicker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="تعداد:"
-                                    android:textColor="@color/black" />
+                                    <ui_elements.MyTextView
+                                        android:id="@+id/countpicker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:text="تعداد:"
+                                        android:textColor="@color/black" />
 
-                                <com.travijuu.numberpicker.library.NumberPicker
-                                    android:id="@+id/numberPicker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/countpicker"
-                                    android:gravity="center"
-                                    android:visibility="gone" />
+                                    <com.travijuu.numberpicker.library.NumberPicker
+                                        android:id="@+id/numberPicker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/countpicker"
+                                        android:gravity="center"
+                                        android:visibility="gone" />
 
-                                <ui_elements.MyTextView
-                                    android:id="@+id/nostock"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/countpicker"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="نا موجود"
-                                    android:textColor="@color/red"
-                                    android:visibility="gone" />
-                            </RelativeLayout>
+                                    <ui_elements.MyTextView
+                                        android:id="@+id/nostock"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/countpicker"
+                                        android:layout_centerInParent="true"
+                                        android:gravity="center"
+                                        android:text="نا موجود"
+                                        android:textColor="@color/red"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
 
 
-                        </LinearLayout>
+                            </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/linearLayout_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="end"
-                            android:background="@drawable/corner_ronde_search"
-                            android:orientation="horizontal"
-                            android:layout_below="@+id/linearLayout">
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/descriptionpro"
+                            <LinearLayout
+                                android:id="@+id/linearLayout_description"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="6dp"
-                                android:inputType="textMultiLine"
-                                android:text="محصول خوبیه"
-                                android:textColor="@color/gray_dark"
-                                android:textSize="12sp" />
+                                android:layout_below="@+id/linearLayout"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/corner_ronde_search">
 
-                        </LinearLayout>
+                                <ui_elements.MyTextView
+                                    android:id="@+id/descriptionpro"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:inputType="textMultiLine"
+                                    android:text="محصول خوبیه"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+
+                            <RelativeLayout
+                                android:id="@+id/layout_comment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/linearLayout_description">
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/information"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="28dp"
+                                    android:layout_marginBottom="15dp"
+                                    card_view:cardUseCompatPadding="true">
+
+                                    <ui_elements.MyTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="مشخصات"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white" />
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/comment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_marginLeft="28dp"
+                                    android:layout_marginBottom="15dp"
+                                    card_view:cardUseCompatPadding="true">
+
+                                    <ui_elements.MyTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text="نظرات"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white" />
+                                </androidx.cardview.widget.CardView>
+                            </RelativeLayout>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/addtobasket"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginRight="30dp"
+                                android:layout_marginBottom="20dp"
+                                app:cardBackgroundColor="@color/blueDark"
+                                android:layout_below="@+id/layout_comment">
+
+
+                                <ui_elements.MyTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:scaleType="centerInside"
+                                    android:text="افزودن به سبد خرید"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                            </androidx.cardview.widget.CardView>
 
                         </RelativeLayout>
 
@@ -425,10 +411,9 @@
                         android:layout_below="@+id/feaTxt"
                         android:layout_margin="30dp"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                     </LinearLayout>
-
 
                 </RelativeLayout>
 

@@ -55,11 +55,11 @@
                         android:id="@+id/layout_percentage_discount"
                         android:layout_width="70dp"
                         android:layout_height="25dp"
-                        android:layout_margin="3dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical"
                         android:padding="3dp"
                         android:layout_alignParentLeft="true"
-                        android:rotation="-25"
+                        android:rotation="-30"
                         android:background="@drawable/off_discount">
 
                         <ui_elements.MyTextView
@@ -79,10 +79,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         android:gravity="right"
                         android:orientation="vertical">
 
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical"
+                            android:padding="3dp">
+
+
+                            <ui_elements.MyTextView
+                                android:id="@+id/dis_pro_txt_price"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:singleLine="true"
+                                android:text="قیمت"
+                                android:textColor="@color/greenDark"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -100,32 +121,8 @@
                                 android:ellipsize="marquee"
                                 android:gravity="right"
                                 android:text="قیمت اصلی"
-                                android:textColor="@color/digikala_green_dark"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_margin="3dp"
-                            android:orientation="vertical"
-                            android:padding="3dp">
-
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/dis_pro_txt_price"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:singleLine="true"
-                                android:text="قیمت"
-                                android:textColor="@color/digikala_green_light"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
+                                android:textColor="@color/gray_dark"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
 

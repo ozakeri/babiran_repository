@@ -2,6 +2,7 @@ package Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,8 +18,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
 
 import com.android.volley.AuthFailureError;
@@ -34,6 +37,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.babiran.app.BlankAcct;
+import net.babiran.app.CreditActivity;
 import net.babiran.app.FactorList;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
@@ -57,6 +61,7 @@ import tools.AppConfig;
 import tools.AudioRecorder;
 import tools.Util;
 import ui_elements.MyEditText;
+import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -250,19 +255,22 @@ public class DescriptionDialog extends DialogFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        System.out.println("response======" + response);
                         d.dismiss();
                         try {
+
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("success").equals("1")) {
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jsonObject.getString("url")));
-                                startActivityForResult(browserIntent, REQUEST_CODE_PAY);
-                            }
+                                if (!jsonObject.isNull("url")) {
+                                    String urlStr = jsonObject.getString("url");
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr));
+                                    startActivityForResult(browserIntent, REQUEST_CODE_PAY);
 
-                            if (jsonObject.getString("success").equals("3")) {
-                                getDialog().dismiss();
-                                getFactorId();
+                                }else if (!jsonObject.isNull("result")) {
+                                    String resultStr = jsonObject.getString("result");
+                                    showGuideDialog();
+                                }
                             }
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -397,5 +405,27 @@ public class DescriptionDialog extends DialogFragment {
             intent.putExtra("id", id);
             startActivity(intent);
         }
+    }
+
+    public void showGuideDialog() {
+        final Dialog alert = new Dialog(getActivity());
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.setContentView(R.layout.custom_dialog_after_pay);
+        TextView buttonTextView = alert.findViewById(R.id.txt_action);
+        MyTextView txt_status = alert.findViewById(R.id.txt_status);
+        AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
+
+        txt_status.setText("در خواست شما با موفقیت ثبت شد");
+
+        buttonTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                getDialog().dismiss();
+                getFactorId();
+            }
+        });
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
     }
 }
