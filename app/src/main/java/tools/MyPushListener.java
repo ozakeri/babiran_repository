@@ -86,10 +86,16 @@ public class MyPushListener extends PusheListenerService {
                         editor.apply();
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+<<<<<<< Updated upstream
                         intent.putExtra("cat_id", pro_idStr);
                         intent.putExtra("pro_id", cat_idStr);
                         // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
                         showNotification(getApplicationContext(), titleStr, bodyStr, intent);
+=======
+                        intent.putExtra("pro_id", pro_idStr);
+                        intent.putExtra("cat_id", cat_idStr);
+                        showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+>>>>>>> Stashed changes
                     }
                 }
 
