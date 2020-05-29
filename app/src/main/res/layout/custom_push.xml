@@ -11,10 +11,10 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:src="@drawable/applogo" />
 
             <TextView
@@ -25,7 +25,10 @@
                 android:text="..."
                 android:textColor="#745050"
                 android:layout_marginRight="10dp"
-                android:textSize="20sp" />
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/image"
+                android:gravity="right"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/body"
@@ -33,10 +36,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/image"
                 android:text="..."
+                android:gravity="right"
                 android:textColor="#706868"
                 android:layout_marginRight="10dp"
-                android:textSize="18dp" />
+                android:layout_marginLeft="10dp"
+                android:textSize="12dp" />
 
         </RelativeLayout>
 

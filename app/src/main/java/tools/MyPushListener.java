@@ -38,12 +38,13 @@ public class MyPushListener extends PusheListenerService {
     private RequestQueue queue;
     private DatabaseHandler db;
     private GlobalValues globalValues = new GlobalValues();
+    private String pro_id, cat_id, title, body = null;
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
 
-        System.out.println("resultJson====" + message.toString());
-        System.out.println("content====" + content.toString());
+        System.out.println("message=====" + message.toString());
+        System.out.println("content=====" + content.toString());
 
         try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
@@ -51,20 +52,69 @@ public class MyPushListener extends PusheListenerService {
             if (!contentJson.isNull("content")) {
 
                 String jsonObjectStr = contentJson.getString("content");
+                jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
+                jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
                 System.out.println("jsonObjectStr=====" + jsonObjectStr);
                 String[] kvPairs = jsonObjectStr.split(",");
 
                 for (String kvPair : kvPairs) {
-                    String[] kv = kvPair.split("=");
+                    String[] kv = kvPair.split(":");
                     String key = kv[0];
                     String value = kv[1];
 
-                    System.out.println("key=====" + key.replaceAll("[{]", ""));
-                    System.out.println("key=====" + key.replaceAll("[}]", ""));
+
+                    key = key.replaceAll("([{-}])", "");
+                    value = value.replaceAll("([{-}])", "");
+
+                    System.out.println("key=====" + key);
                     System.out.println("value=====" + value);
+
+                    if (key.equals(" pro_id")){
+                        key = key.replace(" pro_id","pro_id");
+                    }if (key.equals(" title")){
+                        key = key.replace(" title","title");
+                    }if (key.equals(" cat_id")){
+                        key = key.replace(" cat_id","cat_id");
+                    }if (key.equals(" body")){
+                        key = key.replace(" body","body");
+                    }
+
+                    if (key.equals("pro_id")) {
+                        pro_id = value;
+                    }
+
+                    if (key.equals("cat_id")) {
+                        cat_id = value;
+                    }
+
+                    if (key.equals("title")) {
+                        title = value;
+                    }
+
+                    if (key.equals("body")) {
+                        body = value;
+                    }
+
+                    System.out.println("pro_id=====" + pro_id);
+                    System.out.println("cat_id=====" + cat_id);
+                    System.out.println("title=====" + title);
+                    System.out.println("body=====" + body);
+
                 }
 
-                JSONObject jsonObject = new JSONObject(jsonObjectStr);
+                if (pro_id != null && cat_id != null) {
+                    editor = AppController.getInstance().getSharedPreferences().edit();
+                    editor.putBoolean("getProduct", true);
+                    editor.apply();
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("pro_id", pro_id);
+                    intent.putExtra("cat_id", cat_id);
+                    // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                    showNotification(getApplicationContext(), intent, title, body);
+                }
+
+              /*  JSONObject jsonObject = new JSONObject(jsonObjectStr);
                 if (!jsonObject.isNull("pro_id") && !jsonObject.isNull("cat_id")) {
 
                     String pro_idStr = jsonObject.getString("pro_id");
@@ -91,7 +141,7 @@ public class MyPushListener extends PusheListenerService {
                         // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
                         showNotification(getApplicationContext(), titleStr, bodyStr, intent);
                     }
-                }
+                }*/
 
 
             }
@@ -244,7 +294,12 @@ public class MyPushListener extends PusheListenerService {
     }
 
     public void showNotification(Context context, Intent intent, String title, String body) {
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
 
         int notificationId = 1;
         String channelId = "channel-01";
@@ -266,7 +321,8 @@ public class MyPushListener extends PusheListenerService {
                 .setSmallIcon(R.drawable.applogo)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setContent(contentView);
+                .setContent(contentView)
+                .setContentIntent(pendingIntent);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
