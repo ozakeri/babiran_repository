@@ -175,6 +175,10 @@ public class ShowRssActivity extends AppCompatActivity {
                 List<GETINGBlog> s = appController.getResponse().body();
                 for (int i = 0; i < s.size(); i++) {
                     prograsDialog.dismiss();
+
+                    System.out.println("Url1111=======" + s.get(i).getId());
+                    System.out.println("Url1111=======" + ListtoListActivity.ID_ME);
+
                     if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
                         //txt_html_ffff.setVisibility(View.VISIBLE);
                         //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
@@ -202,7 +206,6 @@ public class ShowRssActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ShowRssActivity.this, FullScreenActivity.class);
-                    System.out.println("imgUrl====" + imgUrl);
                     intent.putExtra("imgUrl", imgUrl);
                     startActivity(intent);
                 }
@@ -705,6 +708,7 @@ public class ShowRssActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // Connect to the web site
+            System.out.println("Url=======" + Url);
             Document doc = null;
             try {
                 doc = Jsoup.connect(Url).get();

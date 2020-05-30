@@ -71,6 +71,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             holder.name.setText(categories.get(position).name);
             Picasso.with(context).load(categories.get(position).icon).into(holder.img_icon);
             System.out.println("icon=====" + categories.get(position).icon);
+            System.out.println("slide_image=====" + categories.get(position).slide_image);
 
             holder.item_Button.setOnClickListener(new View.OnClickListener() {
                 @Override

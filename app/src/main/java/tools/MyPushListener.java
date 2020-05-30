@@ -23,6 +23,8 @@ import net.babiran.app.AppController;
 import net.babiran.app.FactorList;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
+import net.babiran.app.Rss.ListtoListActivity;
+import net.babiran.app.Rss.ShowRssActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +48,7 @@ public class MyPushListener extends PusheListenerService {
         System.out.println("message=====" + message.toString());
         System.out.println("content=====" + content.toString());
 
-        try {
+        /*try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
             // System.out.println("contentJson=====" + contentJson);
             if (!contentJson.isNull("content")) {
@@ -114,7 +116,7 @@ public class MyPushListener extends PusheListenerService {
                     showNotification(getApplicationContext(), intent, title, body);
                 }
 
-              /*  JSONObject jsonObject = new JSONObject(jsonObjectStr);
+              *//*  JSONObject jsonObject = new JSONObject(jsonObjectStr);
                 if (!jsonObject.isNull("pro_id") && !jsonObject.isNull("cat_id")) {
 
                     String pro_idStr = jsonObject.getString("pro_id");
@@ -141,156 +143,67 @@ public class MyPushListener extends PusheListenerService {
                         // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
                         showNotification(getApplicationContext(), titleStr, bodyStr, intent);
                     }
-                }*/
+                }*//*
 
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        Handler handler = new Handler(getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void run() {
+        try {
+            JSONObject resultJson = new JSONObject(message.toString());
 
-
-                //  "{pro_id=3738, cat_id=1185, title=شامپو بدن مای, body=شامپو بدن مای مدل Sugar Candy حجم 420 میلی لیتر}"
-
+            String title = null;
+            String body = null;
+            String id = null;
+            String type = null;
 
 
-
-                /*try {
-                    JSONObject resultJson = new JSONObject(message.toString());
-
-                    String title = null;
-                    String body = null;
-                    String id = null;
-                    String type = null;
-                    String image = null;
-                    String catId = null;
-                    String proId = null;
-
-
-                    if (!resultJson.isNull("type")) {
-                        String type123 = resultJson.getString("type");
-                        if (type123.equals("123")) {
-                            System.out.println("resultJson====" + resultJson);
-                            new Thread(new Task()).start();
-                        }
-                    }
-
-
-                    if (!resultJson.isNull("title")) {
-                        title = resultJson.getString("title");
-                    } else {
-                        title = "بابیران";
-                    }
-
-                    if (!resultJson.isNull("body")) {
-                        body = resultJson.getString("body");
-                    } else {
-                        body = "بابیران";
-                    }
-
-                    if (!resultJson.isNull("id")) {
-                        id = resultJson.getString("id");
-                    }
-
-                    if (!resultJson.isNull("type")) {
-                        type = resultJson.getString("type");
-                    }
-
-                    if (!resultJson.isNull("img_url")) {
-                        image = resultJson.getString("img_url");
-                    }
-
-                    if (!resultJson.isNull("cat_id")) {
-                        catId = resultJson.getString("cat_id");
-                    }
-
-                    if (!resultJson.isNull("pro_id")) {
-                        proId = resultJson.getString("pro_id");
-                    }
-
-
-                    if (type != null) {
-                        globalValues.setPush(true);
-                        switch (type) {
-                            case "0": {
-
-                                if (id != null) {
-                                    ListtoListActivity.ID_ME = id;
-                                    Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
-                                    intent.putExtra("isPush", true);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                } else {
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                }
-
-                                break;
-                            }
-                            case "1": {
-                                editor = AppController.getInstance().getSharedPreferences().edit();
-                                editor.putBoolean("newPush", true);
-                                editor.apply();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                showNotification(getApplicationContext(), intent, title, body);
-
-                                break;
-                            }
-                            case "2": {
-
-                                if (id != null && image != null) {
-                                    editor = AppController.getInstance().getSharedPreferences().edit();
-                                    editor.putBoolean("productFood", true);
-                                    editor.apply();
-
-                                    Intent intent = new Intent(getApplicationContext(), ShowActivity.class);
-                                    intent.putExtra("IDDD", id);
-                                    intent.putExtra("IsdfDDD", image);
-                                    intent.putExtra("isPush", true);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                } else {
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                }
-
-                                break;
-                            }
-                            case "3": {
-
-
-                                if (catId != null && proId != null) {
-                                    editor = AppController.getInstance().getSharedPreferences().edit();
-                                    editor.putBoolean("getProduct", true);
-                                    editor.apply();
-
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra("cat_id", catId);
-                                    intent.putExtra("pro_id", proId);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                } else {
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    showNotification(getApplicationContext(), intent, title, body);
-                                }
-
-
-                                break;
-                            }
-
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }*/
-
-
+            if (!resultJson.isNull("title")) {
+                title = resultJson.getString("title");
+            } else {
+                title = "بابیران";
             }
-        }, 10);
+
+            if (!resultJson.isNull("body")) {
+                body = resultJson.getString("body");
+            } else {
+                body = "بابیران";
+            }
+
+            if (!resultJson.isNull("id")) {
+                id = resultJson.getString("id");
+            }
+
+            if (!resultJson.isNull("type")) {
+                type = resultJson.getString("type");
+            }
+
+
+            if (type != null) {
+                globalValues.setPush(true);
+                switch (type) {
+                    case "123": {
+
+                        if (id != null) {
+                            ListtoListActivity.ID_ME = id;
+                            Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
+                            intent.putExtra("isPush", true);
+                            showNotification(getApplicationContext(), intent, title, body);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            showNotification(getApplicationContext(), intent, title, body);
+                        }
+
+                        break;
+                    }
+
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showNotification(Context context, Intent intent, String title, String body) {
