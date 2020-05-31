@@ -198,7 +198,7 @@ public class ShowRssActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                Listed();
+                new Thread(new Task()).start();
             }
 
 
@@ -356,7 +356,7 @@ public class ShowRssActivity extends AppCompatActivity {
         //String p = getIntent().getExtras().getString("id");
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<List<GETINGBlog>> call = n.getBlogById(Integer.parseInt(ListtoListActivity.ID_ME));
+            Call<List<GETINGBlog>> call = n.getBlogCatById(Integer.parseInt(ListtoListActivity.ID_ME));
             System.out.println("ID_ME====" + Integer.parseInt(ListtoListActivity.ID_ME));
 
             call.enqueue(new Callback<List<GETINGBlog>>() {
@@ -365,32 +365,33 @@ public class ShowRssActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<List<GETINGBlog>> call, @NonNull retrofit2.Response<List<GETINGBlog>> response) {
                     prograsDialog.dismiss();
                     List<GETINGBlog> s = response.body();
-                    System.out.println("s.size()====" + s.size());
+                    System.out.println("response=======" + response.body());
 
+                    if (s != null){
+                        System.out.println("size=======" + s.size());
+                        for (int i = 0; i < s.size(); i++) {
 
-                    for (int i = 0; i < s.size(); i++) {
+                            if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
+                                //txt_html_ffff.setVisibility(View.VISIBLE);
+                                //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
+                                System.out.println("---------------" + s.get(i).getCreatedAtInt());
+                                txtLike.setText(s.get(i).getLike() + 1 + "");
+                                titl.setText(s.get(i).getSubject());
+                                txt.setText(s.get(i).getBody());
+                                Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
+                                imgUrl = s.get(i).getImageLink();
+                                txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
+                                System.out.println("img====" + s.get(i).getImageLink());
 
-                        if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
-                            //txt_html_ffff.setVisibility(View.VISIBLE);
-                            //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
-                            System.out.println("---------------" + s.get(i).getCreatedAtInt());
-                            txtLike.setText(s.get(i).getLike() + 1 + "");
-                            titl.setText(s.get(i).getSubject());
-                            txt.setText(s.get(i).getBody());
-                            Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
-                            imgUrl = s.get(i).getImageLink();
-                            txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
-                            System.out.println("img====" + s.get(i).getImageLink());
+                                id_blog = s.get(i).getId();
+                                ListedGetLike();
+                                ListedGetCommet();
 
-                            id_blog = s.get(i).getId();
-                            ListedGetLike();
-                            ListedGetCommet();
+                                LISTFILL();
 
-                            LISTFILL();
-
+                            }
                         }
                     }
-
 
                 }
 
@@ -837,6 +838,13 @@ public class ShowRssActivity extends AppCompatActivity {
         if (isPush) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+        }
+    }
+
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+            Listed();
         }
     }
 }
