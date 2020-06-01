@@ -144,8 +144,6 @@ public class MyPushListener extends PusheListenerService {
                             showNotification(getApplicationContext(), intent, title, body);
                         }
                     }
-
-
                 }
 
 

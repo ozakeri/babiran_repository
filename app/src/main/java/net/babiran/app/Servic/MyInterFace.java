@@ -39,8 +39,11 @@ public interface MyInterFace {
     @GET("blog/getBlogs/")
     Call<List<GETINGBlog>> getBlogs();
 
+    @GET("blog/getBlog/{id}/")
+    Call<GETINGBlog> getBlogById(@Path("id") int id);
+
     @GET("blog/getBlogs/{id}/")
-    Call<List<GETINGBlog>> getBlogById(@Path("id") int id);
+    Call<List<GETINGBlog>> getBlogsById(@Path("id") int id);
 
     @GET("blog/getBlogCat/{id}/")
     Call<List<GETINGBlog>> getBlogCatById(@Path("id") int id);

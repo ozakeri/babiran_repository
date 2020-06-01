@@ -198,7 +198,7 @@ public class ShowRssActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                new Thread(new Task()).start();
+                Listed();
             }
 
 
@@ -356,49 +356,40 @@ public class ShowRssActivity extends AppCompatActivity {
         //String p = getIntent().getExtras().getString("id");
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<List<GETINGBlog>> call = n.getBlogCatById(Integer.parseInt(ListtoListActivity.ID_ME));
+            Call<GETINGBlog> call = n.getBlogById(Integer.parseInt(ListtoListActivity.ID_ME));
             System.out.println("ID_ME====" + Integer.parseInt(ListtoListActivity.ID_ME));
 
-            call.enqueue(new Callback<List<GETINGBlog>>() {
+            call.enqueue(new Callback<GETINGBlog>() {
                 @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(@NonNull Call<List<GETINGBlog>> call, @NonNull retrofit2.Response<List<GETINGBlog>> response) {
+                public void onResponse(@NonNull Call<GETINGBlog> call, @NonNull retrofit2.Response<GETINGBlog> response) {
                     prograsDialog.dismiss();
-                    List<GETINGBlog> s = response.body();
+                    GETINGBlog s = response.body();
                     System.out.println("response=======" + response.body());
 
-                    if (s != null){
-                        System.out.println("size=======" + s.size());
-                        for (int i = 0; i < s.size(); i++) {
+                    if (s != null) {
+                        txtLike.setText(s.getLike() + 1 + "");
+                        titl.setText(s.getSubject());
+                        txt.setText(s.getBody());
+                        Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img);
+                        imgUrl = s.getImageLink();
+                        txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.getCreatedAtInt()));
+                        System.out.println("img====" + s.getImageLink());
 
-                            if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
-                                //txt_html_ffff.setVisibility(View.VISIBLE);
-                                //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
-                                System.out.println("---------------" + s.get(i).getCreatedAtInt());
-                                txtLike.setText(s.get(i).getLike() + 1 + "");
-                                titl.setText(s.get(i).getSubject());
-                                txt.setText(s.get(i).getBody());
-                                Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
-                                imgUrl = s.get(i).getImageLink();
-                                txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
-                                System.out.println("img====" + s.get(i).getImageLink());
+                        id_blog = s.getId();
+                        ListedGetLike();
+                        ListedGetCommet();
 
-                                id_blog = s.get(i).getId();
-                                ListedGetLike();
-                                ListedGetCommet();
-
-                                LISTFILL();
-
-                            }
-                        }
+                        LISTFILL();
                     }
 
                 }
 
                 @Override
-                public void onFailure(Call<List<GETINGBlog>> call, Throwable t) {
-                    Log.e("response 2  :", t.getMessage() + "\n" + t.toString());
+                public void onFailure(Call<GETINGBlog> call, Throwable t) {
+
                 }
+
             });
         } catch (Exception ex) {
             Log.e("response 3 :", ex.getMessage());
@@ -844,7 +835,7 @@ public class ShowRssActivity extends AppCompatActivity {
     private class Task implements Runnable {
         @Override
         public void run() {
-            Listed();
+
         }
     }
 }
