@@ -38,7 +38,7 @@ public class MyPushListener extends PusheListenerService {
     private RequestQueue queue;
     private DatabaseHandler db;
     private GlobalValues globalValues = new GlobalValues();
-    private String type, pro_id, cat_id, title, body, blog_id = null;
+    private String type, pro_id, cat_id, title, body, blog_id, success = null;
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
@@ -75,6 +75,10 @@ public class MyPushListener extends PusheListenerService {
                             key = key.replace(" type", "type");
                         }
 
+                        if (key.equals(" success")) {
+                            key = key.replace(" success", "success");
+                        }
+
                         if (key.equals(" blog_id")) {
                             key = key.replace(" blog_id", "blog_id");
                         }
@@ -101,6 +105,10 @@ public class MyPushListener extends PusheListenerService {
                             pro_id = value;
                         }
 
+                        if (key.equals("success")) {
+                            success = value;
+                        }
+
                         if (key.equals("blog_id")) {
                             blog_id = value;
                         }
@@ -124,26 +132,34 @@ public class MyPushListener extends PusheListenerService {
 
                     }
 
-                    if (type.equals("product")) {
-                        if (pro_id != null && cat_id != null) {
-                            editor = AppController.getInstance().getSharedPreferences().edit();
-                            editor.putBoolean("getProduct", true);
-                            editor.apply();
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("pro_id", pro_id);
-                            intent.putExtra("cat_id", cat_id);
-                            // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
-                            showNotification(getApplicationContext(), intent, title, body);
-                        }
-                    } else if (type.equals("blog")) {
-                        if (blog_id != null) {
-                            ListtoListActivity.ID_ME = blog_id;
-                            Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
-                            intent.putExtra("isPush", true);
-                            showNotification(getApplicationContext(), intent, title, body);
+                    if (success != null) {
+                        showNotificationCopy(getApplicationContext(), title, body);
+                        new Thread(new Task()).start();
+                    }
+                    if (type != null) {
+                        if (type.equals("product")) {
+                            if (pro_id != null && cat_id != null) {
+                                editor = AppController.getInstance().getSharedPreferences().edit();
+                                editor.putBoolean("getProduct", true);
+                                editor.apply();
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("pro_id", pro_id);
+                                intent.putExtra("cat_id", cat_id);
+                                // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                                showNotification(getApplicationContext(), intent, title, body);
+                            }
+                        } else if (type.equals("blog")) {
+                            if (blog_id != null) {
+                                ListtoListActivity.ID_ME = blog_id;
+                                Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
+                                intent.putExtra("isPush", true);
+                                showNotification(getApplicationContext(), intent, title, body);
+                            }
                         }
                     }
+
                 }
 
 
@@ -205,6 +221,49 @@ public class MyPushListener extends PusheListenerService {
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push);
         contentView.setImageViewResource(R.id.image, R.drawable.applogo);
         contentView.setTextViewText(R.id.title, title);
+        contentView.setTextViewText(R.id.body, body);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.applogo)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContent(contentView)
+                .setContentIntent(pendingIntent);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+    public void showNotificationCopy(Context context, String title, String body) {
+
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push);
+        contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+        contentView.setTextViewText(R.id.title, "پرداخت با موفقیت انجام شد");
         contentView.setTextViewText(R.id.body, body);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)

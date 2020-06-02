@@ -181,6 +181,8 @@ public class SearchFrgment extends Fragment {
                             if (jsonArray != null && jsonArray.length() == 0) {
                                 return;
                             }
+
+
                             submit(s.toString());
                             System.out.println("ssssssss======" + s.toString());
                         }
@@ -308,12 +310,11 @@ public class SearchFrgment extends Fragment {
 
         //Volley Start
 
-
+       // ed_name.setEnabled(false);
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
         System.out.println("url=====" + url);
-
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -386,7 +387,7 @@ public class SearchFrgment extends Fragment {
                             }
 
 
-                            ed_name.setEnabled(true);
+                            //ed_name.setEnabled(true);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -405,8 +406,6 @@ public class SearchFrgment extends Fragment {
 
 
                 Map<String, String> params = new HashMap<String, String>();
-
-                ed_name.setEnabled(false);
                 //params.put("offset", String.valueOf(offset));
                 //params.put("limit", String.valueOf(limit));
                 params.put("key", s);

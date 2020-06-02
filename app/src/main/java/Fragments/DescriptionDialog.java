@@ -229,7 +229,7 @@ public class DescriptionDialog extends DialogFragment {
                 completeBUY(id, address, productArray, selected_Pay, credit, "");
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
-                //getDialog().dismiss();
+
 
             }
         });
@@ -263,13 +263,17 @@ public class DescriptionDialog extends DialogFragment {
                             if (jsonObject.getString("success").equals("1")) {
                                 if (!jsonObject.isNull("url")) {
                                     String urlStr = jsonObject.getString("url");
+                                    getDialog().dismiss();
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr));
                                     startActivityForResult(browserIntent, REQUEST_CODE_PAY);
 
                                 }else if (!jsonObject.isNull("result")) {
-                                    String resultStr = jsonObject.getString("result");
                                     showGuideDialog();
                                 }
+                            }else if (jsonObject.getString("success").equals("3")) {
+                                Toast.makeText(getActivity(), "در خواست شما با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
+                                getFactorId();
+                                getDialog().dismiss();
                             }
 
                         } catch (JSONException e) {
@@ -421,8 +425,8 @@ public class DescriptionDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                getDialog().dismiss();
                 getFactorId();
+                getDialog().dismiss();
             }
         });
         alert.setCanceledOnTouchOutside(false);

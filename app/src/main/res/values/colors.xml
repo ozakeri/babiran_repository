@@ -22,7 +22,7 @@
     <color name="orange">#FFD76F07</color>
     <color name="green">#13ae2d</color>
     <color name="green_light">#03FD2D</color>
-    <color name="green_transparent">#7C13AE2D</color>
+    <color name="green_transparent">#147023</color>
     <color name="greenDark">#035311</color>
     <color name="blueDark">#DD2C00</color>
     <color name="txt_color">#6f6f6f</color>
@@ -33,7 +33,8 @@
     <color name="back_gray">#ffe8e8e8</color>
     <color name="digikala_secondaryTextColor">#ffaaaaaa</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
-    <color name="digikala_green_dark">#ff539755</color>
+    <color name="digikala_green_dark">#528A53</color>
+    <color name="digikala_green_dark_copy">#2C492C</color>
     <color name="digikala_red_light">#fff5363f</color>
     <color name="gray_500">#ff9e9e9e</color>
     <color name="digikala_black_light">#ff424242</color>
