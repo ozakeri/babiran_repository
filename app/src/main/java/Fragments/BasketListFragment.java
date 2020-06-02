@@ -550,6 +550,7 @@ public class BasketListFragment extends Fragment implements
                                         PayValue.setText(secondPay.getText().toString());
                                         mPopupWindow.dismiss();
                                     }
+
                                     if (_3Chk.isChecked()) {
                                         selectedPay = "2";
                                         PayValue.setText(_3secondPay.getText().toString());
