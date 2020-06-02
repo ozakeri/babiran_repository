@@ -212,9 +212,18 @@
         android:gravity="center"
         android:text="سفارش شما پس از تایید، با هماهنگی ارسال خواهد شد."/>
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title2"
+        android:layout_margin="10dp"
+        android:textSize="14sp"
+        android:hint="توضیحات ... "/>
+
     <RelativeLayout
         android:id="@+id/submitDes"
-        android:layout_below="@+id/txt_title2"
+        android:layout_below="@+id/edt_description"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="50dp"

@@ -70,6 +70,7 @@ import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterByUrlMain;
+import tools.CustomPagerAdapterProduct;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
 
@@ -108,7 +109,7 @@ public class ProductFragment extends Fragment {
     private boolean getProduct = false;
     NumberPicker numberpicker;
 
-    public CustomPagerAdapterByUrlMain mCustomPagerAdapterByUrlMain;
+    public CustomPagerAdapterProduct mCustomPagerAdapterByUrlMain;
 
     @SuppressLint("ValidFragment")
     public ProductFragment(Product product, Category category, String prev) {
@@ -209,7 +210,7 @@ public class ProductFragment extends Fragment {
             information.getLayoutParams().width = (int) (width * 0.40);
             comment.getLayoutParams().width = (int) (width * 0.40);
 
-            mCustomPagerAdapterByUrlMain = new CustomPagerAdapterByUrlMain(getActivity());
+            mCustomPagerAdapterByUrlMain = new CustomPagerAdapterProduct(getActivity());
 
             customIndicator = (CircleIndicator) v.findViewById(R.id.product_indicator_custom);
 

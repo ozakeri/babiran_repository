@@ -1497,6 +1497,8 @@ public class MainActivity extends AppCompatActivity {
                                 ArrayList<Image> imagesArray = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
+                                System.out.println("c===============" + c.toString());
+
                                 JSONArray features = c.getJSONArray("features");
                                 for (int fea = 0; fea < features.length(); fea++) {
                                     try {
@@ -1510,7 +1512,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 JSONArray images = c.getJSONArray("images");
-                                ;
                                 for (int img = 0; img < images.length(); img++) {
 
                                     try {
@@ -1531,10 +1532,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Log.e("compSize", products.size() + "");
 
+                            for (int i = 0;i<products.size();i++){
+                                if (products.get(i).id.equals(proId)){
+                                    Product product = products.get(i);
+                                    AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(product, getProduct)).commit();
+                                }
+                            }
 
-                            Product product = products.get(Integer.parseInt(proId));
+                            //Product product = products.get(Integer.parseInt(proId));
 
-                            AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(product, getProduct)).commit();
+
                             //getSupportFragmentManager().beginTransaction().replace(R.id.Productcontainer, new ProductFragment(proId, catId, getProduct)).commit();
 
                             SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();

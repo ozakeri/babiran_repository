@@ -32,6 +32,7 @@ import net.babiran.app.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import Adapters.BasketListAdapter;
 import Handlers.DatabaseHandler;
@@ -443,17 +444,15 @@ public class BasketListFragment extends Fragment implements
                     secondPayLinear.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //    firstChk.setChecked(false);
                             secondChk.setChecked(true);
                             _3Chk.setChecked(false);
-                           // Toast.makeText(getActivity(), "فعلا امکان پرداخت از طریق کارتخوان بی سیم مقدور نمی باشد", Toast.LENGTH_LONG).show();
+                            checkbox_credit.setChecked(false);
 
                         }
                     });
                     _3PayLinear.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //           firstChk.setChecked(false);
                             secondChk.setChecked(false);
                             _3Chk.setChecked(true);
                             checkbox_credit.setChecked(false);
@@ -461,10 +460,15 @@ public class BasketListFragment extends Fragment implements
                         }
                     });
 
-                    checkbox_credit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+                    secondChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                            if (isChecked){
+                                _3Chk.setChecked(false);
+                                checkbox_credit.setChecked(false);
+                            }
                         }
                     });
 
@@ -473,10 +477,8 @@ public class BasketListFragment extends Fragment implements
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked){
                                 _3Chk.setChecked(false);
-                            }else {
-                                _3Chk.setChecked(true);
+                                secondChk.setChecked(false);
                             }
-
                         }
                     });
 
@@ -485,10 +487,8 @@ public class BasketListFragment extends Fragment implements
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (isChecked){
                                 checkbox_credit.setChecked(false);
-                            }else {
-                                checkbox_credit.setChecked(true);
+                                secondChk.setChecked(false);
                             }
-
                         }
                     });
 
@@ -550,6 +550,7 @@ public class BasketListFragment extends Fragment implements
                                         PayValue.setText(secondPay.getText().toString());
                                         mPopupWindow.dismiss();
                                     }
+
                                     if (_3Chk.isChecked()) {
                                         selectedPay = "2";
                                         PayValue.setText(_3secondPay.getText().toString());
@@ -557,6 +558,7 @@ public class BasketListFragment extends Fragment implements
                                     }
 
                                     if (checkbox_credit.isChecked()) {
+                                        selectedPay = "2";
                                         credit = 1;
                                         PayValue.setText(txt_credit.getText().toString());
                                         mPopupWindow.dismiss();
@@ -605,8 +607,13 @@ public class BasketListFragment extends Fragment implements
 
                                     System.out.println("credit=====" + credit);
                                     FragmentManager fm = getActivity().getFragmentManager();
+
                                     DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor);
                                     descriptionDialog.show(fm, "DescriptionDialog");
+
+                                    totalprice.setText("");
+                                    AddValue.setText("");
+                                    PayValue.setText("");
 
                                 } else {
                                     Toast.makeText(getActivity(), "لطفا نوع پرداخت را انتخاب نمایید", Toast.LENGTH_LONG).show();

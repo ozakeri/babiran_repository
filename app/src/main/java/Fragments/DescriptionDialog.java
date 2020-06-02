@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
 
@@ -30,20 +32,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.babiran.app.BlankAcct;
-import net.babiran.app.CreditActivity;
 import net.babiran.app.FactorList;
-import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.commnets.UNIQ;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,15 +49,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import Handlers.DatabaseHandler;
-import Models.EventbusModel;
 import Models.Product;
 import tools.AppConfig;
 import tools.AudioRecorder;
-import tools.Util;
 import ui_elements.MyEditText;
 import ui_elements.MyTextView;
 
@@ -74,7 +68,7 @@ public class DescriptionDialog extends DialogFragment {
 
     View v;
     RequestQueue queue;
-    MyEditText description;
+    AppCompatEditText edt_description;
     RelativeLayout progressbar;
     RelativeLayout submit;
     String id, address, productArray, selected_Pay;
@@ -114,7 +108,6 @@ public class DescriptionDialog extends DialogFragment {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         v = inflater.inflate(R.layout.description_dialog, container, false);
         getDialog().setTitle("DescriptionDialog");
-        // description = (MyEditText) v.findViewById(R.id.description_main);
 
         fori = (CardView) v.findViewById(R.id.fori);
         yekrooz = (CardView) v.findViewById(R.id.yekrooz);
@@ -127,6 +120,8 @@ public class DescriptionDialog extends DialogFragment {
         yeksaatchck = (CheckBox) v.findViewById(R.id.yeksaatcheck);
         dosaatchck = (CheckBox) v.findViewById(R.id.dosaatcheck);
         sayerchck = (CheckBox) v.findViewById(R.id.sayercheck);
+        edt_description = v.findViewById(R.id.edt_description);
+        edt_description.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
 
         fori.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,10 +221,10 @@ public class DescriptionDialog extends DialogFragment {
                 }
                 Log.e("descript", descriptionFactor);
                 Log.e("selected_Pay==", selected_Pay);
-                completeBUY(id, address, productArray, selected_Pay, credit, "");
+                completeBUY(id, address, productArray, selected_Pay, credit, edt_description.getText().toString());
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
-                //getDialog().dismiss();
+
 
             }
         });
@@ -263,13 +258,17 @@ public class DescriptionDialog extends DialogFragment {
                             if (jsonObject.getString("success").equals("1")) {
                                 if (!jsonObject.isNull("url")) {
                                     String urlStr = jsonObject.getString("url");
+                                    getDialog().dismiss();
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr));
                                     startActivityForResult(browserIntent, REQUEST_CODE_PAY);
 
-                                }else if (!jsonObject.isNull("result")) {
-                                    String resultStr = jsonObject.getString("result");
+                                } else if (!jsonObject.isNull("result")) {
                                     showGuideDialog();
                                 }
+                            } else if (jsonObject.getString("success").equals("3")) {
+                                Toast.makeText(getActivity(), "در خواست شما با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
+                                getFactorId();
+                                getDialog().dismiss();
                             }
 
                         } catch (JSONException e) {
@@ -421,8 +420,8 @@ public class DescriptionDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                getDialog().dismiss();
                 getFactorId();
+                getDialog().dismiss();
             }
         });
         alert.setCanceledOnTouchOutside(false);
