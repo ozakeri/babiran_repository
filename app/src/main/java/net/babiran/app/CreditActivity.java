@@ -62,6 +62,7 @@ public class CreditActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_PAY = 101;
     private AppCompatImageView btn_back;
     private String id = "";
+    private GlobalValues globalValues = new GlobalValues();
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -250,7 +251,8 @@ public class CreditActivity extends AppCompatActivity {
                                 if (response.getString("credit") == null) {
                                     credit = "0";
                                 }
-                                EventBus.getDefault().post(new EventbusModel(credit));
+                                //EventBus.getDefault().post(new EventbusModel(credit));
+                                globalValues.setCreditValue(credit);
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
@@ -300,7 +302,7 @@ public class CreditActivity extends AppCompatActivity {
         TextView buttonTextView = alert.findViewById(R.id.txt_action);
         MyTextView txt_status = alert.findViewById(R.id.txt_status);
         AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
-
+        alert.setCancelable(false);
 
         if (success != null && success.equals("1")) {
             statusIcon.setBackgroundResource(R.drawable.success);
@@ -314,11 +316,17 @@ public class CreditActivity extends AppCompatActivity {
         buttonTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getCreditRequest();
                 alert.dismiss();
             }
         });
         alert.setCanceledOnTouchOutside(false);
         alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
 

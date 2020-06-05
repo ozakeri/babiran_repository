@@ -11,6 +11,7 @@ public class GlobalValues {
     private static String firstId;
     private static String secondId;
     private boolean isPush;
+    private String creditValue;
 
     public String getFirstId() {
         return firstId;
@@ -44,5 +45,13 @@ public class GlobalValues {
 
     public void setPush(boolean push) {
         isPush = push;
+    }
+
+    public String getCreditValue() {
+        return creditValue;
+    }
+
+    public void setCreditValue(String creditValue) {
+        this.creditValue = creditValue;
     }
 }

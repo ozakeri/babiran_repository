@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/linear"
@@ -146,11 +147,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/linear"
+            android:background="@color/white"
             android:textAlignment="center">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical">
 
 
@@ -184,7 +187,7 @@
                     android:id="@+id/specialRelative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/back_one">
+                    android:background="@color/white">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card1"
@@ -365,7 +368,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/back_three">
+                    android:background="@color/white">
 
                     <RelativeLayout
                         android:id="@+id/relativebanner"
@@ -535,7 +538,7 @@
                     android:id="@+id/specialTondMarketRelative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/back_two">
+                    android:background="@color/white">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/specialLayout"

@@ -269,6 +269,7 @@ public class DescriptionDialog extends DialogFragment {
                                 Toast.makeText(getActivity(), "در خواست شما با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
                                 getFactorId();
                                 getDialog().dismiss();
+
                             }
 
                         } catch (JSONException e) {
@@ -395,14 +396,21 @@ public class DescriptionDialog extends DialogFragment {
     }
 
     public void getFactorId() {
+
+        NullBasket();
+        getDialog().dismiss();
+        AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
+        Intent intent = new Intent(getActivity(), BlankAcct.class);
+        startActivity(intent);
+
         db = new DatabaseHandler(context);
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();
             String id = userDetailsHashMap.get("id");
-            Intent intent = new Intent(context, FactorList.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("id", id);
-            startActivity(intent);
+            Intent intent1 = new Intent(context, FactorList.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent1.putExtra("id", id);
+            startActivity(intent1);
         }
     }
 
@@ -419,9 +427,17 @@ public class DescriptionDialog extends DialogFragment {
         buttonTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                NullBasket();
+                getDialog().dismiss();
+                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
+                Intent intent = new Intent(getActivity(), BlankAcct.class);
+                startActivity(intent);
+
                 alert.dismiss();
                 getFactorId();
                 getDialog().dismiss();
+
             }
         });
         alert.setCanceledOnTouchOutside(false);

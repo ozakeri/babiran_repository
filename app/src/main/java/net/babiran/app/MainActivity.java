@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHandler db;
     private RelativeLayout layout_favorite;
     public static final String TAG = "TAG";
+    GlobalValues globalValues = new GlobalValues();
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -791,7 +792,7 @@ public class MainActivity extends AppCompatActivity {
                                 Pattern p = Pattern.compile("\\d+");
                                 Matcher m = p.matcher(credit);
                                 while (m.find()) {
-                                    txt_credit.setText(Util.convertToFormalString((m.group())));
+                                    //txt_credit.setText(Util.convertToFormalString((m.group())));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -1253,6 +1254,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onOptionsItemSelected(MenuItem item) {
                 if (item != null && item.getItemId() == android.R.id.home) {
+                    txt_credit.setText(globalValues.getCreditValue());
                     if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                     } else {
@@ -1342,7 +1344,7 @@ public class MainActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(model.getCredit());
         while (m.find()) {
-            txt_credit.setText(Util.convertToFormalString((m.group())));
+            //txt_credit.setText(Util.convertToFormalString((m.group())));
         }
     }
     @Override

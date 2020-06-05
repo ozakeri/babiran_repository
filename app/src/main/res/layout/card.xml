@@ -5,7 +5,8 @@
     android:gravity="center_horizontal"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/card_layout"
@@ -14,23 +15,27 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:background="@color/white"
         android:alpha="0.4" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="2dp">
+        android:layout_margin="2dp"
+        android:background="@color/white">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="2dp">
+            android:layout_margin="2dp"
+            android:background="@color/white">
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/productThumbnailImage"
