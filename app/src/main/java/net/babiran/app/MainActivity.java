@@ -1,7 +1,6 @@
 package net.babiran.app;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -77,7 +76,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Adapters.MenuAdapter;
-import Fragments.AboutFragment;
 import Fragments.BasketListFragment;
 import Fragments.CategoryFragment;
 import Fragments.EditProfileFrgment;
@@ -785,7 +783,7 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 String credit = response.getString("credit");
 
-                                if (response.getString("credit") == null){
+                                if (response.getString("credit") == null) {
                                     credit = "0";
                                 }
                                 EventBus.getDefault().post(new EventbusModel(credit));
@@ -829,6 +827,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tab_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventBus.getDefault().post(new EventbusModel(false));
                 viewLogo.setVisibility(View.VISIBLE);
                 layout_favorite.setVisibility(View.VISIBLE);
                 btnBack.setVisibility(View.GONE);
@@ -868,7 +867,7 @@ public class MainActivity extends AppCompatActivity {
 
                 viewLogo.setVisibility(View.VISIBLE);
                 layout_favorite.setVisibility(View.VISIBLE);
-
+                EventBus.getDefault().post(new EventbusModel(false));
                 btnBack.setVisibility(View.GONE);
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
@@ -906,7 +905,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 viewLogo.setVisibility(View.VISIBLE);
                 layout_favorite.setVisibility(View.VISIBLE);
-
+                EventBus.getDefault().post(new EventbusModel(false));
                 btnBack.setVisibility(View.GONE);
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
@@ -1179,7 +1178,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
 
-                         break;
+                        break;
                     /*case 11:
                         //about
 
@@ -1344,9 +1343,10 @@ public class MainActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(model.getCredit());
         while (m.find()) {
-            //txt_credit.setText(Util.convertToFormalString((m.group())));
+            txt_credit.setText(Util.convertToFormalString((m.group())));
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -1364,6 +1364,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        getCreditRequest();
+
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(AppConfig.REGISTRATION_COMPLETE));
@@ -1534,8 +1537,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Log.e("compSize", products.size() + "");
 
-                            for (int i = 0;i<products.size();i++){
-                                if (products.get(i).id.equals(proId)){
+                            for (int i = 0; i < products.size(); i++) {
+                                if (products.get(i).id.equals(proId)) {
                                     Product product = products.get(i);
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(product, getProduct)).commit();
                                 }

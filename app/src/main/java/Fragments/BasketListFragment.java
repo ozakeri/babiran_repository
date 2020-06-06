@@ -30,13 +30,16 @@ import com.google.gson.Gson;
 
 import net.babiran.app.R;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import Adapters.BasketListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Basket;
+import Models.EventbusModel;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
 
@@ -93,11 +96,12 @@ public class BasketListFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("===onCreate===");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        System.out.println("===onCreateView===");
 
         v = inflater.inflate(R.layout.basket_list_fragment, container, false);
 
@@ -132,7 +136,6 @@ public class BasketListFragment extends Fragment implements
 
 //            AppConfig.tempActivity = (MainActivity) getActivity();
             listView = (ListView) v.findViewById(R.id.basket_listView);
-            listsabad = (ImageView) v.findViewById(R.id.listsabad);
 
             AddValue = (MyTextView) v.findViewById(R.id.addValue);
             PayValue = (MyTextView) v.findViewById(R.id.payValue);
@@ -149,85 +152,7 @@ public class BasketListFragment extends Fragment implements
 
             ///      Log.e("proContent", AppConfig.products.toString() );
 
-
-            ArrayList<Basket> baskets = new ArrayList<>();
-
-            if (products != null) {
-                if (products.size() > 0) {
-                    if (listsabad.getVisibility() == View.VISIBLE) {
-                        listsabad.setVisibility(View.INVISIBLE);
-                    }
-                    for (int i = 0; i < products.size(); i++) {
-                        Basket basket = new Basket(products.get(i).getId(), products.get(i).count);
-                        baskets.add(basket);
-                    }
-                    Gson gson = new Gson();
-                    basketjson = gson.toJson(baskets);
-
-
-                    BasketListAdapter adp = new BasketListAdapter(getActivity(), products);
-                    adp.notifyDataSetChanged();
-                    listView.setAdapter(adp);
-
-                    TotalPrice = 0;
-                    discountPrice = 0;
-
-                    rawPrice = 0;
-                    rawPrice_dis = 0;
-                    Log.e("proSizein", products.size() + "");
-
-                    int p = 0;
-                    int p_dis = 0;
-                    int dis1 = 0;
-                    int dis2 = 0;
-                    int dis3 = 0;
-                    int count = 0;
-                    for (int i = 0; i < products.size(); i++) {
-
-                        if (products.get(i).getPrice() != null && !products.get(i).getPrice().equals("null") && !products.get(i).getPrice().equals("")) {
-                            p = Integer.parseInt(products.get(i).getPrice());
-                        }
-                        if (products.get(i).getDis_price() != null && !products.get(i).getDis_price().equals("null") && !products.get(i).getDis_price().equals("")) {
-                            p_dis = Integer.parseInt(products.get(i).getDis_price());
-                        }
-
-                        System.out.println("count======" + products.get(i).getCount());
-                        System.out.println("count======" + products.get(i).count);
-                        if (products.get(i).count != null && !products.get(i).count.equals("null") && !products.get(i).count.equals("")) {
-                            count = Integer.parseInt(products.get(i).count);
-                        }
-
-
-                    /*if(prefs.getString("pro_id","0").equals(products.get(i).id)) {
-                        count = Integer.parseInt(prefs.getString("count", "0"));
-                    }*/
-
-
-                        TotalPrice += p * count * (100 - (dis1 +
-                                dis2 + dis3)
-                        ) * 0.01;
-
-
-                        Log.e("priceeee", p + "");
-                        Log.e("priceeee", p_dis + "");
-                        Log.e("counttt", count + "");
-
-
-                        rawPrice += p * count;
-                        rawPrice_dis += p_dis * count;
-
-                    }
-
-                } else {
-                    listsabad.setVisibility(View.VISIBLE);
-                    listsabad.setImageResource(R.drawable.shopping_cart);
-
-                }
-            } else {
-                listView.setVisibility(View.GONE);
-
-            }
-
+            updateList();
 
             Log.e("raw_dis", rawPrice + " " + rawPrice_dis);
             // discountPrice = rawPrice - TotalPrice ;
@@ -461,11 +386,10 @@ public class BasketListFragment extends Fragment implements
                     });
 
 
-
                     secondChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked){
+                            if (isChecked) {
                                 _3Chk.setChecked(false);
                                 checkbox_credit.setChecked(false);
                             }
@@ -475,7 +399,7 @@ public class BasketListFragment extends Fragment implements
                     checkbox_credit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked){
+                            if (isChecked) {
                                 _3Chk.setChecked(false);
                                 secondChk.setChecked(false);
                             }
@@ -485,7 +409,7 @@ public class BasketListFragment extends Fragment implements
                     _3Chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked){
+                            if (isChecked) {
                                 checkbox_credit.setChecked(false);
                                 secondChk.setChecked(false);
                             }
@@ -547,12 +471,14 @@ public class BasketListFragment extends Fragment implements
                             }*/
                                     if (secondChk.isChecked()) {
                                         selectedPay = "1";
+                                        credit = 0;
                                         PayValue.setText(secondPay.getText().toString());
                                         mPopupWindow.dismiss();
                                     }
 
                                     if (_3Chk.isChecked()) {
                                         selectedPay = "2";
+                                        credit = 0;
                                         PayValue.setText(_3secondPay.getText().toString());
                                         mPopupWindow.dismiss();
                                     }
@@ -562,8 +488,6 @@ public class BasketListFragment extends Fragment implements
                                         credit = 1;
                                         PayValue.setText(txt_credit.getText().toString());
                                         mPopupWindow.dismiss();
-                                    } else {
-                                        credit = 0;
                                     }
 
                                 }
@@ -703,18 +627,15 @@ public class BasketListFragment extends Fragment implements
 
     @Override
     public void onStop() {
+        EventBus.getDefault().unregister(this);
         super.onStop();
+        System.out.println("===onStop===");
+
         if (queue != null) {
             queue.cancelAll(TAG);
         }
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        System.out.println("====basket onResume====");
-    }
 
     public String ConvertEnToPe(String value) {
         char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
@@ -741,6 +662,114 @@ public class BasketListFragment extends Fragment implements
 
         }
         return priceString.substring(0, priceString.length() - 1);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        System.out.println("===onStart===");
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("===onResume===");
+        updateList();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("===onPause===");
+    }
+
+
+    @Subscribe
+    public void getEvent(EventbusModel model) {
+        if (model.isBasket()) {
+            updateList();
+        }
+    }
+
+    public void updateList() {
+        listsabad = (ImageView) v.findViewById(R.id.listsabad);
+        ArrayList<Basket> baskets = new ArrayList<>();
+        if (products != null) {
+            System.out.println("products========" + products.size());
+            if (products.size() > 0) {
+                if (listsabad.getVisibility() == View.VISIBLE) {
+                    listsabad.setVisibility(View.INVISIBLE);
+                }
+                for (int i = 0; i < products.size(); i++) {
+                    Basket basket = new Basket(products.get(i).getId(), products.get(i).count);
+                    baskets.add(basket);
+                }
+                Gson gson = new Gson();
+                basketjson = gson.toJson(baskets);
+
+
+                BasketListAdapter adp = new BasketListAdapter(getActivity(), products);
+                adp.notifyDataSetChanged();
+                listView.setAdapter(adp);
+
+                TotalPrice = 0;
+                discountPrice = 0;
+
+                rawPrice = 0;
+                rawPrice_dis = 0;
+                Log.e("proSizein", products.size() + "");
+
+                int p = 0;
+                int p_dis = 0;
+                int dis1 = 0;
+                int dis2 = 0;
+                int dis3 = 0;
+                int count = 0;
+                for (int i = 0; i < products.size(); i++) {
+
+                    if (products.get(i).getPrice() != null && !products.get(i).getPrice().equals("null") && !products.get(i).getPrice().equals("")) {
+                        p = Integer.parseInt(products.get(i).getPrice());
+                    }
+                    if (products.get(i).getDis_price() != null && !products.get(i).getDis_price().equals("null") && !products.get(i).getDis_price().equals("")) {
+                        p_dis = Integer.parseInt(products.get(i).getDis_price());
+                    }
+
+                    System.out.println("count======" + products.get(i).getCount());
+                    System.out.println("count======" + products.get(i).count);
+                    if (products.get(i).count != null && !products.get(i).count.equals("null") && !products.get(i).count.equals("")) {
+                        count = Integer.parseInt(products.get(i).count);
+                    }
+
+
+                    /*if(prefs.getString("pro_id","0").equals(products.get(i).id)) {
+                        count = Integer.parseInt(prefs.getString("count", "0"));
+                    }*/
+
+
+                    TotalPrice += p * count * (100 - (dis1 +
+                            dis2 + dis3)
+                    ) * 0.01;
+
+
+                    Log.e("priceeee", p + "");
+                    Log.e("priceeee", p_dis + "");
+                    Log.e("counttt", count + "");
+
+
+                    rawPrice += p * count;
+                    rawPrice_dis += p_dis * count;
+
+                }
+
+            } else {
+                listsabad.setVisibility(View.VISIBLE);
+                listsabad.setImageResource(R.drawable.shopping_cart);
+
+            }
+        } else {
+            listView.setVisibility(View.GONE);
+        }
     }
 
 }

@@ -69,7 +69,6 @@ import Models.Image;
 import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
-import tools.CustomPagerAdapterByUrlMain;
 import tools.CustomPagerAdapterProduct;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
@@ -443,6 +442,8 @@ public class ProductFragment extends Fragment {
 
     public void UpdateCount() {
         int count = 0;
+
+        System.out.println("=-=-=-count-=-=-" + count);
         if (products != null) {
             for (int i = 0; i < products.size(); i++) {
                 if (this.product.getId().equals(products.get(i).getId())) {
@@ -532,30 +533,23 @@ public class ProductFragment extends Fragment {
 
         UpdateCount();
         Log.e("IsUpdate", IsUpdateCount + "");
-        if (IsUpdateCount) {
 
-            try {
+        if (products != null){
+            if (IsUpdateCount) {
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
-            } catch (Exception e) {
-                e.getMessage();
-            }
 
-        } else {
-
-            try {
+            } else {
                 product.count = Count;
                 products.add(this.product);
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
-            } catch (Exception e) {
-                e.getMessage();
-            }
 
+            }
         }
 
 
@@ -637,6 +631,7 @@ public class ProductFragment extends Fragment {
         txt_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppConfig.frag = ProductFragment.this;
                 addtoBasket();
                 alert.dismiss();
             }

@@ -348,19 +348,37 @@ public class DescriptionDialog extends DialogFragment {
             System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
-                NullBasket();
+               /* NullBasket();
                 getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                SharedPreferences pro_prefs;
+                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
+                Gson gson = new Gson();
+                String json = pro_prefs.getString("products", "");
+                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
+                }.getType());
+                Log.e("objGson", obj + "");
+                AppConfig.products = obj;
 
             } else {
 
-                NullBasket();
+                /*NullBasket();
                 getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                SharedPreferences pro_prefs;
+                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
+                Gson gson = new Gson();
+                String json = pro_prefs.getString("products", "");
+                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
+                }.getType());
+                Log.e("objGson", obj + "");
+                AppConfig.products = obj;
 
 
             }
@@ -376,14 +394,11 @@ public class DescriptionDialog extends DialogFragment {
 
         SharedPreferences pro_prefs;
         pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-
-
         Gson gson = new Gson();
         String json = pro_prefs.getString("products", "");
         ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
         }.getType());
         Log.e("objGson", obj + "");
-
         AppConfig.products = obj;
 
         //  getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
@@ -397,11 +412,20 @@ public class DescriptionDialog extends DialogFragment {
 
     public void getFactorId() {
 
-        NullBasket();
+        /*NullBasket();
         getDialog().dismiss();
         AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
         Intent intent = new Intent(getActivity(), BlankAcct.class);
-        startActivity(intent);
+        startActivity(intent);*/
+
+        SharedPreferences pro_prefs;
+        pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = pro_prefs.getString("products", "");
+        ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
+        }.getType());
+        Log.e("objGson", obj + "");
+        AppConfig.products = obj;
 
         db = new DatabaseHandler(context);
         if (db.getRowCount() > 0) {
@@ -428,11 +452,20 @@ public class DescriptionDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-                NullBasket();
+               /* NullBasket();
                 getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                SharedPreferences pro_prefs;
+                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
+                Gson gson = new Gson();
+                String json = pro_prefs.getString("products", "");
+                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
+                }.getType());
+                Log.e("objGson", obj + "");
+                AppConfig.products = obj;
 
                 alert.dismiss();
                 getFactorId();

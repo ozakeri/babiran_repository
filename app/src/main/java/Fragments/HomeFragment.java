@@ -1340,7 +1340,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
 
@@ -1452,7 +1452,7 @@ public class HomeFragment extends Fragment {
 
 
                 //System.out.println("homecategory_id1==" + c.getString("category_id1"));
-                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
+                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
 
