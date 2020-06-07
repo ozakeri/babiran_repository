@@ -117,6 +117,7 @@ public class FactorList extends AppCompatActivity {
             id = extras.getString("id");
             //  id="55";
             getFactor();
+            getCreditRequest();
         }
 
 
@@ -140,7 +141,7 @@ public class FactorList extends AppCompatActivity {
             }
         });
 
-        getCreditRequest();
+
     }
 
 
@@ -149,6 +150,7 @@ public class FactorList extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
 
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
+        System.out.println("url=====" + url);
         // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -157,7 +159,7 @@ public class FactorList extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
 
-                            Log.e("response :", response + "");
+                            System.out.println("response=====" + response);
 
                             factorArrayList = new ArrayList<>();
                             for (int i = 0; i < response.length(); i++) {
@@ -303,7 +305,7 @@ public class FactorList extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         try {
 
-                            Log.e("responseFactor:", response + "");
+                            System.out.println("response=====" + response);
 
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -492,10 +494,6 @@ public class FactorList extends AppCompatActivity {
     public void getCreditRequest() {
 
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
-
-        if (id.equals("")) {
-            id = "-1";
-        }
 
         final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
 

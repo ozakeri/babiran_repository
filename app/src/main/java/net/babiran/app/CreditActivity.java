@@ -164,15 +164,17 @@ public class CreditActivity extends AppCompatActivity {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), edt_price.getText().toString().replaceAll(",", ""));
 
+            System.out.println("edt_price=====" + Integer.parseInt(AppConfig.id));
             System.out.println("edt_price=====" + edt_price.getText().toString().replaceAll(",", ""));
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
                     try {
+                        System.out.println("response======" + response.body());
+                        System.out.println("response======" + response);
                         if (response.body() != null) {
 
-                            System.out.println("response======" + response.body());
                             Integer fetching = response.body().getSuccess();
 
                             if (fetching == 1) {

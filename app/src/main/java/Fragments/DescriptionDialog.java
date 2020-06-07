@@ -261,6 +261,7 @@ public class DescriptionDialog extends DialogFragment {
                                     getDialog().dismiss();
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr));
                                     startActivityForResult(browserIntent, REQUEST_CODE_PAY);
+                                    NullBasket();
 
                                 } else if (!jsonObject.isNull("result")) {
                                     showGuideDialog();
