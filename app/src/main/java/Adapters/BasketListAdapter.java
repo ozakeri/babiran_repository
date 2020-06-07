@@ -213,6 +213,8 @@ public class BasketListAdapter extends BaseAdapter {
         SharedPreferences.Editor editor= context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         products.remove(id);
         AppConfig.products = products ;
+
+
         try {
             Gson gson = new Gson();
             String proObj = gson.toJson(AppConfig.products);

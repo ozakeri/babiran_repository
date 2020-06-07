@@ -348,11 +348,11 @@ public class DescriptionDialog extends DialogFragment {
             System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
-               /* NullBasket();
-                getDialog().dismiss();
+                NullBasket();
+              /*  getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);*/
+                startActivity(intent);
 
                 SharedPreferences pro_prefs;
                 pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
@@ -361,15 +361,15 @@ public class DescriptionDialog extends DialogFragment {
                 ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
                 }.getType());
                 Log.e("objGson", obj + "");
-                AppConfig.products = obj;
+                AppConfig.products = obj;*/
 
             } else {
 
-                /*NullBasket();
-                getDialog().dismiss();
+                NullBasket();
+             /*   getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);*/
+                startActivity(intent);
 
                 SharedPreferences pro_prefs;
                 pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
@@ -378,7 +378,7 @@ public class DescriptionDialog extends DialogFragment {
                 ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
                 }.getType());
                 Log.e("objGson", obj + "");
-                AppConfig.products = obj;
+                AppConfig.products = obj;*/
 
 
             }
@@ -387,11 +387,29 @@ public class DescriptionDialog extends DialogFragment {
 
     public void NullBasket() {
 
-        final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
+        SharedPreferences pro_prefs;
+        pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = pro_prefs.getString("products", "");
+        ArrayList<Product> arrayList = gson.fromJson(json, new TypeToken<List<Product>>() {
+        }.getType());
+        SharedPreferences.Editor editor= context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
+        arrayList.removeAll(arrayList);
+        AppConfig.products = arrayList ;
+
+        try {
+            Gson gson1 = new Gson();
+            String proObj = gson1.toJson(AppConfig.products);
+            editor.putString("products", proObj);
+            editor.commit();
+        }catch (Exception e){
+            e.getMessage();
+        }
+        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+
+       /* final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         editor.putString("products", "");
         editor.apply();
-
-
         SharedPreferences pro_prefs;
         pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
         Gson gson = new Gson();
@@ -400,8 +418,7 @@ public class DescriptionDialog extends DialogFragment {
         }.getType());
         Log.e("objGson", obj + "");
         AppConfig.products = obj;
-
-        //  getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();*/
     }
 
     @Override
@@ -412,20 +429,13 @@ public class DescriptionDialog extends DialogFragment {
 
     public void getFactorId() {
 
-        /*NullBasket();
+        NullBasket();
+
+       /* NullBasket();
         getDialog().dismiss();
         AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
         Intent intent = new Intent(getActivity(), BlankAcct.class);
         startActivity(intent);*/
-
-        SharedPreferences pro_prefs;
-        pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = pro_prefs.getString("products", "");
-        ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
-        }.getType());
-        Log.e("objGson", obj + "");
-        AppConfig.products = obj;
 
         db = new DatabaseHandler(context);
         if (db.getRowCount() > 0) {
@@ -452,20 +462,20 @@ public class DescriptionDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-               /* NullBasket();
+                /*NullBasket();
                 getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
                 startActivity(intent);*/
 
-                SharedPreferences pro_prefs;
+                /*SharedPreferences pro_prefs;
                 pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
                 Gson gson = new Gson();
                 String json = pro_prefs.getString("products", "");
                 ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
                 }.getType());
                 Log.e("objGson", obj + "");
-                AppConfig.products = obj;
+                AppConfig.products = obj;*/
 
                 alert.dismiss();
                 getFactorId();

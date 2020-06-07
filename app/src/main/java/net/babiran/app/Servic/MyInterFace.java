@@ -10,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -25,6 +26,7 @@ public interface MyInterFace {
     @POST("chargPardakht")
     Call<MyMesa> BuySahrj(@Field("mobile") String mobile, @Field("price") String price, @Field("is_direct") String is_direct, @Field("operator_id") String operator_id);
 
+    @Headers("Content-Type: application/json")
     @FormUrlEncoded
     @POST("creditPardakht")
     Call<MyMesa> BuyCredit(@Field("user_id") int user_id, @Field("price") String price);
