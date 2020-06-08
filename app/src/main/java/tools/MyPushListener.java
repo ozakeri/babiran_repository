@@ -58,108 +58,114 @@ public class MyPushListener extends PusheListenerService {
                     jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
                     System.out.println("jsonObjectStr=====" + jsonObjectStr);
 
-                    String[] kvPairs = jsonObjectStr.split(",");
-                    for (String kvPair : kvPairs) {
-                        String[] kv = kvPair.split(":");
-                        String key = kv[0];
-                        String value = kv[1];
+                    if (jsonObjectStr != null) {
+                        String[] kvPairs = jsonObjectStr.split(",");
+                        for (String kvPair : kvPairs) {
+                            try {
+                                String[] kv = kvPair.split(":");
+                                System.out.println("kv=====" + kv);
+                                String key = kv[0];
+                                String value = kv[1];
 
 
-                        key = key.replaceAll("([{-}])", "");
-                        value = value.replaceAll("([{-}])", "");
+                                key = key.replaceAll("([{-}])", "");
+                                value = value.replaceAll("([{-}])", "");
 
-                        System.out.println("key=====" + key);
-                        System.out.println("value=====" + value);
+                                System.out.println("key=====" + key);
+                                System.out.println("value=====" + value);
 
-                        if (key.equals(" type")) {
-                            key = key.replace(" type", "type");
-                        }
+                                if (key.equals(" type")) {
+                                    key = key.replace(" type", "type");
+                                }
 
-                        if (key.equals(" success")) {
-                            key = key.replace(" success", "success");
-                        }
+                                if (key.equals(" success")) {
+                                    key = key.replace(" success", "success");
+                                }
 
-                        if (key.equals(" blog_id")) {
-                            key = key.replace(" blog_id", "blog_id");
-                        }
-                        if (key.equals(" pro_id")) {
-                            key = key.replace(" pro_id", "pro_id");
-                        }
+                                if (key.equals(" blog_id")) {
+                                    key = key.replace(" blog_id", "blog_id");
+                                }
+                                if (key.equals(" pro_id")) {
+                                    key = key.replace(" pro_id", "pro_id");
+                                }
 
-                        if (key.equals(" cat_id")) {
-                            key = key.replace(" cat_id", "cat_id");
-                        }
+                                if (key.equals(" cat_id")) {
+                                    key = key.replace(" cat_id", "cat_id");
+                                }
 
-                        if (key.equals(" title")) {
-                            key = key.replace(" title", "title");
-                        }
-                        if (key.equals(" body")) {
-                            key = key.replace(" body", "body");
-                        }
+                                if (key.equals(" title")) {
+                                    key = key.replace(" title", "title");
+                                }
+                                if (key.equals(" body")) {
+                                    key = key.replace(" body", "body");
+                                }
 
-                        if (key.equals("type")) {
-                            type = value;
-                        }
+                                if (key.equals("type")) {
+                                    type = value;
+                                }
 
-                        if (key.equals("pro_id")) {
-                            pro_id = value;
-                        }
+                                if (key.equals("pro_id")) {
+                                    pro_id = value;
+                                }
 
-                        if (key.equals("success")) {
-                            success = value;
-                        }
+                                if (key.equals("success")) {
+                                    success = value;
+                                }
 
-                        if (key.equals("blog_id")) {
-                            blog_id = value;
-                        }
+                                if (key.equals("blog_id")) {
+                                    blog_id = value;
+                                }
 
-                        if (key.equals("cat_id")) {
-                            cat_id = value;
-                        }
+                                if (key.equals("cat_id")) {
+                                    cat_id = value;
+                                }
 
-                        if (key.equals("title")) {
-                            title = value;
-                        }
+                                if (key.equals("title")) {
+                                    title = value;
+                                }
 
-                        if (key.equals("body")) {
-                            body = value;
-                        }
+                                if (key.equals("body")) {
+                                    body = value;
+                                }
 
-                        System.out.println("pro_id=====" + pro_id);
-                        System.out.println("cat_id=====" + cat_id);
-                        System.out.println("title=====" + title);
-                        System.out.println("body=====" + body);
+                                System.out.println("pro_id=====" + pro_id);
+                                System.out.println("cat_id=====" + cat_id);
+                                System.out.println("title=====" + title);
+                                System.out.println("body=====" + body);
 
-                    }
+                                if (success != null) {
+                                    showNotificationCopy(getApplicationContext(), title, body);
+                                    //new Thread(new Task()).start();
+                                }
+                                if (type != null) {
+                                    if (type.equals("product")) {
+                                        if (pro_id != null && cat_id != null) {
+                                            editor = AppController.getInstance().getSharedPreferences().edit();
+                                            editor.putBoolean("getProduct", true);
+                                            editor.apply();
+
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            intent.putExtra("pro_id", pro_id);
+                                            intent.putExtra("cat_id", cat_id);
+                                            // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                                            showNotification(getApplicationContext(), intent, title, body);
+                                        }
+                                    } else if (type.equals("blog")) {
+                                        if (blog_id != null) {
+                                            ListtoListActivity.ID_ME = blog_id;
+                                            Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
+                                            intent.putExtra("isPush", true);
+                                            showNotification(getApplicationContext(), intent, title, body);
+                                        }
+                                    }
+                                }
 
 
-                    if (success != null) {
-                        showNotificationCopy(getApplicationContext(), title, body);
-                        new Thread(new Task()).start();
-                    }
-                    if (type != null) {
-                        if (type.equals("product")) {
-                            if (pro_id != null && cat_id != null) {
-                                editor = AppController.getInstance().getSharedPreferences().edit();
-                                editor.putBoolean("getProduct", true);
-                                editor.apply();
-
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("pro_id", pro_id);
-                                intent.putExtra("cat_id", cat_id);
-                                // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
-                                showNotification(getApplicationContext(), intent, title, body);
+                            } catch (Exception e) {
+                                e.getMessage();
                             }
-                        } else if (type.equals("blog")) {
-                            if (blog_id != null) {
-                                ListtoListActivity.ID_ME = blog_id;
-                                Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
-                                intent.putExtra("isPush", true);
-                                showNotification(getApplicationContext(), intent, title, body);
-                            }
                         }
                     }
-
                 }
 
 

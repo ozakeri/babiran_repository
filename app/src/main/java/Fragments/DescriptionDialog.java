@@ -349,7 +349,7 @@ public class DescriptionDialog extends DialogFragment {
             System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
-                NullBasket();
+               // NullBasket();
               /*  getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
@@ -366,7 +366,7 @@ public class DescriptionDialog extends DialogFragment {
 
             } else {
 
-                NullBasket();
+               // NullBasket();
              /*   getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
@@ -403,10 +403,11 @@ public class DescriptionDialog extends DialogFragment {
             String proObj = gson1.toJson(AppConfig.products);
             editor.putString("products", proObj);
             editor.commit();
+            AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
         }catch (Exception e){
             e.getMessage();
         }
-        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+
 
        /* final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         editor.putString("products", "");

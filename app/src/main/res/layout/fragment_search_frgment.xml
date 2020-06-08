@@ -21,8 +21,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/white"
-            android:layoutDirection="ltr">
+            android:layoutDirection="ltr"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/corner_ronde">
 
             <ImageView
                 android:id="@+id/searchImage"
@@ -39,7 +41,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="3"
                 android:background="@null"
-                android:hint="جستجو..."
+                android:hint="جستجو در بابیران"
                 android:imeOptions="actionSearch"
                 android:inputType="text" />
 

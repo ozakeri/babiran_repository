@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +66,16 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
             }
         });
 
+        holder.SeenP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListtoListActivity.ID_ME = list.id;
+                Intent intent = new Intent(mContext, ShowRssActivity.class);
+                mContext.startActivity(intent);
+                System.out.println("ID_ME====" + ListtoListActivity.ID_ME);
+            }
+        });
+
 
     }
 
@@ -77,6 +88,7 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
     {
         public TextView SeenP;
         ImageView imageView;
+        private LinearLayout linearLayout;
 
 
 
@@ -86,6 +98,7 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
             SeenP = (TextView) view.findViewById(R.id.txt_rc_rss2);
 
             imageView = (ImageView) view.findViewById(R.id.img_rc_rss2);
+            linearLayout = view.findViewById(R.id.linearLayout);
 
 
         }

@@ -46,7 +46,6 @@ import Models.Feature;
 import Models.Image;
 import Models.Product;
 import tools.AppConfig;
-import tools.MyPushListener;
 import ui_elements.MyTextView;
 
 /**
@@ -77,7 +76,13 @@ public class FactorList extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-            new Thread(new Task()).start();
+
+            db = new DatabaseHandler(getApplicationContext());
+            if (db.getRowCount() > 0) {
+                HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+                id = userDetailsHashMap.get("id");
+            }
+
             Uri uri = intent.getData();
             System.out.println("===uri===" + uri);
             if (uri != null) {
@@ -119,9 +124,6 @@ public class FactorList extends AppCompatActivity {
             getFactor();
             getCreditRequest();
         }
-
-
-        // getFactor();
 
 
         factorList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -296,7 +298,6 @@ public class FactorList extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/" + factorArrayList.size();
-        System.out.println("url=====" + url);
         //final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/" + factorArrayList.size();
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -304,8 +305,6 @@ public class FactorList extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-
-                            System.out.println("response=====" + response);
 
                             for (int i = 0; i < response.length(); i++) {
                                 try {
@@ -460,6 +459,7 @@ public class FactorList extends AppCompatActivity {
         MyTextView txt_status = alert.findViewById(R.id.txt_status);
         AppCompatImageView statusIcon = alert.findViewById(R.id.statusIcon);
 
+        new Thread(new Task()).start();
 
         if (success != null && success.equals("1")) {
             statusIcon.setBackgroundResource(R.drawable.success);
@@ -473,6 +473,7 @@ public class FactorList extends AppCompatActivity {
         buttonTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 alert.dismiss();
             }
         });
@@ -487,6 +488,8 @@ public class FactorList extends AppCompatActivity {
             if (db.getRowCount() > 0) {
                 HashMap<String, String> userDetailsHashMap = db.getUserDetails();
                 id = userDetailsHashMap.get("id");
+                System.out.println("id===========" + id);
+                getFactor();
             }
         }
     }
@@ -505,7 +508,7 @@ public class FactorList extends AppCompatActivity {
                             try {
                                 String credit = response.getString("credit");
 
-                                if (response.getString("credit") == null){
+                                if (response.getString("credit") == null) {
                                     credit = "0";
                                 }
                                 EventBus.getDefault().post(new EventbusModel(credit));

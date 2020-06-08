@@ -87,6 +87,7 @@ public class CreditActivity extends AppCompatActivity {
             System.out.println("===uri===" + uri);
             if (uri != null) {
                 String success = uri.getQueryParameter("success");
+                getCreditRequest();
                 showGuideDialog(success);
                 System.out.println("===success===" + success);
             }
@@ -318,7 +319,6 @@ public class CreditActivity extends AppCompatActivity {
         buttonTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCreditRequest();
                 alert.dismiss();
             }
         });
