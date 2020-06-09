@@ -18,9 +18,7 @@
         android:name="com.paratic.paratic.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.paratic.paratic.permission.C2D_MESSAGE" />
-
-    <!-- Optional permissions -->
+    <uses-permission android:name="com.paratic.paratic.permission.C2D_MESSAGE" /> <!-- Optional permissions -->
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
     <application
@@ -34,7 +32,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-
+        <activity android:name=".AfterOrderActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="pay"
+                    android:scheme="babiran.net.app" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".BlankAcct"
             android:screenOrientation="portrait">
@@ -89,10 +97,10 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name=".MainActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ActivityPay"
             android:screenOrientation="portrait"
@@ -101,13 +109,13 @@
             android:name=".Actip2"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
-        <!--     <receiver android:name=".SMSReceiver">
+        <!--
+     <receiver android:name=".SMSReceiver">
                  <intent-filter>
                      <action android:name="android.provider.Telephony.SMS_RECEIVED" />
                  </intent-filter>
-             </receiver>-->
-
+             </receiver>
+        -->
         <activity
             android:name=".Rss.ListRssActivity"
             android:screenOrientation="portrait" />
@@ -120,7 +128,6 @@
         <activity
             android:name=".Rss.MainListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Sefaresh.ListFoodActivity"
             android:screenOrientation="portrait" />
@@ -174,22 +181,10 @@
         <activity android:name=".Rss.ListtoListActivity" />
         <activity android:name=".Rss.FavListActivity" />
         <activity android:name=".Rss.LastListActivity" />
-
         <activity
             android:name=".FactorList"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="pay"
-                    android:scheme="babiran.net.app" />
-            </intent-filter>
         </activity>
-
         <activity
             android:name=".SharjActivity"
             android:screenOrientation="portrait">
@@ -204,7 +199,6 @@
                     android:scheme="babiran.net.app" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CreditActivity"
             android:screenOrientation="portrait">
@@ -235,10 +229,10 @@
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="2147483647">
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -37,10 +38,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.babiran.app.BlankAcct;
+import net.babiran.app.AfterOrderActivity;
 import net.babiran.app.FactorList;
 import net.babiran.app.R;
-import net.babiran.app.commnets.UNIQ;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +54,6 @@ import Handlers.DatabaseHandler;
 import Models.Product;
 import tools.AppConfig;
 import tools.AudioRecorder;
-import ui_elements.MyEditText;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -260,16 +259,26 @@ public class DescriptionDialog extends DialogFragment {
                                     String urlStr = jsonObject.getString("url");
                                     getDialog().dismiss();
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlStr));
+                                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivityForResult(browserIntent, REQUEST_CODE_PAY);
+                                    ActivityCompat.finishAffinity(getActivity());
                                     NullBasket();
 
                                 } else if (!jsonObject.isNull("result")) {
-                                    showGuideDialog();
+                                    // showGuideDialog();
+                                    getDialog().dismiss();
+                                    Intent intent = new Intent(getActivity(), AfterOrderActivity.class);
+                                    startActivity(intent);
+                                    NullBasket();
+                                    ActivityCompat.finishAffinity(getActivity());
                                 }
                             } else if (jsonObject.getString("success").equals("3")) {
-                                Toast.makeText(getActivity(), "در خواست شما با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
-                                getFactorId();
                                 getDialog().dismiss();
+                                Intent intent = new Intent(getActivity(), AfterOrderActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                NullBasket();
+                                ActivityCompat.finishAffinity(getActivity());
 
                             }
 
@@ -349,7 +358,7 @@ public class DescriptionDialog extends DialogFragment {
             System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
-               // NullBasket();
+                // NullBasket();
               /*  getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
@@ -366,7 +375,7 @@ public class DescriptionDialog extends DialogFragment {
 
             } else {
 
-               // NullBasket();
+                // NullBasket();
              /*   getDialog().dismiss();
                 AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
                 Intent intent = new Intent(getActivity(), BlankAcct.class);
@@ -394,9 +403,9 @@ public class DescriptionDialog extends DialogFragment {
         String json = pro_prefs.getString("products", "");
         ArrayList<Product> arrayList = gson.fromJson(json, new TypeToken<List<Product>>() {
         }.getType());
-        SharedPreferences.Editor editor= context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         arrayList.removeAll(arrayList);
-        AppConfig.products = arrayList ;
+        AppConfig.products = arrayList;
 
         try {
             Gson gson1 = new Gson();
@@ -404,7 +413,7 @@ public class DescriptionDialog extends DialogFragment {
             editor.putString("products", proObj);
             editor.commit();
             AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
 
@@ -430,15 +439,7 @@ public class DescriptionDialog extends DialogFragment {
     }
 
     public void getFactorId() {
-
         NullBasket();
-
-       /* NullBasket();
-        getDialog().dismiss();
-        AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
-        Intent intent = new Intent(getActivity(), BlankAcct.class);
-        startActivity(intent);*/
-
         db = new DatabaseHandler(context);
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();

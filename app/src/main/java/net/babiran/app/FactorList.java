@@ -54,12 +54,13 @@ import ui_elements.MyTextView;
 
 public class FactorList extends AppCompatActivity {
 
-    ListView factorList;
-    FactorListAdapter factorListAdapter;
-    Toolbar toolbar;
-    String id = "-1";
-    ArrayList<Product> productArrayList;
-    ArrayList<Factor> factorArrayList;
+    private ListView factorList;
+    private FactorListAdapter factorListAdapter;
+    private Toolbar toolbar;
+    private String id = "-1";
+    private String pageName = null;
+    private ArrayList<Product> productArrayList;
+    private ArrayList<Factor> factorArrayList;
     private String What = AppConfig.NULLBASKET;
     private DatabaseHandler db;
 
@@ -74,7 +75,7 @@ public class FactorList extends AppCompatActivity {
         NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(1);
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
 
             db = new DatabaseHandler(getApplicationContext());
@@ -90,7 +91,7 @@ public class FactorList extends AppCompatActivity {
                 showGuideDialog(success);
                 System.out.println("===success===" + success);
             }
-        }
+        }*/
 
 
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
@@ -120,6 +121,8 @@ public class FactorList extends AppCompatActivity {
 
         if (extras != null) {
             id = extras.getString("id");
+            pageName = extras.getString("page");
+            System.out.println("pageName====" + pageName);
             //  id="55";
             getFactor();
             getCreditRequest();
@@ -434,12 +437,20 @@ public class FactorList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        System.out.println("pageName====" + pageName);
+        if (pageName != null && pageName.equals("AfterOrderActivity")) {
+            AppConfig.NULLBASKET = "";
+            Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         if (TextUtils.isEmpty(What)) {
             finish();
         } else {
             AppConfig.NULLBASKET = "";
             Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
-
             startActivity(intent);
             finish();
         }

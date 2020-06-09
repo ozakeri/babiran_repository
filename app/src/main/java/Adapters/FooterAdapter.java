@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,12 @@ import Fragments.CardBanner;
 import Models.Category;
 import tools.AppConfig;
 
-public class BigTileAdapter extends RecyclerView.Adapter<BigTileAdapter.CustomView> {
+public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.CustomView> {
 
     private Context context;
     private List<Category> categories;
 
-    public BigTileAdapter(Context context, List<Category> categories) {
+    public FooterAdapter(Context context,List<Category> categories) {
         this.categories = categories;
         this.context = context;
     }

@@ -21,6 +21,9 @@ import android.widget.RelativeLayout;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -45,12 +48,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Adapters.BigTileAdapter;
 import Adapters.DisProListAdapter;
+import Adapters.FooterAdapter;
 import Adapters.NewProListAdapter;
+import Adapters.SmallTileAdapter;
 import Adapters.TopProListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Category;
@@ -71,30 +78,25 @@ import static tools.AppConfig.smallTile;
 public class HomeFragment extends Fragment {
     ViewPager viewPager, viewPager2;
     CircleIndicator customIndicator, customIndicator2;
-    CardView firstBanner, secondbanner, firstcardban, secondcardban, thirdcardban, forthcardban, FullfirstBanner, FullSecondBanner, dualfirstcard, dualsecondcard, specialLayout;
-    RelativeLayout relativebanner, secondrelative, dualcardrelative, specialTondMarketRelative, footer_relativeLayout,special,discount,newpro,selltop;
-
-    public LinearLayout horizontal1, horizontal2, secondHorizontal, footer_linearLayout;
-
-
+    CardView firstBanner, secondbanner, FullfirstBanner, FullSecondBanner, specialLayout;
+    RelativeLayout specialTondMarketRelative, special, discount, newpro, selltop;
+    public LinearLayout horizontal1, horizontal2, secondHorizontal;
     public ArrayList<Card> cards;
     public ArrayList<FooterCard> footerCards;
+    public List<Category> footerCategories = new ArrayList<>();
+    public List<Category> smallTileCategories = new ArrayList<>();
+    public List<Category> bigTileCategories = new ArrayList<>();
     public CustomPagerAdapterByUrlMain mCustomPagerAdapterByUrlMain, mCustomPagerAdapterByUrlMain2;
-
     NewProListAdapter adp;
     TopProListAdapter adpTop;
     DisProListAdapter adpDis;
-
     MyTextView cardTextHome, HourTxt, MinTxt, SecTxt;
     RelativeLayout specialRelative;
     LinearLayout layspecial, laynew, laydiscount, laytopsell;
-    ImageView firstFullBannerImg, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage, firstBigTile, secondBigTile, firstSmallTile, secondSmallTile, thirdSmallTile, fourthSmallTile;
-
+    ImageView firstFullBannerImg, secondFullBannerImg, firstCardBannerImage, secondCardBannerImage;
     public ArrayList<Product> Newproducts = new ArrayList<>();
     public ArrayList<Product> Topproducts = new ArrayList<>();
     public ArrayList<Product> Disproducts = new ArrayList<>();
-
-
     String firstslideImage = "";
     String secondslideImage = "";
     String firstCardImage = "";
@@ -105,11 +107,10 @@ public class HomeFragment extends Fragment {
     String SecondSmallTile = "";
     String ThirdSmallTile = "";
     String FourthSmallTile = "";
-
-
     ListView NewProList, TopProList, DisProList;
     RequestQueue queue;
     public static final String TAG = "TAG";
+    private RecyclerView recycler_view,recycler_view_smallTile,recycler_view_bigTile;
 
 
     DatabaseHandler db;
@@ -147,12 +148,7 @@ public class HomeFragment extends Fragment {
         viewPager = (ViewPager) v.findViewById(R.id.home_viewpager);
         //viewPager2 = (ViewPager) v.findViewById(R.id.home_viewpager2);
 
-        relativebanner = (RelativeLayout) v.findViewById(R.id.relativebanner);
-        secondrelative = (RelativeLayout) v.findViewById(R.id.secondrelativebanner);
-        dualcardrelative = (RelativeLayout) v.findViewById(R.id.DualCard);
-
         specialTondMarketRelative = (RelativeLayout) v.findViewById(R.id.specialTondMarketRelative);
-        footer_relativeLayout = (RelativeLayout) v.findViewById(R.id.footer_relativeLayout);
         special = v.findViewById(R.id.special);
         discount = v.findViewById(R.id.discount);
         newpro = v.findViewById(R.id.newpro);
@@ -161,29 +157,12 @@ public class HomeFragment extends Fragment {
         firstBanner = (CardView) v.findViewById(R.id.firstbanner);
         secondbanner = (CardView) v.findViewById(R.id.secondbanner);
 
-        firstcardban = (CardView) v.findViewById(R.id.ban1);
-        secondcardban = (CardView) v.findViewById(R.id.ban2);
-        thirdcardban = (CardView) v.findViewById(R.id.ban3);
-        forthcardban = (CardView) v.findViewById(R.id.ban4);
-
-
-        dualfirstcard = (CardView) v.findViewById(R.id.Dualban1);
-        dualsecondcard = (CardView) v.findViewById(R.id.Dualban2);
-
         specialLayout = (CardView) v.findViewById(R.id.specialLayout);
 
         firstFullBannerImg = (ImageView) v.findViewById(R.id.imgfirstFullban1);
         secondFullBannerImg = (ImageView) v.findViewById(R.id.imgsecondFullban1);
         firstCardBannerImage = (ImageView) v.findViewById(R.id.imgfirstban1);
         secondCardBannerImage = (ImageView) v.findViewById(R.id.imgsecondban2);
-
-        firstBigTile = (ImageView) v.findViewById(R.id.imgdualban1);
-        secondBigTile = (ImageView) v.findViewById(R.id.imgdualban2);
-
-        firstSmallTile = (ImageView) v.findViewById(R.id.imgban1);
-        secondSmallTile = (ImageView) v.findViewById(R.id.imgban2);
-        thirdSmallTile = (ImageView) v.findViewById(R.id.imgban3);
-        fourthSmallTile = (ImageView) v.findViewById(R.id.imgban4);
 
         FullfirstBanner = (CardView) v.findViewById(R.id.Fullfirstbanner);
         FullSecondBanner = (CardView) v.findViewById(R.id.Fullsecondbanner);
@@ -201,14 +180,15 @@ public class HomeFragment extends Fragment {
 
         horizontal1 = (LinearLayout) v.findViewById(R.id.horizontal1);
         secondHorizontal = (LinearLayout) v.findViewById(R.id.secondhorizontal);
-        footer_linearLayout = (LinearLayout) v.findViewById(R.id.footer_linearLayout);
 
 
         cardTextHome = (MyTextView) v.findViewById(R.id.cardtextHome);
         HourTxt = (MyTextView) v.findViewById(R.id.hourTxt);
         MinTxt = (MyTextView) v.findViewById(R.id.minTxt);
         SecTxt = (MyTextView) v.findViewById(R.id.secTxt);
-
+        recycler_view = v.findViewById(R.id.recycler_view);
+        recycler_view_smallTile = v.findViewById(R.id.recycler_view_smallTile);
+        recycler_view_bigTile = v.findViewById(R.id.recycler_view_bigTile);
         disSwipeRefreshLayout = v.findViewById(R.id.disSwipeRefreshLayout);
         proSwipeRefreshLayout = v.findViewById(R.id.proSwipeRefreshLayout);
         topSwipeRefreshLayout = v.findViewById(R.id.topSwipeRefreshLayout);
@@ -218,10 +198,6 @@ public class HomeFragment extends Fragment {
         int height = metrics.heightPixels;
         viewPager.getLayoutParams().height = width / 2;
         //  viewPager2.getLayoutParams().height = width / 2;
-
-        relativebanner.getLayoutParams().height = width / 3;
-        secondrelative.getLayoutParams().height = width / 3;
-        dualcardrelative.getLayoutParams().height = (int) (width * 0.50);
 
         firstBanner.getLayoutParams().height = width / 2;
         // firstBanner.getLayoutParams().width = (int) (width * 0.92);
@@ -291,91 +267,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        firstcardban.getLayoutParams().width = (int) (width * 0.45);
-        secondcardban.getLayoutParams().width = (int) (width * 0.45);
-
-        thirdcardban.getLayoutParams().width = (int) (width * 0.45);
-        forthcardban.getLayoutParams().width = (int) (width * 0.45);
-
-        dualfirstcard.getLayoutParams().width = (int) (width * 0.45);
-        dualsecondcard.getLayoutParams().width = (int) (width * 0.45);
-
-
-        final String DualcardList = getFirstBigTile();
-        if (FirstBigTile != null && !FirstBigTile.equals("") && !FirstBigTile.equals("null")) {
-            Glide.with(getActivity()).load(FirstBigTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(firstBigTile);
-        }
-        dualfirstcard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.BigTileContainer, new BigTile(DualcardList, "first")).commit();
-            }
-        });
-
-        final String DualcardList_second = getSecondBigTile();
-        if (SecondBigTile != null && !SecondBigTile.equals("") && !SecondBigTile.equals("null")) {
-            Glide.with(getActivity()).load(SecondBigTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(secondBigTile);
-        }
-        dualsecondcard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.BigTileContainer, new BigTile(DualcardList_second, "second")).commit();
-            }
-        });
-
-
-        final String smallTile_first = getFirstSmallTile();
-        if (FirstSmallTile != null && !FirstSmallTile.equals("") && !FirstSmallTile.equals("null")) {
-            Glide.with(getActivity()).load(FirstSmallTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(firstSmallTile);
-        }
-        firstcardban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.SmallTileContainer, new SmallTile(smallTile_first, "first")).commit();
-            }
-        });
-
-        final String smallTile_second = getSecondSmallTile();
-        if (SecondSmallTile != null && !SecondSmallTile.equals("") && !SecondSmallTile.equals("null")) {
-            Glide.with(getActivity()).load(SecondSmallTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(secondSmallTile);
-        }
-        secondcardban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.SmallTileContainer, new SmallTile(smallTile_second, "second")).commit();
-            }
-        });
-
-        final String smallTile_third = getThirdSmallTile();
-        if (ThirdSmallTile != null && !ThirdSmallTile.equals("") && !ThirdSmallTile.equals("null")) {
-            Glide.with(getActivity()).load(ThirdSmallTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(thirdSmallTile);
-        }
-        thirdcardban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.SmallTileContainer, new SmallTile(smallTile_third, "third")).commit();
-            }
-        });
-
-        final String smallTile_fourth = getFourthSmallTile();
-        if (FourthSmallTile != null && !FourthSmallTile.equals("") && !FourthSmallTile.equals("null")) {
-            Glide.with(getActivity()).load(FourthSmallTile).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(fourthSmallTile);
-        }
-        forthcardban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.SmallTileContainer, new SmallTile(smallTile_fourth, "fourth")).commit();
-            }
-        });
-
-
         customIndicator = (CircleIndicator) v.findViewById(R.id.product_indicator_custom);
         //customIndicator2 = (CircleIndicator) v.findViewById(R.id.product_indicator_custom2);
 
@@ -405,7 +296,7 @@ public class HomeFragment extends Fragment {
         disSwipeRefreshLayout.setVisibility(View.GONE);
         TopProList.setVisibility(View.INVISIBLE);
         NewProList.setVisibility(View.INVISIBLE);
-       // laytopsell.setVisibility(View.INVISIBLE);
+        // laytopsell.setVisibility(View.INVISIBLE);
         selltop.setBackgroundResource(R.drawable.tab_background);
         //layspecial.setVisibility(View.VISIBLE);
         special.setBackgroundResource(R.drawable.tab_background_selected);
@@ -422,6 +313,8 @@ public class HomeFragment extends Fragment {
         getCardsTopSell();
         getCardsTopSeen();
         getFooterCards();
+        getSmallTileCards();
+        getBigTileCards();
         getCardsSpecialPro();
         getCardsDiscountPro();
 
@@ -436,13 +329,9 @@ public class HomeFragment extends Fragment {
                 FullfirstBanner.setVisibility(View.VISIBLE);
                 firstBanner.setVisibility(View.VISIBLE);
                 secondbanner.setVisibility(View.VISIBLE);
-                relativebanner.setVisibility(View.VISIBLE);
-                secondrelative.setVisibility(View.VISIBLE);
-                dualcardrelative.setVisibility(View.VISIBLE);
                 FullSecondBanner.setVisibility(View.VISIBLE);
                 specialLayout.setVisibility(View.VISIBLE);
                 specialTondMarketRelative.setVisibility(View.VISIBLE);
-                footer_relativeLayout.setVisibility(View.VISIBLE);
 
                 cardTextHome.setText("شاید جالب باشد");
                 //laytopsell.setVisibility(View.INVISIBLE);
@@ -468,11 +357,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               // laytopsell.setVisibility(View.INVISIBLE);
+                // laytopsell.setVisibility(View.INVISIBLE);
                 selltop.setBackgroundResource(R.drawable.tab_background);
                 //layspecial.setVisibility(View.INVISIBLE);
                 special.setBackgroundResource(R.drawable.tab_background);
-               // laynew.setVisibility(View.INVISIBLE);
+                // laynew.setVisibility(View.INVISIBLE);
                 newpro.setBackgroundResource(R.drawable.tab_background);
                 //laydiscount.setVisibility(View.VISIBLE);
                 discount.setBackgroundResource(R.drawable.tab_background_selected);
@@ -575,7 +464,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-       selltop.setOnClickListener(new View.OnClickListener() {
+        selltop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -594,7 +483,7 @@ public class HomeFragment extends Fragment {
                 special.setBackgroundResource(R.drawable.tab_background);
                 //laynew.setVisibility(View.INVISIBLE);
                 newpro.setBackgroundResource(R.drawable.tab_background);
-               // laydiscount.setVisibility(View.INVISIBLE);
+                // laydiscount.setVisibility(View.INVISIBLE);
                 discount.setBackgroundResource(R.drawable.tab_background);
 
                 proSwipeRefreshLayout.setVisibility(View.GONE);
@@ -1111,139 +1000,6 @@ public class HomeFragment extends Fragment {
         return id;
     }
 
-    public String getFirstBigTile() {
-
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = AppConfig.bigTile.getJSONObject(0);
-            FirstBigTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-        return id;
-    }
-
-    public String getSecondBigTile() {
-
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = AppConfig.bigTile.getJSONObject(1);
-            SecondBigTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-
-        return id;
-    }
-
-    public String getFirstSmallTile() {
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = smallTile.getJSONObject(0);
-            FirstSmallTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-
-        return id;
-    }
-
-    public String getSecondSmallTile() {
-
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = smallTile.getJSONObject(1);
-            SecondSmallTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-        return id;
-    }
-
-    public String getThirdSmallTile() {
-
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = smallTile.getJSONObject(2);
-            ThirdSmallTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-        return id;
-    }
-
-    public String getFourthSmallTile() {
-
-        String id = "";
-        Category category = null;
-
-        try {
-            JSONObject c = smallTile.getJSONObject(3);
-            FourthSmallTile = c.getString("icon");
-
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
-        } catch (JSONException e) {
-            AppConfig.error(e);
-        }
-
-        if (category != null) {
-            id = category.id;
-        }
-        return id;
-    }
-
-
     public boolean first = true;
 
     public void getCardsTopSell() {
@@ -1340,7 +1096,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
+                Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
 
@@ -1452,7 +1208,7 @@ public class HomeFragment extends Fragment {
 
 
                 //System.out.println("homecategory_id1==" + c.getString("category_id1"));
-                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
+                Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
 
 
@@ -1523,33 +1279,76 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public String getFooterCards() {
+    public void getFooterCards() {
 
         String id = "";
         Category category = null;
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        recycler_view.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < AppConfig.footerBanner.length(); i++) {
             try {
                 JSONObject c = AppConfig.footerBanner.getJSONObject(i);
-                System.out.println("getFooterCards=" + c);
-                firstCardImage = c.getString("slide_image");
-
                 category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
                         , c.getString("icon"), c.getString("slide_image"));
 
-                FooterCard card = new FooterCard(AppConfig.act, category);
-                footer_linearLayout.addView(card);
+                footerCategories.add(category);
 
             } catch (JSONException e) {
 
                 AppConfig.error(e);
             }
         }
-        if (category != null) {
-            id = category.id;
+
+        recycler_view.setAdapter(new FooterAdapter(getActivity(), footerCategories));
+
+    }
+
+    public void getSmallTileCards() {
+
+        String id = "";
+        Category category = null;
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        recycler_view_smallTile.setLayoutManager(mLayoutManager);
+
+        for (int i = 0; i < AppConfig.smallTile.length(); i++) {
+            try {
+                JSONObject c = AppConfig.smallTile.getJSONObject(i);
+                category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                        , c.getString("icon"), c.getString("slide_image"));
+
+                smallTileCategories.add(category);
+
+            } catch (JSONException e) {
+
+                AppConfig.error(e);
+            }
         }
 
-        return id;
+        recycler_view_smallTile.setAdapter(new SmallTileAdapter(getActivity(), smallTileCategories));
+    }
+
+    public void getBigTileCards() {
+
+        Category category = null;
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        recycler_view_bigTile.setLayoutManager(mLayoutManager);
+
+        for (int i = 0; i < AppConfig.bigTile.length(); i++) {
+            try {
+                JSONObject c = AppConfig.bigTile.getJSONObject(i);
+                category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                        , c.getString("icon"), c.getString("slide_image"));
+
+                bigTileCategories.add(category);
+
+            } catch (JSONException e) {
+
+                AppConfig.error(e);
+            }
+        }
+
+        recycler_view_bigTile.setAdapter(new BigTileAdapter(getActivity(), bigTileCategories));
     }
 
     @Override
