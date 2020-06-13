@@ -101,12 +101,6 @@ public class HomeFragment extends Fragment {
     String secondslideImage = "";
     String firstCardImage = "";
     String secondCardImage = "";
-    String FirstBigTile = "";
-    String SecondBigTile = "";
-    String FirstSmallTile = "";
-    String SecondSmallTile = "";
-    String ThirdSmallTile = "";
-    String FourthSmallTile = "";
     ListView NewProList, TopProList, DisProList;
     RequestQueue queue;
     public static final String TAG = "TAG";
@@ -192,6 +186,10 @@ public class HomeFragment extends Fragment {
         disSwipeRefreshLayout = v.findViewById(R.id.disSwipeRefreshLayout);
         proSwipeRefreshLayout = v.findViewById(R.id.proSwipeRefreshLayout);
         topSwipeRefreshLayout = v.findViewById(R.id.topSwipeRefreshLayout);
+
+        recycler_view.setNestedScrollingEnabled(false);
+        recycler_view_smallTile.setNestedScrollingEnabled(false);
+        recycler_view_bigTile.setNestedScrollingEnabled(false);
 
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         int width = metrics.widthPixels;

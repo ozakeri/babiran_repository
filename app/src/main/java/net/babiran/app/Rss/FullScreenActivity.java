@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 
 import net.babiran.app.AppStore;
@@ -72,25 +74,12 @@ public class FullScreenActivity extends AppCompatActivity {
         final Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-
-            //start a background thread for networking
-            new Thread(new Runnable() {
-                public void run(){
-                    try {
-                        //download the drawable
-                        String path = bundle.getString("imgUrl");
-                        final Drawable drawable = Drawable.createFromStream((InputStream) new URL(path).getContent(), "src");
-                        //edit the view in the UI thread
-                        image_View.post(new Runnable() {
-                            public void run() {
-                                image_View.setImageDrawable(drawable);
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            String path = bundle.getString("imgUrl");
+            System.out.println("path=====" + path);
+            if (path != null){
+                Glide.with(FullScreenActivity.this).load(path).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(image_View);
+            }
         }
 
         image_View.setOnTouchImageViewListener(new TouchImageView.OnTouchImageViewListener() {

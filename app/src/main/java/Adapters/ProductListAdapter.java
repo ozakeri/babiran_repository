@@ -14,16 +14,16 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
+import net.babiran.app.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import Fragments.CountDialog;
-
-import net.babiran.app.R;
-
 import Fragments.ProductFragment;
 import Models.Product;
 import tools.AppConfig;
+import tools.Util;
 import ui_elements.MyTextView;
 
 
@@ -32,17 +32,16 @@ import ui_elements.MyTextView;
  */
 
 public class ProductListAdapter extends BaseAdapter {
-    Context context;
-    List<Product> categories = new ArrayList<>();
-    LayoutInflater inflater;
+    private Context context;
+    private List<Product> categories = new ArrayList<>();
+    private LayoutInflater inflater;
 
 
-    public ProductListAdapter(Context context, List<Product> categories){
+    public ProductListAdapter(Context context, List<Product> categories) {
         this.context = context;
         this.categories = categories;
         this.inflater = LayoutInflater.from(context);
     }
-
 
 
     @Override
@@ -71,12 +70,12 @@ public class ProductListAdapter extends BaseAdapter {
 
             holder.name = (MyTextView) convertView.findViewById(R.id.txt_name_n);
             holder.img = (ImageView) convertView.findViewById(R.id.img);
-            holder.item_Button = (LinearLayout) convertView.findViewById(R.id.item_button_n) ;
-            holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addTo) ;
-
-
+            holder.item_Button = (LinearLayout) convertView.findViewById(R.id.item_button_n);
+            holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addTo);
             holder.price_dis = (MyTextView) convertView.findViewById(R.id.txt_price);
             holder.price_free = (MyTextView) convertView.findViewById(R.id.txt_free_price);
+            holder.txt_percentage_discount = convertView.findViewById(R.id.txt_percentage_discount);
+            holder.layout_percentage_discount = convertView.findViewById(R.id.layout_percentage_discount);
 
 
             convertView.setTag(holder);
@@ -84,9 +83,28 @@ public class ProductListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(!categories.get(i).name.equals("null") && !categories.get(i).name.equals("") && categories.get(i).name != null ){
+        if (!categories.get(i).name.equals("null") && !categories.get(i).name.equals("") && categories.get(i).name != null) {
             holder.name.setText(categories.get(i).name);
 
+        }
+
+        int Percentage1 = 0;
+        int Percentage2 = 0;
+        int result = 0;
+        if (!categories.get(i).dis_price.equals("null") && !categories.get(i).dis_price.equals("") && categories.get(i).dis_price != null) {
+            Percentage1 = Integer.parseInt(categories.get(i).dis_price);
+        }
+        if (!categories.get(i).price.equals("null") && !categories.get(i).price.equals("") && categories.get(i).price != null) {
+            Percentage2 = Integer.parseInt(categories.get(i).price);
+        }
+
+        result = ((Percentage1 - Percentage2) * 100) / Percentage2;
+
+        if (result == 0) {
+            holder.layout_percentage_discount.setVisibility(View.INVISIBLE);
+        } else {
+            holder.txt_percentage_discount.setText(Util.latinNumberToPersian(String.valueOf(result)) + "%" + "OFF");
+            holder.layout_percentage_discount.setVisibility(View.VISIBLE);
         }
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +112,7 @@ public class ProductListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
                 System.out.println("getCategory_id=-=-=-=" + categories.get(i).getCategory_id());
-               AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
+                AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
                 System.out.println("iiiii====" + i);
 
 
@@ -105,84 +123,79 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = ((Activity)context).getFragmentManager();
+                FragmentManager fm = ((Activity) context).getFragmentManager();
                 CountDialog countDialog = new CountDialog(categories.get(i));
-                countDialog.show(fm,"CountDialog");
+                countDialog.show(fm, "CountDialog");
 
             }
         });
 
-        if(isEven(i))
-        {
+        if (isEven(i)) {
             holder.item_Button.setBackgroundResource(R.color.bac);
-        }
-        else
-
-        {
+        } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
 
 
-
-        if(!categories.get(i).dis_price.equals("null") && !categories.get(i).dis_price.equals("") && categories.get(i).dis_price != null){
-            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(categories.get(i).dis_price)+""))+" ت ");
+        if (!categories.get(i).dis_price.equals("null") && !categories.get(i).dis_price.equals("") && categories.get(i).dis_price != null) {
+            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(categories.get(i).dis_price) + "")) + " ت ");
             //   price_free.setVisibility(INVISIBLE);
         }
 
-        if(!categories.get(i).price.equals("null") && !categories.get(i).price.equals("") && categories.get(i).price != null) {
+        if (!categories.get(i).price.equals("null") && !categories.get(i).price.equals("") && categories.get(i).price != null) {
             holder.price_free.setText(ConvertEnToPe(convertToFormalString(categories.get(i).price + "")) + " ت ");
             holder.price_free.setPaintFlags(holder.price_free.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
-        for(int j = 0 ; j < categories.get(i).images.size() ; j ++){
-            if(categories.get(i).images.get(j) != null && categories.get(i).images.get(j).toString().length()>5) {
+        for (int j = 0; j < categories.get(i).images.size(); j++) {
+            if (categories.get(i).images.get(j) != null && categories.get(i).images.get(j).toString().length() > 5) {
                 Glide.with(context).load(categories.get(i).images.get(j).image_link).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
             }
         }
 
         return convertView;
     }
-    private static boolean isEven(int number)
-    {
+
+    private static boolean isEven(int number) {
         return (number & 1) == 0;
     }
 
     private class ViewHolder {
 
         MyTextView name, addToBasket;
-        LinearLayout item_Button ;
-        MyTextView price_dis ,price_free;
+        LinearLayout item_Button;
+        MyTextView price_dis, price_free, txt_percentage_discount;
+        RelativeLayout layout_percentage_discount;
 
         ImageView img;
 
     }
 
-    public String ConvertEnToPe(String value){
-        char[] arabicChars = {'٠','١','٢','٣','٤','٥','٦','٧','٨','٩'};
+    public String ConvertEnToPe(String value) {
+        char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
         StringBuilder builder = new StringBuilder();
-        for(int i =0;i<value.length();i++){
-            if(Character.isDigit(value.charAt(i))){
-                builder.append(arabicChars[(int)(value.charAt(i))-48]);
-            }
-            else{
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))) {
+                builder.append(arabicChars[(int) (value.charAt(i)) - 48]);
+            } else {
                 builder.append(value.charAt(i));
             }
         }
         return builder.toString();
     }
-    public String convertToFormalString(String input){
+
+    public String convertToFormalString(String input) {
         String priceString = "";
-        for(int i = 0 ; i < input.length() ; i++){
-            int j = input.length() - i ;
-            if(j%3 !=1){
-                priceString += input.substring(i,i+1);
-            }
-            else{
-                priceString += input.substring(i,i+1)+ ",";
+        for (int i = 0; i < input.length(); i++) {
+            int j = input.length() - i;
+            if (j % 3 != 1) {
+                priceString += input.substring(i, i + 1);
+            } else {
+                priceString += input.substring(i, i + 1) + ",";
             }
 
         }
-        return priceString.substring(0,priceString.length()-1) ;
+        return priceString.substring(0, priceString.length() - 1);
     }
 
 

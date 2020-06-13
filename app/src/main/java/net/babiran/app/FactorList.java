@@ -97,6 +97,16 @@ public class FactorList extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (pageName != null && pageName.equals("AfterOrderActivity")) {
+                    AppConfig.NULLBASKET = "";
+                    Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+
+
                 if (TextUtils.isEmpty(What)) {
                     finish();
                 } else {
