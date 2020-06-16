@@ -322,7 +322,7 @@ public class SecondCategoryFragment extends Fragment {
                                 }
 
                                 Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,c.getString("provider_name"));
 
 
                                 products.add(product);

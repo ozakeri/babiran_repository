@@ -1,9 +1,11 @@
 package Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,12 +110,12 @@ public class ProductListAdapter extends BaseAdapter {
         }
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View view) {
                 //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
-                System.out.println("getCategory_id=-=-=-=" + categories.get(i).getCategory_id());
+                Log.e("=====getProviderName11======", categories.get(i).getProviderName());
                 AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
-                System.out.println("iiiii====" + i);
 
 
             }
