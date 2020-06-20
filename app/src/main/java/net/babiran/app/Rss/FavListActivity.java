@@ -1,6 +1,7 @@
 package net.babiran.app.Rss;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +36,7 @@ public class FavListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterUserListToTo adapterUserListToTo;
     List<String>listC=new ArrayList<>();
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +120,7 @@ public class FavListActivity extends AppCompatActivity {
 
                             if (Ch(s.get(i).getId()+"",listC))
                             {
-                                list.add(new BLOGME(String.valueOf(s.get(i).getId()),s.get(i).getTitr(),s.get(i).getImageLink(),String.valueOf(s.get(i).getCategoryId())));
+                                list.add(new BLOGME(String.valueOf(s.get(i).getId()),s.get(i).getTitr(),s.get(i).getImageLink(),String.valueOf(s.get(i).getCategoryId()),s.get(i).getCreatedAtInt()));
 
                             }
 

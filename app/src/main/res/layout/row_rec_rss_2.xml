@@ -1,48 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutDirection="ltr">
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:orientation="horizontal"
-        android:background="@color/WHITE">
+        android:background="@color/WHITE"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
             android:layout_height="match_parent"
-            android:layout_margin="3dp">
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ui_elements.MyTextView
+                android:id="@+id/txt_newsDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_html_tit"
+                android:layout_alignParentRight="true"
+                android:layout_margin="7dp"
+                android:inputType="textMultiLine"
+                android:text="تاریخ خبر "
+                android:textColor="@color/Black"
+                android:textSize="10sp"
+                android:gravity="right"
+                android:textStyle="italic" />
+
             <TextView
                 android:id="@+id/txt_rc_rss2"
                 android:layout_width="match_parent"
-
-                android:layout_margin="3dp"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
                 android:inputType="textMultiLine"
-                />
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/txt_rc_rss_link"
                 android:layout_width="match_parent"
-                android:textSize="1sp"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                />
+                android:textSize="1sp"
+                android:visibility="invisible" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/img_rc_rss2"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_margin="3dp"/>
+            android:layout_margin="3dp" />
 
     </LinearLayout>
 

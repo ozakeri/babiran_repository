@@ -102,7 +102,7 @@ public class ListtoListActivity extends AppCompatActivity {
                         Log.e("FFD", "" + s.get(i).getId());
 
                         if (s.get(i).getCategoryId() == Integer.parseInt(cat_id)) {
-                            list.add(new BLOGME(String.valueOf(s.get(i).getId()), s.get(i).getTitr(), s.get(i).getImageLink(), String.valueOf(s.get(i).getCategoryId())));
+                            list.add(new BLOGME(String.valueOf(s.get(i).getId()), s.get(i).getTitr(), s.get(i).getImageLink(), String.valueOf(s.get(i).getCategoryId()),s.get(i).getCreatedAtInt()));
                         }
                     }
 

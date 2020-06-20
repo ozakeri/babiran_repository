@@ -56,6 +56,7 @@ public class AdapterUserListMy extends RecyclerView.Adapter<AdapterUserListMy.My
 
         String list[] = listProducts.get(position).split("##");
         holder.imageView.setVisibility(View.GONE);
+        System.out.println("listProducts=====" + listProducts.get(position));
 
         holder.SeenP.setText(list[0]);
         holder.link.setText(list[1]);

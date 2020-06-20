@@ -1444,6 +1444,19 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView sourush = (ImageView) dialog.findViewById(R.id.kjdnfgbkjn3);
 
+        ImageView whats_up = (ImageView) dialog.findViewById(R.id.whats_up);
+
+        whats_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+
         telegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
