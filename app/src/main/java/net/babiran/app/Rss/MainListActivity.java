@@ -236,10 +236,14 @@ public class MainListActivity extends AppCompatActivity
 
                     for(int i = 0 ; i< s.size() ; i++)
                     {
+
+
                         if(s.get(i).getParentId()==0)
                         {
                             AppConfig.GETT =s;
-                            list.add(s.get(i).getName()+"##"+s.get(i).getId());
+                            list.add(s.get(i).getName()+"##"+s.get(i).getId()+"##" +s.get(i).getIcon());
+
+                            System.out.println("icon====" + s.get(i).getIcon());
 
                         }
                     }

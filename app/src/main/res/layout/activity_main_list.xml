@@ -44,14 +44,14 @@
                     <ui_elements.MyTextView
                         android:id="@+id/label"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_margin="3dp"
                         android:layout_alignParentRight="true"
                         android:gravity="center_vertical"
                         android:text="رویداد ها و مطالب گوناگون"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
 
 
                 </RelativeLayout>

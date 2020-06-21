@@ -123,17 +123,13 @@ public class ListActivity extends AppCompatActivity {
         for (int i = 0; i < s.size(); i++) {
             if (s.get(i).getParentId() == Integer.parseInt(id)) {
                 AppConfig.GETT = s;
-                list.add(s.get(i).getName() + "##" + s.get(i).getId() + "##" + s.get(i).getHasChild());
-                System.out.println("response====" + s.get(i).getId());
-                System.out.println("response====" + s.get(i).getParentId());
+                list.add(s.get(i).getName() + "##" + s.get(i).getId() + "##" + s.get(i).getHasChild()+ "##" + s.get(i).getIcon());
             }
         }
 
         prograsDialog.dismiss();
         mAdaptermy = new AdapterUserListMy(ListActivity.this, list);
-
         recyclerView.setAdapter(mAdaptermy);
-
 
         //    prograsDialog.dismiss();
     }

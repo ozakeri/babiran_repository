@@ -31,6 +31,10 @@ public class GETING {
     @Expose
     private String hasChild;
 
+    @SerializedName("icon")
+    @Expose
+    private String icon;
+
 
     public String getHasChild() {
         return hasChild;
@@ -96,6 +100,13 @@ public class GETING {
         this.parentName = parentName;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }
 
 

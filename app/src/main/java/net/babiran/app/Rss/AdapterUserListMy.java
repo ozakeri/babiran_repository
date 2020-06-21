@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import net.babiran.app.R;
@@ -55,12 +56,13 @@ public class AdapterUserListMy extends RecyclerView.Adapter<AdapterUserListMy.My
     {
 
         String list[] = listProducts.get(position).split("##");
-        holder.imageView.setVisibility(View.GONE);
+        //holder.imageView.setVisibility(View.GONE);
         System.out.println("listProducts=====" + listProducts.get(position));
 
         holder.SeenP.setText(list[0]);
         holder.link.setText(list[1]);
         holder.tf.setText(list[2]);
+        Glide.with(mContext).load(list[3]).fitCenter().placeholder(R.drawable.logoloading).into(holder.imageView);
     }
 
     @Override

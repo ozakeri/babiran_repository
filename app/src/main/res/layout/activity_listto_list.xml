@@ -51,7 +51,7 @@
                         android:layout_alignParentRight="true"
                         android:text="Rss اخبار "
                         android:textColor="@color/white"
-                        android:textSize="20sp"
+                        android:textSize="12sp"
                         android:layout_centerVertical="true"
                         android:gravity="center_vertical"
                         android:layout_margin="3dp"

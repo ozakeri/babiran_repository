@@ -49,8 +49,16 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
 
         final BLOGME list = listProducts.get(position);
         Picasso.with(mContext).load(list.image_link).into(holder.imageView);
-        holder.SeenP.setText(list.titr);
+
+        String s = list.titr;
+        if (s.length() <= 50) {
+            holder.SeenP.setText(s);
+        } else {
+            holder.SeenP.setText(s.substring(0,50)+"...");
+        }
+
         holder.txt_newsDate.setText(Util.convertEnToPe(list.created_at_int));
+        System.out.println("created_at_int====" + list.created_at_int);
         System.out.println("created_at_int====" + Util.convertEnToPe(list.created_at_int));
 
         //holder.txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));

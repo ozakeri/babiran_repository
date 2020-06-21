@@ -83,7 +83,7 @@ public class CustomPagerAdapterByUrlMain extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (position == 0){
+                if (position == 3){
                     mContext.startActivity(new Intent(mContext, SharjActivity.class));
                 }
             }
