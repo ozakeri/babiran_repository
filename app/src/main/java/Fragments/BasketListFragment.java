@@ -535,7 +535,7 @@ public class BasketListFragment extends Fragment implements
                                     DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor);
                                     descriptionDialog.show(fm, "DescriptionDialog");
 
-                                    totalprice.setText("");
+                                    //totalprice.setText("");
                                     AddValue.setText("");
                                     PayValue.setText("");
 
