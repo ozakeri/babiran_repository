@@ -53,6 +53,8 @@ import net.babiran.app.R;
 import net.babiran.app.Sms_Register;
 import net.babiran.app.productInfo;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +69,7 @@ import java.util.TimerTask;
 import Handlers.AdvertisingDatabaseHandler;
 import Handlers.DatabaseHandler;
 import Models.Category;
+import Models.EventbusModel;
 import Models.Feature;
 import Models.Image;
 import Models.Product;
@@ -115,7 +118,7 @@ public class ProductFragment extends Fragment {
     RequestQueue queue;
     public static final String TAG = "TAG";
 
-    MyTextView ed_visit, noStock;
+    MyTextView colorName, noStock;
     View v;
     String Count = "";
 
@@ -180,7 +183,8 @@ public class ProductFragment extends Fragment {
         comment.setBackgroundResource(R.drawable.border_button);
         information.setBackgroundResource(R.drawable.border_button);
 
-        noStock = (MyTextView) v.findViewById(R.id.nostock);
+        noStock = v.findViewById(R.id.nostock);
+        colorName = v.findViewById(R.id.colorName);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
 
 
@@ -558,15 +562,6 @@ public class ProductFragment extends Fragment {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (queue != null) {
-            queue.cancelAll(TAG);
-        }
-    }
-
-
     public void addtoBasket() {
 
         final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
@@ -804,5 +799,23 @@ public class ProductFragment extends Fragment {
 
         //Volley End
     }
+    @Subscribe
+    public void getEvent(EventbusModel model) {
+        colorName.setText(model.getColor());
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
+        EventBus.getDefault().unregister(this);
+    }
 }

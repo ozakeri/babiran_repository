@@ -3,17 +3,18 @@ package Models;
 public class EventbusModel {
 
     private String credit;
-    private boolean isBasket;
     private String color;
+    private String color1;
+    private boolean isBasket;
 
-    public String getColor() {
-        return color;
+    public EventbusModel(String credit) {
+        this.credit = credit;
     }
 
-    public void setColor(String color) {
+    public EventbusModel(String color1,String color) {
         this.color = color;
+        this.color1 = color1;
     }
-
 
     public EventbusModel(boolean isBasket) {
         this.isBasket = isBasket;
@@ -23,8 +24,23 @@ public class EventbusModel {
         return credit;
     }
 
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
     public boolean isBasket() {
         return isBasket;
     }
 
+    public void setBasket(boolean basket) {
+        isBasket = basket;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

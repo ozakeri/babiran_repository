@@ -114,19 +114,19 @@ public class SelectColorView extends RelativeLayout {
                     case "blue":
                         drawable = (GradientDrawable) layout_selectColor.getBackground();
                         drawable.setStroke(3, Color.BLUE); // set stroke width and stroke color
-                        //EventBus.getDefault().post(EventbusModel);
+                        EventBus.getDefault().post(new EventbusModel("","آبی"));
 
                         break;
                     case "red":
                         drawable = (GradientDrawable) layout_selectColor.getBackground();
                         drawable.setStroke(3, Color.RED); // set stroke width and stroke color
-
+                        EventBus.getDefault().post(new EventbusModel("","قرمز"));
 
                         break;
                     case "black":
                         drawable = (GradientDrawable) layout_selectColor.getBackground();
                         drawable.setStroke(3, Color.BLACK); // set stroke width and stroke color
-
+                        EventBus.getDefault().post(new EventbusModel("","مشکی"));
                         break;
                 }
             }
