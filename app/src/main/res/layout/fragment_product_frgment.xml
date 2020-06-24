@@ -280,7 +280,7 @@
                                             android:textSize="12sp" />
 
                                         <ui_elements.MyTextView
-                                            android:id="@+id/colorName"
+                                            android:id="@+id/txt_colorName"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_margin="6dp"
@@ -301,18 +301,28 @@
                                         android:scrollbars="none"
                                         android:layout_marginTop="5dp"
                                         android:layout_marginBottom="10dp"
-                                        android:layout_below="@+id/specialLayout">
+                                        android:layout_below="@+id/specialLayout"
+                                        android:visibility="gone">
 
                                         <LinearLayout
                                             android:id="@+id/layout_selectColor"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:orientation="horizontal">
+                                            android:orientation="horizontal"
+                                           >
 
                                         </LinearLayout>
 
+
+
                                     </HorizontalScrollView>
+
+                                    <RadioGroup
+                                        android:id="@+id/radio_group"
+                                        android:orientation="vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
 
 
                                     <LinearLayout

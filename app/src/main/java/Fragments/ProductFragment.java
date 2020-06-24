@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,7 +85,7 @@ import ui_elements.SelectColorView;
 import static android.content.Context.MODE_PRIVATE;
 import static tools.AppConfig.products;
 
-public class ProductFragment extends Fragment {
+public class ProductFragment extends Fragment implements View.OnClickListener {
 
 
     ViewPager viewPager;
@@ -118,7 +120,7 @@ public class ProductFragment extends Fragment {
     RequestQueue queue;
     public static final String TAG = "TAG";
 
-    MyTextView colorName, noStock;
+    MyTextView txt_colorName, noStock;
     View v;
     String Count = "";
 
@@ -179,12 +181,12 @@ public class ProductFragment extends Fragment {
         viewPager = (ViewPager) v.findViewById(R.id.home_viewpager);
         information = (CardView) v.findViewById(R.id.information);
         comment = (CardView) v.findViewById(R.id.comment);
-
+        mRgAllButtons = v.findViewById(R.id.radio_group);
         comment.setBackgroundResource(R.drawable.border_button);
         information.setBackgroundResource(R.drawable.border_button);
 
         noStock = v.findViewById(R.id.nostock);
-        colorName = v.findViewById(R.id.colorName);
+        txt_colorName = v.findViewById(R.id.txt_colorName);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
 
 
@@ -235,6 +237,8 @@ public class ProductFragment extends Fragment {
                 SelectColorView selectColorView = new SelectColorView(getActivity(), colorName, colorCode);
                 selectColorViews.add(selectColorView);
                 layout_selectColor.addView(selectColorView);
+
+                addRadioButtons(colorName, colorCode);
             }
 
 
@@ -799,9 +803,10 @@ public class ProductFragment extends Fragment {
 
         //Volley End
     }
+
     @Subscribe
     public void getEvent(EventbusModel model) {
-        colorName.setText(model.getColor());
+        //txt_colorName.setText(model.getColor());
     }
 
     @Override
@@ -817,5 +822,37 @@ public class ProductFragment extends Fragment {
             queue.cancelAll(TAG);
         }
         EventBus.getDefault().unregister(this);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void addRadioButtons(String name, String colorCode) {
+        mRgAllButtons.setOrientation(LinearLayout.HORIZONTAL);
+        //
+        RadioButton rdbtn = new RadioButton(getActivity());
+        rdbtn.setId(View.generateViewId());
+        rdbtn.setText(name);
+        rdbtn.setTextSize(18f);
+
+        switch (colorCode) {
+            case "blue":
+                rdbtn.setTextColor(Color.BLUE);
+                break;
+
+            case "red":
+                rdbtn.setTextColor(Color.RED);
+                break;
+
+            case "black":
+                rdbtn.setTextColor(Color.BLACK);
+                break;
+        }
+        rdbtn.setOnClickListener(this);
+        mRgAllButtons.addView(rdbtn);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, " Name " + ((RadioButton) v).getText() + " Id is " + v.getId());
+        txt_colorName.setText(((RadioButton) v).getText());
     }
 }
