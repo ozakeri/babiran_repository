@@ -39,7 +39,7 @@ public class BigTileAdapter extends RecyclerView.Adapter<BigTileAdapter.CustomVi
 
     @Override
     public void onBindViewHolder(@NonNull CustomView holder, int position) {
-            Category category = categories.get(position);
+            final Category category = categories.get(position);
         Glide.with(context).load(category.slide_image).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(holder.img_footer_banner);
 

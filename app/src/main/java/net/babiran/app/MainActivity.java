@@ -405,8 +405,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else   // Refresh Bascket Frahment
             {
-
-
                 db = new DatabaseHandler(getApplicationContext());
 
                 pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);

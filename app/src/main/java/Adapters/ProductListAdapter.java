@@ -114,7 +114,6 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
-                Log.e("=====getProviderName11======", categories.get(i).getProviderName());
                 AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
 
 
