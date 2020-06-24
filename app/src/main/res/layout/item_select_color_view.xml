@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_layout_main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/card_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:alpha="0.4" />
+    <LinearLayout
+        android:id="@+id/layout_selectColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/border_select_color">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <ui_elements.MyTextView
+                android:id="@+id/txt_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#2100FF"
+                android:layout_gravity="center_vertical"
+                android:text="آبی"
+                android:layout_marginRight="10dp"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/im_color"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

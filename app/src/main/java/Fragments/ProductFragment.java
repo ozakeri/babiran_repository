@@ -13,6 +13,7 @@ import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -24,9 +25,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -72,6 +75,7 @@ import tools.AppConfig;
 import tools.CustomPagerAdapterProduct;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
+import ui_elements.SelectColorView;
 
 import static android.content.Context.MODE_PRIVATE;
 import static tools.AppConfig.products;
@@ -81,12 +85,27 @@ public class ProductFragment extends Fragment {
 
     ViewPager viewPager;
     CircleIndicator customIndicator;
-
+    private LinearLayout layout_selectColor;
     Product product;
     Category category;
     public static String prev = "";
     CardView information, comment;
-
+    private int count = 0;
+    private ArrayList<SelectColorView> selectColorViews = new ArrayList<>();
+    private String json = "{\"color\": [\n" +
+            "            {\n" +
+            "                \"color_name\": \"آبی\",\n" +
+            "                \"color_code\": \"blue\"            \n" +
+            "            },\n" +
+            "            {\n" +
+            "              \"color_name\": \"قرمز\",\n" +
+            "                \"color_code\": \"red\" \n" +
+            "            },\n" +
+            "            {\n" +
+            "             \"color_name\": \"مشکی\",\n" +
+            "                \"color_code\": \"black\" \n" +
+            "            },        \n" +
+            "        ]}";
 
     DatabaseHandler db;
     boolean IsUpdateCount = false;
@@ -107,6 +126,7 @@ public class ProductFragment extends Fragment {
 
     private boolean getProduct = false;
     NumberPicker numberpicker;
+    private RadioGroup mRgAllButtons;
 
     public CustomPagerAdapterProduct mCustomPagerAdapterByUrlMain;
 
@@ -145,6 +165,7 @@ public class ProductFragment extends Fragment {
     public boolean first = true;
     public Timer timer;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -160,6 +181,7 @@ public class ProductFragment extends Fragment {
         information.setBackgroundResource(R.drawable.border_button);
 
         noStock = (MyTextView) v.findViewById(R.id.nostock);
+        layout_selectColor = v.findViewById(R.id.layout_selectColor);
 
 
         AppConfig.frag = ProductFragment.this;
@@ -188,7 +210,6 @@ public class ProductFragment extends Fragment {
         ImageView providerCategory = v.findViewById(R.id.providerCategory);
         MyTextView txt_category = v.findViewById(R.id.txt_category);
 
-
         final CardView addToBasket = (CardView) v.findViewById(R.id.addtobasket);
 
         addToBasket.setBackgroundResource(R.drawable.border_button);
@@ -197,7 +218,26 @@ public class ProductFragment extends Fragment {
 
         LinearLayout featureCard = (LinearLayout) v.findViewById(R.id.productlinear);
 
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONArray array = root.getJSONArray("color");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                String colorName = object.getString("color_name");
+                String colorCode = object.getString("color_code");
+                System.out.println("color_name=" + object.getString("color_name"));
+                System.out.println("color_code=" + object.getString("color_code"));
+                count++;
+                SelectColorView selectColorView = new SelectColorView(getActivity(), colorName, colorCode);
+                selectColorViews.add(selectColorView);
+                layout_selectColor.addView(selectColorView);
+            }
 
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //addRadioButtons(4);
         if (product != null) {
 
             System.out.println("product=====" + product.toString());
@@ -534,7 +574,7 @@ public class ProductFragment extends Fragment {
         UpdateCount();
         Log.e("IsUpdate", IsUpdateCount + "");
 
-        if (products != null){
+        if (products != null) {
             if (IsUpdateCount) {
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
@@ -764,4 +804,5 @@ public class ProductFragment extends Fragment {
 
         //Volley End
     }
+
 }

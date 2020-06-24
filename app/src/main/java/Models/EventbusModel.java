@@ -4,10 +4,16 @@ public class EventbusModel {
 
     private String credit;
     private boolean isBasket;
+    private String color;
 
-    public EventbusModel(String credit) {
-        this.credit = credit;
+    public String getColor() {
+        return color;
     }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
 
     public EventbusModel(boolean isBasket) {
         this.isBasket = isBasket;
@@ -17,15 +23,8 @@ public class EventbusModel {
         return credit;
     }
 
-    public void setCredit(String credit) {
-        this.credit = credit;
-    }
-
     public boolean isBasket() {
         return isBasket;
     }
 
-    public void setBasket(boolean basket) {
-        isBasket = basket;
-    }
 }
