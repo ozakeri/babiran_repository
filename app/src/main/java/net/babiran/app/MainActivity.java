@@ -1337,11 +1337,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void getEvent(EventbusModel model) {
-        System.out.println("=====getCredit=====" + model.getCredit());
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(model.getCredit());
-        while (m.find()) {
-            txt_credit.setText(Util.convertToFormalString((m.group())));
+
+        if (model.getCredit() != null){
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(model.getCredit());
+            while (m.find()) {
+                txt_credit.setText(Util.convertToFormalString((m.group())));
+            }
         }
     }
 

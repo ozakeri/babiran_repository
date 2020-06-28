@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
@@ -34,6 +33,8 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
@@ -64,17 +65,21 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Adapters.ListColorAdapter;
 import Handlers.AdvertisingDatabaseHandler;
 import Handlers.DatabaseHandler;
 import Models.Category;
+import Models.Color;
 import Models.EventbusModel;
 import Models.Feature;
 import Models.Image;
 import Models.Product;
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterProduct;
@@ -95,21 +100,33 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     Category category;
     public static String prev = "";
     CardView information, comment;
-    private int count = 0;
+    private SelectColorView selectColorView;
+    private JSONObject root;
+    private JSONArray array;
+    private RecyclerView recyclerView_colorList;
+    private List<Color> colorList;
     private ArrayList<SelectColorView> selectColorViews = new ArrayList<>();
     private String json = "{\"color\": [\n" +
             "            {\n" +
+            "\t\t\t\"id\": \"10\",\n" +
             "                \"color_name\": \"آبی\",\n" +
-            "                \"color_code\": \"blue\"            \n" +
+            "                \"color_code\": \"e5ccff\"            \n" +
             "            },\n" +
             "            {\n" +
+            "\t\t\t\"id\": \"20\",\n" +
             "              \"color_name\": \"قرمز\",\n" +
-            "                \"color_code\": \"red\" \n" +
+            "                \"color_code\": \"b41418\" \n" +
             "            },\n" +
             "            {\n" +
+            "\t\t\t\"id\": \"30\",\n" +
             "             \"color_name\": \"مشکی\",\n" +
-            "                \"color_code\": \"black\" \n" +
-            "            },        \n" +
+            "                \"color_code\": \"000000\" \n" +
+            "            }  ,\n" +
+            "            {\n" +
+            "\t\t\t\"id\": \"30\",\n" +
+            "             \"color_name\": \"سبز\",\n" +
+            "                \"color_code\": \"899a67\" \n" +
+            "            }     \n" +
             "        ]}";
 
     DatabaseHandler db;
@@ -131,7 +148,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
     private boolean getProduct = false;
     NumberPicker numberpicker;
-    private RadioGroup mRgAllButtons;
 
     public CustomPagerAdapterProduct mCustomPagerAdapterByUrlMain;
 
@@ -181,13 +197,13 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         viewPager = (ViewPager) v.findViewById(R.id.home_viewpager);
         information = (CardView) v.findViewById(R.id.information);
         comment = (CardView) v.findViewById(R.id.comment);
-        mRgAllButtons = v.findViewById(R.id.radio_group);
         comment.setBackgroundResource(R.drawable.border_button);
         information.setBackgroundResource(R.drawable.border_button);
 
         noStock = v.findViewById(R.id.nostock);
         txt_colorName = v.findViewById(R.id.txt_colorName);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
+        recyclerView_colorList = v.findViewById(R.id.recyclerView_colorList);
 
 
         AppConfig.frag = ProductFragment.this;
@@ -223,24 +239,24 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         numberpicker = (NumberPicker) v.findViewById(R.id.numberPicker);
 
         LinearLayout featureCard = (LinearLayout) v.findViewById(R.id.productlinear);
-
         try {
-            JSONObject root = new JSONObject(json);
-            JSONArray array = root.getJSONArray("color");
+            colorList = new ArrayList<>();
+            root = new JSONObject(json);
+            array = root.getJSONArray("color");
+            System.out.println("array=======" + array.length());
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
+                String id = object.getString("id");
                 String colorName = object.getString("color_name");
                 String colorCode = object.getString("color_code");
-                System.out.println("color_name=" + object.getString("color_name"));
-                System.out.println("color_code=" + object.getString("color_code"));
-                count++;
-                SelectColorView selectColorView = new SelectColorView(getActivity(), colorName, colorCode);
-                selectColorViews.add(selectColorView);
-                layout_selectColor.addView(selectColorView);
 
-                addRadioButtons(colorName, colorCode);
+                Color color = new Color(id,colorName,colorCode);
+                colorList.add(color);
+
             }
 
+            recyclerView_colorList.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView_colorList.setAdapter(new ListColorAdapter(getActivity(),colorList));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -804,15 +820,19 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         //Volley End
     }
 
-    @Subscribe
+   /* @Subscribe
     public void getEvent(EventbusModel model) {
-        //txt_colorName.setText(model.getColor());
-    }
+        if (model.getColor() != null) {
+            txt_colorName.setText(model.getColor());
+            getGsonColor();
+        }
+
+    }*/
 
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+       // EventBus.getDefault().register(this);
     }
 
     @Override
@@ -821,33 +841,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
-        EventBus.getDefault().unregister(this);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void addRadioButtons(String name, String colorCode) {
-        mRgAllButtons.setOrientation(LinearLayout.HORIZONTAL);
-        //
-        RadioButton rdbtn = new RadioButton(getActivity());
-        rdbtn.setId(View.generateViewId());
-        rdbtn.setText(name);
-        rdbtn.setTextSize(18f);
-
-        switch (colorCode) {
-            case "blue":
-                rdbtn.setTextColor(Color.BLUE);
-                break;
-
-            case "red":
-                rdbtn.setTextColor(Color.RED);
-                break;
-
-            case "black":
-                rdbtn.setTextColor(Color.BLACK);
-                break;
-        }
-        rdbtn.setOnClickListener(this);
-        mRgAllButtons.addView(rdbtn);
+        //EventBus.getDefault().unregister(this);
     }
 
     @Override

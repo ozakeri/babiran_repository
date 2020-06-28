@@ -25,8 +25,8 @@ public class SelectColorView extends RelativeLayout {
 
 
     private Context context;
-    private String colorName;
-    private String colorCode;
+    private String colorName = null;
+    private String colorCode = null;
     private RelativeLayout card_layout;
     private LinearLayout layout_selectColor;
     private TextView txt_color;
@@ -71,6 +71,8 @@ public class SelectColorView extends RelativeLayout {
         im_color = findViewById(R.id.im_color);
         txt_color.setText(colorName);
 
+        drawable = (GradientDrawable) layout_selectColor.getBackground();
+        drawable.setStroke(3, context.getResources().getColor(R.color.gray_lighter)); // set stroke width and stroke color
         switch (colorCode) {
             case "blue": {
                 colorStrName = "blue";
@@ -101,14 +103,12 @@ public class SelectColorView extends RelativeLayout {
                 im_color.setBackgroundResource(R.drawable.circle_background_select_color);
                 break;
             }
+
         }
 
         layout_selectColor.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                drawable = (GradientDrawable) layout_selectColor.getBackground();
-                drawable.setStroke(3, Color.TRANSPARENT); // set stroke width and stroke color
 
                 switch (colorStrName) {
                     case "blue":
