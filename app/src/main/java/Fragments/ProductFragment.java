@@ -123,7 +123,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             "                \"color_code\": \"000000\" \n" +
             "            }  ,\n" +
             "            {\n" +
-            "\t\t\t\"id\": \"30\",\n" +
+            "\t\t\t\"id\": \"40\",\n" +
             "             \"color_name\": \"سبز\",\n" +
             "                \"color_code\": \"899a67\" \n" +
             "            }     \n" +
@@ -132,24 +132,19 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     DatabaseHandler db;
     boolean IsUpdateCount = false;
     ArrayList<Product> productArrayList;
-
     public AdvertisingDatabaseHandler dba;
     RequestQueue queue;
     public static final String TAG = "TAG";
-
     MyTextView txt_colorName, noStock;
     View v;
     String Count = "";
-
-
     String user_id = "-1";
     String id = "-1";
     ImageView fav;
-
     private boolean getProduct = false;
     NumberPicker numberpicker;
-
     public CustomPagerAdapterProduct mCustomPagerAdapterByUrlMain;
+    private ListColorAdapter listColorAdapter;
 
     @SuppressLint("ValidFragment")
     public ProductFragment(Product product, Category category, String prev) {
@@ -255,8 +250,11 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             }
 
-            recyclerView_colorList.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView_colorList.setAdapter(new ListColorAdapter(getActivity(),colorList));
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+            recyclerView_colorList.setLayoutManager(linearLayoutManager);
+            listColorAdapter = new ListColorAdapter(getActivity(),colorList);
+            listColorAdapter.notifyDataSetChanged();
+            recyclerView_colorList.setAdapter(listColorAdapter);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -820,19 +818,18 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         //Volley End
     }
 
-   /* @Subscribe
+    @Subscribe
     public void getEvent(EventbusModel model) {
         if (model.getColor() != null) {
             txt_colorName.setText(model.getColor());
-            getGsonColor();
         }
 
-    }*/
+    }
 
     @Override
     public void onStart() {
         super.onStart();
-       // EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -841,7 +838,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         if (queue != null) {
             queue.cancelAll(TAG);
         }
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
