@@ -41,6 +41,15 @@
                 <data
                     android:host="pay"
                     android:scheme="babiran.net.app" />
+
+                <data
+                    android:host="sharj"
+                    android:scheme="babiran.net.app" />
+
+                <data
+                    android:host="credit"
+                    android:scheme="babiran.net.app" />
+
             </intent-filter>
         </activity>
         <activity
@@ -188,30 +197,10 @@
         <activity
             android:name=".SharjActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="sharj"
-                    android:scheme="babiran.net.app" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CreditActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="credit"
-                    android:scheme="babiran.net.app" />
-            </intent-filter>
         </activity>
 
         <service

@@ -3,6 +3,7 @@ package net.babiran.app;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import tools.AppConfig;
 public class AfterOrderActivity extends AppCompatActivity {
     private DatabaseHandler db;
     private String key = null;
+    private String server = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +40,32 @@ public class AfterOrderActivity extends AppCompatActivity {
         txt_two.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
         txt_return.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            key = bundle.getString("key");
+
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            if (uri != null){
+                server = uri.getAuthority();
+            }
         }
 
         txt_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFactorId();
+                if (server != null) {
+                    System.out.println("server=====" + server);
+                    if (server.equals("credit")) {
+                        startActivity(new Intent(AfterOrderActivity.this, CreditActivity.class));
+                    }
+
+                    if (server.equals("sharj")) {
+                        startActivity(new Intent(AfterOrderActivity.this, SharjActivity.class));
+                    }
+
+                    if (server.equals("pay")) {
+                        getFactorId();
+                    }
+                }
                 finish();
             }
         });

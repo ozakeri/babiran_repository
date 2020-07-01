@@ -218,6 +218,16 @@
         android:layout_margin="50dp"
         android:background="@color/blueDark">
 
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            android:id="@+id/waitProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:cpv_animAutostart="true"
+            app:cpv_color="@color/white"
+            app:cpv_indeterminate="true"
+            android:visibility="gone"/>
+
         <ui_elements.MyTextView
             android:id="@+id/FinishText"
             android:layout_width="wrap_content"

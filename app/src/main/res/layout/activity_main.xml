@@ -393,7 +393,7 @@
 
                         android:src="@drawable/babiran_wait" />
 
-                    <TextView
+                    <ui_elements.MyTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

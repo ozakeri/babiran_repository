@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyMesa;
@@ -63,6 +64,7 @@ public class CreditActivity extends AppCompatActivity {
     private AppCompatImageView btn_back;
     private String id = "";
     private GlobalValues globalValues = new GlobalValues();
+    private CircularProgressView waitProgress;
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -79,17 +81,16 @@ public class CreditActivity extends AppCompatActivity {
         radioButton3 = findViewById(R.id.option_third);
         btn_back = findViewById(R.id.btn_back);
         btn_pay = findViewById(R.id.btn_pay);
+        waitProgress = findViewById(R.id.waitProgress);
         //edt_price.setEnabled(false);
 
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri uri = intent.getData();
-            System.out.println("===uri===" + uri);
             if (uri != null) {
                 String success = uri.getQueryParameter("success");
                 getCreditRequest();
                 showGuideDialog(success);
-                System.out.println("===success===" + success);
             }
         }
 
@@ -160,7 +161,7 @@ public class CreditActivity extends AppCompatActivity {
 
     private void actionPay() {
 
-
+        waitProgress.setVisibility(View.VISIBLE);
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), edt_price.getText().toString().replaceAll(",", ""));
@@ -175,7 +176,7 @@ public class CreditActivity extends AppCompatActivity {
                         System.out.println("response======" + response.body());
                         System.out.println("response======" + response);
                         if (response.body() != null) {
-
+                            waitProgress.setVisibility(View.GONE);
                             Integer fetching = response.body().getSuccess();
 
                             if (fetching == 1) {
@@ -188,6 +189,7 @@ public class CreditActivity extends AppCompatActivity {
 
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
                                 startActivityForResult(browserIntent, REQUEST_CODE_PAY);
+                                finish();
                                 //startActivity(browserIntent);
 
                             } else {

@@ -246,7 +246,7 @@ public class SharjActivity extends AppCompatActivity {
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
                                 //startActivityForResult(intent, REQUEST_CODE_PAY);
                                 startActivity(browserIntent);
-
+                                finish();
                             } else {
                                 Toast.makeText(SharjActivity.this, "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
                             }
