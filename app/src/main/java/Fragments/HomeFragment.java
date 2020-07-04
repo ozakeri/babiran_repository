@@ -1281,7 +1281,7 @@ public class HomeFragment extends Fragment {
 
         String id = "";
         Category category = null;
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.VERTICAL, false);
         recycler_view.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < AppConfig.footerBanner.length(); i++) {
