@@ -1024,7 +1024,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
         menu.add(new Menu("اشتراک گذاری", R.drawable.share));
         menu.add(new Menu("سوالات متداول", R.drawable.ic_ansqus));
-        menu.add(new Menu("راهنمای استفاده", R.drawable.ic_help));
+        menu.add(new Menu("راهنمای استفاده", R.drawable.help_icon));
         //menu.add(new Menu("درباره ما", R.drawable.babiran));
         // menu.add(new Menu("تنظیمات", R.drawable.ic_info_outline_black_24dp));
         menu.add(new Menu("خروج از حساب کاربری", R.drawable.ic_exit___));

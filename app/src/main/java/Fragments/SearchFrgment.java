@@ -168,7 +168,7 @@ public class SearchFrgment extends Fragment {
             @Override
             public void afterTextChanged(final Editable s) {
                 System.out.println("afterTextChanged===" + s);
-                if (s.length() >= 2) {
+               // if (s.length() >= 2) {
 
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -188,7 +188,7 @@ public class SearchFrgment extends Fragment {
                         }
 
                     }, DELAY);
-                }
+                //}
             }
         });
 
@@ -354,8 +354,8 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
-                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,c.getString("provider_name"));
 
                                 products.add(product);
 
@@ -476,8 +476,8 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
-                                Product product = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,c.getString("provider_name"));
 
                                 products.add(product);
                             }

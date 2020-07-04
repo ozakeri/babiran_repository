@@ -17,11 +17,13 @@
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="60dp"
             android:orientation="horizontal"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp">
 
             <RelativeLayout
                 android:id="@+id/special"
@@ -29,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:background="@drawable/tab_background"
+                android:background="@drawable/background_button_main"
                 android:orientation="vertical">
 
                 <ui_elements.MyTextView
@@ -59,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:background="@drawable/tab_background"
+                android:background="@drawable/background_button_main"
                 android:orientation="vertical">
 
                 <ui_elements.MyTextView
@@ -88,7 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:background="@drawable/tab_background"
+                android:background="@drawable/background_button_main"
                 android:orientation="vertical">
 
                 <ui_elements.MyTextView
@@ -111,33 +113,41 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/selltop"
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:background="@drawable/tab_background"
-                android:orientation="vertical">
+                android:background="@drawable/background_button_main"
+                android:layout_margin="3dp"
+                android:visibility="gone"/>
 
-                <ui_elements.MyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="پر فروش ترین ها"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <LinearLayout
-                    android:id="@+id/laytopsell"
+                <RelativeLayout
+                    android:id="@+id/selltop"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/digikala_white_pure"
-                    android:orientation="vertical"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_button_main"
+                    android:layout_margin="1dp">
+
+                    <ui_elements.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="پر فروش ترین ها"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:id="@+id/laytopsell"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/digikala_white_pure"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
+                </RelativeLayout>
 
 
         </LinearLayout>
