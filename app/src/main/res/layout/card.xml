@@ -39,8 +39,8 @@
 
                 <ImageView
                     android:id="@+id/productThumbnailImage"
-                    android:layout_width="140dp"
-                    android:layout_height="150dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:paddingTop="10dp"
@@ -71,13 +71,13 @@
                     android:id="@+id/card_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="3dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="15dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_below="@+id/productThumbnailImage"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
 
                 <ui_elements.MyTextView
@@ -90,7 +90,7 @@
                     android:layout_marginTop="30dp"
                     android:textColor="@color/greenDark"
                     android:layout_below="@+id/card_name"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <ui_elements.MyTextView
                     android:id="@+id/card_price"
@@ -102,7 +102,7 @@
                     android:text="7000"
                     android:textColor="@color/gray_dark"
                     android:layout_below="@+id/card_price_dis"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
 
             </RelativeLayout>

@@ -180,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setVisibility(View.GONE);
 
         if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
             viewLogo = findViewById(R.id.btn_logo);
@@ -333,9 +336,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     };
                     displayFirebaseRegId();
-
-                    toolbar = (Toolbar) findViewById(R.id.toolbar);
-                    setSupportActionBar(toolbar);
                     initNavigationDrawer(id);
 
                     deliver = (RelativeLayout) findViewById(R.id.motor);
@@ -818,6 +818,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
+
+        toolbar.setVisibility(View.VISIBLE);
     }
 
     private void tabListeners() {

@@ -389,8 +389,17 @@
                         android:text="لذت خرید آنلاین"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
+
                 </LinearLayout>
 
+
+                <ImageView
+                    android:layout_width="210dp"
+                    android:layout_height="110dp"
+                    android:scaleType="centerInside"
+                    android:layout_above="@+id/waitProg"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/enamad"/>
 
                 <com.github.rahatarmanahmed.cpv.CircularProgressView
                     android:id="@+id/waitProg"

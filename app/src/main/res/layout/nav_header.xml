@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="235dp"
+    android:layout_height="wrap_content"
     android:background="@color/blueDark"
     android:layoutDirection="ltr"
     android:orientation="vertical"
@@ -10,36 +10,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/mainLinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="8">
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="8"
-                android:orientation="vertical"
-                android:weightSum="5">
+            android:orientation="vertical">
 
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_person" />
+                    android:src="@drawable/ic_person"
+                    android:layout_marginTop="20dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="3">
 
                     <ui_elements.MyTextView
@@ -51,7 +41,8 @@
                         android:gravity="center"
                         android:text="بدون نام"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"/>
 
                     <ui_elements.MyTextView
                         android:id="@+id/phonenumber"
@@ -62,91 +53,50 @@
                         android:text="بدون شماره"
                         android:textColor="@color/white" />
 
-
-                    <RelativeLayout
-                        android:id="@+id/layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_below="@+id/phonenumber"/>
-
-                    <LinearLayout
-                        android:id="@+id/linearEtebar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/layout"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <ui_elements.MyTextView
-                            android:id="@+id/balance"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:text="0 تومان"
-                            android:textColor="@color/white" />
-
-                        <ui_elements.MyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="4dp"
-                            android:layout_weight="0.5"
-                            android:gravity="center"
-                            android:text="میزان اعتبار :"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-
                 </RelativeLayout>
-
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
     </LinearLayout>
 
 
-
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="center_horizontal"
-       android:orientation="horizontal">
-
-
-       <ui_elements.MyTextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="30dp"
-           android:gravity="center"
-           android:text=" تومان "
-           android:textColor="@color/white" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
 
-       <ui_elements.MyTextView
-           android:id="@+id/txt_credit"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="30dp"
-           android:gravity="center"
-           android:textSize="18sp"
-           android:text="5000"
-           android:textColor="@color/white" />
+        <ui_elements.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text=" تومان "
+            android:textColor="@color/white" />
 
 
-       <ui_elements.MyTextView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="30dp"
-           android:gravity="center"
-           android:text=" اعتبار شما "
-           android:textColor="@color/white" />
+        <ui_elements.MyTextView
+            android:id="@+id/txt_credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="5000"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
-   </LinearLayout>
+        <ui_elements.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text=" اعتبار شما "
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
