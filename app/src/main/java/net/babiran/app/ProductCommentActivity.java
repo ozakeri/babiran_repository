@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
-import Adapters.ProductFeaAdapter;
 import Models.Product;
 import ui_elements.MyTextView;
 

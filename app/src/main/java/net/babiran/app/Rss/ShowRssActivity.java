@@ -6,10 +6,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -48,6 +50,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
@@ -64,7 +68,10 @@ public class ShowRssActivity extends AppCompatActivity {
     ImageView img;
     MyTextView txt, txt_html_ffff;
     MyTextView titl, txt_newsDate;
-    String SSS, Url, RRR, Titlea = null;
+    String SSS;
+    String Url;
+    String RRR;
+    String Titlea = null;
     private Toolbar toolbar;
     Typeface font;
     LinearLayout ln;
@@ -186,7 +193,45 @@ public class ShowRssActivity extends AppCompatActivity {
                         System.out.println("---------------" + s.get(i).getCreatedAtInt());
                         txtLike.setText(s.get(i).getLike() + 1 + "");
                         titl.setText(s.get(i).getSubject());
-                        txt.setText(s.get(i).getBody());
+
+                        Pattern p = Pattern.compile("\\d+");
+                        String SSS1 = null;
+                        if (s.get(i).getBody() != null) {
+
+                           /* Pattern pattern = Pattern.compile("123456789");
+                            Linkify.TransformFilter username = new Linkify.TransformFilter() {
+                                @Override
+                                public String transformUrl(Matcher match, String url) {
+                                    return "123456789";
+                                }
+                            };*/
+
+                           // txt.setText("امید ذاکری  یک پیغامی 123456789 برای شما ارسال کرده است");
+                           // Linkify.addLinks(txt, pattern, "myScheme://?username=", null, username);
+                            //System.out.println("username====" + username);
+
+                            txt.setText(s.get(i).getBody());
+                            Matcher m = p.matcher(s.get(i).getBody());
+                            String val1 = s.get(i).getBody();
+                            while (m.find()) {
+                                if (m.group().length() > 7) {
+                                    Pattern pattern1 = Pattern.compile(m.group());
+                                    Linkify.TransformFilter username1 = new Linkify.TransformFilter() {
+                                        @Override
+                                        public String transformUrl(Matcher match, String url) {
+                                            return m.group();
+                                        }
+                                    };
+                                    Linkify.addLinks(txt, pattern1, "tel:", null, username1);
+;                                }
+                            }
+
+                            /*Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse("tel:123456789"));
+                            startActivity(callIntent);*/
+                        }
+
+                        //txt.setText(SSS1);
                         Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
                         imgUrl = s.get(i).getImageLink();
                         id_blog = s.get(i).getId();

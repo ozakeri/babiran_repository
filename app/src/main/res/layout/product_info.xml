@@ -69,21 +69,22 @@
     <RelativeLayout
         android:id="@+id/proname"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="57dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:background="@color/white">
 
         <ui_elements.MyTextView
             android:id="@+id/pro_name_fea_txt"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="jhfvhgcjg"
+            android:layout_margin="10dp"
             android:textAlignment="center" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/Features"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/proname"

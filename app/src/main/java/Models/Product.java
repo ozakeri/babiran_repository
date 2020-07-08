@@ -18,8 +18,9 @@ public class Product {
     public String providerName;
     public int rate;
     public ArrayList<Feature> features;
-    public ArrayList<Models.Image> images;
+    public ArrayList<Image> images;
     private String category_id;
+    private ArrayList<Moshakhasat> mo;
 
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
@@ -70,7 +71,7 @@ public class Product {
 
     public Product(String category_id, String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
-                   ArrayList<Feature> features, String providerName) {
+                   ArrayList<Feature> features, ArrayList<Moshakhasat> mo, String providerName) {
 
         this.id = id;
         this.category_id = category_id;
@@ -83,6 +84,7 @@ public class Product {
         this.images = images;
         this.features = features;
         this.providerName = providerName;
+        this.mo = mo;
     }
 
     public Product() {
@@ -183,5 +185,13 @@ public class Product {
 
     public void setCategory_id(String category_id) {
         this.category_id = category_id;
+    }
+
+    public ArrayList<Moshakhasat> getMo() {
+        return mo;
+    }
+
+    public void setMo(ArrayList<Moshakhasat> mo) {
+        this.mo = mo;
     }
 }

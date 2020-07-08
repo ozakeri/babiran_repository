@@ -1,12 +1,16 @@
 package net.babiran.app;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import net.babiran.app.R;
 
@@ -22,10 +26,11 @@ import ui_elements.MyTextView;
 
 public class productInfo extends AppCompatActivity {
 
-    Product product = null;
-    ListView Feautures;
-    MyTextView name, nofeature;
+    private Product product = null;
+    private RecyclerView recycler_view;
+    private MyTextView name, nofeature;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,17 +60,20 @@ public class productInfo extends AppCompatActivity {
             }
         }
 
-        Feautures = (ListView) findViewById(R.id.Features);
+        recycler_view = findViewById(R.id.recycler_view);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
 
         if (product != null) {
 
-            if (product.features.size() > 0) {
+            if (product.getMo().size() > 0) {
                 if (!product.name.equals("") && !product.name.equals("null") && product.name != null) {
                     name.setText(product.name);
                 }
-                ProductFeaAdapter adp = new ProductFeaAdapter(productInfo.this, product.features);
-                Feautures.setAdapter(adp);
-                adp.notifyDataSetChanged();
+
+                System.out.println("size=======" + product.getMo().size());
+                ProductFeaAdapter adp = new ProductFeaAdapter(productInfo.this, product.getMo());
+                recycler_view.setAdapter(adp);
+                //adp.notifyDataSetChanged();
             } else {
                 if (!product.name.equals("") && !product.name.equals("null") && product.name != null) {
                     name.setText(product.name);

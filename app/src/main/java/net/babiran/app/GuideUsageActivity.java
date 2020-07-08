@@ -1,7 +1,6 @@
 package net.babiran.app;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
@@ -10,9 +9,6 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-
-import Adapters.ProductFeaAdapter;
 import Models.Product;
 import ui_elements.MyTextView;
 

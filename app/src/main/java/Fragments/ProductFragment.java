@@ -78,6 +78,7 @@ import Models.Color;
 import Models.EventbusModel;
 import Models.Feature;
 import Models.Image;
+import Models.Moshakhasat;
 import Models.Product;
 import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import me.relex.circleindicator.CircleIndicator;
@@ -723,6 +724,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray = new ArrayList<>();
+                                ArrayList<Moshakhasat> moshakhasatArrayList = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
                                 JSONArray features = c.getJSONArray("features");
@@ -751,9 +753,22 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
+                                JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
+
+                                for (int mo = 0; mo < jsonArray1.length(); mo++) {
+
+                                    try {
+                                        JSONObject im = jsonArray1.getJSONObject(i);
+                                        Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
+                                        moshakhasatArrayList.add(i, moshakhasat);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+
                                 //c.getString("category_id1")
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList, c.getString("provider_name"));
 
                                 products.add(product);
                             }

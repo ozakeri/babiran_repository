@@ -6,27 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.captain_miao.recyclerviewutils.listener.LinearLayoutWithRecyclerOnScrollListener;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import Adapters.ProductFeaAdapter;
-import Models.Product;
-import ui_elements.MyTextView;
 
 /**
  * Created by Mohammad on 7/27/2017.

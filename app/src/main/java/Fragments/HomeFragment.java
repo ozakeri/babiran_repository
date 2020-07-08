@@ -63,6 +63,7 @@ import Handlers.DatabaseHandler;
 import Models.Category;
 import Models.Feature;
 import Models.Image;
+import Models.Moshakhasat;
 import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
@@ -72,7 +73,6 @@ import ui_elements.FooterCard;
 import ui_elements.MyTextView;
 
 import static tools.AppConfig.fragmentManager;
-import static tools.AppConfig.smallTile;
 
 
 public class HomeFragment extends Fragment {
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
     ListView NewProList, TopProList, DisProList;
     RequestQueue queue;
     public static final String TAG = "TAG";
-    private RecyclerView recycler_view,recycler_view_smallTile,recycler_view_bigTile;
+    private RecyclerView recycler_view, recycler_view_smallTile, recycler_view_bigTile;
 
 
     DatabaseHandler db;
@@ -1061,10 +1061,12 @@ public class HomeFragment extends Fragment {
 
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
+        ArrayList<Moshakhasat> moshakhasatArrayList;
 
         for (int i = 0; i < AppConfig.topseenPro.length(); i++) {
             featuresArray = new ArrayList<>();
             imagesArray = new ArrayList<>();
+            moshakhasatArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.topseenPro.getJSONObject(i);
 
@@ -1094,8 +1096,21 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                JSONArray jsonArray = c.getJSONArray("moshakhasat");
+
+                for (int mo = 0; mo < jsonArray.length(); mo++) {
+
+                    try {
+                        JSONObject im = jsonArray.getJSONObject(i);
+                        Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
+                        moshakhasatArrayList.add(i, moshakhasat);
+                    } catch (JSONException ex) {
+
+                    }
+                }
+
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, c.getString("provider_name"));
 
 
                 Card card = new Card(AppConfig.act, product);
@@ -1170,10 +1185,12 @@ public class HomeFragment extends Fragment {
     public void getCardsSpecialPro() {
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
+        ArrayList<Moshakhasat> moshakhasatArrayList;
 
         for (int i = 0; i < AppConfig.specialPro.length(); i++) {
             featuresArray = new ArrayList<>();
             imagesArray = new ArrayList<>();
+            moshakhasatArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.specialPro.getJSONObject(i);
                 System.out.println("Special=====" + c.toString());
@@ -1190,8 +1207,27 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                if (!c.isNull("moshakhasat")) {
+                    JSONArray jsonArray = c.getJSONArray("moshakhasat");
+
+                    for (int mo = 0; mo < jsonArray.length(); mo++) {
+
+                        JSONObject im = jsonArray.getJSONObject(mo);
+                        Moshakhasat moshakhasat = new Moshakhasat();
+                        moshakhasat.setName(im.getString("name"));
+                        moshakhasat.setValue(im.getString("val"));
+                        moshakhasatArrayList.add(mo, moshakhasat);
+
+                        System.out.println("moshakhasat=====" + moshakhasat.getName());
+                        System.out.println("moshakhaisat=====" + moshakhasat.getValue());
+                    }
+                }
+
+
+
+
                 JSONArray images = c.getJSONArray("images");
-                ;
+
                 for (int img = 0; img < images.length(); img++) {
 
                     try {
@@ -1207,7 +1243,7 @@ public class HomeFragment extends Fragment {
 
                 //System.out.println("homecategory_id1==" + c.getString("category_id1"));
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, c.getString("provider_name"));
 
 
                 Card card = new Card(AppConfig.act, product);
