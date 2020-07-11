@@ -753,18 +753,21 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
-                                JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
+                                if (!c.isNull("moshakhasat")){
+                                    JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
-                                for (int mo = 0; mo < jsonArray1.length(); mo++) {
+                                    for (int mo = 0; mo < jsonArray1.length(); mo++) {
 
-                                    try {
-                                        JSONObject im = jsonArray1.getJSONObject(i);
-                                        Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
-                                        moshakhasatArrayList.add(i, moshakhasat);
-                                    } catch (JSONException ex) {
+                                        try {
+                                            JSONObject im = jsonArray1.getJSONObject(mo);
+                                            Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
+                                            moshakhasatArrayList.add(mo, moshakhasat);
+                                        } catch (JSONException ex) {
 
+                                        }
                                     }
                                 }
+
 
                                 //c.getString("category_id1")
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),

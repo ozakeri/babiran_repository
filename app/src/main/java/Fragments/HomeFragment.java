@@ -69,7 +69,6 @@ import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterByUrlMain;
 import ui_elements.Card;
-import ui_elements.FooterCard;
 import ui_elements.MyTextView;
 
 import static tools.AppConfig.fragmentManager;
@@ -82,7 +81,6 @@ public class HomeFragment extends Fragment {
     RelativeLayout specialTondMarketRelative, special, discount, newpro, selltop;
     public LinearLayout horizontal1, horizontal2, secondHorizontal;
     public ArrayList<Card> cards;
-    public ArrayList<FooterCard> footerCards;
     public List<Category> footerCategories = new ArrayList<>();
     public List<Category> smallTileCategories = new ArrayList<>();
     public List<Category> bigTileCategories = new ArrayList<>();
@@ -200,9 +198,6 @@ public class HomeFragment extends Fragment {
         firstBanner.getLayoutParams().height = width / 2;
         // firstBanner.getLayoutParams().width = (int) (width * 0.92);
         secondbanner.getLayoutParams().height = width / 2;
-        secondbanner.getLayoutParams().width = (int) (width * 0.92);
-
-
         FullfirstBanner.getLayoutParams().height = width / 2;
 
         FullSecondBanner.getLayoutParams().height = width / 2;
@@ -1101,7 +1096,7 @@ public class HomeFragment extends Fragment {
                 for (int mo = 0; mo < jsonArray.length(); mo++) {
 
                     try {
-                        JSONObject im = jsonArray.getJSONObject(i);
+                        JSONObject im = jsonArray.getJSONObject(mo);
                         Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
                         moshakhasatArrayList.add(i, moshakhasat);
                     } catch (JSONException ex) {

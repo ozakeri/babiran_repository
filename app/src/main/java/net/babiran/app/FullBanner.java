@@ -132,18 +132,22 @@ public class FullBanner extends Fragment {
                                     }
                                 }
 
-                                JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
-                                for (int mo = 0; mo < jsonArray1.length(); mo++) {
+                                if (!c.isNull("moshakhasat")){
+                                    JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
-                                    try {
-                                        JSONObject im = jsonArray1.getJSONObject(i);
-                                        Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
-                                        moshakhasatArrayList.add(i, moshakhasat);
-                                    } catch (JSONException ex) {
+                                    for (int mo = 0; mo < jsonArray1.length(); mo++) {
 
+                                        try {
+                                            JSONObject im = jsonArray1.getJSONObject(mo);
+                                            Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
+                                            moshakhasatArrayList.add(mo, moshakhasat);
+                                        } catch (JSONException ex) {
+
+                                        }
                                     }
                                 }
+
 
                                 System.out.println("category_id1=====" + c.getString("category_id1"));
                                 Product  product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),

@@ -379,26 +379,22 @@
                     android:id="@+id/recycler_view_smallTile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_margin="10dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/secondbanner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="4dp">
 
                     <ImageView
                         android:id="@+id/imgsecondban2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/logoloading" />
+                        android:src="@drawable/logoloading"/>
                 </androidx.cardview.widget.CardView>
 
 
@@ -406,7 +402,6 @@
                     android:id="@+id/recycler_view_bigTile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_margin="10dp"/>
 
                 <androidx.cardview.widget.CardView
@@ -414,12 +409,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="4dp">
 
                         <ImageView
                             android:id="@+id/imgsecondFullban1"
@@ -427,8 +420,7 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
                             android:scaleType="fitXY"
-                            android:src="@drawable/logoloading" />
-                    </LinearLayout>
+                            android:src="@drawable/logoloading"  />
 
                 </androidx.cardview.widget.CardView>
 
