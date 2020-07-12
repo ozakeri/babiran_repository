@@ -265,10 +265,12 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/layout_color"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal"
+                                        android:visibility="gone">
 
                                         <ui_elements.MyTextView
                                             android:layout_width="wrap_content"

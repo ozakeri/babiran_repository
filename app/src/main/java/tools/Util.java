@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Util {
     private static String[] persianNumbers = new String[]{"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"};
@@ -97,5 +98,9 @@ public class Util {
             }
         }
         return out;
+    }
+
+    public static String createTransactionID() throws Exception{
+        return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 }

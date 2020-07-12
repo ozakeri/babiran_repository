@@ -36,11 +36,13 @@ import java.util.Map;
 
 import Adapters.ProductListAdapter;
 import Models.Category;
+import Models.Color;
 import Models.Feature;
 import Models.Image;
 import Models.Moshakhasat;
 import Models.Product;
 import tools.AppConfig;
+import tools.Util;
 
 import static tools.AppConfig.categories;
 
@@ -143,6 +145,7 @@ public class ProductListFragment extends Fragment {
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray = new ArrayList<>();
                                 ArrayList<Moshakhasat> moshakhasatArrayList = new ArrayList<>();
+                                ArrayList<Color> colorArrayList = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
                                 JSONArray features = c.getJSONArray("features");
@@ -187,9 +190,25 @@ public class ProductListFragment extends Fragment {
                                     }
                                 }
 
+                                if (!c.isNull("rang")){
+                                    JSONArray colorJSONArray = c.getJSONArray("rang");
+                                    for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
+
+                                        try {
+                                            JSONObject im = colorJSONArray.getJSONObject(iColor);
+                                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                            colorArrayList.add(i, color);
+                                        } catch (JSONException ex) {
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
 
                                 Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList,c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList,colorArrayList,c.getString("provider_name"));
 
 
                                 products.add(product);

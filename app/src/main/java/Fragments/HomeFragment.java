@@ -61,6 +61,7 @@ import Adapters.SmallTileAdapter;
 import Adapters.TopProListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Category;
+import Models.Color;
 import Models.Feature;
 import Models.Image;
 import Models.Moshakhasat;
@@ -68,6 +69,7 @@ import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterByUrlMain;
+import tools.Util;
 import ui_elements.Card;
 import ui_elements.MyTextView;
 
@@ -1057,11 +1059,13 @@ public class HomeFragment extends Fragment {
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
         ArrayList<Moshakhasat> moshakhasatArrayList;
+        ArrayList<Color> colorArrayList;
 
         for (int i = 0; i < AppConfig.topseenPro.length(); i++) {
             featuresArray = new ArrayList<>();
             imagesArray = new ArrayList<>();
             moshakhasatArrayList = new ArrayList<>();
+            colorArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.topseenPro.getJSONObject(i);
 
@@ -1104,8 +1108,25 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+
+                if (!c.isNull("rang")){
+                    JSONArray colorJSONArray = c.getJSONArray("rang");
+                    for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
+
+                        try {
+                            JSONObject im = colorJSONArray.getJSONObject(iColor);
+                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            colorArrayList.add(i, color);
+                        } catch (JSONException ex) {
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
 
 
                 Card card = new Card(AppConfig.act, product);
@@ -1181,11 +1202,13 @@ public class HomeFragment extends Fragment {
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
         ArrayList<Moshakhasat> moshakhasatArrayList;
+        ArrayList<Color> colorArrayList;
 
         for (int i = 0; i < AppConfig.specialPro.length(); i++) {
             featuresArray = new ArrayList<>();
             imagesArray = new ArrayList<>();
             moshakhasatArrayList = new ArrayList<>();
+            colorArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.specialPro.getJSONObject(i);
                 System.out.println("Special=====" + c.toString());
@@ -1219,26 +1242,26 @@ public class HomeFragment extends Fragment {
                 }
 
 
+                if (!c.isNull("rang")){
+                    JSONArray colorJSONArray = c.getJSONArray("rang");
+                    for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
+                        try {
+                            JSONObject im = colorJSONArray.getJSONObject(iColor);
+                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            colorArrayList.add(i, color);
+                        } catch (JSONException ex) {
 
-                JSONArray images = c.getJSONArray("images");
-
-                for (int img = 0; img < images.length(); img++) {
-
-                    try {
-                        JSONObject im = images.getJSONObject(img);
-                        Image image = new Image(
-                                im.getString("image_link"));
-                        imagesArray.add(img, image);
-                    } catch (JSONException ex) {
-
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
 
                 //System.out.println("homecategory_id1==" + c.getString("category_id1"));
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
 
 
                 Card card = new Card(AppConfig.act, product);

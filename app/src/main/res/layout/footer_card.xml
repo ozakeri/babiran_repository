@@ -1,22 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:id="@+id/card_layout_main"
-    android:layout_margin="3dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:gravity="center_horizontal"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/footer_card_banner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp">
+        android:layout_gravity="center">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_footer_banner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/logoloading"/>
-
+            android:layout_height="240dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logoloading" />
     </androidx.cardview.widget.CardView>
 
 
-    </RelativeLayout>
+</RelativeLayout>

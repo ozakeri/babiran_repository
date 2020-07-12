@@ -26,7 +26,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,10 +79,10 @@ import Models.Feature;
 import Models.Image;
 import Models.Moshakhasat;
 import Models.Product;
-import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterProduct;
+import tools.Util;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
 import ui_elements.SelectColorView;
@@ -96,7 +95,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
     ViewPager viewPager;
     CircleIndicator customIndicator;
-    private LinearLayout layout_selectColor;
+    private LinearLayout layout_selectColor, layout_color;
     Product product;
     Category category;
     public static String prev = "";
@@ -107,28 +106,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView_colorList;
     private List<Color> colorList;
     private ArrayList<SelectColorView> selectColorViews = new ArrayList<>();
-    private String json = "{\"color\": [\n" +
-            "            {\n" +
-            "\t\t\t\"id\": \"10\",\n" +
-            "                \"color_name\": \"آبی\",\n" +
-            "                \"color_code\": \"e5ccff\"            \n" +
-            "            },\n" +
-            "            {\n" +
-            "\t\t\t\"id\": \"20\",\n" +
-            "              \"color_name\": \"قرمز\",\n" +
-            "                \"color_code\": \"b41418\" \n" +
-            "            },\n" +
-            "            {\n" +
-            "\t\t\t\"id\": \"30\",\n" +
-            "             \"color_name\": \"مشکی\",\n" +
-            "                \"color_code\": \"000000\" \n" +
-            "            }  ,\n" +
-            "            {\n" +
-            "\t\t\t\"id\": \"40\",\n" +
-            "             \"color_name\": \"سبز\",\n" +
-            "                \"color_code\": \"899a67\" \n" +
-            "            }     \n" +
-            "        ]}";
+    private String json = "{\"colors\":{\"سفید\":\"FFFFFF\",\"سیاه\":\"000000\",\"قرمز\":\"FF0000\"}}";
 
     DatabaseHandler db;
     boolean IsUpdateCount = false;
@@ -200,6 +178,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         txt_colorName = v.findViewById(R.id.txt_colorName);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
         recyclerView_colorList = v.findViewById(R.id.recyclerView_colorList);
+        layout_color = v.findViewById(R.id.layout_color);
 
 
         AppConfig.frag = ProductFragment.this;
@@ -235,18 +214,20 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         numberpicker = (NumberPicker) v.findViewById(R.id.numberPicker);
 
         LinearLayout featureCard = (LinearLayout) v.findViewById(R.id.productlinear);
-        try {
+
+
+
+       /* try {
             colorList = new ArrayList<>();
             root = new JSONObject(json);
             array = root.getJSONArray("color");
             System.out.println("array=======" + array.length());
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
-                String id = object.getString("id");
                 String colorName = object.getString("color_name");
                 String colorCode = object.getString("color_code");
 
-                Color color = new Color(id,colorName,colorCode);
+                Color color = new Color(colorName,colorCode);
                 colorList.add(color);
 
             }
@@ -259,8 +240,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
         //addRadioButtons(4);
+
+
         if (product != null) {
 
             System.out.println("product=====" + product.toString());
@@ -421,6 +404,18 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             } else {
                 providerName.setText("فاقد اطلاعات");
             }
+
+            if (product.getColors() != null && product.getColors().size() > 0) {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerView_colorList.setLayoutManager(linearLayoutManager);
+                listColorAdapter = new ListColorAdapter(getActivity(), product.getColors());
+                listColorAdapter.notifyDataSetChanged();
+                recyclerView_colorList.setAdapter(listColorAdapter);
+                layout_color.setVisibility(View.VISIBLE);
+            } else {
+                layout_color.setVisibility(View.GONE);
+            }
+
 
             //providerCategory.setText(product.getCategory_id());
             if (product.getCategory_id() == null) {
@@ -725,6 +720,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray = new ArrayList<>();
                                 ArrayList<Moshakhasat> moshakhasatArrayList = new ArrayList<>();
+                                ArrayList<Color> colorArrayList = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
 
                                 JSONArray features = c.getJSONArray("features");
@@ -740,7 +736,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                 }
 
                                 JSONArray images = c.getJSONArray("images");
-                                ;
+
                                 for (int img = 0; img < images.length(); img++) {
 
                                     try {
@@ -753,7 +749,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
-                                if (!c.isNull("moshakhasat")){
+                                if (!c.isNull("moshakhasat")) {
                                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -768,10 +764,26 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
+                                if (!c.isNull("rang")) {
+                                    JSONArray colorJSONArray = c.getJSONArray("rang");
+                                    for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
+
+                                        try {
+                                            JSONObject im = colorJSONArray.getJSONObject(iColor);
+                                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
+                                            colorArrayList.add(i, color);
+                                        } catch (JSONException ex) {
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
 
                                 //c.getString("category_id1")
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                 products.add(product);
                             }

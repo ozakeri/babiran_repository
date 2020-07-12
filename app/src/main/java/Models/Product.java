@@ -21,6 +21,7 @@ public class Product {
     public ArrayList<Image> images;
     private String category_id;
     private ArrayList<Moshakhasat> mo;
+    private ArrayList<Color> colors;
 
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
@@ -71,7 +72,7 @@ public class Product {
 
     public Product(String category_id, String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
-                   ArrayList<Feature> features, ArrayList<Moshakhasat> mo, String providerName) {
+                   ArrayList<Feature> features, ArrayList<Moshakhasat> mo,ArrayList<Color> colors, String providerName) {
 
         this.id = id;
         this.category_id = category_id;
@@ -85,6 +86,7 @@ public class Product {
         this.features = features;
         this.providerName = providerName;
         this.mo = mo;
+        this.colors = colors;
     }
 
     public Product() {
@@ -193,5 +195,13 @@ public class Product {
 
     public void setMo(ArrayList<Moshakhasat> mo) {
         this.mo = mo;
+    }
+
+    public ArrayList<Color> getColors() {
+        return colors;
+    }
+
+    public void setColors(ArrayList<Color> colors) {
+        this.colors = colors;
     }
 }

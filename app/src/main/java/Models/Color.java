@@ -12,7 +12,7 @@ public class Color {
     public String colorName;
     public String colorCode;
 
-    public Color(String id, String colorName, String colorCode) {
+    public Color(String id,String colorName, String colorCode) {
         this.id = id;
         this.colorName = colorName;
         this.colorCode = colorCode;

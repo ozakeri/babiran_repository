@@ -379,7 +379,7 @@
                     android:id="@+id/recycler_view_smallTile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="5dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/secondbanner"
@@ -402,7 +402,7 @@
                     android:id="@+id/recycler_view_bigTile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="5dp"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/Fullsecondbanner"
