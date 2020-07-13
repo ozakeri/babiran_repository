@@ -22,6 +22,8 @@ public class Product {
     private String category_id;
     private ArrayList<Moshakhasat> mo;
     private ArrayList<Color> colors;
+    private String colorName;
+    private String colorCode;
 
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,
@@ -203,5 +205,21 @@ public class Product {
 
     public void setColors(ArrayList<Color> colors) {
         this.colors = colors;
+    }
+
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
     }
 }

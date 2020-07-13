@@ -702,7 +702,11 @@ public class BasketListFragment extends Fragment implements
                     listsabad.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < products.size(); i++) {
-                    Basket basket = new Basket(products.get(i).getId(), products.get(i).count);
+                    Basket basket = new Basket();
+                    basket.setProduct_id(products.get(i).getId());
+                    basket.setCount(products.get(i).count);
+                    basket.setColorName(products.get(i).getColorName());
+                    basket.setColorCode(products.get(i).getColorCode());
                     baskets.add(basket);
                 }
                 Gson gson = new Gson();

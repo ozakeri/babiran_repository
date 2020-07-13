@@ -401,6 +401,7 @@ public class DescriptionDialog extends DialogFragment {
         try {
             Gson gson1 = new Gson();
             String proObj = gson1.toJson(AppConfig.products);
+
             editor.putString("products", proObj);
             editor.commit();
 

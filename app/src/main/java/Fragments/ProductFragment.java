@@ -81,6 +81,7 @@ import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterProduct;
+import tools.RecyclerItemClickListener;
 import tools.Util;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
@@ -408,6 +409,18 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 layout_color.setVisibility(View.GONE);
             }
 
+            recyclerView_colorList.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Color color = product.getColors().get(position);
+                    product.setColorName(color.getColorName());
+                    product.setColorCode(color.getColorCode());
+
+                    System.out.println("color=========" + color.getColorName());
+                    System.out.println("color=========" + color.getColorCode());
+                }
+            }));
+
             //providerCategory.setText(product.getCategory_id());
             if (product.getCategory_id() == null) {
                 providerCategory.setVisibility(View.GONE);
@@ -583,12 +596,14 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             } else {
                 product.count = Count;
+
+
                 products.add(this.product);
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
-
+                System.out.println("proObj======" + proObj);
             }
         }
 
