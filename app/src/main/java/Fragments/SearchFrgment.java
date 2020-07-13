@@ -381,7 +381,7 @@ public class SearchFrgment extends Fragment {
                                         try {
                                             JSONObject im = colorJSONArray.getJSONObject(iColor);
                                             Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
-                                            colorArrayList.add(i, color);
+                                            colorArrayList.add(iColor, color);
                                         } catch (JSONException ex) {
 
                                         } catch (Exception e) {
@@ -538,7 +538,7 @@ public class SearchFrgment extends Fragment {
                                         try {
                                             JSONObject im = colorJSONArray.getJSONObject(iColor);
                                             Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
-                                            colorArrayList.add(i, color);
+                                            colorArrayList.add(iColor, color);
                                         } catch (JSONException ex) {
 
                                         } catch (Exception e) {

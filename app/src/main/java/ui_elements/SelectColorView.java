@@ -106,7 +106,7 @@ public class SelectColorView extends RelativeLayout {
 
         }
 
-        layout_selectColor.setOnClickListener(new OnClickListener() {
+       /* layout_selectColor.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -130,7 +130,7 @@ public class SelectColorView extends RelativeLayout {
                         break;
                 }
             }
-        });
+        });*/
 
     }
 

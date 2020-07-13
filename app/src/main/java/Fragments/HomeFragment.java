@@ -1069,6 +1069,8 @@ public class HomeFragment extends Fragment {
             try {
                 JSONObject c = AppConfig.topseenPro.getJSONObject(i);
 
+                System.out.println("ccccccccccccccc====" + c.toString());
+
                 JSONArray features = c.getJSONArray("features");
                 for (int fea = 0; fea < features.length(); fea++) {
                     try {
@@ -1095,16 +1097,17 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                JSONArray jsonArray = c.getJSONArray("moshakhasat");
 
-                for (int mo = 0; mo < jsonArray.length(); mo++) {
+                if (!c.isNull("moshakhasat")) {
+                    JSONArray jsonArray = c.getJSONArray("moshakhasat");
 
-                    try {
+                    for (int mo = 0; mo < jsonArray.length(); mo++) {
+
                         JSONObject im = jsonArray.getJSONObject(mo);
-                        Moshakhasat moshakhasat = new Moshakhasat(im.getString("name"), im.getString("val"));
-                        moshakhasatArrayList.add(i, moshakhasat);
-                    } catch (JSONException ex) {
-
+                        Moshakhasat moshakhasat = new Moshakhasat();
+                        moshakhasat.setName(im.getString("name"));
+                        moshakhasat.setValue(im.getString("val"));
+                        moshakhasatArrayList.add(mo, moshakhasat);
                     }
                 }
 
@@ -1116,7 +1119,7 @@ public class HomeFragment extends Fragment {
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
                             Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
-                            colorArrayList.add(i, color);
+                            colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
                         } catch (Exception e) {
@@ -1125,10 +1128,13 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                System.out.println();
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
-
-
+                System.out.println("product====" + product.getName());
+                System.out.println("product====" + product.getDis_price());
+                System.out.println("product====" + product.getProviderName());
+                System.out.println("product====" + product.getStock());
                 Card card = new Card(AppConfig.act, product);
                 cards.add(card);
                 secondHorizontal.addView(card);
@@ -1169,7 +1175,6 @@ public class HomeFragment extends Fragment {
                 }
 
                 JSONArray images = c.getJSONArray("images");
-                ;
                 for (int img = 0; img < images.length(); img++) {
 
                     try {
@@ -1225,6 +1230,19 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
+                JSONArray images = c.getJSONArray("images");
+                for (int img = 0; img < images.length(); img++) {
+
+                    try {
+                        JSONObject im = images.getJSONObject(img);
+                        Image image = new Image(
+                                im.getString("image_link"));
+                        imagesArray.add(img, image);
+                    } catch (JSONException ex) {
+
+                    }
+                }
+
                 if (!c.isNull("moshakhasat")) {
                     JSONArray jsonArray = c.getJSONArray("moshakhasat");
 
@@ -1235,9 +1253,6 @@ public class HomeFragment extends Fragment {
                         moshakhasat.setName(im.getString("name"));
                         moshakhasat.setValue(im.getString("val"));
                         moshakhasatArrayList.add(mo, moshakhasat);
-
-                        System.out.println("moshakhasat=====" + moshakhasat.getName());
-                        System.out.println("moshakhaisat=====" + moshakhasat.getValue());
                     }
                 }
 
@@ -1249,7 +1264,7 @@ public class HomeFragment extends Fragment {
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
                             Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
-                            colorArrayList.add(i, color);
+                            colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
                         } catch (Exception e) {

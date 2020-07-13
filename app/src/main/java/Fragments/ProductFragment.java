@@ -64,7 +64,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -85,7 +84,6 @@ import tools.CustomPagerAdapterProduct;
 import tools.Util;
 import ui_elements.CardFeature;
 import ui_elements.MyTextView;
-import ui_elements.SelectColorView;
 
 import static android.content.Context.MODE_PRIVATE;
 import static tools.AppConfig.products;
@@ -100,13 +98,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     Category category;
     public static String prev = "";
     CardView information, comment;
-    private SelectColorView selectColorView;
-    private JSONObject root;
-    private JSONArray array;
     private RecyclerView recyclerView_colorList;
-    private List<Color> colorList;
-    private ArrayList<SelectColorView> selectColorViews = new ArrayList<>();
-    private String json = "{\"colors\":{\"سفید\":\"FFFFFF\",\"سیاه\":\"000000\",\"قرمز\":\"FF0000\"}}";
 
     DatabaseHandler db;
     boolean IsUpdateCount = false;
@@ -409,13 +401,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView_colorList.setLayoutManager(linearLayoutManager);
                 listColorAdapter = new ListColorAdapter(getActivity(), product.getColors());
-                listColorAdapter.notifyDataSetChanged();
+                //listColorAdapter.notifyDataSetChanged();
                 recyclerView_colorList.setAdapter(listColorAdapter);
                 layout_color.setVisibility(View.VISIBLE);
             } else {
                 layout_color.setVisibility(View.GONE);
             }
-
 
             //providerCategory.setText(product.getCategory_id());
             if (product.getCategory_id() == null) {
@@ -771,7 +762,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                         try {
                                             JSONObject im = colorJSONArray.getJSONObject(iColor);
                                             Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
-                                            colorArrayList.add(i, color);
+                                            colorArrayList.add(iColor, color);
                                         } catch (JSONException ex) {
 
                                         } catch (Exception e) {
@@ -852,6 +843,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     public void getEvent(EventbusModel model) {
         if (model.getColor() != null) {
             txt_colorName.setText(model.getColor());
+            int position = model.getPosition();
+            listColorAdapter.notifyDataSetChanged();
+            recyclerView_colorList.setAdapter(listColorAdapter);
+            recyclerView_colorList.smoothScrollToPosition(position);
         }
 
     }

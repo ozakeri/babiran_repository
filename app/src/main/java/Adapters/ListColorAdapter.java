@@ -64,8 +64,8 @@ public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.Cust
                 @Override
                 public void onClick(View v) {
                     selectedItemId = color.getId();
-                    notifyDataSetChanged();
-                    EventBus.getDefault().post(new EventbusModel("",color.getColorName()));
+                    //notifyDataSetChanged();
+                    EventBus.getDefault().post(new EventbusModel("",color.getColorName(),position));
                 }
             });
 
