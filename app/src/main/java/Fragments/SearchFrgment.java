@@ -163,35 +163,49 @@ public class SearchFrgment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                progressLayout.setVisibility(View.VISIBLE);
-                if (timer != null)
+                // user is typing: reset already started timer (if existing)
+               //progressLayout.setVisibility(View.VISIBLE);
+
+                if (s.length() == 0){
+                    progressLayout.setVisibility(View.GONE);
+                }
+                if (timer != null) {
                     timer.cancel();
+                }
             }
 
             @Override
-            public void afterTextChanged(final Editable s) {
-                System.out.println("afterTextChanged===" + s);
-               // if (s.length() >= 2) {
-
+            public void afterTextChanged(Editable arg0) {
+                // user typed: start the timer
+                progressLayout.setVisibility(View.VISIBLE);
+                if (arg0.length() == 0){
+                    progressLayout.setVisibility(View.GONE);
+                    queue.cancelAll(new RequestQueue.RequestFilter() {
+                        @Override
+                        public boolean apply(Request<?> request) {
+                            return true;
+                        }
+                    });
+                }
+                if (arg0.length() >=2){
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            // TODO: do what you need here (refresh list)
-                            // you will probably need to use
-                            // runOnUiThread(Runnable action) for some specific
-                            // actions
-                            if (jsonArray != null && jsonArray.length() == 0) {
-                                return;
-                            }
-
-
-                            submit(s.toString());
-                            System.out.println("ssssssss======" + s.toString());
+                            // do your actual work here
+                          /*  if (arg0.length() == 0){
+                                queue.cancelAll(new RequestQueue.RequestFilter() {
+                                    @Override
+                                    public boolean apply(Request<?> request) {
+                                        return true;
+                                    }
+                                });
+                            }*/
+                            submit(arg0.toString());
                         }
+                    }, 1500); // 600ms delay before the timer executes the „run“ method from TimerTask
+                }
 
-                    }, DELAY);
-                //}
             }
         });
 
@@ -481,7 +495,7 @@ public class SearchFrgment extends Fragment {
                             Log.e("randomRes", response);
                             ArrayList<Product> products = new ArrayList<>();
                             JSONArray jsonArray = new JSONArray(response);
-                            for (int i = 0; i < jsonArray.length(); i++) {
+                            for (int i = 0; i < 20; i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray = new ArrayList<>();

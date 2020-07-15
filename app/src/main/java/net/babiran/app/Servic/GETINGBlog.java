@@ -29,7 +29,6 @@ public class GETINGBlog {
     @SerializedName("like")
     @Expose
     private int like;
-
     @SerializedName("titr")
     @Expose
     private String titr;

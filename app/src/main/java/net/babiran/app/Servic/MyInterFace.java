@@ -39,6 +39,9 @@ public interface MyInterFace {
     @GET("blog/getBlogs/")
     Call<List<GETINGBlog>> getBlogs();
 
+    @POST("blog/searchBlogs/{q}/")
+    Call<List<GETINGBlog>> getBlogByKey(@Path("q") String key);
+
     @GET("blog/getBlog/{id}/")
     Call<GETINGBlog> getBlogById(@Path("id") int id);
 

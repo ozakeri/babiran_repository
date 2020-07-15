@@ -8,9 +8,11 @@
     tools:context="net.babiran.app.Rss.MainListActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".FactorList">
+        tools:context=".FactorList"
+        android:visibility="visible">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -35,9 +37,19 @@
                         android:layout_height="50dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_margin="5dp"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_arrow_back_black_24dp"
+                        android:tint="#fff" />
+
+
+                    <ImageView
+                        android:id="@+id/btn_search"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        android:src="@drawable/sear"
+                        android:layout_toRightOf="@+id/btn_back"
                         android:tint="#fff" />
 
 
@@ -61,6 +73,38 @@
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layoutDirection="ltr"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/corner_ronde"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/closeImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_closee" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search_bar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="جستجو در بلاگ"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
 
 
     <ProgressBar
@@ -145,6 +189,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
