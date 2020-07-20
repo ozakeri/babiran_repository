@@ -107,7 +107,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     public AdvertisingDatabaseHandler dba;
     RequestQueue queue;
     public static final String TAG = "TAG";
-    MyTextView txt_colorName, noStock;
+    MyTextView txt_colorName, noStock,btn_addToBasket;
     View v;
     String Count = "";
     String user_id = "-1";
@@ -168,6 +168,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         information.setBackgroundResource(R.drawable.border_button);
 
         noStock = v.findViewById(R.id.nostock);
+        btn_addToBasket = v.findViewById(R.id.btn_addToBasket);
         txt_colorName = v.findViewById(R.id.txt_colorName);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
         recyclerView_colorList = v.findViewById(R.id.recyclerView_colorList);
@@ -389,6 +390,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             // just set viewPager
             customIndicator.setViewPager(viewPager);
 
+            if (Integer.parseInt(product.getStock()) == 0){
+                btn_addToBasket.setText("نا موجـــود");
+                btn_addToBasket.setEnabled(false);
+            }
 
             name.setText(product.name);
             System.out.println("providerName=========" + product.providerName);

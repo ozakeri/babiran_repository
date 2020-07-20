@@ -7,6 +7,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -27,6 +29,9 @@ import net.babiran.app.Rss.ShowRssActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 
 import Handlers.DatabaseHandler;
@@ -38,7 +43,7 @@ public class MyPushListener extends PusheListenerService {
     private RequestQueue queue;
     private DatabaseHandler db;
     private GlobalValues globalValues = new GlobalValues();
-    private String type, pro_id, cat_id, title, body, blog_id, success = null;
+    private String type, pro_id, cat_id, title, body, blog_id, success = null, pro_image = null;
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
@@ -54,116 +59,129 @@ public class MyPushListener extends PusheListenerService {
                 String jsonObjectStr = contentJson.getString("content");
                 if (!jsonObjectStr.isEmpty()) {
 
-                    jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
+                    System.out.println("jsonObjectStrcontent=====" + jsonObjectStr);
+
+                   // jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
                     jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
-                    System.out.println("jsonObjectStr=====" + jsonObjectStr);
-
-                    if (jsonObjectStr != null) {
-                        String[] kvPairs = jsonObjectStr.split(",");
-                        for (String kvPair : kvPairs) {
-                            try {
-                                String[] kv = kvPair.split(":");
-                                System.out.println("kv=====" + kv);
-                                String key = kv[0];
-                                String value = kv[1];
 
 
-                                key = key.replaceAll("([{-}])", "");
-                                value = value.replaceAll("([{-}])", "");
+                    String[] kvPairs = jsonObjectStr.split(",");
+                    for (String kvPair : kvPairs) {
+                        try {
+                            String[] kv = kvPair.split(":");
+                            System.out.println("kv=====" + kv);
+                            String key = kv[0];
+                            String value = kv[1];
 
-                                System.out.println("key=====" + key);
-                                System.out.println("value=====" + value);
 
-                                if (key.equals(" type")) {
-                                    key = key.replace(" type", "type");
-                                }
+                            if (key.equals(" pro_image")) {
+                                key = key.replace(" pro_image", "pro_image");
+                            }
+                            if (key.equals("pro_image")) {
+                                pro_image = value;
+                                System.out.println("pro_image23=====" + value);
+                            }
 
-                                if (key.equals(" success")) {
-                                    key = key.replace(" success", "success");
-                                }
+                            key = key.replaceAll("([{-}])", "");
+                            value = value.replaceAll("([{-}])", "");
 
-                                if (key.equals(" blog_id")) {
-                                    key = key.replace(" blog_id", "blog_id");
-                                }
-                                if (key.equals(" pro_id")) {
-                                    key = key.replace(" pro_id", "pro_id");
-                                }
+                            System.out.println("key=====" + key);
+                            System.out.println("value=====" + value);
 
-                                if (key.equals(" cat_id")) {
-                                    key = key.replace(" cat_id", "cat_id");
-                                }
+                            if (key.equals(" type")) {
+                                key = key.replace(" type", "type");
+                            }
 
-                                if (key.equals(" title")) {
-                                    key = key.replace(" title", "title");
-                                }
-                                if (key.equals(" body")) {
-                                    key = key.replace(" body", "body");
-                                }
+                            if (key.equals(" success")) {
+                                key = key.replace(" success", "success");
+                            }
 
-                                if (key.equals("type")) {
-                                    type = value;
-                                }
+                            if (key.equals(" blog_id")) {
+                                key = key.replace(" blog_id", "blog_id");
+                            }
+                            if (key.equals(" pro_id")) {
+                                key = key.replace(" pro_id", "pro_id");
+                            }
 
-                                if (key.equals("pro_id")) {
-                                    pro_id = value;
-                                }
+                            if (key.equals(" cat_id")) {
+                                key = key.replace(" cat_id", "cat_id");
+                            }
 
-                                if (key.equals("success")) {
-                                    success = value;
-                                }
+                           /* if (key.equals(" pro_image")) {
+                                key = key.replace(" pro_image", "pro_image");
+                            }*/
 
-                                if (key.equals("blog_id")) {
-                                    blog_id = value;
-                                }
+                            if (key.equals(" title")) {
+                                key = key.replace(" title", "title");
+                            }
+                            if (key.equals(" body")) {
+                                key = key.replace(" body", "body");
+                            }
 
-                                if (key.equals("cat_id")) {
-                                    cat_id = value;
-                                }
+                            if (key.equals("type")) {
+                                type = value;
+                            }
 
-                                if (key.equals("title")) {
-                                    title = value;
-                                }
+                            if (key.equals("pro_id")) {
+                                pro_id = value;
+                            }
 
-                                if (key.equals("body")) {
-                                    body = value;
-                                }
+                            if (key.equals("success")) {
+                                success = value;
+                            }
 
-                                System.out.println("pro_id=====" + pro_id);
-                                System.out.println("cat_id=====" + cat_id);
-                                System.out.println("title=====" + title);
-                                System.out.println("body=====" + body);
+                            if (key.equals("blog_id")) {
+                                blog_id = value;
+                            }
 
-                                if (success != null) {
-                                    showNotificationCopy(getApplicationContext(), title, body);
-                                    //new Thread(new Task()).start();
-                                }
-                                if (type != null) {
-                                    if (type.equals("product")) {
-                                        if (pro_id != null && cat_id != null) {
-                                            editor = AppController.getInstance().getSharedPreferences().edit();
-                                            editor.putBoolean("getProduct", true);
-                                            editor.apply();
+                            if (key.equals("cat_id")) {
+                                cat_id = value;
+                            }
 
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            intent.putExtra("pro_id", pro_id);
-                                            intent.putExtra("cat_id", cat_id);
-                                            // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
-                                            showNotification(getApplicationContext(), intent, title, body);
-                                        }
-                                    } else if (type.equals("blog")) {
-                                        if (blog_id != null) {
-                                            ListtoListActivity.ID_ME = blog_id;
-                                            Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
-                                            intent.putExtra("isPush", true);
-                                            showNotification(getApplicationContext(), intent, title, body);
-                                        }
+                            if (key.equals("title")) {
+                                title = value;
+                            }
+
+                            if (key.equals("body")) {
+                                body = value;
+                            }
+
+                            System.out.println("pro_id=====" + pro_id);
+                            System.out.println("cat_id=====" + cat_id);
+                            System.out.println("title=====" + title);
+                            System.out.println("body=====" + body);
+
+                            if (success != null) {
+                                showNotificationCopy(getApplicationContext(), title, body);
+                                //new Thread(new Task()).start();
+                            }
+                            if (type != null) {
+                                if (type.equals("product")) {
+                                    if (pro_id != null && cat_id != null) {
+                                        editor = AppController.getInstance().getSharedPreferences().edit();
+                                        editor.putBoolean("getProduct", true);
+                                        editor.apply();
+
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("pro_id", pro_id);
+                                        intent.putExtra("cat_id", cat_id);
+                                        intent.putExtra("pro_image", pro_image);
+                                        // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
+                                        showNotification(getApplicationContext(), intent, title, body);
+                                    }
+                                } else if (type.equals("blog")) {
+                                    if (blog_id != null) {
+                                        ListtoListActivity.ID_ME = blog_id;
+                                        Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
+                                        intent.putExtra("isPush", true);
+                                        showNotification(getApplicationContext(), intent, title, body);
                                     }
                                 }
-
-
-                            } catch (Exception e) {
-                                e.getMessage();
                             }
+
+
+                        } catch (Exception e) {
+                            e.getMessage();
                         }
                     }
                 }
@@ -225,9 +243,23 @@ public class MyPushListener extends PusheListenerService {
         }
 
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push);
-        contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+
+
+        if (pro_image != null) {
+            System.out.println("pro_image===" + pro_image);
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(pro_image).getContent());
+                contentView.setImageViewBitmap(R.id.image, bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+        }
         contentView.setTextViewText(R.id.title, title);
         contentView.setTextViewText(R.id.body, body);
+
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.applogo)
