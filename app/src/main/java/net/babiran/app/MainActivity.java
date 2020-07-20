@@ -1555,7 +1555,6 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < products.size(); i++) {
                                 if (products.get(i).id.equals(proId)) {
                                     Product product = products.get(i);
-                                    Log.e("=====getProviderName======", product.getProviderName());
                                     AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(product, getProduct)).commit();
                                 }
                             }

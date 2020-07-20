@@ -61,26 +61,19 @@ public class MyPushListener extends PusheListenerService {
 
                     System.out.println("jsonObjectStrcontent=====" + jsonObjectStr);
 
-                   // jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
-                    jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
+                    jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
+                    //jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
 
 
                     String[] kvPairs = jsonObjectStr.split(",");
                     for (String kvPair : kvPairs) {
                         try {
-                            String[] kv = kvPair.split(":");
+                            String[] kv = kvPair.split("=");
                             System.out.println("kv=====" + kv);
                             String key = kv[0];
                             String value = kv[1];
-
-
-                            if (key.equals(" pro_image")) {
-                                key = key.replace(" pro_image", "pro_image");
-                            }
-                            if (key.equals("pro_image")) {
-                                pro_image = value;
-                                System.out.println("pro_image23=====" + value);
-                            }
+                            key = key.replaceAll("([{-}])", "");
+                            value = value.replaceAll("([{-}])", "");
 
                             key = key.replaceAll("([{-}])", "");
                             value = value.replaceAll("([{-}])", "");
@@ -107,9 +100,9 @@ public class MyPushListener extends PusheListenerService {
                                 key = key.replace(" cat_id", "cat_id");
                             }
 
-                           /* if (key.equals(" pro_image")) {
+                            if (key.equals(" pro_image")) {
                                 key = key.replace(" pro_image", "pro_image");
-                            }*/
+                            }
 
                             if (key.equals(" title")) {
                                 key = key.replace(" title", "title");
@@ -146,10 +139,16 @@ public class MyPushListener extends PusheListenerService {
                                 body = value;
                             }
 
+                            if (key.equals("pro_image")) {
+                                pro_image = value;
+                                System.out.println("pro_image23=====" + value);
+                            }
+
                             System.out.println("pro_id=====" + pro_id);
                             System.out.println("cat_id=====" + cat_id);
                             System.out.println("title=====" + title);
                             System.out.println("body=====" + body);
+                            System.out.println("type=====" + type);
 
                             if (success != null) {
                                 showNotificationCopy(getApplicationContext(), title, body);
@@ -259,6 +258,7 @@ public class MyPushListener extends PusheListenerService {
         }
         contentView.setTextViewText(R.id.title, title);
         contentView.setTextViewText(R.id.body, body);
+
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)

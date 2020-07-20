@@ -63,7 +63,7 @@ public class productInfo extends AppCompatActivity {
         recycler_view = findViewById(R.id.recycler_view);
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
 
-        if (product != null) {
+        if (product != null && product.getMo() != null) {
 
             if (product.getMo().size() > 0) {
                 if (!product.name.equals("") && !product.name.equals("null") && product.name != null) {
@@ -79,7 +79,6 @@ public class productInfo extends AppCompatActivity {
                     name.setText(product.name);
                 }
                 nofeature.setVisibility(View.VISIBLE);
-
             }
 
         }
