@@ -76,8 +76,7 @@ public class TopProListAdapter extends BaseAdapter {
             holder.layout_percentage_discount = (RelativeLayout) convertView.findViewById(R.id.layout_percentage_discount);
             holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addToTop);
             holder.txt_percentage_discount = (MyTextView) convertView.findViewById(R.id.txt_percentage_discount);
-
-
+            holder.noProduct = (MyTextView) convertView.findViewById(R.id.noProduct);
             holder.price_dis = (MyTextView) convertView.findViewById(R.id.top_pro_txt_price);
             holder.price_free = (MyTextView) convertView.findViewById(R.id.top_pro_txt_free_price);
 
@@ -91,7 +90,7 @@ public class TopProListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String s =products.get(i).name;
+        String s = products.get(i).name;
         if (s.length() <= 20) {
             holder.name.setText(s);
         } else {
@@ -102,6 +101,16 @@ public class TopProListAdapter extends BaseAdapter {
             holder.item_Button.setBackgroundResource(R.color.bac);
         } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
+        }
+
+        if (products.get(i).getStock() != null){
+            if (products.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -164,7 +173,7 @@ public class TopProListAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        MyTextView name;
+        MyTextView name,noProduct;
         LinearLayout item_Button;
         MyTextView price_dis, price_free, addToBasket, txt_percentage_discount;
         ImageView img;

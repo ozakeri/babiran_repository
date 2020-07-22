@@ -143,6 +143,18 @@
 
                     </RelativeLayout>
 
+                    <ui_elements.MyTextView
+                        android:id="@+id/noProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_alignParentBottom="true"
+                        android:text="نـا موجـــــود"
+                        android:background="@drawable/background_button_main_selected"
+                        android:textSize="10sp"
+                        android:visibility="gone"/>
+
 
                 </RelativeLayout>
 

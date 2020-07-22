@@ -77,7 +77,7 @@ public class DisProListAdapter extends BaseAdapter {
             holder.item_Button = (LinearLayout) convertView.findViewById(R.id.dis_pro_item_button) ;
             holder.layout_percentage_discount = (RelativeLayout) convertView.findViewById(R.id.layout_percentage_discount) ;
             holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addToDis) ;
-
+            holder.noProduct = (MyTextView) convertView.findViewById(R.id.noProduct) ;
             holder.price_dis = (MyTextView) convertView.findViewById(R.id.dis_pro_txt_price);
             holder.price_free = (MyTextView) convertView.findViewById(R.id.dis_pro_txt_free_price);
             holder.txt_percentage_discount = (MyTextView) convertView.findViewById(R.id.txt_percentage_discount);
@@ -143,6 +143,16 @@ public class DisProListAdapter extends BaseAdapter {
             Percentage2 = Integer.parseInt(products.get(i).price);
         }
 
+        if (products.get(i).getStock() != null){
+            if (products.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         result = ((Percentage1 - Percentage2) * 100) / Percentage2;
 
@@ -169,7 +179,7 @@ public class DisProListAdapter extends BaseAdapter {
     private class ViewHolder
     {
 
-        MyTextView name,addToBasket;
+        MyTextView name,addToBasket,noProduct;
         LinearLayout item_Button;
         MyTextView price_dis ,price_free,txt_percentage_discount;
         RelativeLayout layout_percentage_discount;

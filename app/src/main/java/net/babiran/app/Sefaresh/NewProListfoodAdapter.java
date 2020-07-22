@@ -93,7 +93,7 @@ public class NewProListfoodAdapter extends BaseAdapter {
             holder.img = (ImageView) convertView.findViewById(R.id.new_pro_img);
             holder.item_Button = (LinearLayout) convertView.findViewById(R.id.new_pro_item_button);
             holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addToNew);
-
+            holder.noProduct = (MyTextView) convertView.findViewById(R.id.noProduct);
             holder.price_dis = (MyTextView) convertView.findViewById(R.id.new_pro_txt_price);
             holder.price_free = (MyTextView) convertView.findViewById(R.id.new_pro_txt_free_price);
 
@@ -110,6 +110,15 @@ public class NewProListfoodAdapter extends BaseAdapter {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
 
+        if (productArray.get(i).getStock() != null) {
+            if (productArray.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
+        }
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +193,7 @@ public class NewProListfoodAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        MyTextView name, addToBasket;
+        MyTextView name, addToBasket, noProduct;
         LinearLayout item_Button;
         ImageView img;
         MyTextView price_dis, price_free;

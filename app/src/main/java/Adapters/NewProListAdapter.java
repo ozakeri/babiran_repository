@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.RequestQueue;
-
 import com.bumptech.glide.Glide;
 
 import net.babiran.app.R;
@@ -31,14 +30,14 @@ import ui_elements.MyTextView;
 
 public class NewProListAdapter extends BaseAdapter {
     RequestQueue queue;
-    DatabaseHandler db ;
+    DatabaseHandler db;
     String id_user = "-1";
     Context context;
-    ProgressDialog d ;
-    ArrayList<Product> productArray = new ArrayList<>() ;
+    ProgressDialog d;
+    ArrayList<Product> productArray = new ArrayList<>();
     LayoutInflater inflater;
 
-    public NewProListAdapter(Context context, ArrayList<Product> products){
+    public NewProListAdapter(Context context, ArrayList<Product> products) {
 
         this.context = context;
         this.productArray = products;
@@ -73,14 +72,14 @@ public class NewProListAdapter extends BaseAdapter {
 
             holder.name = (MyTextView) convertView.findViewById(R.id.new_pro_txt_name);
             holder.img = (ImageView) convertView.findViewById(R.id.new_pro_img);
-            holder.item_Button = (LinearLayout) convertView.findViewById(R.id.new_pro_item_button) ;
-            holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addToNew) ;
+            holder.item_Button = (LinearLayout) convertView.findViewById(R.id.new_pro_item_button);
+            holder.addToBasket = (MyTextView) convertView.findViewById(R.id.addToNew);
 
             holder.price_dis = (MyTextView) convertView.findViewById(R.id.new_pro_txt_price);
             holder.price_free = (MyTextView) convertView.findViewById(R.id.new_pro_txt_free_price);
             holder.txt_percentage_discount = (MyTextView) convertView.findViewById(R.id.txt_percentage_discount);
             holder.layout_percentage_discount = (RelativeLayout) convertView.findViewById(R.id.layout_percentage_discount);
-
+            holder.noProduct = convertView.findViewById(R.id.noProduct);
 
 
             convertView.setTag(holder);
@@ -88,24 +87,29 @@ public class NewProListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String s =productArray.get(i).name;
+        String s = productArray.get(i).name;
         if (s.length() <= 20) {
             holder.name.setText(s);
         } else {
-            holder.name.setText(s.substring(0,20)+"...");
+            holder.name.setText(s.substring(0, 20) + "...");
         }
 
-        if(isEven(i))
-        {
+        if (isEven(i)) {
             holder.item_Button.setBackgroundResource(R.color.bac);
-        }
-        else
-
-        {
+        } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
 
 
+        if (productArray.get(i).getStock() != null) {
+            if (productArray.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
+        }
 
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +122,9 @@ public class NewProListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = ((Activity)context).getFragmentManager();
+                FragmentManager fm = ((Activity) context).getFragmentManager();
                 CountDialog countDialog = new CountDialog(productArray.get(i));
-                countDialog.show(fm,"CountDialog");
+                countDialog.show(fm, "CountDialog");
 
             }
         });
@@ -130,13 +134,13 @@ public class NewProListAdapter extends BaseAdapter {
         int Percentage2 = 0;
         int result = 0;
 
-        if(!productArray.get(i).dis_price.equals("null") && !productArray.get(i).dis_price.equals("") && productArray.get(i).dis_price != null){
-            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(productArray.get(i).dis_price)+""))+" ت ");
+        if (!productArray.get(i).dis_price.equals("null") && !productArray.get(i).dis_price.equals("") && productArray.get(i).dis_price != null) {
+            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(productArray.get(i).dis_price) + "")) + " ت ");
             Percentage1 = Integer.parseInt(productArray.get(i).dis_price);
             //   price_free.setVisibility(INVISIBLE);
         }
 
-        if(!productArray.get(i).price.equals("null") && !productArray.get(i).price.equals("") && productArray.get(i).price != null) {
+        if (!productArray.get(i).price.equals("null") && !productArray.get(i).price.equals("") && productArray.get(i).price != null) {
             holder.price_free.setText(ConvertEnToPe(convertToFormalString(productArray.get(i).price + "")) + " ت ");
             holder.price_free.setPaintFlags(holder.price_free.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             Percentage2 = Integer.parseInt(productArray.get(i).price);
@@ -151,12 +155,11 @@ public class NewProListAdapter extends BaseAdapter {
             holder.layout_percentage_discount.setVisibility(View.VISIBLE);
         }
 
-        for(int j = 0 ; j < productArray.get(i).images.size() ; j ++){
-            if(productArray.get(i).images.get(j) != null && productArray.get(i).images.get(j).toString().length()>5) {
+        for (int j = 0; j < productArray.get(i).images.size(); j++) {
+            if (productArray.get(i).images.get(j) != null && productArray.get(i).images.get(j).toString().length() > 5) {
                 Glide.with(context).load(productArray.get(i).images.get(j).image_link).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
             }
         }
-
 
 
         return convertView;
@@ -164,44 +167,42 @@ public class NewProListAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        MyTextView name,addToBasket;
+        MyTextView name, addToBasket, noProduct;
         LinearLayout item_Button;
         ImageView img;
-        MyTextView price_dis ,price_free,txt_percentage_discount;
+        MyTextView price_dis, price_free, txt_percentage_discount;
         RelativeLayout layout_percentage_discount;
 
     }
 
-    private static boolean isEven(int number)
-    {
+    private static boolean isEven(int number) {
         return (number & 1) == 0;
     }
 
-    public String ConvertEnToPe(String value){
-        char[] arabicChars = {'٠','١','٢','٣','٤','٥','٦','٧','٨','٩'};
+    public String ConvertEnToPe(String value) {
+        char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
         StringBuilder builder = new StringBuilder();
-        for(int i =0;i<value.length();i++){
-            if(Character.isDigit(value.charAt(i))){
-                builder.append(arabicChars[(int)(value.charAt(i))-48]);
-            }
-            else{
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))) {
+                builder.append(arabicChars[(int) (value.charAt(i)) - 48]);
+            } else {
                 builder.append(value.charAt(i));
             }
         }
         return builder.toString();
     }
-    public String convertToFormalString(String input){
+
+    public String convertToFormalString(String input) {
         String priceString = "";
-        for(int i = 0 ; i < input.length() ; i++){
-            int j = input.length() - i ;
-            if(j%3 !=1){
-                priceString += input.substring(i,i+1);
-            }
-            else{
-                priceString += input.substring(i,i+1)+ ",";
+        for (int i = 0; i < input.length(); i++) {
+            int j = input.length() - i;
+            if (j % 3 != 1) {
+                priceString += input.substring(i, i + 1);
+            } else {
+                priceString += input.substring(i, i + 1) + ",";
             }
 
         }
-        return priceString.substring(0,priceString.length()-1) ;
+        return priceString.substring(0, priceString.length() - 1);
     }
 }

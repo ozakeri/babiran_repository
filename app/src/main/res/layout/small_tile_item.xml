@@ -44,7 +44,8 @@
                 android:id="@+id/item_content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/addToSmall">
+                android:layout_toEndOf="@+id/addToSmall"
+                android:layout_toRightOf="@+id/addToSmall">
 
                 <ImageView
                     android:id="@+id/small_tile_img"

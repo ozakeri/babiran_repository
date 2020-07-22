@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +77,7 @@ public class ProductListAdapter extends BaseAdapter {
             holder.price_free = (MyTextView) convertView.findViewById(R.id.txt_free_price);
             holder.txt_percentage_discount = convertView.findViewById(R.id.txt_percentage_discount);
             holder.layout_percentage_discount = convertView.findViewById(R.id.layout_percentage_discount);
+            holder.noProduct = convertView.findViewById(R.id.noProduct);
 
 
             convertView.setTag(holder);
@@ -98,6 +98,16 @@ public class ProductListAdapter extends BaseAdapter {
         }
         if (!categories.get(i).price.equals("null") && !categories.get(i).price.equals("") && categories.get(i).price != null) {
             Percentage2 = Integer.parseInt(categories.get(i).price);
+        }
+
+        if (categories.get(i).getStock() != null) {
+            if (categories.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
         }
 
         result = ((Percentage1 - Percentage2) * 100) / Percentage2;
@@ -163,7 +173,7 @@ public class ProductListAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        MyTextView name, addToBasket;
+        MyTextView name, addToBasket, noProduct;
         LinearLayout item_Button;
         MyTextView price_dis, price_free, txt_percentage_discount;
         RelativeLayout layout_percentage_discount;
