@@ -80,7 +80,7 @@ public class Sms_Register extends AppCompatActivity {
                         editor.putString("TKN", ETName.getText().toString());
                         editor.apply();
 
-                        Log.e("G", random + "");
+                        Log.e("G=====", random + "");
                         RequestHandler.sendSMS2(token, random, ETName.getText().toString(), new SendSmsCallback() {
                             @Override
                             public void onSendSmsSuccessAction() {

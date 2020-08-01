@@ -13,7 +13,7 @@
                 android:id="@+id/layout_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/pushe_border"
+                android:background="@drawable/border_image_notify"
                 android:layout_margin="3dp"
                 android:layout_alignParentLeft="true">
                 <ImageView

@@ -43,7 +43,7 @@ public class MyPushListener extends PusheListenerService {
     private RequestQueue queue;
     private DatabaseHandler db;
     private GlobalValues globalValues = new GlobalValues();
-    private String type, pro_id, cat_id, title, body, blog_id, success = null, pro_image = null;
+    private String type, pro_id, cat_id, title, body, blog_id, success, factorCode, pro_image = null;
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
@@ -57,9 +57,33 @@ public class MyPushListener extends PusheListenerService {
             if (!contentJson.isNull("content")) {
 
                 String jsonObjectStr = contentJson.getString("content");
+
                 if (!jsonObjectStr.isEmpty()) {
 
                     System.out.println("jsonObjectStrcontent=====" + jsonObjectStr);
+                    // jsonObjectStr = "{\"ref_id\":\"E19865A785EA71C9\",\"success\":1,\"track_code\":173383938702,\"factorcode\":885,\"type\":\"neworder\"}";
+
+                    try {
+                        JSONObject contentJSONObject = new JSONObject(jsonObjectStr);
+                        if (!contentJSONObject.isNull("factorcode") && !contentJSONObject.isNull("type")) {
+                            String factorCode = contentJSONObject.getString("factorcode");
+                            String type = contentJSONObject.getString("type");
+
+                            System.out.println("factorCode=====" + factorCode);
+                            System.out.println("type=====" + type);
+
+                            if (type.equals("neworder")) {
+                                body = " تامین کننده گرامی سفارش با کد " + factorCode + " برای شما ثبت شده است ";
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                showNotificationCopy(getApplicationContext(), intent, body);
+
+                            }
+
+                            return;
+                        }
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
 
                     jsonObjectStr = jsonObjectStr.replaceAll("\"", "");
                     //jsonObjectStr = jsonObjectStr.replaceAll("=", ":");
@@ -139,6 +163,7 @@ public class MyPushListener extends PusheListenerService {
                                 body = value;
                             }
 
+
                             if (key.equals("pro_image")) {
                                 pro_image = value;
                                 System.out.println("pro_image23=====" + value);
@@ -150,10 +175,10 @@ public class MyPushListener extends PusheListenerService {
                             System.out.println("body=====" + body);
                             System.out.println("type=====" + type);
 
-                            if (success != null) {
+                           /* if (success != null) {
                                 showNotificationCopy(getApplicationContext(), title, body);
                                 //new Thread(new Task()).start();
-                            }
+                            }*/
                             if (type != null) {
                                 if (type.equals("product")) {
                                     if (pro_id != null && cat_id != null) {
@@ -175,6 +200,9 @@ public class MyPushListener extends PusheListenerService {
                                         intent.putExtra("isPush", true);
                                         showNotification(getApplicationContext(), intent, title, body);
                                     }
+                                } else {
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    showNotification(getApplicationContext(), intent, title, body);
                                 }
                             }
 
@@ -259,6 +287,47 @@ public class MyPushListener extends PusheListenerService {
         contentView.setTextViewText(R.id.title, title);
         contentView.setTextViewText(R.id.body, body);
 
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.applogo)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContent(contentView)
+                .setContentIntent(pendingIntent);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+    public void showNotificationCopy(Context context, Intent intent, String body) {
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push_copy);
+        contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+        contentView.setTextViewText(R.id.body, body);
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
