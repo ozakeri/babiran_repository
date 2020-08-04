@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:605715957951:android:cb46f11b0b19ff03",
+        "mobilesdk_app_id": "1:605715957951:android:9675b2e56c7cdd2410de0a",
         "android_client_info": {
           "package_name": "net.babiran.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "605715957951-51jljk3rfs9dj3beh85s5rpagsvn8582.apps.googleusercontent.com",
+          "client_id": "605715957951-mdjfgc0cev2komu2k9t06dl4joo4a982.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.babiran.app",
-            "certificate_hash": "9155dccc999fd80cfc1727333c7e7c3e43402a32"
+            "certificate_hash": "02b535d9cfa57e33e696ffa221130eba3a7e2eec"
           }
         },
         {

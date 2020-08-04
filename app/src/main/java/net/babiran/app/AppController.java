@@ -9,14 +9,11 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.crashlytics.android.Crashlytics;
-
 
 import net.babiran.app.Servic.GETINGBlog;
 
 import java.util.List;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Response;
 
 /**
@@ -32,12 +29,11 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         mInstance = this;
 
-     //  Pushe.initialize(this,true);
+        //  Pushe.initialize(this,true);
 //        OneSignal.startInit(this)
 //                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
 //                .unsubscribeWhenNotificationsAreDisabled(true)

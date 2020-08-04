@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -35,7 +36,6 @@ import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +45,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Handlers.DatabaseHandler;
-import Models.EventbusModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
@@ -103,9 +102,9 @@ public class CreditActivity extends AppCompatActivity {
         radioButton3.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
         txt_validity.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
 
-        radioButton1.setChecked(true);
+        //radioButton1.setChecked(true);
 
-        //edt_price.setText(Util.PersianNumber("10000"));
+        //edt_price.setText(Util.PersianNumber("50000"));
         //edt_price.setText(Util.convertToFormalString(String.valueOf((10000))));
         radioButton1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("50000"))));
         radioButton2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("100000"))));
@@ -147,7 +146,30 @@ public class CreditActivity extends AppCompatActivity {
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionPay();
+                String s = edt_price.getText().toString().replaceAll(",", "");
+                System.out.println("onClick=====" + s);
+                if (s.length() > 0) {
+
+                    Handler handler = new Handler();
+                    Thread someThread = new Thread() {
+
+                        @Override
+                        public void run() {
+
+                            //some actions
+                            handler.post(new Runnable() {
+                                public void run() {
+                                    actionPay(Integer.parseInt(s));
+                                }
+                            });
+                        }
+                    };
+
+                    someThread.start();
+                    //actionPay(Integer.parseInt(s));
+                }else {
+                    Toast.makeText(CreditActivity.this, "مبلغ را وارد کنید", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -159,22 +181,20 @@ public class CreditActivity extends AppCompatActivity {
         });
     }
 
-    private void actionPay() {
-
+    private void actionPay(int price) {
+        System.out.println("price1=====" + price);
         waitProgress.setVisibility(View.VISIBLE);
         try {
+        System.out.println("AppConfig.id=====" + AppConfig.id);
+        System.out.println("AppConfig.id=====" + id);
+
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(AppConfig.id), edt_price.getText().toString().replaceAll(",", ""));
-
-            System.out.println("edt_price=====" + Integer.parseInt(AppConfig.id));
-            System.out.println("edt_price=====" + edt_price.getText().toString().replaceAll(",", ""));
-
+            Call<MyMesa> call = n.BuyCredit(Integer.parseInt(id), price);
+            System.out.println("price2=====" + price);
             call.enqueue(new Callback<MyMesa>() {
                 @Override
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
                     try {
-                        System.out.println("response======" + response.body());
-                        System.out.println("response======" + response);
                         if (response.body() != null) {
                             waitProgress.setVisibility(View.GONE);
                             Integer fetching = response.body().getSuccess();
@@ -182,15 +202,9 @@ public class CreditActivity extends AppCompatActivity {
                             if (fetching == 1) {
 
                                 Log.e("URL  ", response.body().getUrl());
-                          /*  Log.e("URL  ", response.body().getUrl());
-                            Intent intent = new Intent(SharjActivity.this, Actip2.class);
-                            intent.putExtra("url", response.body().getUrl());
-                            intent.putExtra("sharj", "sharj");*/
-
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
                                 startActivityForResult(browserIntent, REQUEST_CODE_PAY);
                                 finish();
-                                //startActivity(browserIntent);
 
                             } else {
                                 Toast.makeText(CreditActivity.this, "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
@@ -287,7 +301,7 @@ public class CreditActivity extends AppCompatActivity {
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();
             id = userDetailsHashMap.get("id");
-            System.out.println("id=====" + id);
+            System.out.println("=====id=====" + id);
             if (id != null) {
                 getCreditRequest();
             }

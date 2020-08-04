@@ -20,7 +20,7 @@ public class MyServices {
                     .writeTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).build();
 
 
-    static Retrofit.Builder builder =
+    private static Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());

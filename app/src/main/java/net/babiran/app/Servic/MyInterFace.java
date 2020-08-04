@@ -27,7 +27,7 @@ public interface MyInterFace {
 
     @FormUrlEncoded
     @POST("creditPardakht")
-    Call<MyMesa> BuyCredit(@Field("user_id") int user_id, @Field("price") String price);
+    Call<MyMesa> BuyCredit(@Field("user_id") int user_id, @Field("price") int price);
 
 
     @GET("factor/chargeFactorList/{id}/")
