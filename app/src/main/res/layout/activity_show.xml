@@ -72,12 +72,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+<!--    <androidx.core.widget.NestedScrollView
         android:id="@+id/nested"
         android:layout_width="match_parent"
-
         android:layout_height="fill_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
 
         <LinearLayout
@@ -109,6 +108,6 @@
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+   <!-- </androidx.core.widget.NestedScrollView>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

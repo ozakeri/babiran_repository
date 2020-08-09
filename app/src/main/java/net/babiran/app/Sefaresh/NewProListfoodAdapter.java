@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 
 import net.babiran.app.ActivityComments;
 import net.babiran.app.R;
+import net.babiran.app.Rss.FullScreenActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +39,7 @@ import Models.Product;
 import Models.ProductNew;
 import ui_elements.MyTextView;
 
-public class NewProListfoodAdapter extends BaseAdapter {
+public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAdapter.MyViewHolder> {
     RequestQueue queue;
     DatabaseHandler db;
     String id_user = "-1";
@@ -64,14 +67,138 @@ public class NewProListfoodAdapter extends BaseAdapter {
 
     }
 
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private MyTextView name, addToBasket, noProduct, price_dis, price_free;
+        private LinearLayout item_Button;
+        private ImageView img;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            name = (MyTextView) itemView.findViewById(R.id.new_pro_txt_name);
+            img = (ImageView) itemView.findViewById(R.id.new_pro_img);
+            item_Button = (LinearLayout) itemView.findViewById(R.id.new_pro_item_button);
+            addToBasket = (MyTextView) itemView.findViewById(R.id.addToNew);
+            noProduct = (MyTextView) itemView.findViewById(R.id.noProduct);
+            price_dis = (MyTextView) itemView.findViewById(R.id.new_pro_txt_price);
+            price_free = (MyTextView) itemView.findViewById(R.id.new_pro_txt_free_price);
+        }
+    }
+
+    @NonNull
     @Override
-    public int getCount() {
-        return productArray.size();
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.row_new_adp_sefaresh, parent, false);
+
+        return new NewProListfoodAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public ProductNew getItem(int i) {
-        return productArray.get(i);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        holder.name.setText(productArray.get(i).name);
+        if (isEven(i)) {
+            holder.item_Button.setBackgroundResource(R.color.bac);
+        } else {
+            holder.item_Button.setBackgroundResource(R.color.bac2);
+        }
+        System.out.println("name====" + productArray.get(i).name);
+        System.out.println("getStock====" + productArray.get(i).getStock());
+        if (productArray.get(i).getStock() != null) {
+            if (productArray.get(i).getStock().equals("0")) {
+                holder.noProduct.setVisibility(View.VISIBLE);
+                holder.addToBasket.setVisibility(View.GONE);
+            } else {
+                holder.noProduct.setVisibility(View.GONE);
+                holder.addToBasket.setVisibility(View.VISIBLE);
+            }
+        }
+
+        holder.item_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    ProductNew product = productArray.get(i);
+                    Product product1 = productArrayO.get(i);
+                    Di(product, productArray.get(i).mokhalafat, product1);
+                    //     context.startActivity(new Intent(context, MainActivity.class));
+
+                } catch (Exception e) {
+                    Log.e("SAA", e.getMessage());
+                }
+
+
+            }
+        });
+        holder.addToBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (startTime != null && endTime != null) {
+                    int current = now.get(Calendar.HOUR_OF_DAY);
+                    start = Integer.parseInt(startTime.trim());
+                    end = Integer.parseInt(endTime.trim());
+
+                    for (int j = start; j <= end; j++) {
+                        if (current == j) {
+                            b = true;
+                        }
+                    }
+
+                    if (b) {
+                        FragmentManager fm = ((Activity) context).getFragmentManager();
+                        CountDialog countDialog = new CountDialog(productArray.get(i));
+                        countDialog.show(fm, "CountDialog");
+                    } else {
+                        Toast.makeText(context, "خارج از ساعت کاری", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    FragmentManager fm = ((Activity) context).getFragmentManager();
+                    CountDialog countDialog = new CountDialog(productArray.get(i));
+                    countDialog.show(fm, "CountDialog");
+                }
+
+
+            }
+        });
+
+
+        if (!productArray.get(i).dis_price.equals("null") && !productArray.get(i).dis_price.equals("") && productArray.get(i).dis_price != null) {
+            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(productArray.get(i).dis_price) + "")) + " ت ");
+            //   price_free.setVisibility(INVISIBLE);
+        }
+
+        if (!productArray.get(i).price.equals("null") && !productArray.get(i).price.equals("") && productArray.get(i).price != null) {
+            holder.price_free.setText(ConvertEnToPe(convertToFormalString(productArray.get(i).price + "")) + " ت ");
+            holder.price_free.setPaintFlags(holder.price_free.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
+        System.out.println("images111111========" + productArray.get(i).images.size());
+
+        for (int j = 0; j < productArray.get(i).images.size(); j++) {
+            if (productArray.get(i).images.get(j) != null && productArray.get(i).images.get(j).toString().length() > 5) {
+
+                System.out.println("images111111========" + productArray.get(i).images.get(j));
+
+                Glide.with(context).load(productArray.get(i).images.get(j).image_link).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
+            }
+        }
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int j = 0; j < productArray.get(i).images.size(); j++) {
+                    Intent intent = new Intent(context, FullScreenActivity.class);
+                    intent.putExtra("imgUrl", productArray.get(i).images.get(j).image_link);
+                    context.startActivity(intent);
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -80,6 +207,11 @@ public class NewProListfoodAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemCount() {
+        return productArray.size();
+    }
+
+/*    @Override
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
         if (convertView == null) {
@@ -109,7 +241,8 @@ public class NewProListfoodAdapter extends BaseAdapter {
         } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
-
+        System.out.println("name====" + productArray.get(i).name);
+        System.out.println("getStock====" + productArray.get(i).getStock());
         if (productArray.get(i).getStock() != null) {
             if (productArray.get(i).getStock().equals("0")) {
                 holder.noProduct.setVisibility(View.VISIBLE);
@@ -188,7 +321,7 @@ public class NewProListfoodAdapter extends BaseAdapter {
 
 
         return convertView;
-    }
+    }*/
 
 
     private class ViewHolder {
@@ -295,23 +428,3 @@ public class NewProListfoodAdapter extends BaseAdapter {
 
     }
 }
-//<ui_elements.MyButton
-//        android:id="@+id/btn_exit_main_ok"
-//        android:background="@color/red"
-//        android:layout_width="0dp"
-//        android:layout_height="match_parent"
-//        android:text="نظرات"
-//        android:textStyle="bold"
-//        android:textColor="@color/white"
-//        android:layout_margin="5dp"
-//        android:layout_weight=".3"/>
-//<ui_elements.MyButton
-//        android:id="@+id/btn_exit_main_cancell"
-//        android:background="@color/red"
-//        android:layout_width="0dp"
-//        android:layout_margin="5dp"
-//        android:text="مخلفات "
-//        android:textStyle="bold"
-//        android:textColor="@color/white"
-//        android:layout_height="match_parent"
-//        android:layout_weight=".3"/>

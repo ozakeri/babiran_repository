@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import net.babiran.app.R;
 
@@ -27,7 +28,7 @@ import tools.AppConfig;
 public class Tab2 extends Fragment {
     private View mView;
     NewProListfoodAdapter newProListfoodAdapter;
-    private ListView NewProList;
+    private RecyclerView recyclerView;
     String IDs;
     public ArrayList<ProductNew> Newproducts = new ArrayList<>();
     public ArrayList<Product> NewproductsO = new ArrayList<>();
@@ -50,7 +51,7 @@ public class Tab2 extends Fragment {
         if (Newproducts != null) {
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
 
-            NewProList.setAdapter(newProListfoodAdapter);
+            recyclerView.setAdapter(newProListfoodAdapter);
 
 
         }
@@ -63,7 +64,7 @@ public class Tab2 extends Fragment {
         Newproducts.clear();
 
 
-        NewProList = (ListView) mView.findViewById(R.id.fggnfgnrthfhf);
+        recyclerView =  mView.findViewById(R.id.recyclerView);
 
 
         ArrayList<Feature> featuresArray;

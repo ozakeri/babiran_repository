@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Sefaresh.Tab2">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fggnfgnrthfhf"/>
+        android:id="@+id/recyclerView"/>
 </FrameLayout>
