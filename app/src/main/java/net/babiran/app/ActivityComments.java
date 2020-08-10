@@ -30,6 +30,7 @@ import java.util.List;
 
 import Models.Product;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import ui_elements.MyTextView;
 
 /**
  * Created by Alireza on 1/31/2017.
@@ -42,11 +43,10 @@ public class ActivityComments extends AppCompatActivity {
     private CommentAdapter adaptr;
     private ProgressDialog myProgressDialog;
     private LinearLayoutManager layoutManager;
-
+    private MyTextView txt_null;
     private String reqTag;
     private String reqOneTag;
     private String nonceReqTag;
-
     private int page = 1;
     private boolean loading = false;
     int pastVisibleItems, visibleItemCount, totalItemCount;
@@ -78,6 +78,9 @@ public class ActivityComments extends AppCompatActivity {
                 finish();
             }
         });
+
+        txt_null = findViewById(R.id.txt_null);
+        txt_null.setVisibility(View.GONE);
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.btn_add_new_comment);
         floatingActionButton.setBackgroundTintList(new ColorStateList(new int[][]{new int[]{0}}, new int[]{R.color.colorPrimary}));
         this.mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -103,6 +106,9 @@ public class ActivityComments extends AppCompatActivity {
         });
 
         loadProductsPageOne();
+        if (mCommentList.size() == 0){
+            txt_null.setVisibility(View.VISIBLE);
+        }
     }
 
     public void showProgressDialog(String s) {

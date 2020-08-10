@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +16,8 @@ import java.util.List;
 
 import Models.Category;
 import Models.CategoryInfo;
+import tools.Util;
+import ui_elements.MyTextView;
 
 
 /**
@@ -58,9 +59,10 @@ public class AdapterfoolplaceList extends RecyclerView.Adapter<AdapterfoolplaceL
         for (int i = 0; i < categoryInfoList.size(); i++) {
             CategoryInfo lCategoryInfo = categoryInfoList.get(i);
             if (lCategory.id.equals(lCategoryInfo.getParent_id())) {
-                holder.SeenP.setText(lCategoryInfo.getWork_time());
+                holder.SeenP.setText(Util.ConvertEnToPe(lCategoryInfo.getWork_time()));
+
                 holder.area.setText(" محدوده سرویس دهی : " + lCategoryInfo.getService_area());
-                holder.price.setText(" حداقل سفارش :  " + lCategoryInfo.getMinimum_order());
+                holder.price.setText(" حداقل سفارش :  " + Util.ConvertEnToPe(lCategoryInfo.getMinimum_order()));
             }
         }
 
@@ -77,24 +79,23 @@ public class AdapterfoolplaceList extends RecyclerView.Adapter<AdapterfoolplaceL
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView SeenP, link, id, plink, area, price;
+        public MyTextView SeenP, link, id, plink, area, price;
         ImageView imageView;
 
 
         public MyViewHolder(View view) {
             super(view);
-            SeenP = (TextView) view.findViewById(R.id.sdfgbwtghkjd);
-            link = (TextView) view.findViewById(R.id.aefhtryjh);
-            imageView = (ImageView) view.findViewById(R.id.hrejkbgjg);
-            plink = (TextView) view.findViewById(R.id.adfbgdfhgrtyhrutj);
-            id = (TextView) view.findViewById(R.id.erbdvbds);
-            area = (TextView) view.findViewById(R.id.sdgferthrthdr);
-            price = (TextView) view.findViewById(R.id.dfbsdfghsrth);
+            SeenP = view.findViewById(R.id.sdfgbwtghkjd);
+            link = view.findViewById(R.id.aefhtryjh);
+            imageView = view.findViewById(R.id.hrejkbgjg);
+            plink = view.findViewById(R.id.adfbgdfhgrtyhrutj);
+            id = view.findViewById(R.id.erbdvbds);
+            area = view.findViewById(R.id.sdgferthrthdr);
+            price = view.findViewById(R.id.dfbsdfghsrth);
 
 
         }
-
-
     }
+
 
 }

@@ -103,4 +103,18 @@ public class Util {
     public static String createTransactionID() throws Exception{
         return UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
+
+
+    public static String ConvertEnToPe(String value) {
+        char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))) {
+                builder.append(arabicChars[(int) (value.charAt(i)) - 48]);
+            } else {
+                builder.append(value.charAt(i));
+            }
+        }
+        return builder.toString();
+    }
 }

@@ -1,16 +1,24 @@
 package net.babiran.app.Sefaresh;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 import net.babiran.app.R;
 
@@ -19,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import Models.Feature;
 import Models.Image;
@@ -58,6 +68,10 @@ public class Tab1 extends Fragment {
         INIT();
 
         if (Newproducts != null) {
+
+            System.out.println("Newproducts=====" + Newproducts.size());
+            System.out.println("NewproductsO=====" + NewproductsO.size());
+
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
 
             recyclerView.setAdapter(newProListfoodAdapter);
@@ -69,7 +83,7 @@ public class Tab1 extends Fragment {
 
     private void INIT() {
         Newproducts.clear();
-        recyclerView =  mView.findViewById(R.id.recycler_view);
+        recyclerView = mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
@@ -92,7 +106,7 @@ public class Tab1 extends Fragment {
                 }
 
                 JSONArray images = c.getJSONArray("images");
-                ;
+
                 for (int img = 0; img < images.length(); img++) {
 
                     try {
@@ -129,6 +143,5 @@ public class Tab1 extends Fragment {
             }
         }
     }
-
 
 }

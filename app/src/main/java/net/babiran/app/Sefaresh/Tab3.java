@@ -51,15 +51,15 @@ public class Tab3 extends Fragment {
         IDs = getActivity().getIntent().getExtras().getString("IDDD");
         startTime = getActivity().getIntent().getExtras().getString("startTime");
         endTime = getActivity().getIntent().getExtras().getString("endTime");
-        INIT();
-
+        //INIT();
+/*
         if (Newproducts != null) {
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
 
             recyclerView.setAdapter(newProListfoodAdapter);
 
 
-        }
+        }*/
 
         return mView;
     }

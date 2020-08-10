@@ -53,7 +53,6 @@ public class ListFoodActivity extends AppCompatActivity {
     private String endTime = null;
     private String[] arrOfStr = null;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +75,7 @@ public class ListFoodActivity extends AppCompatActivity {
         });
         idSender = getIntent().getExtras().getString("IDD");
         txtLbl = (MyTextView) findViewById(R.id.rlghkjegkerg);
+
 
         if (idSender.equals("1197")) {
             txtLbl.setText("لیست فست فــود");
@@ -152,6 +152,7 @@ public class ListFoodActivity extends AppCompatActivity {
                     e.getMessage();
                 }
 
+                System.out.println("IDDD=======" + id);
                 Intent intent = new Intent(ListFoodActivity.this, ShowActivity.class);
                 intent.putExtra("IDDD", id);
                 intent.putExtra("IsdfDDD", pic);
@@ -181,6 +182,7 @@ public class ListFoodActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + 0 + "/" + "202";
+        System.out.println("url=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

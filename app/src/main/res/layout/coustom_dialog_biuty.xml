@@ -1,97 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="250dp"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center"
-        android:background="@drawable/tamplate_piyk"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/blueDark"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-            <TextView
+            android:gravity="center">
+
+            <ui_elements.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"
+                android:text="مشخصات پیک"
                 android:textColor="@color/white"
-                android:text="مشخصات پیک"/>
+                android:textSize="14sp"
+                android:layout_margin="5dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_payke"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/peykicon"
+            app:civ_border_width="0.5dp"
+            android:layout_margin="10dp"
+            app:civ_border_color="#FF000000" />
+
         <LinearLayout
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/img_payke"
-                android:layout_width="100dp"
-                android:layout_height="110dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="right"
             android:orientation="horizontal">
-            <TextView
-                android:gravity="right"
+
+            <ui_elements.MyTextView
                 android:id="@+id/name_payke"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:gravity="right"
+                android:text="---"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:text="نام پیک"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".5"
+                android:textStyle="bold" />
+
+            <ui_elements.MyTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:text=" نام پیک  : "
+                android:textColor="@color/black_lighter"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:text=" نام پیک  : "/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="right"
             android:orientation="horizontal">
-            <TextView
-                android:gravity="right"
+
+            <ui_elements.MyTextView
                 android:id="@+id/mob_payke"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:gravity="right"
+                android:text="---"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:text="نام پیک"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".5"
+                android:textStyle="bold" />
+
+            <ui_elements.MyTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:text="شماره موبایل : "
+                android:textColor="@color/black_lighter"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:text="شماره موبایل :"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 
 </LinearLayout>

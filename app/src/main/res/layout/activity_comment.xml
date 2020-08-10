@@ -67,11 +67,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ui_elements.MyTextView
+        android:id="@+id/txt_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="نظری ثبت نشده است"
+        android:layout_gravity="center"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"

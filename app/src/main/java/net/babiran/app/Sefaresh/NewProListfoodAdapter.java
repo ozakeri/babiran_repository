@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -48,6 +49,7 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
     ArrayList<ProductNew> productArray = new ArrayList<>();
     ArrayList<Product> productArrayO = new ArrayList<>();
     LayoutInflater inflater;
+    private boolean open = false;
 
     private Calendar now = Calendar.getInstance();
     private int start = 0;
@@ -70,20 +72,27 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private MyTextView name, addToBasket, noProduct, price_dis, price_free;
+        private MyTextView name, addToBasket, noProduct, price_dis, price_free, txt_material;
         private LinearLayout item_Button;
-        private ImageView img;
+        private ImageView img, img_material;
+        private CardView material_carView, comment_carView;
+        private LinearLayout layout_material;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = (MyTextView) itemView.findViewById(R.id.new_pro_txt_name);
-            img = (ImageView) itemView.findViewById(R.id.new_pro_img);
-            item_Button = (LinearLayout) itemView.findViewById(R.id.new_pro_item_button);
-            addToBasket = (MyTextView) itemView.findViewById(R.id.addToNew);
-            noProduct = (MyTextView) itemView.findViewById(R.id.noProduct);
-            price_dis = (MyTextView) itemView.findViewById(R.id.new_pro_txt_price);
-            price_free = (MyTextView) itemView.findViewById(R.id.new_pro_txt_free_price);
+            name = itemView.findViewById(R.id.new_pro_txt_name);
+            img = itemView.findViewById(R.id.new_pro_img);
+            item_Button = itemView.findViewById(R.id.new_pro_item_button);
+            addToBasket = itemView.findViewById(R.id.addToNew);
+            noProduct = itemView.findViewById(R.id.noProduct);
+            price_dis = itemView.findViewById(R.id.new_pro_txt_price);
+            price_free = itemView.findViewById(R.id.new_pro_txt_free_price);
+            txt_material = itemView.findViewById(R.id.txt_material);
+            material_carView = itemView.findViewById(R.id.material_carView);
+            comment_carView = itemView.findViewById(R.id.comment_carView);
+            layout_material = itemView.findViewById(R.id.layout_material);
+            img_material = itemView.findViewById(R.id.img_material);
         }
     }
 
@@ -104,6 +113,7 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
         } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
+        System.out.println("iiiiiiiiiiiiiiiiiiiii====" + i);
         System.out.println("name====" + productArray.get(i).name);
         System.out.println("getStock====" + productArray.get(i).getStock());
         if (productArray.get(i).getStock() != null) {
@@ -115,6 +125,12 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
                 holder.addToBasket.setVisibility(View.VISIBLE);
             }
         }
+
+
+        if (productArray.get(i).getMokhalafat() != null) {
+            holder.txt_material.setText(productArray.get(i).getMokhalafat());
+        }
+
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +212,43 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
                     context.startActivity(intent);
                 }
 
+            }
+        });
+
+        holder.material_carView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (open) {
+                    open = false;
+                    holder.layout_material.setVisibility(View.GONE);
+                    holder.img_material.setBackground(context.getResources().getDrawable(R.drawable.arrow_down));
+                } else {
+                    open = true;
+                    holder.layout_material.setVisibility(View.VISIBLE);
+                    holder.img_material.setBackground(context.getResources().getDrawable(R.drawable.arrow_up));
+                }
+
+            }
+        });
+
+        holder.comment_carView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ProductNew productNew = productArray.get(i);
+                Product product = productArrayO.get(i);
+
+
+                System.out.println("productArray====" + productArray.size());
+                System.out.println("productArrayO====" + productArrayO.size());
+
+                Gson gson = new Gson();
+                String proObj = gson.toJson(product);
+                Intent intent = new Intent(context, ActivityComments.class);
+                intent.putExtra("product", proObj);
+                intent.putExtra("product_id", productNew.id);
+                context.startActivity(intent);
             }
         });
 
@@ -326,7 +379,7 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
 
     private class ViewHolder {
 
-        MyTextView name, addToBasket, noProduct;
+        MyTextView name, addToBasket, noProduct, txt_material;
         LinearLayout item_Button;
         ImageView img;
         MyTextView price_dis, price_free;

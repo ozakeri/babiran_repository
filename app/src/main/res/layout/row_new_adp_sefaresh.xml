@@ -12,178 +12,281 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:padding="1dp"
-        card_view:cardUseCompatPadding="true">
-
+        card_view:cardUseCompatPadding="true"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
-
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/WHITE"
-
-            android:gravity="right"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/WHITE"
+
                 android:gravity="right"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/new_pro_item_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="left">
-
-                    <ui_elements.MyTextView
-
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:background="@color/blueDark"
-                        android:gravity="center"
-                        android:text="مخلفات"
-                        android:textColor="@color/white"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <ui_elements.MyTextView
-                    android:id="@+id/new_pro_txt_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="false"
-                    android:layout_margin="2dp"
-                    android:ellipsize="marquee"
+                    android:layout_weight="1"
                     android:gravity="right"
-                    android:inputType="textMultiLine"
-                    android:singleLine="true"
-                    android:text="فروش آپارتمان یک خوابه"
-                    android:textColor="#4c4c4c"
-                    android:textSize="13sp" />
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="2dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/new_pro_item_button"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:gravity="left"
+                        android:visibility="gone">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <ui_elements.MyTextView
 
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_margin="3dp"
-                            android:orientation="vertical"
-                            android:padding="3dp">
-
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/new_pro_txt_free_price"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-
-                                android:ellipsize="marquee"
-                                android:gravity="right"
-                                android:text="قیمت اصلی"
-                                android:textColor="@color/digikala_green_dark"
-                                android:textSize="15sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_margin="3dp"
-                            android:orientation="vertical"
-                            android:padding="3dp">
-
-
-                            <ui_elements.MyTextView
-                                android:id="@+id/new_pro_txt_price"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:singleLine="true"
-                                android:text="قیمت"
-                                android:textColor="@color/digikala_green_light"
-                                android:textSize="15sp"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:background="@color/blueDark"
+                            android:gravity="center"
+                            android:text="مخلفات"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
                     </LinearLayout>
 
 
-                <RelativeLayout
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_alignParentBottom="true">
+                    <ui_elements.MyTextView
+                        android:id="@+id/new_pro_txt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:gravity="right"
+                        android:inputType="textMultiLine"
+                        android:singleLine="true"
+                        android:text="فروش آپارتمان یک خوابه"
+                        android:textColor="#4c4c4c"
+                        android:textSize="14sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="3dp">
+
+                                <ui_elements.MyTextView
+                                    android:id="@+id/new_pro_txt_free_price"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="marquee"
+                                    android:singleLine="true"
+                                    android:text="قیمت"
+                                    android:textColor="@color/greenDark"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="3dp">
+
+                                <ui_elements.MyTextView
+                                    android:id="@+id/new_pro_txt_price"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:ellipsize="marquee"
+                                    android:gravity="right"
+                                    android:text="قیمت اصلی"
+                                    android:textColor="@color/gray_dark"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:layout_centerVertical="true">
+
+                            <ui_elements.MyTextView
+                                android:id="@+id/addToNew"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/add_to_basket"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="10sp" />
+
+                        </RelativeLayout>
+
 
                         <ui_elements.MyTextView
-                            android:id="@+id/addToNew"
-                            android:layout_width="40dp"
+                            android:id="@+id/noProduct"
+                            android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:background="@drawable/add_to_basket"
                             android:gravity="center"
                             android:textColor="@color/white"
-                            android:textSize="10sp" />
-
-                </RelativeLayout>
-
-
-                    <ui_elements.MyTextView
-                        android:id="@+id/noProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_alignParentBottom="true"
-                        android:text="نـا موجـــــود"
-                        android:background="@drawable/background_button_main_selected"
-                        android:textSize="10sp"
-                        android:visibility="gone"/>
+                            android:layout_alignParentBottom="true"
+                            android:text="نـا موجـــــود"
+                            android:background="@drawable/background_button_main_selected"
+                            android:textSize="10sp"
+                            android:visibility="gone"/>
 
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="2dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/new_pro_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logoloading" />
+                </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/comment_carView"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
+                    card_view:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ui_elements.MyTextView
+                            android:id="@+id/txt_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="#443434"
+                            android:text="نظرات"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="25dp"
+                            android:layout_height="15dp"
+                            android:background="@drawable/comment"
+                            android:layout_toRightOf="@+id/txt_comment"
+                            android:layout_centerVertical="true" />
+
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/material_carView"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
+                    card_view:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <ui_elements.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/img_material"
+                            android:textColor="#443434"
+                            android:text="مخلفات"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_material"
+                            android:layout_width="20dp"
+                            android:layout_height="10dp"
+                            android:background="@drawable/arrow_down"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                    </RelativeLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_margin="2dp"
-                android:orientation="vertical">
+                android:id="@+id/layout_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/new_pro_img"
+                <ui_elements.MyTextView
+                    android:id="@+id/txt_material"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logoloading" />
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="zcvszcxzxczxc"
+                    android:padding="5dp"
+                    android:layout_margin="5dp" />
+
             </LinearLayout>
 
         </LinearLayout>
+
+
+
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>

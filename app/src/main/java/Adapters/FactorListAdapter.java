@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,19 +17,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import net.babiran.app.DownLoadImageTask;
 import net.babiran.app.OrderList;
 import net.babiran.app.R;
+import net.babiran.app.Rss.FullScreenActivity;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,6 +41,7 @@ import Fragments.DescriptionDialog;
 import Handlers.DatabaseHandler;
 import Models.Basket;
 import Models.Factor;
+import de.hdodenhof.circleimageview.CircleImageView;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -55,6 +61,11 @@ public class FactorListAdapter extends BaseAdapter {
     ArrayList<Basket> baskets = new ArrayList<>();
     private String basketjson = "";
     private SharedPreferences.Editor editor;
+
+    private String[] descriptionData1 = {"ثبت شده", "", "", ""};
+    private String[] descriptionData2 = {"", "در حال آماده سازی", "", ""};
+    private String[] descriptionData3 = {"", "", "تحویل پیک و در حال ارسال", ""};
+    private String[] descriptionData4 = {"", "", "", "", "تحویل داده"};
 
 
     public FactorListAdapter(Context context, ArrayList<Factor> factors) {
@@ -161,7 +172,27 @@ public class FactorListAdapter extends BaseAdapter {
         System.out.println("ar[4]====" + ar[4]);
 
         Log.e("orders:", factors.get(i).products.size() + "");
-        CheckInput(factors.get(i).state, viewGroup, holder.stateProgressBar);
+        //CheckInput(factors.get(i).state, viewGroup, holder.stateProgressBar);
+
+
+        System.out.println("input======" + factors.get(i).state);
+        if (factors.get(i).state.equals("سفارش شما ثبت و در حال بررسی است")) {
+            holder.stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+            holder.stateProgressBar.setStateDescriptionData(descriptionData1);
+
+        } else if (factors.get(i).state.equals("در حال آماده سازی")) {
+            holder.stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+            holder.stateProgressBar.setStateDescriptionData(descriptionData2);
+
+        } else if (factors.get(i).state.equals("تحویل پیک و در حال ارسال")) {
+            holder.stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+            holder.stateProgressBar.setStateDescriptionData(descriptionData3);
+
+        } else if (factors.get(i).state.equals("تحویل داده شد")) {
+            holder.stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
+            holder.stateProgressBar.setStateDescriptionData(descriptionData4);
+            holder.stateProgressBar.setAllStatesCompleted(true);
+        }
 
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +253,7 @@ public class FactorListAdapter extends BaseAdapter {
                         System.out.println("basketjson2===" + basketjson);
 
                         FragmentManager fm = ((Activity) context).getFragmentManager();
-                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type,0, editor);
+                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, 0, editor);
                         descriptionDialog.show(fm, "DescriptionDialog");
                     }
                 }
@@ -236,32 +267,25 @@ public class FactorListAdapter extends BaseAdapter {
 
 
     private void CheckInput(String input, View view, StateProgressBar stateProgressBar) {
-        if (input.equals("سفارش شما ثبت و در حال بررسی است")) {
-            StateProgresbarNewOreder(view, "ok", "", "", "", "", stateProgressBar);
-        } else if (input.equals("در حال آماده سازی")) {
-            StateProgresbarNewOreder(view, "ok", "ok", "", "", "", stateProgressBar);
-        } else if (input.equals("تحویل پیک و در حال ارسال")) {
-            StateProgresbarNewOreder(view, "ok", "ok", "ok", "", "", stateProgressBar);
-        } else if (input.equals("تحویل داده شده")) {
-            StateProgresbarNewOreder(view, "ok", "ok", "ok", "ok", "ok", stateProgressBar);
-        }
+
+        System.out.println("input======" + input);
 
 
     }
 
-    private void StateProgresbarNewOreder(View v, String P, String F, String A, String L, String B, StateProgressBar stateProgressBar) {
+    private void StateProgresbarNewOreder(View V, String A, String B, String C, String D, StateProgressBar stateProgressBar) {
         String[] descriptionData = {"ثبت شده", "در حال آماده سازی", "تحویل پیک شده", "در حال ارسال", "تحویل داده"};
 
         // StateProgressBar stateProgressBar = (StateProgressBar)  v. findViewById(R.id.your_state_progress_bar_id);
         //stateProgressBar.setStateDescriptionData(descriptionData);
 
-        if (TextUtils.isEmpty(P)) {
+        if (TextUtils.isEmpty(A)) {
             stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
-        } else if (TextUtils.isEmpty(F)) {
+        } else if (TextUtils.isEmpty(B)) {
             stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
-        } else if (TextUtils.isEmpty(A)) {
+        } else if (TextUtils.isEmpty(C)) {
             stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
-        } else if (TextUtils.isEmpty(L)) {
+        } else if (TextUtils.isEmpty(D)) {
             stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
         }
 
@@ -301,13 +325,28 @@ public class FactorListAdapter extends BaseAdapter {
         dialog.setCancelable(true);
         dialog.show();
 
-        TextView txtName = (TextView) dialog.findViewById(R.id.name_payke);
-        ImageView img = (ImageView) dialog.findViewById(R.id.img_payke);
-        TextView txtM = (TextView) dialog.findViewById(R.id.mob_payke);
+        MyTextView txtName = dialog.findViewById(R.id.name_payke);
+        CircleImageView img = dialog.findViewById(R.id.img_payke);
+        MyTextView txtM = dialog.findViewById(R.id.mob_payke);
 
-        new DownLoadImageTask(img, context).execute(url);
+        //new DownLoadImageTask(img, context).execute(url);
+        //url = "http://www.babiran.net/upload/images/carrier/1399-02-04-215649.jpg";
+        
+        Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img);
+
+
         txtName.setText(Name);
         txtM.setText(mob);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, FullScreenActivity.class);
+                intent.putExtra("imgUrl", url);
+                context.startActivity(intent);
+            }
+        });
     }
 
 }

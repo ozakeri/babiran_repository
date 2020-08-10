@@ -291,7 +291,6 @@
                         app:spb_animateToCurrentProgressState="true"
                         app:spb_checkStateCompleted="true"
                         app:spb_currentStateDescriptionColor="#006796"
-                        app:spb_currentStateNumber="two"
                         app:spb_maxStateNumber="four"
                         app:spb_stateBackgroundColor="#BDBDBD"
                         app:spb_stateDescriptionColor="#808080"
