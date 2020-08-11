@@ -1,12 +1,9 @@
 package Fragments;
 
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +38,7 @@ import Models.Basket;
 import Models.EventbusModel;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
+import ui_elements.NonScrollListView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
@@ -58,7 +55,7 @@ public class BasketListFragment extends Fragment implements
     String[] payment = {"پرداخت با کارت خوان درب منزل", "پرداخت نقدی در محل تحویل", "پرداخت آنلاین از درگاه بانکی"};
     View v;
     RequestQueue queue;
-    ListView listView;
+    NonScrollListView listView;
     String prev = "";
     String id = "";
     String address1 = "";
@@ -96,33 +93,14 @@ public class BasketListFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("===onCreate===");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("===onCreateView===");
 
         v = inflater.inflate(R.layout.basket_list_fragment, container, false);
 
-        //  getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-
-        Intent in = getActivity().getIntent();
-        Uri data = in.getData();
-        if (data != null) {
-
-            String rdata = data.toString().replace("http://", "");
-
-            if (rdata.equals("1")) {
-                System.out.println("111111111");
-            } else {
-                System.out.println("222222");
-            }
-        }
-
-
         final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
-
 
         addresses = new ArrayList<>();
         db = new DatabaseHandler(getActivity());
@@ -135,7 +113,7 @@ public class BasketListFragment extends Fragment implements
             address2 = userDetailsHashMap.get("address2");
 
 //            AppConfig.tempActivity = (MainActivity) getActivity();
-            listView = (ListView) v.findViewById(R.id.basket_listView);
+            listView =  v.findViewById(R.id.basket_listView);
 
             AddValue = (MyTextView) v.findViewById(R.id.addValue);
             PayValue = (MyTextView) v.findViewById(R.id.payValue);
@@ -148,13 +126,10 @@ public class BasketListFragment extends Fragment implements
             typePayLinear = (LinearLayout) v.findViewById(R.id.paymentLinear);
 
 
-//            Log.e("proSize", AppConfig.products.size() + "");
 
-            ///      Log.e("proContent", AppConfig.products.toString() );
 
             updateList();
 
-            Log.e("raw_dis", rawPrice + " " + rawPrice_dis);
             // discountPrice = rawPrice - TotalPrice ;
             discountPrice = rawPrice - rawPrice_dis;
 
@@ -286,7 +261,6 @@ public class BasketListFragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
 
-                            Log.e("here", "confirm");
                             if (firstChk.isChecked()) {
                                 selectedAdd = address1;
                                 AddValue.setText(address1);
@@ -461,14 +435,6 @@ public class BasketListFragment extends Fragment implements
                                 @Override
                                 public void onClick(View v) {
 
-                                    Log.e("here", "confirm");
-                         /*   if (firstChk.isChecked())
-                            {
-                                selectedPay = "0";
-                                PayValue.setText(firstPay.getText().toString());
-                                mPopupWindow.dismiss();
-
-                            }*/
                                     if (secondChk.isChecked()) {
                                         selectedPay = "1";
                                         credit = 0;
@@ -529,7 +495,6 @@ public class BasketListFragment extends Fragment implements
 
                                 if (PayValue.getText().toString() != null && !PayValue.getText().toString().equals("") && !PayValue.getText().toString().equals("null")) {
 
-                                    System.out.println("credit=====" + credit);
                                     FragmentManager fm = getActivity().getFragmentManager();
 
                                     DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor);
@@ -629,7 +594,6 @@ public class BasketListFragment extends Fragment implements
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-        System.out.println("===onStop===");
 
         if (queue != null) {
             queue.cancelAll(TAG);
@@ -667,21 +631,18 @@ public class BasketListFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("===onStart===");
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("===onResume===");
         updateList();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("===onPause===");
     }
 
 
@@ -693,10 +654,21 @@ public class BasketListFragment extends Fragment implements
     }
 
     public void updateList() {
+
+        TotalPrice = 0;
+        discountPrice = 0;
+        rawPrice = 0;
+        rawPrice_dis = 0;
+        int p = 0;
+        int p_dis = 0;
+        int dis1 = 0;
+        int dis2 = 0;
+        int dis3 = 0;
+        int count = 0;
         listsabad = (ImageView) v.findViewById(R.id.listsabad);
         ArrayList<Basket> baskets = new ArrayList<>();
+
         if (products != null) {
-            System.out.println("products========" + products.size());
             if (products.size() > 0) {
                 if (listsabad.getVisibility() == View.VISIBLE) {
                     listsabad.setVisibility(View.INVISIBLE);
@@ -711,25 +683,10 @@ public class BasketListFragment extends Fragment implements
                 }
                 Gson gson = new Gson();
                 basketjson = gson.toJson(baskets);
-
-
                 BasketListAdapter adp = new BasketListAdapter(getActivity(), products);
                 adp.notifyDataSetChanged();
                 listView.setAdapter(adp);
 
-                TotalPrice = 0;
-                discountPrice = 0;
-
-                rawPrice = 0;
-                rawPrice_dis = 0;
-                Log.e("proSizein", products.size() + "");
-
-                int p = 0;
-                int p_dis = 0;
-                int dis1 = 0;
-                int dis2 = 0;
-                int dis3 = 0;
-                int count = 0;
                 for (int i = 0; i < products.size(); i++) {
 
                     if (products.get(i).getPrice() != null && !products.get(i).getPrice().equals("null") && !products.get(i).getPrice().equals("")) {
@@ -739,27 +696,13 @@ public class BasketListFragment extends Fragment implements
                         p_dis = Integer.parseInt(products.get(i).getDis_price());
                     }
 
-                    System.out.println("count======" + products.get(i).getCount());
-                    System.out.println("count======" + products.get(i).count);
                     if (products.get(i).count != null && !products.get(i).count.equals("null") && !products.get(i).count.equals("")) {
                         count = Integer.parseInt(products.get(i).count);
                     }
 
-
-                    /*if(prefs.getString("pro_id","0").equals(products.get(i).id)) {
-                        count = Integer.parseInt(prefs.getString("count", "0"));
-                    }*/
-
-
                     TotalPrice += p * count * (100 - (dis1 +
                             dis2 + dis3)
                     ) * 0.01;
-
-
-                    Log.e("priceeee", p + "");
-                    Log.e("priceeee", p_dis + "");
-                    Log.e("counttt", count + "");
-
 
                     rawPrice += p * count;
                     rawPrice_dis += p_dis * count;

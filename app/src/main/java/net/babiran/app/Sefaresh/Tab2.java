@@ -48,12 +48,10 @@ public class Tab2 extends Fragment {
         endTime = getActivity().getIntent().getExtras().getString("endTime");
         INIT();
 
+
         if (Newproducts != null) {
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
-
             recyclerView.setAdapter(newProListfoodAdapter);
-
-
         }
 
         return mView;
@@ -88,7 +86,7 @@ public class Tab2 extends Fragment {
                 }
 
                 JSONArray images = c.getJSONArray("images");
-                ;
+
                 for (int img = 0; img < images.length(); img++) {
 
                     try {
@@ -102,11 +100,15 @@ public class Tab2 extends Fragment {
                 }
 
                 String gh = c.getString("category_id1");
+                System.out.println("IDs==Tab2====" + IDs);
+                System.out.println("gh==Tab2====" + gh);
+
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");
-                    Log.e("xdffv", fg + "");
+                    Log.e("Tab2====", fg + "");
                     if (fg.equals("2")) {
-                        Log.e("rtgfhxfgn", "xfgfghnfhjff");
+                        Log.e("====Tab2====", "fg.equals(\"2\")");
+
                         ProductNew product = new ProductNew(c.getString("mokhalafat"), c.getString("id"), c.getString("name"), c.getString("description"),
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
                         Product producto = new Product(c.getString("id"), c.getString("name"), c.getString("description"),

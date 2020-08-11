@@ -64,7 +64,6 @@ public class Tab1 extends Fragment {
         IDs = getActivity().getIntent().getExtras().getString("IDDD");
         startTime = getActivity().getIntent().getExtras().getString("startTime");
         endTime = getActivity().getIntent().getExtras().getString("endTime");
-        System.out.println("IDs====" + IDs);
         INIT();
 
         if (Newproducts != null) {
@@ -120,6 +119,9 @@ public class Tab1 extends Fragment {
                 }
 
                 String gh = c.getString("category_id1");
+                System.out.println("IDs==Tab1====" + IDs);
+                System.out.println("gh==Tab1====" + gh);
+
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");
                     Log.e("xdffv", fg + "");

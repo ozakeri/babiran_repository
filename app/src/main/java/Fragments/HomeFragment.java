@@ -600,7 +600,7 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
 
-                                    if (!c.isNull("moshakhasat")){
+                                    if (!c.isNull("moshakhasat")) {
                                         JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                         for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -615,13 +615,13 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
 
-                                    if (!c.isNull("rang")){
+                                    if (!c.isNull("rang")) {
                                         JSONArray colorJSONArray = c.getJSONArray("rang");
                                         for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                                             try {
                                                 JSONObject im = colorJSONArray.getJSONObject(iColor);
-                                                Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                                Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                                                 colorArrayList.add(iColor, color);
                                             } catch (JSONException ex) {
 
@@ -632,7 +632,7 @@ public class HomeFragment extends Fragment {
                                     }
 
                                     Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                     Newproducts.add(product);
                                     adp.notifyDataSetChanged();
@@ -733,7 +733,7 @@ public class HomeFragment extends Fragment {
                                     }
 
 
-                                    if (!c.isNull("moshakhasat")){
+                                    if (!c.isNull("moshakhasat")) {
                                         JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                         for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -748,13 +748,13 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
 
-                                    if (!c.isNull("rang")){
+                                    if (!c.isNull("rang")) {
                                         JSONArray colorJSONArray = c.getJSONArray("rang");
                                         for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                                             try {
                                                 JSONObject im = colorJSONArray.getJSONObject(iColor);
-                                                Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                                Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                                                 colorArrayList.add(iColor, color);
                                             } catch (JSONException ex) {
 
@@ -765,7 +765,7 @@ public class HomeFragment extends Fragment {
                                     }
 
                                     Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                     Topproducts.add(product);
                                     adpTop.notifyDataSetChanged();
@@ -866,9 +866,7 @@ public class HomeFragment extends Fragment {
                                     }
 
 
-
-
-                                    if (!c.isNull("moshakhasat")){
+                                    if (!c.isNull("moshakhasat")) {
                                         JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                         for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -883,13 +881,13 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
 
-                                    if (!c.isNull("rang")){
+                                    if (!c.isNull("rang")) {
                                         JSONArray colorJSONArray = c.getJSONArray("rang");
                                         for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                                             try {
                                                 JSONObject im = colorJSONArray.getJSONObject(iColor);
-                                                Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                                Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                                                 colorArrayList.add(iColor, color);
                                             } catch (JSONException ex) {
 
@@ -900,7 +898,7 @@ public class HomeFragment extends Fragment {
                                     }
 
                                     Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                                            c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                     Disproducts.add(product);
                                     adpDis.notifyDataSetChanged();
@@ -1018,12 +1016,16 @@ public class HomeFragment extends Fragment {
         Category category = null;
 
         try {
-            JSONObject c = AppConfig.fullbanner.getJSONObject(0);
-            firstslideImage = c.getString("slide_image");
+
+            if (AppConfig.fullbanner.getJSONObject(0) != null) {
+                JSONObject c = AppConfig.fullbanner.getJSONObject(0);
+                firstslideImage = c.getString("slide_image");
 
 
-            category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
-                    , c.getString("icon"), c.getString("slide_image"));
+                category = new Category(c.getString("id"), c.getString("name"), c.getString("parent_id")
+                        , c.getString("icon"), c.getString("slide_image"));
+            }
+
         } catch (JSONException e) {
             AppConfig.error(e);
         }
@@ -1145,7 +1147,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("moshakhasat")){
+                if (!c.isNull("moshakhasat")) {
                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -1160,13 +1162,13 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("rang")){
+                if (!c.isNull("rang")) {
                     JSONArray colorJSONArray = c.getJSONArray("rang");
                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                             colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
@@ -1177,7 +1179,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
 
                 Topproducts.add(product);
@@ -1253,13 +1255,13 @@ public class HomeFragment extends Fragment {
                 }
 
 
-                if (!c.isNull("rang")){
+                if (!c.isNull("rang")) {
                     JSONArray colorJSONArray = c.getJSONArray("rang");
                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                             colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
@@ -1271,7 +1273,7 @@ public class HomeFragment extends Fragment {
 
                 System.out.println();
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
                 System.out.println("product====" + product.getName());
                 System.out.println("product====" + product.getDis_price());
                 System.out.println("product====" + product.getProviderName());
@@ -1332,7 +1334,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("moshakhasat")){
+                if (!c.isNull("moshakhasat")) {
                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -1347,13 +1349,13 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("rang")){
+                if (!c.isNull("rang")) {
                     JSONArray colorJSONArray = c.getJSONArray("rang");
                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                             colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
@@ -1364,7 +1366,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                 Newproducts.add(product);
 
@@ -1432,13 +1434,13 @@ public class HomeFragment extends Fragment {
                 }
 
 
-                if (!c.isNull("rang")){
+                if (!c.isNull("rang")) {
                     JSONArray colorJSONArray = c.getJSONArray("rang");
                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                             colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
@@ -1451,7 +1453,7 @@ public class HomeFragment extends Fragment {
 
                 //System.out.println("homecategory_id1==" + c.getString("category_id1"));
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
 
                 Card card = new Card(AppConfig.act, product);
@@ -1510,7 +1512,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("moshakhasat")){
+                if (!c.isNull("moshakhasat")) {
                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -1525,13 +1527,13 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                if (!c.isNull("rang")){
+                if (!c.isNull("rang")) {
                     JSONArray colorJSONArray = c.getJSONArray("rang");
                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                         try {
                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                             colorArrayList.add(iColor, color);
                         } catch (JSONException ex) {
 
@@ -1542,7 +1544,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList,colorArrayList, c.getString("provider_name"));
+                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                 Disproducts.add(product);
 

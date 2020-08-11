@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -78,6 +79,11 @@ public class SecondCategoryFragment extends Fragment {
     public SecondCategoryFragment(ArrayList<Category> categories, String prev) {
         this.categoryArrayList = categories;
         this.Mainprev = prev;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        //No call for super(). Bug on API Level > 11.
     }
 
     @Override

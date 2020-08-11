@@ -148,7 +148,9 @@ public class TopProListAdapter extends BaseAdapter {
         }
 
 
-        result = ((Percentage1 - Percentage2) * 100) / Percentage2;
+        if (Percentage2 != 0) {
+            result = ((Percentage1 - Percentage2) * 100) / Percentage2;
+        }
 
         if (result == 0) {
             holder.layout_percentage_discount.setVisibility(View.INVISIBLE);
