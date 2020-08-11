@@ -6,9 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.babiran.app.R;
@@ -51,26 +51,19 @@ public class Tab3 extends Fragment {
         IDs = getActivity().getIntent().getExtras().getString("IDDD");
         startTime = getActivity().getIntent().getExtras().getString("startTime");
         endTime = getActivity().getIntent().getExtras().getString("endTime");
-        //INIT();
-/*
+        INIT();
         if (Newproducts != null) {
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
-
             recyclerView.setAdapter(newProListfoodAdapter);
-
-
-        }*/
+        }
 
         return mView;
     }
 
     private void INIT() {
         Newproducts.clear();
-
-
-        recyclerView =  mView.findViewById(R.id.recyclerView);
-
-
+        recyclerView = mView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
         for (int i = 0; i < AppConfig.NewPro.length(); i++) {
@@ -109,7 +102,7 @@ public class Tab3 extends Fragment {
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");
                     Log.e("xdffv", fg + "");
-                    if (3 == Integer.parseInt(fg)) {
+                    if (fg.equals("3")) {
                         Log.e("rtgfhxfgn", "xfgfghnfhjff");
                         ProductNew product = new ProductNew(c.getString("mokhalafat"), c.getString("id"), c.getString("name"), c.getString("description"),
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);

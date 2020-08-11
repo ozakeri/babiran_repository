@@ -5,9 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.babiran.app.R;
@@ -48,8 +48,9 @@ public class Tab2 extends Fragment {
         endTime = getActivity().getIntent().getExtras().getString("endTime");
         INIT();
 
-
         if (Newproducts != null) {
+            System.out.println("Tab2Newproducts=====" + Newproducts.size());
+            System.out.println("Tab2NewproductsO=====" + NewproductsO.size());
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
             recyclerView.setAdapter(newProListfoodAdapter);
         }
@@ -60,11 +61,8 @@ public class Tab2 extends Fragment {
 
     private void INIT() {
         Newproducts.clear();
-
-
-        recyclerView =  mView.findViewById(R.id.recyclerView);
-
-
+        recyclerView = mView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ArrayList<Feature> featuresArray;
         ArrayList<Image> imagesArray;
         for (int i = 0; i < AppConfig.NewPro.length(); i++) {
@@ -105,14 +103,17 @@ public class Tab2 extends Fragment {
 
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");
-                    Log.e("Tab2====", fg + "");
+
                     if (fg.equals("2")) {
-                        Log.e("====Tab2====", "fg.equals(\"2\")");
+                        Log.e("====Tab2fg====", fg);
 
                         ProductNew product = new ProductNew(c.getString("mokhalafat"), c.getString("id"), c.getString("name"), c.getString("description"),
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
                         Product producto = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
+
+                        System.out.println("-==-=-=-=-=-=--=-=-=-=-=" + c.getString("mokhalafat") + "*" + c.getString("id") + "*" + c.getString("name")
+                                + "*" + c.getString("description") + "*" + c.getString("discount_price"));
 
                         NewproductsO.add(producto);
                         Newproducts.add(product);
