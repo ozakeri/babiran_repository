@@ -118,7 +118,7 @@ public class MainListActivity extends AppCompatActivity {
                 b1 = false;
                 imNewsMy.setVisibility(View.INVISIBLE);
                 list.clear();
-                recyclerViewMy.setVisibility(View.GONE);
+                recyclerViewMy.setVisibility(View.VISIBLE);
             }
         });
 
@@ -209,26 +209,25 @@ public class MainListActivity extends AppCompatActivity {
                 intent.putExtra("title", title);
                 startActivity(intent);
 
-               /* if(b1)
+                if(b1)
                 {
-                    String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                    String Link1 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
 
-                    Intent intent =new Intent(MainListActivity.this,ListActivity.class);
-                    intent.putExtra("id",Link);
-                    startActivity(intent);
+                    Intent intent1 =new Intent(MainListActivity.this,ListActivity.class);
+                    intent.putExtra("id",Link1);
+                    startActivity(intent1);
                     b1=false;
                 }
                 else
                 {
-                    String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                    String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
-
-                    Intent intent =new Intent(MainListActivity.this,ListRssActivity.class);
-                    intent.putExtra("link",Link);
-
-                    startActivity(intent);
-                }*/
+                    System.out.println("Link2======" + Link2);
+                    Intent intent2 =new Intent(MainListActivity.this,ListRssActivity.class);
+                    intent.putExtra("link",Link2);
+                    startActivity(intent2);
+                }
 
             }
 

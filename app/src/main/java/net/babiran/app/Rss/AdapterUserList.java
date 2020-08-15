@@ -56,7 +56,7 @@ public class AdapterUserList extends RecyclerView.Adapter<AdapterUserList.MyView
     {
 
         RssFeedModel list = listProducts.get(position);
-        Picasso.with(mContext).load(list.description).into(holder.imageView);
+//        Picasso.with(mContext).load(list.description).into(holder.imageView);
         holder.SeenP.setText(list.title);
         holder.link.setText(list.link);
     }

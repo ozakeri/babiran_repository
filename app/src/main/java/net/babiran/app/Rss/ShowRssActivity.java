@@ -65,11 +65,12 @@ import ui_elements.MyTextView;
 
 public class ShowRssActivity extends AppCompatActivity {
     private AlertDialog prograsDialog;
-    ImageView img;
+    ImageView img_html_show;
     MyTextView txt, txt_html_ffff;
     MyTextView titl, txt_newsDate;
     String SSS;
     String Url;
+    String desc;
     String RRR;
     String Titlea = null;
     private Toolbar toolbar;
@@ -112,6 +113,7 @@ public class ShowRssActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             Url = bundle.getString("link");
+            desc = bundle.getString("desc");
             Titlea = bundle.getString("title");
         }
 
@@ -165,15 +167,19 @@ public class ShowRssActivity extends AppCompatActivity {
         imgzoom = (ImageView) findViewById(R.id.dlfngkjdfj);
         imgzoomOut = (ImageView) findViewById(R.id.dlfngkjkjdfj);
 
-        img = (ImageView) findViewById(R.id.img_html_show);
+        img_html_show = (ImageView) findViewById(R.id.img_html_show);
         txt = (MyTextView) findViewById(R.id.txt_html_show);
         titl = (MyTextView) findViewById(R.id.txt_html_tit);
         txt_newsDate = (MyTextView) findViewById(R.id.txt_newsDate);
 
-        txt.setText(SSS);
+        titl.setText(Titlea);
+        if (SSS != null){
+            txt.setText(SSS);
+        }else {
+            txt.setText(desc);
+        }
         txt.setTypeface(font);
         titl.setTypeface(font);
-        titl.setText(Titlea);
 
         if (!TextUtils.isEmpty(ListtoListActivity.ID_ME)) {
             ln.setVisibility(View.VISIBLE);
@@ -232,7 +238,7 @@ public class ShowRssActivity extends AppCompatActivity {
                         }
 
                         //txt.setText(SSS1);
-                        Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img);
+                        Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img_html_show);
                         imgUrl = s.get(i).getImageLink();
                         id_blog = s.get(i).getId();
                         ListedGetLike();
@@ -247,7 +253,7 @@ public class ShowRssActivity extends AppCompatActivity {
             }
 
 
-            img.setOnClickListener(new View.OnClickListener() {
+            img_html_show.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ShowRssActivity.this, FullScreenActivity.class);
@@ -416,7 +422,7 @@ public class ShowRssActivity extends AppCompatActivity {
                         txtLike.setText(s.getLike() + 1 + "");
                         titl.setText(s.getSubject());
                         txt.setText(s.getBody());
-                        Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img);
+                        Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img_html_show);
                         imgUrl = s.getImageLink();
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.getCreatedAtInt()));
                         System.out.println("img====" + s.getImageLink());
@@ -768,13 +774,15 @@ public class ShowRssActivity extends AppCompatActivity {
                 Log.e("DOC  4 :   ", RRR);
 
             }
-            //   Picasso.with(TwoActivity.this).load(RRR).into(img);
+
+            //System.out.println("RRR=====" + RRR);
+            //   Picasso.with(ShowRssActivity.this).load(RRR).into(img_html_show);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            Picasso.with(ShowRssActivity.this).load(RRR).into(img);
+            Picasso.with(ShowRssActivity.this).load(RRR).into(img_html_show);
             System.out.println("img==RRR==" + RRR);
             txt.setText(pngs.text());
             prograsDialog.dismiss();

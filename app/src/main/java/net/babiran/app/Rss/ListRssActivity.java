@@ -1,10 +1,12 @@
 package net.babiran.app.Rss;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -13,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,49 +23,74 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETING;
-import net.babiran.app.Servic.GETINGBlog;
-import net.babiran.app.Servic.MyInterFace;
-import net.babiran.app.Servic.MyServices;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import dmax.dialog.SpotsDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
 import tools.AppConfig;
 import ui_elements.MyTextView;
 
-public class ListRssActivity extends AppCompatActivity
-{
-   private Toolbar toolbar;
-   private String Url="",name="";
+public class ListRssActivity extends AppCompatActivity {
+    private Toolbar toolbar;
+    private String Url = "", name = "";
     private AlertDialog prograsDialog;
-   private RecyclerView recyclerView;
-   private LinearLayoutManager linearLayoutManager;
-   private AdapterUserList mAdapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private AdapterUserList mAdapter;
     private AdapterUserListMy mAdaptermy;
-   private List<RssFeedModel> mFeedModelList = new ArrayList<>();
-    private String TAG="TAG";
+    private List<RssFeedModel> mFeedModelList = new ArrayList<>();
+    private String TAG = "TAG";
     private String mFeedTitle;
     private String mFeedLink;
     private String mFeedDescription;
     public static String ID_ME = "";
+    private String title = null;
+    private String link =null;
+    private String description = null;
+
+
+    // RSS XML document CHANNEL tag
+    private static String TAG_CHANNEL = "channel";
+    private static String TAG_TITLE = "title";
+    private static String TAG_LINK = "link";
+    private static String TAG_DESRIPTION = "description";
+    private static String TAG_ITEM = "item";
+    private static String TAG_PUB_DATE = "pubDate";
+    private static String TAG_GUID = "guid";
 
 
     List<String> list = new ArrayList<>();
 
     MyTextView label;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_rss);
@@ -70,9 +98,16 @@ public class ListRssActivity extends AppCompatActivity
         Bundle bundle = getIntent().getExtras();
         label = (MyTextView) findViewById(R.id.label);
 
-        Url=bundle.getString("link");
-        name=bundle.getString("name");
-        if(!TextUtils.isEmpty(name)){label.setText(name);}
+        if (bundle != null) {
+            Url = bundle.getString("link");
+            name = bundle.getString("name");
+            System.out.println("bundle====" + Url);
+            System.out.println("bundle====" + name);
+        }
+
+        if (!TextUtils.isEmpty(name)) {
+            label.setText(name);
+        }
         /////////////////////////////////////
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -84,23 +119,28 @@ public class ListRssActivity extends AppCompatActivity
             }
         });
 
-        if (toolbar != null)
-        {
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 ////////////////////////////////////////////
         INIT();
 
-      prograsDialog.show();
-      if(!TextUtils.isEmpty(getIntent().getExtras().getString("id")))
-      {
-          //my
-          Listed();
-      }
-      else
-      {
-          new FetchFeedTask().execute((Void) null);//XML
-      }
+        prograsDialog.show();
+        if (getIntent().getExtras() != null) {
+
+            if (!TextUtils.isEmpty(getIntent().getExtras().getString("id"))) {
+                //my
+                Listed();
+            }
+        } else {
+            // new FetchFeedTask().execute((Void) null);//XML
+
+            mFeedModelList = getRSSFeedItems("");
+            recyclerView.setVisibility(View.VISIBLE);
+            mAdapter = new AdapterUserList(ListRssActivity.this, mFeedModelList);
+            recyclerView.setAdapter(mAdapter);
+            prograsDialog.dismiss();
+        }
 
 
         //  new Title().execute((Void) null);                        //HTML
@@ -108,33 +148,35 @@ public class ListRssActivity extends AppCompatActivity
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(ListRssActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position)
-            {
+            public void onItemClick(View view, int position) {
 
 
-                if(!TextUtils.isEmpty(getIntent().getExtras().getString("id")))
-                {
+                if (getIntent().getExtras() != null && !TextUtils.isEmpty(getIntent().getExtras().getString("id"))) {
                     String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_link)).getText().toString();
 
-                    Intent intent =new Intent(ListRssActivity.this,LastListActivity.class);
-                    intent.putExtra("id",Link);
+                    Intent intent = new Intent(ListRssActivity.this, LastListActivity.class);
+                    intent.putExtra("id", Link);
                     startActivity(intent);
 
                     System.out.println("id=====11=" + Link);
-                }
-                else
-                {
-                    String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                } else {
+               /*     String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_link)).getText().toString();
                     String tit = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss)).getText().toString();
-                    Intent intent =new Intent(ListRssActivity.this,ShowRssActivity.class);
-                    intent.putExtra("link",Link);
-                    intent.putExtra("title",tit);
 
-                    System.out.println("Link====" + Link);
-                    System.out.println("tit====" + tit);
+                    String desc = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                            .itemView.findViewById(R.id.txt_rc_rss)).getText().toString();*/
+                    Intent intent = new Intent(ListRssActivity.this, ShowRssActivity.class);
+                    link = "https://www.irna.ir/news/83908201/";
+                    intent.putExtra("link", link);
+                    intent.putExtra("title", title);
+                    intent.putExtra("desc", description);
+
+                    System.out.println("Link====" + link);
+                    System.out.println("tit====" + title);
+                    System.out.println("description====" + description);
 
                     startActivity(intent);
                 }
@@ -142,8 +184,7 @@ public class ListRssActivity extends AppCompatActivity
             }
 
             @Override
-            public void onLongItemClick(View view, int position)
-            {
+            public void onLongItemClick(View view, int position) {
 
             }
         }));
@@ -152,16 +193,13 @@ public class ListRssActivity extends AppCompatActivity
     }
 
 
-    private void Listed()
-    {
+    private void Listed() {
         List<GETING> s = AppConfig.GETT;
-        for (int i = 0 ; i<s.size() ; i++)
-        {
+        for (int i = 0; i < s.size(); i++) {
 
-            if(s.get(i).getParentId()==Integer.parseInt(getIntent().getExtras().getString("id")))
-            {
-                AppConfig.GETT =s;
-                list.add(s.get(i).getName()+"##"+s.get(i).getId()+"##"+s.get(i).getHasChild());
+            if (s.get(i).getParentId() == Integer.parseInt(getIntent().getExtras().getString("id"))) {
+                AppConfig.GETT = s;
+                list.add(s.get(i).getName() + "##" + s.get(i).getId() + "##" + s.get(i).getHasChild());
                 System.out.println("response====" + s.get(i).getId());
                 System.out.println("response====" + s.get(i).getParentId());
             }
@@ -173,16 +211,13 @@ public class ListRssActivity extends AppCompatActivity
         recyclerView.setAdapter(mAdaptermy);
 
 
-
         //    prograsDialog.dismiss();
     }
 
 
-
-    private void INIT()
-    {
+    private void INIT() {
         prograsDialog = new SpotsDialog(ListRssActivity.this);
-        recyclerView=(RecyclerView)findViewById(R.id.rec);
+        recyclerView = (RecyclerView) findViewById(R.id.rec);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -191,18 +226,126 @@ public class ListRssActivity extends AppCompatActivity
 
     /////////////////////////     XML          XML          ///////////////////////////////////////////////////////////////////////////
 
-    private class FetchFeedTask extends AsyncTask<Void, Void, Boolean>
-    {
+    public List<RssFeedModel> getRSSFeedItems(String rss_url) {
+        rss_url = "http://www.irna.ir/fa/rss.aspx?kind=-1";
+        List<RssFeedModel> itemsList = new ArrayList<RssFeedModel>();
+        String rss_feed_xml;
+        rss_feed_xml = this.getXmlFromUrl(rss_url);
+
+        if (rss_feed_xml != null) {
+            try {
+                Document doc = this.getDomElement(rss_feed_xml);
+                NodeList nodeList = doc.getElementsByTagName(TAG_CHANNEL);
+                Element e = (Element) nodeList.item(0);
+
+                NodeList items = e.getElementsByTagName(TAG_ITEM);
+                for (int i = 0; i < items.getLength(); i++) {
+                    Element e1 = (Element) items.item(i);
+
+                    title = this.getValue(e1, TAG_TITLE);
+                    link = this.getValue(e1, TAG_LINK);
+                    description = this.getValue(e1, TAG_DESRIPTION);
+
+                    System.out.println("title====" + title);
+                    System.out.println("link====" + link);
+                    System.out.println("description====" + description);
+
+                    if (description.startsWith("<a ")) {
+                        String cleanUrl = description.substring(description.indexOf("src=") + 5, description.indexOf("/>") - 2);
+                        System.out.println("cleanUrl====" + cleanUrl);
+                    }
+
+                    RssFeedModel rssItem = new RssFeedModel(title, link, description);
+                    // adding item to list
+                    itemsList.add(rssItem);
+                }
+            } catch (Exception e) {
+                // Check log for errors
+                e.printStackTrace();
+            }
+        }
+        return itemsList;
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    public String getXmlFromUrl(String url) {
+        String xml = null;
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            xml = EntityUtils.toString(httpEntity);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return xml;
+    }
+
+    public Document getDomElement(String xml) {
+        Document doc = null;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            InputSource is = new InputSource();
+            is.setCharacterStream(new StringReader(xml));
+            doc = db.parse(is);
+        } catch (ParserConfigurationException e) {
+            Log.e("Error: ", e.getMessage());
+            return null;
+        } catch (SAXException e) {
+            Log.e("Error: ", e.getMessage());
+            return null;
+        } catch (IOException e) {
+            Log.e("Error: ", e.getMessage());
+            return null;
+        }
+        return doc;
+    }
+
+    public String getValue(Element item, String str) {
+        NodeList n = item.getElementsByTagName(str);
+        return this.getElementValue(n.item(0));
+    }
+
+    public final String getElementValue(Node elem) {
+        Node child;
+        if (elem != null) {
+            if (elem.hasChildNodes()) {
+                for (child = elem.getFirstChild(); child != null; child = child
+                        .getNextSibling()) {
+                    if (child.getNodeType() == Node.TEXT_NODE || (child.getNodeType() == Node.CDATA_SECTION_NODE)) {
+                        return child.getNodeValue();
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
 
         private String urlLink;
 
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
+
+            Url = "http://www.irna.ir/fa/rss.aspx?kind=-1";
+            System.out.println("Url=======" + Url);
             //  mSwipeLayout.setRefreshing(true);
             // urlLink = mEditText.getText().toString();
             //urlLink="http://www.irna.ir/fa/rss.aspx?kind=-1";
-            urlLink=Url;
+            urlLink = Url;
         }
 
         @Override
@@ -211,7 +354,7 @@ public class ListRssActivity extends AppCompatActivity
                 return false;
 
             try {
-                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
+                if (!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
                     urlLink = "http://" + urlLink;
 
                 URL url = new URL(urlLink);
@@ -227,12 +370,10 @@ public class ListRssActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onPostExecute(Boolean success)
-        {
+        protected void onPostExecute(Boolean success) {
             //   mSwipeLayout.setRefreshing(false);
 
-            if (success)
-            {
+            if (success) {
                 //  textView.setText("Feed Title: " + mFeedTitle +"\n" );
                 //  textView.setText("Feed Description: " + mFeedDescription+"\n" );
                 //   textView.setText("Feed Link: " + mFeedLink+"\n" );
@@ -256,7 +397,6 @@ public class ListRssActivity extends AppCompatActivity
     }
 
 
-
     public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException,
             IOException {
         String title = null;
@@ -276,18 +416,18 @@ public class ListRssActivity extends AppCompatActivity
                 int eventType = xmlPullParser.getEventType();
 
                 String name = xmlPullParser.getName();
-                if(name == null)
+                if (name == null)
                     continue;
 
-                if(eventType == XmlPullParser.END_TAG) {
-                    if(name.equalsIgnoreCase("item")) {
+                if (eventType == XmlPullParser.END_TAG) {
+                    if (name.equalsIgnoreCase("item")) {
                         isItem = false;
                     }
                     continue;
                 }
 
                 if (eventType == XmlPullParser.START_TAG) {
-                    if(name.equalsIgnoreCase("item")) {
+                    if (name.equalsIgnoreCase("item")) {
                         isItem = true;
                         continue;
                     }
@@ -295,8 +435,7 @@ public class ListRssActivity extends AppCompatActivity
 
                 Log.d("MyXmlParser", "Parsing name ==> " + name);
                 String result = "";
-                if (xmlPullParser.next() == XmlPullParser.TEXT)
-                {
+                if (xmlPullParser.next() == XmlPullParser.TEXT) {
 
 
                     result = xmlPullParser.getText();
@@ -306,30 +445,24 @@ public class ListRssActivity extends AppCompatActivity
 
                 if (name.equalsIgnoreCase("title")) {
                     title = result;
-                    Log.e("NA 1 ",title);
+                    Log.e("NA 1 ", title);
                 } else if (name.equalsIgnoreCase("link")) {
                     link = result;
-                    Log.e("NA 2 ",link);
-                }
-                else if (name.equalsIgnoreCase("media:content"))
-                {
+                    Log.e("NA 2 ", link);
+                } else if (name.equalsIgnoreCase("media:content")) {
 
                     description = xmlPullParser.getAttributeValue(null, "url");
-                    Log.e("NA  3",name);
-                    Log.e("FF  ",  xmlPullParser.getAttributeValue(null, "url"));
+                    Log.e("NA  3", name);
+                    Log.e("FF  ", xmlPullParser.getAttributeValue(null, "url"));
 
                 }
-
-
-
 
 
                 if (title != null && link != null && description != null) {
-                    if(isItem) {
+                    if (isItem) {
                         RssFeedModel item = new RssFeedModel(title, link, description);
                         items.add(item);
-                    }
-                    else {
+                    } else {
                         mFeedTitle = title;
                         mFeedLink = link;
                         mFeedDescription = description;
@@ -350,13 +483,6 @@ public class ListRssActivity extends AppCompatActivity
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 
 
 }

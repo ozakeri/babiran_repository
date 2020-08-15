@@ -41,7 +41,8 @@
             android:id="@+id/img_rc_rss"
             android:layout_width="130dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"/>
+            android:layout_margin="3dp"
+            android:background="@drawable/logoloading"/>
 
         <TextView
             android:layout_width="0.000001dp"
