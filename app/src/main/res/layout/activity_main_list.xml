@@ -11,8 +11,8 @@
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".FactorList"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:context=".FactorList">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -47,9 +47,9 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/btn_back"
                         android:padding="10dp"
                         android:src="@drawable/sear"
-                        android:layout_toRightOf="@+id/btn_back"
                         android:tint="#fff" />
 
 
@@ -57,9 +57,9 @@
                         android:id="@+id/label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_margin="3dp"
-                        android:layout_alignParentRight="true"
                         android:gravity="center_vertical"
                         android:text="رویداد ها و مطالب گوناگون"
                         android:textColor="@color/white"
@@ -74,15 +74,54 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:background="@color/gray_lighter">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/newsCardView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1">
+
+            <ui_elements.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="خبر ها" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/blogCardView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0.5dp"
+            android:layout_weight="1">
+
+            <ui_elements.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="مطالب گوناگون" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layoutDirection="ltr"
-        android:padding="5dp"
         android:layout_margin="10dp"
         android:background="@drawable/corner_ronde"
-        android:visibility="visible">
+        android:layoutDirection="ltr"
+        android:padding="5dp"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/closeImage"
@@ -102,7 +141,7 @@
             android:hint="جستجو در بلاگ"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
@@ -111,98 +150,93 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ln_main_rss_news_my"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/blueDark"
+            android:gravity="center|right"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="رویداد ها و مطالب گوناگون"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/img_main_rss_news_clos_my"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="80dp"
+                android:src="@drawable/ic_close"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_main_news_my"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ln_main_rss_news"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/organizationColor"
+            android:gravity="center|right"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="خبرهای متنوع"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/img_main_rss_news_clos"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="80dp"
+                android:src="@drawable/ic_close"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
-            <LinearLayout
-                android:id="@+id/ln_main_rss_news_my"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/blueDark"
-                android:gravity="center|right"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="رویداد ها و مطالب گوناگون"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/img_main_rss_news_clos_my"
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="80dp"
-                    android:src="@drawable/ic_close"
-                    android:visibility="visible" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rec_main_news_my"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:id="@+id/ln_main_rss_news"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/organizationColor"
-                android:gravity="center|right"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="خبرهای متنوع"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/img_main_rss_news_clos"
-                    android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="80dp"
-                    android:src="@drawable/ic_close"
-                    android:visibility="visible" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rec_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,6 @@ import com.android.volley.toolbox.Volley;
 
 import net.babiran.app.R;
 import net.babiran.app.Servic.GETING;
-import net.babiran.app.Servic.GETINGBlog;
 import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyServices;
 
@@ -59,8 +59,8 @@ public class MainListActivity extends AppCompatActivity {
     AdapterUserListMain mAdapter;
 
     // private AlertDialog prograsDialog;
-    private LinearLayout lnNews, lnNewsMy,layout_search;
-    private ImageView imNews, imNewsMy,closeImage,btn_search;
+    private LinearLayout lnNews, lnNewsMy, layout_search;
+    private ImageView imNews, imNewsMy, closeImage, btn_search;
     private EditText search_bar;
     private RecyclerView recyclerView, recyclerViewMy, recycler_view_search;
     private LinearLayoutManager linearLayoutManager;
@@ -74,6 +74,7 @@ public class MainListActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
     private AdapterUserListToTo adapterUserListToTo;
     private CoordinatorLayout coordinator;
+    private CardView blogCardView, newsCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class MainListActivity extends AppCompatActivity {
         });
 
         INIT();
-
+        b1 = true;
         list.clear();
         Listed();
 
@@ -101,13 +102,13 @@ public class MainListActivity extends AppCompatActivity {
         lnNewsMy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (b1) {
+              /*  if (b1) {
 
                 } else {
                     b1 = true;
                     imNewsMy.setVisibility(View.VISIBLE);
                     Listed();
-                }
+                }*/
 
 
             }
@@ -144,7 +145,7 @@ public class MainListActivity extends AppCompatActivity {
                     progress_bar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     recycler_view_search.setVisibility(View.GONE);
-                }else if (arg0.length() >= 2) {
+                } else if (arg0.length() >= 2) {
                     progress_bar.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                     recycler_view_search.setVisibility(View.GONE);
@@ -163,18 +164,48 @@ public class MainListActivity extends AppCompatActivity {
 
         //////////
 
+        blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
+        newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
+
+        blogCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b1 = true;
+                b2 = false;
+                imNewsMy.setVisibility(View.VISIBLE);
+                imNews.setVisibility(View.GONE);
+                blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
+                newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
+                Listed();
+            }
+        });
+
+        newsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                b2 = true;
+                b1 = false;
+                imNewsMy.setVisibility(View.GONE);
+                imNews.setVisibility(View.VISIBLE);
+                Listed2();
+                blogCardView.setBackgroundColor(getResources().getColor(R.color.white));
+                newsCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
+
+            }
+        });
 
         lnNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (b2) {
+               /* if (b2) {
 
                 } else {
                     b2 = true;
                     imNews.setVisibility(View.VISIBLE);
                     Listed2();
-                }
+                }*/
 
             }
         });
@@ -198,35 +229,34 @@ public class MainListActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
 
 
-                String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
-                        .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
+                if (b1) {
 
-                String title = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
-                        .itemView.findViewById(R.id.txt_rc_rss_mainn_des)).getText().toString();
-
-                Intent intent = new Intent(MainListActivity.this, ListActivity.class);
-                intent.putExtra("id", Link);
-                intent.putExtra("title", title);
-                startActivity(intent);
-
-                if(b1)
-                {
-                    String Link1 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                    String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
 
-                    Intent intent1 =new Intent(MainListActivity.this,ListActivity.class);
-                    intent.putExtra("id",Link1);
+                    String title = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                            .itemView.findViewById(R.id.txt_rc_rss_mainn_des)).getText().toString();
+
+                    Intent intent = new Intent(MainListActivity.this, ListActivity.class);
+                    intent.putExtra("id", Link);
+                    intent.putExtra("title", title);
+                    startActivity(intent);
+
+                  /*  String Link1 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
+                            .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
+                    Intent intent1 = new Intent(MainListActivity.this, ListActivity.class);
+                    intent.putExtra("id", Link1);
                     startActivity(intent1);
-                    b1=false;
-                }
-                else
-                {
+                    System.out.println("b1======" + Link1);*/
+                    //b1 = false;
+                } else {
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
-                    System.out.println("Link2======" + Link2);
-                    Intent intent2 =new Intent(MainListActivity.this,ListRssActivity.class);
-                    intent.putExtra("link",Link2);
+                    System.out.println("b1======" + Link2);
+                    Intent intent2 = new Intent(MainListActivity.this, ListRssActivity.class);
+                    intent2.putExtra("link", Link2);
                     startActivity(intent2);
+                   // b2 = false;
                 }
 
             }
@@ -268,6 +298,8 @@ public class MainListActivity extends AppCompatActivity {
         coordinator = findViewById(R.id.coordinator);
         closeImage = findViewById(R.id.closeImage);
         btn_search = findViewById(R.id.btn_search);
+        blogCardView = findViewById(R.id.blogCardView);
+        newsCardView = findViewById(R.id.newsCardView);
 
         imNews = (ImageView) findViewById(R.id.img_main_rss_news_clos);
         lnNews = (LinearLayout) findViewById(R.id.ln_main_rss_news);
@@ -289,6 +321,7 @@ public class MainListActivity extends AppCompatActivity {
     }
 
     private void Listed() {
+        list.clear();
         recyclerViewMy.setVisibility(View.VISIBLE);
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
@@ -334,8 +367,11 @@ public class MainListActivity extends AppCompatActivity {
     }
 
     private void Listed2() {
+        Listed.clear();
+        Link.clear();
+        name.clear();
         recyclerView.setVisibility(View.VISIBLE);
-        Link.add("http://www.irna.ir/fa/rss.aspx?kind=-1");
+  /*      Link.add("http://www.irna.ir/fa/rss.aspx?kind=-1");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=5");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=20");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=32");
@@ -345,10 +381,14 @@ public class MainListActivity extends AppCompatActivity {
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=1");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=54");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=212");
-        Link.add("http://www.irna.ir/fa/rss.aspx?kind=145");
+        Link.add("http://www.irna.ir/fa/rss.aspx?kind=145");*/
+
+        Link.add("https://www.khabaronline.ir/rss/pl/17");
+        Link.add("https://divar.ir/s/tehran/jobs");
 
         name.add("عناوین کل اخبار");
-        name.add("سیاسی");
+        name.add("آگهی استخدام");
+   /*     name.add("سیاسی");
         name.add("اقتصادی");
         name.add("اجتماعی");
         name.add("فرهنگی");
@@ -357,10 +397,10 @@ public class MainListActivity extends AppCompatActivity {
         name.add("بین الملل");
         name.add("استانها");
         name.add("حوادث");
-        name.add("صفحه اول");
+        name.add("صفحه اول");*/
 
         int lio = name.size();
-        for (int i = 0; i < lio; i++) {
+        for (int i = 0; i <lio ; i++) {
             Listed.add(new RssList(name.get(i), Link.get(i)));
         }
 
@@ -397,7 +437,7 @@ public class MainListActivity extends AppCompatActivity {
                             adapterUserListToTo = new AdapterUserListToTo(MainListActivity.this, listBlog);
                             recycler_view_search.setAdapter(adapterUserListToTo);
                             adapterUserListToTo.notifyDataSetChanged();
-                        }else {
+                        } else {
 
                             recycler_view_search.setVisibility(View.GONE);
                             AlertDialog alertDialog = new AlertDialog.Builder(MainListActivity.this).create();

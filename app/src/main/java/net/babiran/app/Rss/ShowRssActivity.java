@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,8 +68,8 @@ public class ShowRssActivity extends AppCompatActivity {
     MyTextView txt, txt_html_ffff;
     MyTextView titl, txt_newsDate;
     String SSS;
-    String Url;
-    String desc;
+    String Url = null;
+    String desc = null;
     String RRR;
     String Titlea = null;
     private Toolbar toolbar;
@@ -102,12 +101,15 @@ public class ShowRssActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rss);
 
-        Bundle pudhBndle = getIntent().getExtras();
-        if (pudhBndle != null) {
-            isPush = pudhBndle.getBoolean("isPush");
-        }
-        SaveAImg = (ImageView) findViewById(R.id.img_like_);
-        Sahe = (ImageView) findViewById(R.id.img_share);
+        txt_html_ffff = findViewById(R.id.txt_html_ffff);
+        imgzoom = findViewById(R.id.dlfngkjdfj);
+        imgzoomOut = findViewById(R.id.dlfngkjkjdfj);
+        img_html_show = findViewById(R.id.img_html_show);
+        txt = findViewById(R.id.txt_html_show);
+        titl = findViewById(R.id.txt_html_tit);
+        txt_newsDate = findViewById(R.id.txt_newsDate);
+        SaveAImg = findViewById(R.id.img_like_);
+        Sahe = findViewById(R.id.img_share);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -115,6 +117,15 @@ public class ShowRssActivity extends AppCompatActivity {
             Url = bundle.getString("link");
             desc = bundle.getString("desc");
             Titlea = bundle.getString("title");
+            isPush = bundle.getBoolean("isPush");
+
+            titl.setText(Titlea);
+            txt.setText(desc);
+            System.out.println("Link====222" + Url);
+            System.out.println("tit====222" + Titlea);
+            System.out.println("description====" + desc);
+            return;
+
         }
 
         Log.e("ID", AppConfig.id + "");
@@ -161,21 +172,10 @@ public class ShowRssActivity extends AppCompatActivity {
             }
         });
 
-        txt_html_ffff = (MyTextView) findViewById(R.id.txt_html_ffff);
-
-
-        imgzoom = (ImageView) findViewById(R.id.dlfngkjdfj);
-        imgzoomOut = (ImageView) findViewById(R.id.dlfngkjkjdfj);
-
-        img_html_show = (ImageView) findViewById(R.id.img_html_show);
-        txt = (MyTextView) findViewById(R.id.txt_html_show);
-        titl = (MyTextView) findViewById(R.id.txt_html_tit);
-        txt_newsDate = (MyTextView) findViewById(R.id.txt_newsDate);
-
         titl.setText(Titlea);
-        if (SSS != null){
+        if (SSS != null) {
             txt.setText(SSS);
-        }else {
+        } else {
             txt.setText(desc);
         }
         txt.setTypeface(font);
@@ -212,8 +212,8 @@ public class ShowRssActivity extends AppCompatActivity {
                                 }
                             };*/
 
-                           // txt.setText("امید ذاکری  یک پیغامی 123456789 برای شما ارسال کرده است");
-                           // Linkify.addLinks(txt, pattern, "myScheme://?username=", null, username);
+                            // txt.setText("امید ذاکری  یک پیغامی 123456789 برای شما ارسال کرده است");
+                            // Linkify.addLinks(txt, pattern, "myScheme://?username=", null, username);
                             //System.out.println("username====" + username);
 
                             txt.setText(s.get(i).getBody());
@@ -229,7 +229,8 @@ public class ShowRssActivity extends AppCompatActivity {
                                         }
                                     };
                                     Linkify.addLinks(txt, pattern1, "tel:", null, username1);
-;                                }
+                                    ;
+                                }
                             }
 
                             /*Intent callIntent = new Intent(Intent.ACTION_CALL);

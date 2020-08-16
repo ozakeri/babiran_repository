@@ -70,7 +70,7 @@ public class ListRssActivity extends AppCompatActivity {
     private String mFeedDescription;
     public static String ID_ME = "";
     private String title = null;
-    private String link =null;
+    private String link = null;
     private String description = null;
 
 
@@ -95,15 +95,7 @@ public class ListRssActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_rss);
         ListtoListActivity.ID_ME = null;
-        Bundle bundle = getIntent().getExtras();
         label = (MyTextView) findViewById(R.id.label);
-
-        if (bundle != null) {
-            Url = bundle.getString("link");
-            name = bundle.getString("name");
-            System.out.println("bundle====" + Url);
-            System.out.println("bundle====" + name);
-        }
 
         if (!TextUtils.isEmpty(name)) {
             label.setText(name);
@@ -126,16 +118,19 @@ public class ListRssActivity extends AppCompatActivity {
         INIT();
 
         prograsDialog.show();
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().getString("id") != null) {
 
             if (!TextUtils.isEmpty(getIntent().getExtras().getString("id"))) {
                 //my
                 Listed();
             }
-        } else {
+        }else if (getIntent().getExtras().getString("link") != null) {
             // new FetchFeedTask().execute((Void) null);//XML
-
-            mFeedModelList = getRSSFeedItems("");
+            Url = getIntent().getExtras().getString("link");
+            name = getIntent().getExtras().getString("name");
+            System.out.println("bundle====" + Url);
+            System.out.println("bundle====" + name);
+            mFeedModelList = getRSSFeedItems(Url);
             recyclerView.setVisibility(View.VISIBLE);
             mAdapter = new AdapterUserList(ListRssActivity.this, mFeedModelList);
             recyclerView.setAdapter(mAdapter);
@@ -168,15 +163,18 @@ public class ListRssActivity extends AppCompatActivity {
 
                     String desc = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss)).getText().toString();*/
-                    Intent intent = new Intent(ListRssActivity.this, ShowRssActivity.class);
-                    link = "https://www.irna.ir/news/83908201/";
-                    intent.putExtra("link", link);
-                    intent.putExtra("title", title);
-                    intent.putExtra("desc", description);
 
-                    System.out.println("Link====" + link);
-                    System.out.println("tit====" + title);
-                    System.out.println("description====" + description);
+                    RssFeedModel rssFeedModel = mFeedModelList.get(position);
+
+                    Intent intent = new Intent(ListRssActivity.this, ShowRssActivity.class);
+                    //link = "https://www.irna.ir/news/83908201/";
+                    intent.putExtra("link", rssFeedModel.link);
+                    intent.putExtra("title", rssFeedModel.title);
+                    intent.putExtra("desc", rssFeedModel.description);
+
+                    System.out.println("Link111====" + rssFeedModel.link);
+                    System.out.println("tit====111" + rssFeedModel.title);
+                    System.out.println("description====111" + rssFeedModel.description);
 
                     startActivity(intent);
                 }
@@ -227,9 +225,9 @@ public class ListRssActivity extends AppCompatActivity {
     /////////////////////////     XML          XML          ///////////////////////////////////////////////////////////////////////////
 
     public List<RssFeedModel> getRSSFeedItems(String rss_url) {
-        rss_url = "http://www.irna.ir/fa/rss.aspx?kind=-1";
         List<RssFeedModel> itemsList = new ArrayList<RssFeedModel>();
         String rss_feed_xml;
+        System.out.println("rss_url======" + rss_url);
         rss_feed_xml = this.getXmlFromUrl(rss_url);
 
         if (rss_feed_xml != null) {
@@ -340,7 +338,6 @@ public class ListRssActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            Url = "http://www.irna.ir/fa/rss.aspx?kind=-1";
             System.out.println("Url=======" + Url);
             //  mSwipeLayout.setRefreshing(true);
             // urlLink = mEditText.getText().toString();
