@@ -43,7 +43,7 @@ public class AdapterUserListMain extends RecyclerView.Adapter<AdapterUserListMai
 
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_rec_rss_main, parent, false);
+                .inflate(R.layout.row_rec_rss_site, parent, false);
 
 
 

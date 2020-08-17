@@ -186,14 +186,6 @@
                 android:visibility="visible" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_main_news_my"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:visibility="visible" />
-
         <LinearLayout
             android:id="@+id/ln_main_rss_news"
             android:layout_width="match_parent"

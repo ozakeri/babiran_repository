@@ -124,6 +124,7 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/layout_img_html_show"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:layout_margin="3dp"
@@ -258,6 +259,7 @@
                 android:gravity="right">
 
                 <TextView
+                    android:id="@+id/txt_titleComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"

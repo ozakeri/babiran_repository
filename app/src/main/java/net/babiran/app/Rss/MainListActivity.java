@@ -62,7 +62,7 @@ public class MainListActivity extends AppCompatActivity {
     private LinearLayout lnNews, lnNewsMy, layout_search;
     private ImageView imNews, imNewsMy, closeImage, btn_search;
     private EditText search_bar;
-    private RecyclerView recyclerView, recyclerViewMy, recycler_view_search;
+    private RecyclerView recyclerView, recycler_view_search;
     private LinearLayoutManager linearLayoutManager;
     boolean b1 = false, b2 = false;
     private ProgressBar progress_bar;
@@ -119,7 +119,6 @@ public class MainListActivity extends AppCompatActivity {
                 b1 = false;
                 imNewsMy.setVisibility(View.INVISIBLE);
                 list.clear();
-                recyclerViewMy.setVisibility(View.VISIBLE);
             }
         });
 
@@ -294,7 +293,6 @@ public class MainListActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rec_main);
         recycler_view_search = (RecyclerView) findViewById(R.id.recycler_view_search);
 
-        recyclerViewMy = (RecyclerView) findViewById(R.id.rec_main_news_my);
         coordinator = findViewById(R.id.coordinator);
         closeImage = findViewById(R.id.closeImage);
         btn_search = findViewById(R.id.btn_search);
@@ -322,7 +320,6 @@ public class MainListActivity extends AppCompatActivity {
 
     private void Listed() {
         list.clear();
-        recyclerViewMy.setVisibility(View.VISIBLE);
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<List<GETING>> call = n.getCategories();
@@ -384,10 +381,8 @@ public class MainListActivity extends AppCompatActivity {
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=145");*/
 
         Link.add("https://www.khabaronline.ir/rss/pl/17");
-        Link.add("https://divar.ir/s/tehran/jobs");
 
-        name.add("عناوین کل اخبار");
-        name.add("آگهی استخدام");
+        name.add("عناوین کل اخبار (khabaronline.ir)");
    /*     name.add("سیاسی");
         name.add("اقتصادی");
         name.add("اجتماعی");

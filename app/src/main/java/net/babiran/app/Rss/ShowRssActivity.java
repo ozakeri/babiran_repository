@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,13 +78,14 @@ public class ShowRssActivity extends AppCompatActivity {
     LinearLayout ln;
     int id_blog, LIKE;
     RecyclerView recyclerView;
-    TextView txtLike;
+    TextView txtLike, txt_titleComment;
     ImageView imgComment, imglike;
     boolean LikeDisLike = false;
     ImageView imgzoom, imgzoomOut;
-    LinearLayout likeLn, lnComment;
+    LinearLayout likeLn, lnComment,layout_img_html_show;
     private GlobalValues globalValues = new GlobalValues();
     private boolean isPush = false;
+    private RelativeLayout relativeLayout;
 
     ImageView SaveAImg, Sahe;
     List<String> listC = new ArrayList<>();
@@ -110,7 +112,16 @@ public class ShowRssActivity extends AppCompatActivity {
         txt_newsDate = findViewById(R.id.txt_newsDate);
         SaveAImg = findViewById(R.id.img_like_);
         Sahe = findViewById(R.id.img_share);
-
+        relativeLayout = findViewById(R.id.jjjjjjjjjj);
+        txt_titleComment = findViewById(R.id.txt_titleComment);
+        txtLike = findViewById(R.id.count_like);
+        imgComment = findViewById(R.id.img_comment);
+        imglike = findViewById(R.id.img_like);
+        likeLn = findViewById(R.id.dfdfdfdfd);
+        lnComment = findViewById(R.id.dffdfdfdfd);
+        ln = findViewById(R.id.ln_ln_ln);
+        recyclerView =  findViewById(R.id.recccccc);
+        layout_img_html_show = findViewById(R.id.layout_img_html_show);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -120,10 +131,21 @@ public class ShowRssActivity extends AppCompatActivity {
             isPush = bundle.getBoolean("isPush");
 
             titl.setText(Titlea);
-            txt.setText(desc);
+            txt.setText(desc + "\n" +" شرح کامل خبر " +  Url);
+            Linkify.addLinks(txt,Linkify.ALL);
             System.out.println("Link====222" + Url);
             System.out.println("tit====222" + Titlea);
             System.out.println("description====" + desc);
+
+            if (Url != null && Titlea != null && desc != null) {
+                txt_newsDate.setVisibility(View.GONE);
+                img_html_show.setVisibility(View.GONE);
+                ln.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.GONE);
+                txt_titleComment.setVisibility(View.GONE);
+                layout_img_html_show.setVisibility(View.GONE);
+            }
             return;
 
         }
@@ -153,17 +175,6 @@ public class ShowRssActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 ////////////////////////////////////////////
-
-        txtLike = (TextView) findViewById(R.id.count_like);
-
-        imgComment = (ImageView) findViewById(R.id.img_comment);
-        imglike = (ImageView) findViewById(R.id.img_like);
-
-        likeLn = (LinearLayout) findViewById(R.id.dfdfdfdfd);
-        lnComment = (LinearLayout) findViewById(R.id.dffdfdfdfd);
-
-        ln = (LinearLayout) findViewById(R.id.ln_ln_ln);
-
 
         ln.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -301,8 +312,6 @@ public class ShowRssActivity extends AppCompatActivity {
             new Title().execute((Void) null);
         }
 
-
-        recyclerView = (RecyclerView) findViewById(R.id.recccccc);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
