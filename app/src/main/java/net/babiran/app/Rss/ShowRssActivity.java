@@ -69,10 +69,8 @@ public class ShowRssActivity extends AppCompatActivity {
     MyTextView txt, txt_html_ffff;
     MyTextView titl, txt_newsDate;
     String SSS;
-    String Url = null;
-    String desc = null;
+    String Url,desc,Titlea,imgUrl = null;
     String RRR;
-    String Titlea = null;
     private Toolbar toolbar;
     Typeface font;
     LinearLayout ln;
@@ -90,8 +88,6 @@ public class ShowRssActivity extends AppCompatActivity {
     ImageView SaveAImg, Sahe;
     List<String> listC = new ArrayList<>();
 
-    String imgUrl;
-
     int size = 13;
 
     private AppController appController = AppController.getInstance();
@@ -102,6 +98,11 @@ public class ShowRssActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_rss);
+
+        Bundle pudhBndle = getIntent().getExtras();
+        if (pudhBndle != null) {
+            isPush = pudhBndle.getBoolean("isPush");
+        }
 
         txt_html_ffff = findViewById(R.id.txt_html_ffff);
         imgzoom = findViewById(R.id.dlfngkjdfj);
@@ -125,29 +126,28 @@ public class ShowRssActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            imgUrl = bundle.getString("imgUrl");
             Url = bundle.getString("link");
             desc = bundle.getString("desc");
             Titlea = bundle.getString("title");
-            isPush = bundle.getBoolean("isPush");
 
             titl.setText(Titlea);
-            txt.setText(desc + "\n" +" شرح کامل خبر " +  Url);
+            txt.setText(desc);
             Linkify.addLinks(txt,Linkify.ALL);
             System.out.println("Link====222" + Url);
             System.out.println("tit====222" + Titlea);
             System.out.println("description====" + desc);
+            System.out.println("imgUrl====" + imgUrl);
 
             if (Url != null && Titlea != null && desc != null) {
                 txt_newsDate.setVisibility(View.GONE);
-                img_html_show.setVisibility(View.GONE);
                 ln.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.GONE);
                 txt_titleComment.setVisibility(View.GONE);
-                layout_img_html_show.setVisibility(View.GONE);
+                Picasso.with(ShowRssActivity.this).load(imgUrl).into(img_html_show);
+                return;
             }
-            return;
-
         }
 
         Log.e("ID", AppConfig.id + "");

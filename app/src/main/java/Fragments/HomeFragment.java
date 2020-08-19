@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment {
         FullfirstBanner.getLayoutParams().height = width / 2;
 
         FullSecondBanner.getLayoutParams().height = width / 2;
-        FullSecondBanner.getLayoutParams().width = (int) (width * 0.92);
+        //FullSecondBanner.getLayoutParams().width = (int) (width * 0.92);
         // FullSecondBanner.getLayoutParams().height = width / 2;
         //FullSecondBanner.getLayoutParams().height = width / 2;
 

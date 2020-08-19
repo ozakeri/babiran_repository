@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
@@ -52,6 +53,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import dmax.dialog.SpotsDialog;
+import rss.RssItem;
+import rss.RssReader;
 import tools.AppConfig;
 import ui_elements.MyTextView;
 
@@ -64,14 +67,13 @@ public class ListRssActivity extends AppCompatActivity {
     private AdapterUserList mAdapter;
     private AdapterUserListMy mAdaptermy;
     private List<RssFeedModel> mFeedModelList = new ArrayList<>();
+    List<RssFeedModel> itemsList = new ArrayList<RssFeedModel>();
     private String TAG = "TAG";
     private String mFeedTitle;
     private String mFeedLink;
     private String mFeedDescription;
     public static String ID_ME = "";
-    private String title = null;
-    private String link = null;
-    private String description = null;
+
 
 
     // RSS XML document CHANNEL tag
@@ -82,6 +84,7 @@ public class ListRssActivity extends AppCompatActivity {
     private static String TAG_ITEM = "item";
     private static String TAG_PUB_DATE = "pubDate";
     private static String TAG_GUID = "guid";
+    private static String TAG_IMAGE = "url";
 
 
     List<String> list = new ArrayList<>();
@@ -130,10 +133,41 @@ public class ListRssActivity extends AppCompatActivity {
             name = getIntent().getExtras().getString("name");
             System.out.println("bundle====" + Url);
             System.out.println("bundle====" + name);
-            mFeedModelList = getRSSFeedItems(Url);
-            recyclerView.setVisibility(View.VISIBLE);
-            mAdapter = new AdapterUserList(ListRssActivity.this, mFeedModelList);
-            recyclerView.setAdapter(mAdapter);
+            this.getXmlFromUrl(Url);
+            Handler handler = new Handler();
+            Thread someThread = new Thread() {
+
+                @Override
+                public void run() {
+
+                    //some actions
+                    handler.post(new Runnable() {
+                        public void run() {
+                            RssReader rssReader = new RssReader(Url);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            try {
+                                List<RssItem> rssItems = rssReader.getItems();
+                                for (RssItem r:rssItems) {
+                                    System.out.println("getTitle====" + r.getTitle());
+                                    System.out.println("getDescription====" + r.getDescription());
+                                    System.out.println("getLink====" + r.getLink());
+                                    System.out.println("getLink====" + r.getImageUrl());
+                                    RssFeedModel rssItem = new RssFeedModel(r.getTitle(), r.getLink(), r.getDescription(), r.getImageUrl());
+                                    // adding item to list
+                                    itemsList.add(rssItem);
+                                }
+                                System.out.println("itemsListsize11====" + itemsList.size());
+                                mAdapter = new AdapterUserList(ListRssActivity.this, itemsList);
+                                recyclerView.setAdapter(mAdapter);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            };
+
+            someThread.start();
             prograsDialog.dismiss();
         }
 
@@ -164,17 +198,19 @@ public class ListRssActivity extends AppCompatActivity {
                     String desc = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss)).getText().toString();*/
 
-                    RssFeedModel rssFeedModel = mFeedModelList.get(position);
+                    RssFeedModel rssFeedModel = itemsList.get(position);
 
                     Intent intent = new Intent(ListRssActivity.this, ShowRssActivity.class);
                     //link = "https://www.irna.ir/news/83908201/";
                     intent.putExtra("link", rssFeedModel.link);
                     intent.putExtra("title", rssFeedModel.title);
                     intent.putExtra("desc", rssFeedModel.description);
+                    intent.putExtra("imgUrl", rssFeedModel.img_url);
 
                     System.out.println("Link111====" + rssFeedModel.link);
                     System.out.println("tit====111" + rssFeedModel.title);
                     System.out.println("description====111" + rssFeedModel.description);
+                    System.out.println("img_url====111" + rssFeedModel.img_url);
 
                     startActivity(intent);
                 }
@@ -224,46 +260,6 @@ public class ListRssActivity extends AppCompatActivity {
 
     /////////////////////////     XML          XML          ///////////////////////////////////////////////////////////////////////////
 
-    public List<RssFeedModel> getRSSFeedItems(String rss_url) {
-        List<RssFeedModel> itemsList = new ArrayList<RssFeedModel>();
-        String rss_feed_xml;
-        System.out.println("rss_url======" + rss_url);
-        rss_feed_xml = this.getXmlFromUrl(rss_url);
-
-        if (rss_feed_xml != null) {
-            try {
-                Document doc = this.getDomElement(rss_feed_xml);
-                NodeList nodeList = doc.getElementsByTagName(TAG_CHANNEL);
-                Element e = (Element) nodeList.item(0);
-
-                NodeList items = e.getElementsByTagName(TAG_ITEM);
-                for (int i = 0; i < items.getLength(); i++) {
-                    Element e1 = (Element) items.item(i);
-
-                    title = this.getValue(e1, TAG_TITLE);
-                    link = this.getValue(e1, TAG_LINK);
-                    description = this.getValue(e1, TAG_DESRIPTION);
-
-                    System.out.println("title====" + title);
-                    System.out.println("link====" + link);
-                    System.out.println("description====" + description);
-
-                    if (description.startsWith("<a ")) {
-                        String cleanUrl = description.substring(description.indexOf("src=") + 5, description.indexOf("/>") - 2);
-                        System.out.println("cleanUrl====" + cleanUrl);
-                    }
-
-                    RssFeedModel rssItem = new RssFeedModel(title, link, description);
-                    // adding item to list
-                    itemsList.add(rssItem);
-                }
-            } catch (Exception e) {
-                // Check log for errors
-                e.printStackTrace();
-            }
-        }
-        return itemsList;
-    }
 
     @SuppressLint("ObsoleteSdkInt")
     public String getXmlFromUrl(String url) {
@@ -331,7 +327,7 @@ public class ListRssActivity extends AppCompatActivity {
         return "";
     }
 
-    private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
+ /*   private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
 
         private String urlLink;
 
@@ -391,7 +387,7 @@ public class ListRssActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         }
-    }
+    }*/
 
 
     public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException,

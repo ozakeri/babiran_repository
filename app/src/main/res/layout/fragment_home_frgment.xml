@@ -409,17 +409,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="4dp">
+                    android:layout_margin="5dp">
 
                         <ImageView
                             android:id="@+id/imgsecondFullban1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:scaleType="fitXY"
                             android:src="@drawable/logoloading"  />
 
                 </androidx.cardview.widget.CardView>
@@ -436,15 +431,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="10dp">
+                        android:layout_margin="5dp">
 
                         <ui_elements.MyTextView
                             android:id="@+id/specialtondmarket"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:gravity="center"
                             android:text="ویژه تر از ویژه"
                             android:textColor="@color/colorPrimaryDark" />
@@ -485,8 +478,8 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_margin="10dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_margin="5dp"/>
 
             </LinearLayout>
 

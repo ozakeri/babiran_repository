@@ -380,7 +380,7 @@ public class MainListActivity extends AppCompatActivity {
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=212");
         Link.add("http://www.irna.ir/fa/rss.aspx?kind=145");*/
 
-        Link.add("https://www.khabaronline.ir/rss/pl/17");
+        Link.add("https://www.khabaronline.ir/rss");
 
         name.add("عناوین کل اخبار (khabaronline.ir)");
    /*     name.add("سیاسی");
