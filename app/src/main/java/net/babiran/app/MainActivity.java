@@ -738,7 +738,11 @@ public class MainActivity extends AppCompatActivity {
 
                             }
 
-                            loadfragments();
+                            try {
+                                loadfragments();
+                            } catch (Exception e) {
+                                e.getMessage();
+                            }
                             tabListeners();
 
 
@@ -1339,7 +1343,7 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void getEvent(EventbusModel model) {
 
-        if (model.getCredit() != null){
+        if (model.getCredit() != null) {
             Pattern p = Pattern.compile("\\d+");
             Matcher m = p.matcher(model.getCredit());
             while (m.find()) {

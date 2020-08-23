@@ -80,14 +80,14 @@ public class CustomPagerAdapterByUrlMain extends PagerAdapter {
         Glide.with(mContext).load(imageLink.get(position)).into(imageView);
         container.addView(itemView);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+       /* imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (position == 0){
                     mContext.startActivity(new Intent(mContext, SharjActivity.class));
                 }
             }
-        });
+        });*/
 
         return itemView;
     }
