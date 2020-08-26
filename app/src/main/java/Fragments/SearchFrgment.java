@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.load.resource.gif.GifBitmapProvider;
 
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
@@ -274,7 +275,8 @@ public class SearchFrgment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+
+                   /* if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
 
                         MainActivity.productlist.setVisibility(View.INVISIBLE);
 
@@ -305,7 +307,7 @@ public class SearchFrgment extends Fragment {
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
-                    }
+                    }*/
 
                     return true;
                 }

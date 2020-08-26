@@ -62,6 +62,22 @@
                             android:src="@drawable/fav_icon" />
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/layout_search"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="70dp"
+                        android:layout_centerVertical="true">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="3dp"
+                            android:src="@drawable/sear"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+
                     <ImageView
                         android:padding="12dp"
                         android:id="@+id/btn_back"

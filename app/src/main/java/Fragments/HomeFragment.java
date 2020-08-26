@@ -69,6 +69,7 @@ import Models.Product;
 import me.relex.circleindicator.CircleIndicator;
 import tools.AppConfig;
 import tools.CustomPagerAdapterByUrlMain;
+import tools.GlobalValues;
 import tools.Util;
 import ui_elements.Card;
 import ui_elements.MyTextView;
@@ -105,6 +106,7 @@ public class HomeFragment extends Fragment {
     RequestQueue queue;
     public static final String TAG = "TAG";
     private RecyclerView recycler_view, recycler_view_smallTile, recycler_view_bigTile;
+    private GlobalValues globalValues = new GlobalValues();
 
 
     DatabaseHandler db;
@@ -122,8 +124,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     public Timer timer, timer2;
@@ -1640,9 +1640,9 @@ public class HomeFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    // handle back button's click listener
                     if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
                         MainActivity.productlist.setVisibility(View.INVISIBLE);
+
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");

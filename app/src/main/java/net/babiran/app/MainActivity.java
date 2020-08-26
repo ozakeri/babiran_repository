@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     String category_id_notif = "";
     String image_from_notif = "";
     DatabaseHandler db;
-    private RelativeLayout layout_favorite;
+    private RelativeLayout layout_favorite,layout_search;
     public static final String TAG = "TAG";
     GlobalValues globalValues = new GlobalValues();
 
@@ -186,13 +186,22 @@ public class MainActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
             viewLogo = findViewById(R.id.btn_logo);
             layout_favorite = findViewById(R.id.layout_favorite);
+            layout_search = findViewById(R.id.layout_search);
             btnBack = findViewById(R.id.btn_back);
 
 
+            layout_favorite.setVisibility(View.GONE);
             layout_favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(MainActivity.this, FavListActivity.class));
+                }
+            });
+
+            layout_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 }
             });
 
@@ -832,7 +841,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EventBus.getDefault().post(new EventbusModel(false));
                 viewLogo.setVisibility(View.VISIBLE);
-                layout_favorite.setVisibility(View.VISIBLE);
+                layout_favorite.setVisibility(View.GONE);
                 btnBack.setVisibility(View.GONE);
                 findViewById(R.id.Homecontainer).setVisibility(View.VISIBLE);
                 findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
@@ -869,7 +878,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 viewLogo.setVisibility(View.VISIBLE);
-                layout_favorite.setVisibility(View.VISIBLE);
+                layout_favorite.setVisibility(View.GONE);
                 EventBus.getDefault().post(new EventbusModel(false));
                 btnBack.setVisibility(View.GONE);
 
@@ -907,7 +916,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewLogo.setVisibility(View.VISIBLE);
-                layout_favorite.setVisibility(View.VISIBLE);
+                layout_favorite.setVisibility(View.GONE);
                 EventBus.getDefault().post(new EventbusModel(false));
                 btnBack.setVisibility(View.GONE);
 
@@ -944,7 +953,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewLogo.setVisibility(View.VISIBLE);
-                layout_favorite.setVisibility(View.VISIBLE);
+                layout_favorite.setVisibility(View.GONE);
 
                 btnBack.setVisibility(View.GONE);
 
@@ -1393,7 +1402,7 @@ public class MainActivity extends AppCompatActivity {
             AppConfig.BACK_TO_LIOST = "0";
             Log.e("RESUME", "dkfjghskdfgh");
             viewLogo.setVisibility(View.VISIBLE);
-            layout_favorite.setVisibility(View.VISIBLE);
+            layout_favorite.setVisibility(View.GONE);
 
             btnBack.setVisibility(View.GONE);
 

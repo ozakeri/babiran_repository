@@ -675,6 +675,10 @@ public class BasketListFragment extends Fragment implements
                 }
                 for (int i = 0; i < products.size(); i++) {
                     Basket basket = new Basket();
+
+                    System.out.println("getStock=-=-=-=-=-=" + products.get(i).getStock());
+                    System.out.println("getStock=-=-=-=-=-=" + products.get(i).getName());
+
                     basket.setProduct_id(products.get(i).getId());
                     basket.setCount(products.get(i).count);
                     basket.setColorName(products.get(i).getColorName());

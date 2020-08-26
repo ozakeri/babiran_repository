@@ -11,6 +11,7 @@ public class GlobalValues {
     private static String firstId;
     private static String secondId;
     private boolean isPush;
+    private boolean searchOpen;
     private String creditValue;
 
     public String getFirstId() {
@@ -53,5 +54,13 @@ public class GlobalValues {
 
     public void setCreditValue(String creditValue) {
         this.creditValue = creditValue;
+    }
+
+    public boolean isSearchOpen() {
+        return searchOpen;
+    }
+
+    public void setSearchOpen(boolean searchOpen) {
+        this.searchOpen = searchOpen;
     }
 }

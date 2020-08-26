@@ -154,6 +154,8 @@ public class BasketListAdapter extends BaseAdapter {
             }
         });
 
+        System.out.println("getStock======" + products.get(i).getStock());
+        System.out.println("getStock======" + products.get(i).getName());
 
         for(int j = 0 ; j < products.get(i).getImages().size() ; j ++){
             if(products.get(i).getImages().get(j) != null && products.get(i).getImages().get(j).toString().length()>5) {

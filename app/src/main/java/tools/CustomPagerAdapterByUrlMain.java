@@ -96,11 +96,4 @@ public class CustomPagerAdapterByUrlMain extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((RelativeLayout) object);
     }
-
-
-
-
-
-
-
 }
