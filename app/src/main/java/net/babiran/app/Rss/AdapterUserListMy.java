@@ -31,10 +31,6 @@ public class AdapterUserListMy extends RecyclerView.Adapter<AdapterUserListMy.My
     {
         this.mContext = mContext;
         this.listProducts = listProducts;
-
-
-        ;
-
     }
 
 

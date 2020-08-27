@@ -77,6 +77,7 @@ import java.util.regex.Pattern;
 
 import Adapters.MenuAdapter;
 import Fragments.BasketListFragment;
+import Fragments.BlogFrgment;
 import Fragments.CategoryFragment;
 import Fragments.EditProfileFrgment;
 import Fragments.FactorFragment;
@@ -84,6 +85,7 @@ import Fragments.HomeFragment;
 import Fragments.ProductFragment;
 import Fragments.ProductListFragment;
 import Fragments.SearchFrgment;
+import Fragments.ShajeFrgment;
 import Handlers.DatabaseHandler;
 import Models.EventbusModel;
 import Models.Feature;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private String catId;
     private String proId;
     private boolean getProduct = false;
-    public static FrameLayout product, secondcategory, search, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
+    public static FrameLayout product, secondcategory, search,blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
     public static RelativeLayout wait;
     public static View viewLogo, btnBack;
     MyTextView voiceText, label;
@@ -360,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
                     secondcategory = (FrameLayout) findViewById(R.id.SecondCategorycontainer);
                     productlist = (FrameLayout) findViewById(R.id.ProductListcontainer);
                     search = (FrameLayout) findViewById(R.id.Searchcontainer);
+                    blogContainer = (FrameLayout) findViewById(R.id.blogContainer);
                     category = (FrameLayout) findViewById(R.id.Categorycontainer);
                     basketlist = (FrameLayout) findViewById(R.id.BasketListcontainer);
                     factorcontainer = (FrameLayout) findViewById(R.id.Factorcontainer);
@@ -823,11 +826,13 @@ public class MainActivity extends AppCompatActivity {
     private void loadfragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.Homecontainer, new HomeFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.Searchcontainer, new SearchFrgment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.Searchcontainer, new ShajeFrgment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.blogContainer, new BlogFrgment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
 
         findViewById(R.id.Homecontainer).setVisibility(View.VISIBLE);
         findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+        findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
 
@@ -864,7 +869,7 @@ public class MainActivity extends AppCompatActivity {
                     tab_situation = "home";
                 } else if (tab_situation.equals("search")) {
 
-                    findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "home";
                 }
@@ -873,7 +878,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.tab_search).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tab_sharje).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -886,6 +891,47 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.Searchcontainer).setVisibility(View.VISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+
+                if (tab_situation.equals("category")) {
+
+                    findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "search";
+                } else if (tab_situation.equals("profile")) {
+
+                    findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "search";
+                } else if (tab_situation.equals("home")) {
+
+                    findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "search";
+                }
+
+
+            }
+        });
+
+
+        findViewById(R.id.tab_blog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                viewLogo.setVisibility(View.VISIBLE);
+                layout_favorite.setVisibility(View.GONE);
+                EventBus.getDefault().post(new EventbusModel(false));
+                btnBack.setVisibility(View.GONE);
+
+                findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.blogContainer).setVisibility(View.VISIBLE);
+                findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
 
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
@@ -894,17 +940,17 @@ public class MainActivity extends AppCompatActivity {
                 if (tab_situation.equals("category")) {
 
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "search";
                 } else if (tab_situation.equals("profile")) {
 
                     findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "search";
                 } else if (tab_situation.equals("home")) {
 
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "search";
                 }
 
@@ -922,6 +968,7 @@ public class MainActivity extends AppCompatActivity {
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.VISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
@@ -940,7 +987,7 @@ public class MainActivity extends AppCompatActivity {
                     tab_situation = "category";
                 } else if (tab_situation.equals("search")) {
 
-                    findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "category";
                 }
@@ -988,6 +1035,7 @@ public class MainActivity extends AppCompatActivity {
 
                     findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.BasketListcontainer).setVisibility(View.VISIBLE);
                     findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
@@ -1006,7 +1054,7 @@ public class MainActivity extends AppCompatActivity {
                         tab_situation = "profile";
                     } else if (tab_situation.equals("search")) {
 
-                        findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                        findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                         findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                         tab_situation = "profile";
                     }
@@ -1408,6 +1456,7 @@ public class MainActivity extends AppCompatActivity {
 
             findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+            findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.Categorycontainer).setVisibility(View.VISIBLE);
             findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
@@ -1426,7 +1475,7 @@ public class MainActivity extends AppCompatActivity {
                 tab_situation = "category";
             } else if (tab_situation.equals("search")) {
 
-                findViewById(R.id.tab_search).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                 findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                 tab_situation = "category";
             }

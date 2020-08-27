@@ -24,6 +24,7 @@ public class Product {
     private ArrayList<Color> colors;
     private String colorName;
     private String colorCode;
+    private String factor_id;
 
     public Product(String id, String name, String description, String price, String stock, String count, String dis_price
             , ArrayList<Models.Image> images,

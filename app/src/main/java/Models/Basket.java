@@ -5,10 +5,17 @@ package Models;
  */
 
 public class Basket {
-    String product_id , count,colorName,colorCode ;
+    String product_id , count,colorName,colorCode ,factor_id;
+
     public Basket(String product_id,String count){
         this.product_id = product_id ;
         this.count = count ;
+    }
+
+    public Basket(String product_id, String count, String ref_id) {
+        this.product_id = product_id;
+        this.count = count;
+        this.factor_id = factor_id;
     }
 
     public Basket() {
@@ -44,5 +51,13 @@ public class Basket {
 
     public void setColorCode(String colorCode) {
         this.colorCode = colorCode;
+    }
+
+    public String getFactor_id() {
+        return factor_id;
+    }
+
+    public void setFactor_id(String factor_id) {
+        this.factor_id = factor_id;
     }
 }

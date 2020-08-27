@@ -61,7 +61,7 @@ public class FactorListAdapter extends BaseAdapter {
     ArrayList<Basket> baskets = new ArrayList<>();
     private String basketjson = "";
     private SharedPreferences.Editor editor;
-
+    private String factor_id;
     private String[] descriptionData1 = {"ثبت شده", "", "", ""};
     private String[] descriptionData2 = {"", "در حال آماده سازی", "", ""};
     private String[] descriptionData3 = {"", "", "تحویل پیک و در حال ارسال", ""};
@@ -167,6 +167,7 @@ public class FactorListAdapter extends BaseAdapter {
             holder.Peygiri.setText("0");
         } else {
             holder.Peygiri.setText(ar[4]);
+            factor_id = ar[4];
         }
 
         System.out.println("ar[4]====" + ar[4]);
@@ -245,7 +246,8 @@ public class FactorListAdapter extends BaseAdapter {
 
                     if (factors.get(i).products != null && factors.get(i).products.size() > 0) {
                         for (int j = 0; j < factors.get(i).products.size(); j++) {
-                            Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count);
+                            System.out.println("Sefaresh====" + holder.Sefaresh.getText().toString());
+                            Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count,factor_id);
                             baskets.add(basket);
                         }
                         Gson gson = new Gson();

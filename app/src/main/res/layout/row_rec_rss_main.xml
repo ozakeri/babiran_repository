@@ -13,7 +13,7 @@
         android:gravity="right"
         android:orientation="horizontal">
 
-        <TextView
+        <ui_elements.MyTextView
             android:id="@+id/txt_rc_rss_mainn_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

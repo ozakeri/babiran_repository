@@ -100,10 +100,10 @@ public class SearchProductListAdapter extends RecyclerView.Adapter<SearchProduct
             public void onClick(View view) {
                 //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
                 try {
-                    AppConfig.fragmentManager.beginTransaction().add(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
+              /*      AppConfig.fragmentManager.beginTransaction().add(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
                     FragmentManager fm = ((Activity) context).getFragmentManager();
                     ProductFragment countDialog = new ProductFragment(categories.get(i));
-                    fm.beginTransaction().add(R.id.Productcontainer,countDialog).hashCode();
+                    fm.beginTransaction().add(R.id.Productcontainer,countDialog).hashCode();*/
 
                 } catch (Exception e) {
                     e.getMessage();

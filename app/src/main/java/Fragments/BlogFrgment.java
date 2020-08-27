@@ -1,25 +1,35 @@
-package net.babiran.app.Rss;
+package Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,10 +41,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
+import net.babiran.app.Rss.AdapterUserListMain;
+import net.babiran.app.Rss.AdapterUserListMainMy;
+import net.babiran.app.Rss.AdapterUserListToTo;
+import net.babiran.app.Rss.BLOGME;
+import net.babiran.app.Rss.ListActivity;
+import net.babiran.app.Rss.ListRssActivity;
+import net.babiran.app.Rss.MainListActivity;
+import net.babiran.app.Rss.RecyclerItemClickListener;
+import net.babiran.app.Rss.RssList;
 import net.babiran.app.Servic.GETING;
 import net.babiran.app.Servic.MyInterFace;
+import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
+import net.babiran.app.Sharj.SharjHistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +73,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
 
-public class MainListActivity extends AppCompatActivity {
+public class BlogFrgment extends Fragment {
+
     private Toolbar toolbar;
     List<RssList> Listed = new ArrayList<>();
     List<String> name = new ArrayList<>();
@@ -76,26 +99,29 @@ public class MainListActivity extends AppCompatActivity {
     private CoordinatorLayout coordinator;
     private CardView blogCardView, newsCardView;
 
+
+    public BlogFrgment() {
+
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_list);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
 
-        //     getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        INIT();
+        View view = inflater.inflate(R.layout.activity_main_list, container, false);
+
+        AppConfig.frag = BlogFrgment.this;
+
+        INIT(view);
         b1 = true;
         list.clear();
         Listed();
-        Listed2();
 
         coordinator.setVisibility(View.VISIBLE);
         layout_search.setVisibility(View.GONE);
@@ -176,7 +202,7 @@ public class MainListActivity extends AppCompatActivity {
                 imNews.setVisibility(View.GONE);
                 blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
                 newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
-                //Listed();
+                Listed();
             }
         });
 
@@ -188,6 +214,7 @@ public class MainListActivity extends AppCompatActivity {
                 b1 = false;
                 imNewsMy.setVisibility(View.GONE);
                 imNews.setVisibility(View.VISIBLE);
+                Listed2();
                 blogCardView.setBackgroundColor(getResources().getColor(R.color.white));
                 newsCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
 
@@ -223,7 +250,7 @@ public class MainListActivity extends AppCompatActivity {
 
         ///////////////////////////////////////////////////////////////////////////////
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(MainListActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
@@ -236,7 +263,7 @@ public class MainListActivity extends AppCompatActivity {
                     String title = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_des)).getText().toString();
 
-                    Intent intent = new Intent(MainListActivity.this, ListActivity.class);
+                    Intent intent = new Intent(getActivity(), ListActivity.class);
                     intent.putExtra("id", Link);
                     intent.putExtra("title", title);
                     startActivity(intent);
@@ -252,10 +279,10 @@ public class MainListActivity extends AppCompatActivity {
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
                     System.out.println("b1======" + Link2);
-                    Intent intent2 = new Intent(MainListActivity.this, ListRssActivity.class);
+                    Intent intent2 = new Intent(getActivity(), ListRssActivity.class);
                     intent2.putExtra("link", Link2);
                     startActivity(intent2);
-                   // b2 = false;
+                    // b2 = false;
                 }
 
             }
@@ -286,35 +313,104 @@ public class MainListActivity extends AppCompatActivity {
             }
         });
 
+
+        return view;
+
     }
 
-    private void INIT() {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+
+
+                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                        System.out.println("===MainActivity==111===");
+                        //MainActivity.productlist.setVisibility(View.INVISIBLE);
+                        FragmentManager fm = getFragmentManager();
+                        if (fm != null) {
+                            ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
+                            if (fragm != null) {
+                                fragm.backpress();
+                            }
+                        }
+
+
+                    } else {
+                        System.out.println("===MainActivity==333===");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
+                        builder.setTitle("می خواهید خارج شوید؟");
+                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                if (AppConfig.checkReciveSms == true) {
+                                    AppConfig.checkReciveSms = false;
+                                }
+                                if (AppConfig.btnSubmitOk == true) {
+                                    AppConfig.btnSubmitOk = false;
+                                }
+
+                                AppConfig.act.finish();
+
+
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //TODO
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    }
+
+
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void INIT(View view) {
         // prograsDialog = new SpotsDialog(MainListActivity.this);
-        recyclerView = (RecyclerView) findViewById(R.id.rec_main);
-        recycler_view_search = (RecyclerView) findViewById(R.id.recycler_view_search);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rec_main);
+        recycler_view_search = (RecyclerView) view.findViewById(R.id.recycler_view_search);
 
-        coordinator = findViewById(R.id.coordinator);
-        closeImage = findViewById(R.id.closeImage);
-        btn_search = findViewById(R.id.btn_search);
-        blogCardView = findViewById(R.id.blogCardView);
-        newsCardView = findViewById(R.id.newsCardView);
+        coordinator = view.findViewById(R.id.coordinator);
+        closeImage = view.findViewById(R.id.closeImage);
+        btn_search = view.findViewById(R.id.btn_search);
+        blogCardView = view.findViewById(R.id.blogCardView);
+        newsCardView = view.findViewById(R.id.newsCardView);
 
-        imNews = (ImageView) findViewById(R.id.img_main_rss_news_clos);
-        lnNews = (LinearLayout) findViewById(R.id.ln_main_rss_news);
+        imNews = (ImageView) view.findViewById(R.id.img_main_rss_news_clos);
+        lnNews = (LinearLayout) view.findViewById(R.id.ln_main_rss_news);
 
-        imNewsMy = (ImageView) findViewById(R.id.img_main_rss_news_clos_my);
-        lnNewsMy = (LinearLayout) findViewById(R.id.ln_main_rss_news_my);
-        search_bar = findViewById(R.id.search_bar);
-        layout_search = findViewById(R.id.layout_search);
+        imNewsMy = (ImageView) view.findViewById(R.id.img_main_rss_news_clos_my);
+        lnNewsMy = (LinearLayout) view.findViewById(R.id.ln_main_rss_news_my);
+        search_bar = view.findViewById(R.id.search_bar);
+        layout_search = view.findViewById(R.id.layout_search);
 
-        progress_bar = findViewById(R.id.progress_bar);
+        progress_bar = view.findViewById(R.id.progress_bar);
 
 
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        recycler_view_search.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view_search.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }
 
@@ -343,7 +439,7 @@ public class MainListActivity extends AppCompatActivity {
                     }
                     if (list.size() > 0) {
                         progress_bar.setVisibility(View.GONE);
-                        mAd = new AdapterUserListMainMy(MainListActivity.this, list);
+                        mAd = new AdapterUserListMainMy(getActivity(), list);
                         recyclerView.setAdapter(mAd);
                     }
 
@@ -400,7 +496,7 @@ public class MainListActivity extends AppCompatActivity {
         }
 
 
-        mAdapter = new AdapterUserListMain(MainListActivity.this, Listed);
+        mAdapter = new AdapterUserListMain(getActivity(), Listed);
 
         recyclerView.setAdapter(mAdapter);
         //    prograsDialog.dismiss();
@@ -408,7 +504,7 @@ public class MainListActivity extends AppCompatActivity {
 
     public void searchBlog(String key) {
 
-        queue = Volley.newRequestQueue(MainListActivity.this);
+        queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/blog/searchBlogs";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new com.android.volley.Response.Listener<String>() {
@@ -429,13 +525,13 @@ public class MainListActivity extends AppCompatActivity {
                         }
 
                         if (listBlog.size() > 0) {
-                            adapterUserListToTo = new AdapterUserListToTo(MainListActivity.this, listBlog);
+                            adapterUserListToTo = new AdapterUserListToTo(getActivity(), listBlog);
                             recycler_view_search.setAdapter(adapterUserListToTo);
                             adapterUserListToTo.notifyDataSetChanged();
                         } else {
 
                             recycler_view_search.setVisibility(View.GONE);
-                            AlertDialog alertDialog = new AlertDialog.Builder(MainListActivity.this).create();
+                            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                             alertDialog.setTitle("موردی یافت نشد");
                             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
                                     new DialogInterface.OnClickListener() {
@@ -477,17 +573,4 @@ public class MainListActivity extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
-    private boolean Ch(String t, List<String> listC) {
-        boolean f = false;
-
-        for (String s : listC) {
-            if (s.contains(t)) {
-                f = true;
-            }
-        }
-
-        return f;
-    }
-
 }

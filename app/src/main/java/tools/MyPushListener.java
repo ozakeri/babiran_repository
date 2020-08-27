@@ -198,7 +198,7 @@ public class MyPushListener extends PusheListenerService {
                                         ListtoListActivity.ID_ME = blog_id;
                                         Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
                                         intent.putExtra("isPush", true);
-                                        showNotification(getApplicationContext(), intent, title, body);
+                                        showNotificationBlog(getApplicationContext(), intent, title, body);
                                     }
                                 } else {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -270,6 +270,62 @@ public class MyPushListener extends PusheListenerService {
         }
 
         RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push);
+
+
+        if (pro_image != null) {
+            System.out.println("pro_image===" + pro_image);
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(pro_image).getContent());
+                contentView.setImageViewBitmap(R.id.image, bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            contentView.setImageViewResource(R.id.image, R.drawable.applogo);
+        }
+        contentView.setTextViewText(R.id.title, title);
+        contentView.setTextViewText(R.id.body, body);
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.applogo)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setContent(contentView)
+                .setContentIntent(pendingIntent);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+    public void showNotificationBlog(Context context, Intent intent, String title, String body) {
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.custom_push_blog);
 
 
         if (pro_image != null) {

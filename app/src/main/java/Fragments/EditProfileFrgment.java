@@ -78,7 +78,7 @@ public class EditProfileFrgment extends Fragment {
         v = inflater.inflate(R.layout.fragment_editprofile_frgment, container, false);
 
         MainActivity.edit.setVisibility(View.VISIBLE);
-        txt_email_error = (TextView) v.findViewById(R.id.email_error);
+        //txt_email_error = (TextView) v.findViewById(R.id.email_error);
         ed_name = (EditText) v.findViewById(R.id.name);
         ed_email = (EditText) v.findViewById(R.id.email);
         ed_address = (EditText) v.findViewById(R.id.address);
@@ -137,7 +137,7 @@ public class EditProfileFrgment extends Fragment {
 
         final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        ed_email.addTextChangedListener(new TextWatcher() {
+        /*ed_email.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
                 String email = ed_email.getText().toString().trim();
@@ -170,7 +170,7 @@ public class EditProfileFrgment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // other stuffs
             }
-        });
+        });*/
 
 
         v.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
