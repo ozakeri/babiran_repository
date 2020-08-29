@@ -177,6 +177,69 @@
                     android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 
+                    <!-- sharge-->
+                    <RelativeLayout
+                        android:id="@+id/tab_sharje"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="5dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/shaje_icon" />
+
+                        <ui_elements.MyTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="-5dp"
+                            android:text="شارژ"
+                            android:textAlignment="center"
+                            android:textColor="@color/blueDark" />
+
+                    </RelativeLayout>
+
+                    <!-- blog-->
+                    <RelativeLayout
+                        android:id="@+id/tab_blog"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="5dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_news" />
+
+                        <ui_elements.MyTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="-5dp"
+                            android:text="بابی مگ"
+                            android:textAlignment="center"
+                            android:textColor="@color/blueDark" />
+
+                    </RelativeLayout>
+
+                    <!-- home-->
                     <RelativeLayout
 
                         android:id="@+id/tab_home"
@@ -208,6 +271,7 @@
 
                     </RelativeLayout>
 
+                    <!-- cat-->
                     <RelativeLayout
 
                         android:id="@+id/tab_category"
@@ -240,67 +304,7 @@
 
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/tab_sharje"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/shaje_icon" />
-
-                        <ui_elements.MyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
-                            android:text="شارژ"
-                            android:textAlignment="center"
-                            android:textColor="@color/blueDark" />
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/tab_blog"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/ic_news" />
-
-                        <ui_elements.MyTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
-                            android:text="بابی مگ"
-                            android:textAlignment="center"
-                            android:textColor="@color/blueDark" />
-
-                    </RelativeLayout>
-
+                    <!-- basket-->
                     <RelativeLayout
 
                         android:id="@+id/tab_profile"

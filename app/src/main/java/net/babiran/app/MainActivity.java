@@ -84,7 +84,6 @@ import Fragments.FactorFragment;
 import Fragments.HomeFragment;
 import Fragments.ProductFragment;
 import Fragments.ProductListFragment;
-import Fragments.SearchFrgment;
 import Fragments.ShajeFrgment;
 import Handlers.DatabaseHandler;
 import Models.EventbusModel;
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private String catId;
     private String proId;
     private boolean getProduct = false;
-    public static FrameLayout product, secondcategory, search,blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
+    public static FrameLayout product, secondcategory, search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
     public static RelativeLayout wait;
     public static View viewLogo, btnBack;
     MyTextView voiceText, label;
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     String category_id_notif = "";
     String image_from_notif = "";
     DatabaseHandler db;
-    private RelativeLayout layout_favorite,layout_search;
+    private RelativeLayout layout_favorite, layout_search;
     public static final String TAG = "TAG";
     GlobalValues globalValues = new GlobalValues();
 
@@ -853,7 +852,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
-
+                findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
 
@@ -911,6 +910,11 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "search";
+                }else if (tab_situation.equals("blog")) {
+
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "search";
                 }
 
 
@@ -940,18 +944,22 @@ public class MainActivity extends AppCompatActivity {
                 if (tab_situation.equals("category")) {
 
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
-                    tab_situation = "search";
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "blog";
                 } else if (tab_situation.equals("profile")) {
 
                     findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
-                    tab_situation = "search";
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "blog";
                 } else if (tab_situation.equals("home")) {
 
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
-                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
-                    tab_situation = "search";
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "blog";
+                }else if (tab_situation.equals("search")) {
+                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "blog";
                 }
 
 
@@ -976,23 +984,22 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
 
                 if (tab_situation.equals("home")) {
-
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "category";
                 } else if (tab_situation.equals("profile")) {
-
                     findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "category";
                 } else if (tab_situation.equals("search")) {
-
                     findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "category";
+                } else if (tab_situation.equals("blog")) {
+                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                    findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                    tab_situation = "category";
                 }
-
-
             }
         });
 
@@ -1055,6 +1062,10 @@ public class MainActivity extends AppCompatActivity {
                     } else if (tab_situation.equals("search")) {
 
                         findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                        findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                        tab_situation = "profile";
+                    }else if (tab_situation.equals("blog")) {
+                        findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                         findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                         tab_situation = "profile";
                     }
