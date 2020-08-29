@@ -43,7 +43,7 @@ public class MyPushListener extends PusheListenerService {
     private RequestQueue queue;
     private DatabaseHandler db;
     private GlobalValues globalValues = new GlobalValues();
-    private String type, pro_id, cat_id, title, body, blog_id, success, factorCode, pro_image = null;
+    private String type, pro_id, cat_id, title, body, blog_id, success, factorCode,user, pro_image = null;
 
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
@@ -134,6 +134,9 @@ public class MyPushListener extends PusheListenerService {
                             if (key.equals(" body")) {
                                 key = key.replace(" body", "body");
                             }
+                            if (key.equals(" user")) {
+                                key = key.replace(" user", "user");
+                            }
 
                             if (key.equals("type")) {
                                 type = value;
@@ -161,6 +164,10 @@ public class MyPushListener extends PusheListenerService {
 
                             if (key.equals("body")) {
                                 body = value;
+                            }
+
+                            if (key.equals("user")) {
+                                user = value;
                             }
 
 
@@ -199,6 +206,10 @@ public class MyPushListener extends PusheListenerService {
                                         Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
                                         intent.putExtra("isPush", true);
                                         showNotificationBlog(getApplicationContext(), intent, title, body);
+                                    }
+                                }else if (type.equals("user")) {
+                                    if (blog_id != null) {
+                                        showNotificationCopy(getApplicationContext(), title, body);
                                     }
                                 } else {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

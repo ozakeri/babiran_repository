@@ -6,8 +6,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,13 +24,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
-import net.babiran.app.DownLoadImageTask;
 import net.babiran.app.OrderList;
 import net.babiran.app.R;
 import net.babiran.app.Rss.FullScreenActivity;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -153,12 +148,13 @@ public class FactorListAdapter extends BaseAdapter {
 //
         String ar[] = factors.get(i).piyek.split("##");
         System.out.println("ar[]====" + Arrays.toString(ar));
-        if (ar[3].equals("null"))//3==> trak   4 ==> ref
+        System.out.println("pay_again====" + factors.get(i).pay_again);
+        if (factors.get(i).pay_again.equals("1"))//3==> trak   4 ==> ref
         {
             holder.Sefaresh.setText("0");
             holder.Sefaresh.setVisibility(View.GONE);
             holder.btn_type_state_peygiri.setVisibility(View.VISIBLE);
-        } else {
+        } else if (factors.get(i).pay_again.equals("0")) {
             holder.Sefaresh.setText(ar[3]);
             holder.Peygiri.setVisibility(View.VISIBLE);
             holder.btn_type_state_peygiri.setVisibility(View.GONE);
@@ -247,7 +243,7 @@ public class FactorListAdapter extends BaseAdapter {
                     if (factors.get(i).products != null && factors.get(i).products.size() > 0) {
                         for (int j = 0; j < factors.get(i).products.size(); j++) {
                             System.out.println("Sefaresh====" + holder.Sefaresh.getText().toString());
-                            Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count,factor_id);
+                            Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count, factor_id);
                             baskets.add(basket);
                         }
                         Gson gson = new Gson();
@@ -333,7 +329,7 @@ public class FactorListAdapter extends BaseAdapter {
 
         //new DownLoadImageTask(img, context).execute(url);
         //url = "http://www.babiran.net/upload/images/carrier/1399-02-04-215649.jpg";
-        
+
         Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(img);
 

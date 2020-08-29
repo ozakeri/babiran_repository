@@ -175,7 +175,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="0.5"
-                        android:background="@color/blueDark"
+                        android:background="@drawable/border_button"
                         android:text="پرداخت مجدد"
                         android:textColor="@color/white"
                         android:textSize="14sp"

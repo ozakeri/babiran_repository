@@ -275,7 +275,7 @@ public class FactorList extends AppCompatActivity {
                                     if (productArrayList != null) {
 
                                         Factor factor = new Factor(Full, status_name.toString(), jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
-                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"));
+                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"), jsonObject.getString("pay_again"));
 
                                         factorArrayList.add(factor);
                                     }
@@ -414,7 +414,7 @@ public class FactorList extends AppCompatActivity {
                                     if (productArrayList != null) {
 
                                         Factor factor = new Factor(Full, status_name.toString(), jsonObject.getString("id"), jsonObject.getString("price_under_discount"), jsonObject.getString("price"),
-                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"));
+                                                jsonObject.getString("paymentName"), jsonObject.getString("created_at_jalali"), productArrayList, jsonObject.getString("address"), jsonObject.getString("pay_again"));
 
                                         factorArrayList.add(factor);
                                         factorListAdapter.notifyDataSetChanged();
