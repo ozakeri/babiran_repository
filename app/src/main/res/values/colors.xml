@@ -22,7 +22,9 @@
     <color name="orange">#FFD76F07</color>
     <color name="green">#13ae2d</color>
     <color name="green_light">#03FD2D</color>
-    <color name="green_transparent">#147023</color>
+    <color name="green_transparent">#5D929C</color>
+    <color name="yellow_transparent">#C6FF00</color>
+    <color name="forooze_transparent">#BFC5C0</color>
     <color name="greenDark">#035311</color>
     <color name="blueDark">#ff2844</color>
     <color name="txt_color">#6f6f6f</color>

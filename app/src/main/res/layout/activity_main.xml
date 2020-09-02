@@ -132,7 +132,12 @@
                 android:layout_above="@+id/opp"/>
 
             <FrameLayout
-                android:id="@+id/Searchcontainer"
+                android:id="@+id/searchContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <FrameLayout
+                android:id="@+id/shajeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 

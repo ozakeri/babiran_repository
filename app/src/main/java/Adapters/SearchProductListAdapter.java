@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -98,22 +100,17 @@ public class SearchProductListAdapter extends RecyclerView.Adapter<SearchProduct
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View view) {
-                //Toast.makeText(context,"show advertising with id : \n"+categories.get(i).id, Toast.LENGTH_SHORT).show();
-                try {
-              /*      AppConfig.fragmentManager.beginTransaction().add(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
-                    FragmentManager fm = ((Activity) context).getFragmentManager();
-                    ProductFragment countDialog = new ProductFragment(categories.get(i));
-                    fm.beginTransaction().add(R.id.Productcontainer,countDialog).hashCode();*/
-
-                } catch (Exception e) {
-                    e.getMessage();
-                }
+               // AppConfig.fragmentManager.beginTransaction().add(R.id.Productcontainer, new ProductFragment(categories.get(i))).commit();
+                ((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.Productcontainer, new ProductFragment(categories.get(i)))
+                        .commit();
             }
         });
 
         holder.addToBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 FragmentManager fm = ((Activity) context).getFragmentManager();
                 CountDialog countDialog = new CountDialog(categories.get(i));

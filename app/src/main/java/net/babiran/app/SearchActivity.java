@@ -3,12 +3,14 @@ package net.babiran.app;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -60,11 +62,12 @@ public class SearchActivity extends AppCompatActivity {
     private JSONArray jsonArray;
     private List<Product> products;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         search = findViewById(R.id.search);
         recycler_view = findViewById(R.id.recycler_view);
         circularProgressView = findViewById(R.id.progressBarCircularIndeterminate);
@@ -119,14 +122,13 @@ public class SearchActivity extends AppCompatActivity {
         recycler_view.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
         recycler_view.setItemAnimator(new DefaultItemAnimator());
 
-        /*recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(SearchActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+        recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(SearchActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 System.out.println("position=========" + products.get(position));
                 //AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products.get(position))).commit();
-                getSupportFragmentManager().beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products.get(position))).commit();
             }
-        }));*/
+        }));
     }
 
     public void submit(final String s) {
@@ -279,5 +281,11 @@ public class SearchActivity extends AppCompatActivity {
 
 
         //Volley End
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MainActivity.product.setVisibility(View.INVISIBLE);
     }
 }

@@ -84,6 +84,7 @@ import Fragments.FactorFragment;
 import Fragments.HomeFragment;
 import Fragments.ProductFragment;
 import Fragments.ProductListFragment;
+import Fragments.SearchFrgment;
 import Fragments.ShajeFrgment;
 import Handlers.DatabaseHandler;
 import Models.EventbusModel;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private String catId;
     private String proId;
     private boolean getProduct = false;
-    public static FrameLayout product, secondcategory, search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
+    public static FrameLayout product, secondcategory, sharje,search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
     public static RelativeLayout wait;
     public static View viewLogo, btnBack;
     MyTextView voiceText, label;
@@ -202,7 +203,16 @@ public class MainActivity extends AppCompatActivity {
             layout_search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                   // startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer, new SearchFrgment()).commit();
+                    MainActivity.search.setVisibility(View.VISIBLE);
+                    MainActivity.sharje.setVisibility(View.INVISIBLE);
+                    MainActivity.setting.setVisibility(View.INVISIBLE);
+                    MainActivity.about.setVisibility(View.INVISIBLE);
+                    MainActivity.support.setVisibility(View.INVISIBLE);
+                    MainActivity.home.setVisibility(View.INVISIBLE);
+                    MainActivity.category.setVisibility(View.INVISIBLE);
+                    MainActivity.basketlist.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -360,7 +370,8 @@ public class MainActivity extends AppCompatActivity {
                     product = (FrameLayout) findViewById(R.id.Productcontainer);
                     secondcategory = (FrameLayout) findViewById(R.id.SecondCategorycontainer);
                     productlist = (FrameLayout) findViewById(R.id.ProductListcontainer);
-                    search = (FrameLayout) findViewById(R.id.Searchcontainer);
+                    sharje = (FrameLayout) findViewById(R.id.shajeContainer);
+                    search = (FrameLayout) findViewById(R.id.searchContainer);
                     blogContainer = (FrameLayout) findViewById(R.id.blogContainer);
                     category = (FrameLayout) findViewById(R.id.Categorycontainer);
                     basketlist = (FrameLayout) findViewById(R.id.BasketListcontainer);
@@ -825,12 +836,12 @@ public class MainActivity extends AppCompatActivity {
     private void loadfragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.Homecontainer, new HomeFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.Searchcontainer, new ShajeFrgment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.shajeContainer, new ShajeFrgment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.blogContainer, new BlogFrgment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
 
         findViewById(R.id.Homecontainer).setVisibility(View.VISIBLE);
-        findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+        findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
@@ -848,7 +859,7 @@ public class MainActivity extends AppCompatActivity {
                 layout_favorite.setVisibility(View.GONE);
                 btnBack.setVisibility(View.GONE);
                 findViewById(R.id.Homecontainer).setVisibility(View.VISIBLE);
-                findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
@@ -887,7 +898,7 @@ public class MainActivity extends AppCompatActivity {
                 btnBack.setVisibility(View.GONE);
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
-                findViewById(R.id.Searchcontainer).setVisibility(View.VISIBLE);
+                findViewById(R.id.shajeContainer).setVisibility(View.VISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
@@ -933,7 +944,7 @@ public class MainActivity extends AppCompatActivity {
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.blogContainer).setVisibility(View.VISIBLE);
-                findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
 
@@ -975,7 +986,7 @@ public class MainActivity extends AppCompatActivity {
                 btnBack.setVisibility(View.GONE);
 
                 findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
-                findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.VISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
@@ -1041,7 +1052,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.BasketListcontainer).setVisibility(View.VISIBLE);
@@ -1466,7 +1477,7 @@ public class MainActivity extends AppCompatActivity {
             btnBack.setVisibility(View.GONE);
 
             findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
-            findViewById(R.id.Searchcontainer).setVisibility(View.INVISIBLE);
+            findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.Categorycontainer).setVisibility(View.VISIBLE);
             findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);

@@ -30,7 +30,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.load.resource.gif.GifBitmapProvider;
 
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
@@ -165,9 +164,9 @@ public class SearchFrgment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // user is typing: reset already started timer (if existing)
-               //progressLayout.setVisibility(View.VISIBLE);
+                //progressLayout.setVisibility(View.VISIBLE);
 
-                if (s.length() == 0){
+                if (s.length() == 0) {
                     progressLayout.setVisibility(View.GONE);
                 }
                 if (timer != null) {
@@ -179,7 +178,7 @@ public class SearchFrgment extends Fragment {
             public void afterTextChanged(Editable arg0) {
                 // user typed: start the timer
                 progressLayout.setVisibility(View.VISIBLE);
-                if (arg0.length() == 0){
+                if (arg0.length() == 0) {
                     progressLayout.setVisibility(View.GONE);
                     queue.cancelAll(new RequestQueue.RequestFilter() {
                         @Override
@@ -188,7 +187,7 @@ public class SearchFrgment extends Fragment {
                         }
                     });
                 }
-                if (arg0.length() >=2){
+                if (arg0.length() >= 2) {
                     timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
@@ -275,39 +274,10 @@ public class SearchFrgment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-
-                   /* if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-
-                        MainActivity.productlist.setVisibility(View.INVISIBLE);
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
-                        builder.setTitle("می خواهید خارج شوید؟");
-                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                if (AppConfig.checkReciveSms == true) {
-                                    AppConfig.checkReciveSms = false;
-                                }
-                                if (AppConfig.btnSubmitOk == true) {
-                                    AppConfig.btnSubmitOk = false;
-                                }
-
-                                AppConfig.act.finish();
-
-
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //TODO
-                                dialog.dismiss();
-                            }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }*/
+                    MainActivity.search.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.home.setVisibility(View.VISIBLE);
 
                     return true;
                 }
@@ -329,7 +299,7 @@ public class SearchFrgment extends Fragment {
 
         //Volley Start
 
-       // ed_name.setEnabled(false);
+        // ed_name.setEnabled(false);
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
@@ -375,7 +345,7 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
-                                if (!c.isNull("moshakhasat")){
+                                if (!c.isNull("moshakhasat")) {
                                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -390,13 +360,13 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
-                                if (!c.isNull("rang")){
+                                if (!c.isNull("rang")) {
                                     JSONArray colorJSONArray = c.getJSONArray("rang");
                                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                                         try {
                                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                                             colorArrayList.add(iColor, color);
                                         } catch (JSONException ex) {
 
@@ -407,8 +377,8 @@ public class SearchFrgment extends Fragment {
                                 }
 
 
-                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList,colorArrayList,c.getString("provider_name"));
+                                Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                 products.add(product);
 
@@ -531,7 +501,7 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
-                                if (!c.isNull("moshakhasat")){
+                                if (!c.isNull("moshakhasat")) {
                                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
 
                                     for (int mo = 0; mo < jsonArray1.length(); mo++) {
@@ -547,13 +517,13 @@ public class SearchFrgment extends Fragment {
                                 }
 
 
-                                if (!c.isNull("rang")){
+                                if (!c.isNull("rang")) {
                                     JSONArray colorJSONArray = c.getJSONArray("rang");
                                     for (int iColor = 0; iColor < colorJSONArray.length(); iColor++) {
 
                                         try {
                                             JSONObject im = colorJSONArray.getJSONObject(iColor);
-                                            Color color = new Color(Util.createTransactionID(),im.getString("name"), im.getString("val"));
+                                            Color color = new Color(Util.createTransactionID(), im.getString("name"), im.getString("val"));
                                             colorArrayList.add(iColor, color);
                                         } catch (JSONException ex) {
 
@@ -564,9 +534,8 @@ public class SearchFrgment extends Fragment {
                                 }
 
 
-
-                                Product product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList,colorArrayList,c.getString("provider_name"));
+                                Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
 
                                 products.add(product);
                             }
