@@ -303,21 +303,13 @@ public class ProductListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getCatOnResume();
-
-    }
-
-    private void getCatOnResume() {
         MainActivity.viewLogo.setVisibility(View.GONE);
         MainActivity.btnBack.setVisibility(View.VISIBLE);
         MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.e("Resume", category_parent_id);
-
                 MainActivity.productlist.setVisibility(View.INVISIBLE);
-                Log.e("previous111111", prev);
+                Log.e("previous", prev);
                 if (category_parent_id != null) {
                     if (category_parent_id.equals("0") || category_parent_id.equals("-1")) {
                         MainActivity.secondcategory.setVisibility(View.INVISIBLE);
@@ -339,18 +331,23 @@ public class ProductListFragment extends Fragment {
                     }
                 }
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
-
                 MainActivity.btnBack.setVisibility(View.GONE);
             }
         });
         backpress();
 
         categorySwipeRefreshLayout.setRefreshing(false);
+
+    }
+
+    private void getCatOnResume() {
+
     }
 
     public void backpress() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -358,7 +355,6 @@ public class ProductListFragment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-                    System.out.println("category_parent_id====" + category_parent_id);
                     MainActivity.productlist.setVisibility(View.INVISIBLE);
                     Log.e("previous", prev);
                     if (category_parent_id != null) {
@@ -371,10 +367,8 @@ public class ProductListFragment extends Fragment {
 
                                 } else {
                                     if (prev.equals("second")) {
-                                        System.out.println("=====111111111=======");
                                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id, "backToSecond")).commit();
                                     } else {
-                                        System.out.println("=====2222222=======");
                                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id)).commit();
                                     }
                                 }

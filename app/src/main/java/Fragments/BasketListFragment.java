@@ -1,10 +1,13 @@
 package Fragments;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,7 @@ import Adapters.BasketListAdapter;
 import Handlers.DatabaseHandler;
 import Models.Basket;
 import Models.EventbusModel;
+import tools.AppConfig;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
 import ui_elements.NonScrollListView;
@@ -639,8 +643,56 @@ public class BasketListFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         updateList();
+
+
+
         MainActivity.layout_search.setVisibility(View.VISIBLE);
         MainActivity.btnBack.setVisibility(View.INVISIBLE);
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+
+
+
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+
+                        System.out.println("===MainActivity==333===");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
+                        builder.setTitle("می خواهید خارج شوید؟");
+                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                if (AppConfig.checkReciveSms == true) {
+                                    AppConfig.checkReciveSms = false;
+                                }
+                                if (AppConfig.btnSubmitOk == true) {
+                                    AppConfig.btnSubmitOk = false;
+                                }
+
+                                AppConfig.act.finish();
+
+
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //TODO
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

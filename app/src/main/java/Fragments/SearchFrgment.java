@@ -265,32 +265,6 @@ public class SearchFrgment extends Fragment {
 
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        System.out.println("=====onAttach=====");
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        System.out.println("=====onViewCreated=====");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        System.out.println("=====onActivityCreated=====");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        MainActivity.btnBack.setVisibility(View.VISIBLE);
-        MainActivity.viewLogo.setVisibility(View.GONE);
-        MainActivity.layout_search.setVisibility(View.GONE);
-        System.out.println("=====onStart=====");
-    }
 
     @Override
     public void onResume() {
@@ -305,11 +279,17 @@ public class SearchFrgment extends Fragment {
         MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.search.setVisibility(View.INVISIBLE);
-                MainActivity.btnBack.setVisibility(View.GONE);
-                MainActivity.viewLogo.setVisibility(View.VISIBLE);
-                MainActivity.layout_search.setVisibility(View.VISIBLE);
-                MainActivity.home.setVisibility(View.VISIBLE);
+
+                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    System.out.println("=====btnBack=====");
+                    MainActivity.search.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.home.setVisibility(View.VISIBLE);
+                }
+
+
             }
         });
 

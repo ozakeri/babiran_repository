@@ -319,9 +319,10 @@ public class BlogFrgment extends Fragment {
     public void onResume() {
         super.onResume();
         MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
-        MainActivity.btnBack.setVisibility(View.GONE);
+
 
 
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -331,9 +332,7 @@ public class BlogFrgment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-                    MainActivity.layout_search.setVisibility(View.VISIBLE);
-                    MainActivity.blogContainer.setVisibility(View.INVISIBLE);
-                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                    /*if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
                         System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
@@ -345,7 +344,7 @@ public class BlogFrgment extends Fragment {
                         }
 
 
-                    } else {
+                    } else {*/
                         System.out.println("===MainActivity==333===");
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
@@ -374,7 +373,7 @@ public class BlogFrgment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
 
-                    }
+                    //}
 
 
                     return true;

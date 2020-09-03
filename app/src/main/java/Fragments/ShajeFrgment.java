@@ -364,7 +364,7 @@ public class ShajeFrgment extends Fragment {
                     // handle back button's click listener
 
 
-                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                    /*if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
                         System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
@@ -376,7 +376,7 @@ public class ShajeFrgment extends Fragment {
                         }
 
 
-                    } else {
+                    } else {*/
                         System.out.println("===MainActivity==333===");
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
@@ -405,7 +405,7 @@ public class ShajeFrgment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
 
-                    }
+                   // }
 
 
                     return true;

@@ -89,6 +89,24 @@ public class CategoryFragment extends Fragment {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
 
+        MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                    System.out.println("===MainActivity==111===");
+                    //MainActivity.productlist.setVisibility(View.INVISIBLE);
+                    FragmentManager fm = getFragmentManager();
+                    if (fm != null) {
+                        ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
+                        if (fragm != null) {
+                            fragm.backpress();
+                        }
+                    }
+
+
+                }
+            }
+        });
 
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override

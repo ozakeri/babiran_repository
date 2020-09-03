@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -562,15 +563,43 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.product.setVisibility(View.INVISIBLE);
-                MainActivity.btnBack.setVisibility(View.GONE);
-                MainActivity.viewLogo.setVisibility(View.VISIBLE);
 
-                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                if ( MainActivity.product.getVisibility() == View.VISIBLE){
+                    MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.VISIBLE);
                     MainActivity.layout_search.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.GONE);
+                    System.out.println("VISIBLE=====111====");
+                    return;
                 }
+
+                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    MainActivity.search.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.home.setVisibility(View.VISIBLE);
+                    System.out.println("VISIBLE=====222====");
+                    return;
+                }
+/*
+                if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                    System.out.println("===MainActivity==111===");
+                    //MainActivity.productlist.setVisibility(View.INVISIBLE);
+                    FragmentManager fm = getFragmentManager();
+                    if (fm != null) {
+                        ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
+                        if (fragm != null) {
+                            fragm.backpress();
+                        }
+                    }
+
+                    return;
+                }*/
+                MainActivity.product.setVisibility(View.INVISIBLE);
+                MainActivity.btnBack.setVisibility(View.GONE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                System.out.println("VISIBLE=====333====");
             }
         });
         getView().setOnKeyListener(new View.OnKeyListener() {

@@ -470,6 +470,20 @@ public class MainActivity extends AppCompatActivity {
             notif_Relative.setVisibility(View.GONE);
         }
 
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    MainActivity.search.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////Token $ RegId
 //    private void registerInBackground()
