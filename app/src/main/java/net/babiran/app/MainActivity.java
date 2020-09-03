@@ -38,6 +38,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    public static RelativeLayout layout_search;
     //    private GoogleCloudMessaging gcmObj;
 //    private String RegId,TOKEN;
     private String catId;
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     String category_id_notif = "";
     String image_from_notif = "";
     DatabaseHandler db;
-    private RelativeLayout layout_favorite, layout_search;
+    private RelativeLayout layout_favorite;
     public static final String TAG = "TAG";
     GlobalValues globalValues = new GlobalValues();
 
@@ -185,10 +187,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.GONE);
 
+        layout_search = findViewById(R.id.layout_search);
+        layout_search.setVisibility(View.GONE);
+
+
         if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
             viewLogo = findViewById(R.id.btn_logo);
             layout_favorite = findViewById(R.id.layout_favorite);
-            layout_search = findViewById(R.id.layout_search);
             btnBack = findViewById(R.id.btn_back);
 
 
@@ -213,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.home.setVisibility(View.INVISIBLE);
                     MainActivity.category.setVisibility(View.INVISIBLE);
                     MainActivity.basketlist.setVisibility(View.INVISIBLE);
+                    MainActivity.blogContainer.setVisibility(View.INVISIBLE);
+                    MainActivity.product.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -661,7 +668,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 
 
-                if (token.length() > 0) {
+                if (token != null && token.length() > 0) {
                     params.put("code", token);
                 } else {
                     params.put("code", "KmD3487f83nDFrm448Fp03Az4wl4F1sPPwkm38dGdek5km");
@@ -845,8 +852,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
         findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
+        findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
 
         toolbar.setVisibility(View.VISIBLE);
+        layout_search.setVisibility(View.VISIBLE);
     }
 
     private void tabListeners() {
@@ -866,6 +875,8 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
 
                 if (tab_situation.equals("category")) {
 
@@ -905,6 +916,9 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
+
 
                 if (tab_situation.equals("category")) {
 
@@ -932,7 +946,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         findViewById(R.id.tab_blog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -947,10 +960,11 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
-
+                findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
 
                 if (tab_situation.equals("category")) {
 
@@ -993,6 +1007,8 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
 
                 if (tab_situation.equals("home")) {
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
@@ -1059,6 +1075,8 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
 
                     if (tab_situation.equals("home")) {
 
@@ -1100,11 +1118,11 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("کیف پول", R.drawable.credit));
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
-        menu.add(new Menu("شارژ سیمکارت اعتباری", R.drawable.shaje_icon));
+        //menu.add(new Menu("شارژ سیمکارت اعتباری", R.drawable.shaje_icon));
         menu.add(new Menu("دسته بندی", R.drawable.cats));
         menu.add(new Menu("سبد خرید", R.drawable.sabad2));
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
-        menu.add(new Menu("رویداد ها و مطالب گوناگون", R.drawable.ic_news));
+        //menu.add(new Menu("رویداد ها و مطالب گوناگون", R.drawable.ic_news));
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
         menu.add(new Menu("اشتراک گذاری", R.drawable.share));
         menu.add(new Menu("سوالات متداول", R.drawable.ic_ansqus));
@@ -1191,7 +1209,7 @@ public class MainActivity extends AppCompatActivity {
 //
                         //ticket
                         break;*/
-                    case 3:
+                    /*case 3:
 
                         startActivity(new Intent(MainActivity.this, SharjActivity.class));
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.SupportContainer, new SupportFragment()).commit();
@@ -1204,8 +1222,8 @@ public class MainActivity extends AppCompatActivity {
 //                        MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
 
-                        break;
-                    case 4:
+                        break;*/
+                    case 3:
                         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1218,7 +1236,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 5:
+                    case 4:
                         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.edit.setVisibility(View.INVISIBLE);
@@ -1230,23 +1248,23 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.basketlist.setVisibility(View.VISIBLE);
 
                         break;
-                    case 6:
+                  /*  case 6:
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, MainListActivity.class));
 
-                        break;
-                    case 7:
+                        break;*/
+                    case 5:
                         Di();
                         //kif pool
                         break;
-                    case 8:
+                    case 6:
 
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
                         startActivity(intent);
 
                         break;
-                    case 9:
+                    case 7:
                         // solat motedavel
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, CommonQuestionActivity.class));
@@ -1254,7 +1272,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 10:
+                    case 8:
 
                         //rahnama
                         drawerLayout.closeDrawer(Gravity.RIGHT);
@@ -1279,7 +1297,7 @@ public class MainActivity extends AppCompatActivity {
                       //  startActivity(new Intent(MainActivity.this, SettingActivity.class));
 
                         break;*/
-                    case 11:
+                    case 9:
 
                         //khoroj
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
@@ -1448,7 +1466,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
         getCreditRequest();
 
         // register GCM registration complete receiver

@@ -6,63 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginBottom="40dp"
+    android:layout_marginTop="50dp"
     tools:context="net.babiran.app.Rss.MainListActivity">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        tools:context=".FactorList">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarFactor"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/blueDark"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                <RelativeLayout
-                    android:id="@+id/llContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_arrow_back_black_24dp"
-                        android:tint="#fff" />
-
-
-                    <ui_elements.MyTextView
-                        android:id="@+id/label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="3dp"
-                        android:gravity="center_vertical"
-                        android:text="رویداد ها و مطالب گوناگون"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-
-                </RelativeLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
     <LinearLayout

@@ -556,6 +556,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         }
         MainActivity.btnBack.setVisibility(View.VISIBLE);
         MainActivity.viewLogo.setVisibility(View.GONE);
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -564,6 +565,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 MainActivity.product.setVisibility(View.INVISIBLE);
                 MainActivity.btnBack.setVisibility(View.GONE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
+
+                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    MainActivity.btnBack.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.GONE);
+                }
             }
         });
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -575,6 +582,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
+
+                    if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                        MainActivity.btnBack.setVisibility(View.VISIBLE);
+                        MainActivity.layout_search.setVisibility(View.GONE);
+                        MainActivity.viewLogo.setVisibility(View.GONE);
+                    }
 
                     return true;
                 }

@@ -96,7 +96,6 @@ public class BlogFrgment extends Fragment {
     private RequestQueue queue;
     public static final String TAG = "TAG";
     private AdapterUserListToTo adapterUserListToTo;
-    private CoordinatorLayout coordinator;
     private CardView blogCardView, newsCardView;
 
 
@@ -123,7 +122,6 @@ public class BlogFrgment extends Fragment {
         list.clear();
         Listed();
 
-        coordinator.setVisibility(View.VISIBLE);
         layout_search.setVisibility(View.GONE);
         //////My
         lnNewsMy.setOnClickListener(new View.OnClickListener() {
@@ -296,7 +294,6 @@ public class BlogFrgment extends Fragment {
         closeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                coordinator.setVisibility(View.VISIBLE);
                 layout_search.setVisibility(View.GONE);
                 recycler_view_search.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -306,7 +303,6 @@ public class BlogFrgment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                coordinator.setVisibility(View.GONE);
                 layout_search.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 recycler_view_search.setVisibility(View.VISIBLE);
@@ -322,9 +318,12 @@ public class BlogFrgment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+        MainActivity.btnBack.setVisibility(View.GONE);
+
+
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -332,7 +331,8 @@ public class BlogFrgment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.blogContainer.setVisibility(View.INVISIBLE);
                     if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
                         System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
@@ -389,7 +389,6 @@ public class BlogFrgment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rec_main);
         recycler_view_search = (RecyclerView) view.findViewById(R.id.recycler_view_search);
 
-        coordinator = view.findViewById(R.id.coordinator);
         closeImage = view.findViewById(R.id.closeImage);
         btn_search = view.findViewById(R.id.btn_search);
         blogCardView = view.findViewById(R.id.blogCardView);

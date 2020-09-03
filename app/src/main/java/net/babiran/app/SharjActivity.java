@@ -121,7 +121,7 @@ public class SharjActivity extends AppCompatActivity {
     }
 
     private void RadioBTNMablagh() {
-        RadioGroup rg = (RadioGroup) findViewById(R.id.myRadioGroup);
+        //RadioGroup rg = (RadioGroup) findViewById(R.id.myRadioGroup);
         RadioButton r1 = findViewById(R.id.hezar);
         RadioButton r2 = findViewById(R.id.dohezar);
         RadioButton r3 = findViewById(R.id.hezar5);
@@ -135,7 +135,7 @@ public class SharjActivity extends AppCompatActivity {
         mostaghim.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
         ghiremostaghim.setTypeface((Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
 
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+       /* rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.hezar:
@@ -157,7 +157,7 @@ public class SharjActivity extends AppCompatActivity {
 
                 }
             }
-        });
+        });*/
     }
 
     private void RadioBTNType() {

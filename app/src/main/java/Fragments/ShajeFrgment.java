@@ -149,7 +149,7 @@ public class ShajeFrgment extends Fragment {
         });
     }
     private void RadioBTNMablagh(View view) {
-        RadioGroup rg = (RadioGroup) view.findViewById(R.id.myRadioGroup);
+        //RadioGroup rg = (RadioGroup) view.findViewById(R.id.myRadioGroup);
         RadioButton r1 = view.findViewById(R.id.hezar);
         RadioButton r2 = view.findViewById(R.id.dohezar);
         RadioButton r3 = view.findViewById(R.id.hezar5);
@@ -163,7 +163,56 @@ public class ShajeFrgment extends Fragment {
         mostaghim.setTypeface((Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
         ghiremostaghim.setTypeface((Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
 
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+      /*  r1.setText(Util.latinNumberToPersian(Util.convertToFormalString(("1000"))));
+        r2.setText(Util.latinNumberToPersian(Util.convertToFormalString(("2000"))));
+        r3.setText(Util.latinNumberToPersian(Util.convertToFormalString(("5000"))));
+        r4.setText(Util.latinNumberToPersian(Util.convertToFormalString(("10000"))));*/
+
+        r1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                r1.setChecked(true);
+                r2.setChecked(false);
+                r3.setChecked(false);
+                r4.setChecked(false);
+                Mablagh = "1000";
+            }
+        });
+
+        r2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                r2.setChecked(true);
+                r1.setChecked(false);
+                r3.setChecked(false);
+                r4.setChecked(false);
+                Mablagh = "2000";
+            }
+        });
+
+        r3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                r3.setChecked(true);
+                r2.setChecked(false);
+                r1.setChecked(false);
+                r4.setChecked(false);
+                Mablagh = "5000";
+            }
+        });
+
+        r4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                r4.setChecked(true);
+                r2.setChecked(false);
+                r3.setChecked(false);
+                r1.setChecked(false);
+                Mablagh = "10000";
+            }
+        });
+
+      /*  rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.hezar:
@@ -185,7 +234,7 @@ public class ShajeFrgment extends Fragment {
 
                 }
             }
-        });
+        });*/
     }
 
     private void RadioBTNType(View view) {
@@ -216,7 +265,7 @@ public class ShajeFrgment extends Fragment {
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
-                layout_irancell.setBackgroundResource(R.color.green_transparent);
+                layout_irancell.setBackgroundResource(R.color.yellow_transparent);
                 layout_hamrah.setBackgroundResource(0);
                 layout_ritel.setBackgroundResource(0);
             }
@@ -240,7 +289,7 @@ public class ShajeFrgment extends Fragment {
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
-                layout_ritel.setBackgroundResource(R.color.green_transparent);
+                layout_ritel.setBackgroundResource(R.color.forooze_transparent);
                 layout_irancell.setBackgroundResource(0);
                 layout_hamrah.setBackgroundResource(0);
             }
@@ -302,9 +351,11 @@ public class ShajeFrgment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

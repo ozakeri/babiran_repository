@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -638,6 +639,8 @@ public class BasketListFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         updateList();
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
     }
 
     @Override

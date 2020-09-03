@@ -1,6 +1,7 @@
 package Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -94,7 +97,7 @@ public class SearchFrgment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("=====onCreate=====");
     }
 
     @Override
@@ -102,7 +105,7 @@ public class SearchFrgment extends Fragment {
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_search_frgment, container, false);
-
+        System.out.println("=====onCreateView=====");
         AppConfig.frag = SearchFrgment.this;
         handler = new Handler();
 
@@ -263,11 +266,54 @@ public class SearchFrgment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        System.out.println("=====onAttach=====");
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        System.out.println("=====onViewCreated=====");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        System.out.println("=====onActivityCreated=====");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        MainActivity.btnBack.setVisibility(View.VISIBLE);
+        MainActivity.viewLogo.setVisibility(View.GONE);
+        MainActivity.layout_search.setVisibility(View.GONE);
+        System.out.println("=====onStart=====");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-
+        System.out.println("=====onResume=====");
+        MainActivity.btnBack.setVisibility(View.VISIBLE);
+        MainActivity.viewLogo.setVisibility(View.GONE);
+        MainActivity.layout_search.setVisibility(View.GONE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
+
+        MainActivity.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.search.setVisibility(View.INVISIBLE);
+                MainActivity.btnBack.setVisibility(View.GONE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
+                MainActivity.home.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -277,6 +323,7 @@ public class SearchFrgment extends Fragment {
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
                     MainActivity.home.setVisibility(View.VISIBLE);
 
                     return true;
