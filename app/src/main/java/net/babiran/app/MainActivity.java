@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private String catId;
     private String proId;
     private boolean getProduct = false;
-    public static FrameLayout product, secondcategory, sharje,search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, edit, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
+    public static FrameLayout product, secondcategory, sharje,search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
     public static RelativeLayout wait;
     public static View viewLogo, btnBack;
     MyTextView voiceText, label;
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
         layout_search = findViewById(R.id.layout_search);
         layout_search.setVisibility(View.GONE);
-
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
 
         if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
             viewLogo = findViewById(R.id.btn_logo);
@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.basketlist.setVisibility(View.INVISIBLE);
                     MainActivity.blogContainer.setVisibility(View.INVISIBLE);
                     MainActivity.product.setVisibility(View.INVISIBLE);
+                    MainActivity.productlist.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -386,7 +387,6 @@ public class MainActivity extends AppCompatActivity {
                     fullbanner = (FrameLayout) findViewById(R.id.FullbannerContainer);
                     card_banner = (FrameLayout) findViewById(R.id.CardbannerContainer);
                     nazarsanji = (FrameLayout) findViewById(R.id.Nazarcontainer);
-                    edit = (FrameLayout) findViewById(R.id.Editcontainer);
                     setting = (FrameLayout) findViewById(R.id.SettingContainer);
                     about = (FrameLayout) findViewById(R.id.AboutContainer);
                     wait = (RelativeLayout) findViewById(R.id.WaitContainer);
@@ -1159,15 +1159,9 @@ public class MainActivity extends AppCompatActivity {
                         break;*/
                     case 0:
                         if (!userID.equals("")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment()).commit();
+                            startActivity(new Intent(MainActivity.this, EditProfileFrgment.class));
                             drawerLayout.closeDrawer(Gravity.RIGHT);
-                            MainActivity.edit.setVisibility(View.VISIBLE);
-                            MainActivity.setting.setVisibility(View.INVISIBLE);
-                            MainActivity.about.setVisibility(View.INVISIBLE);
-                            MainActivity.support.setVisibility(View.INVISIBLE);
-                            MainActivity.category.setVisibility(View.INVISIBLE);
-                            MainActivity.basketlist.setVisibility(View.INVISIBLE);
-
+                            break;
 
                         } else {
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
@@ -1208,7 +1202,6 @@ public class MainActivity extends AppCompatActivity {
 
                         startActivity(intent);
                         drawerLayout.closeDrawer(Gravity.RIGHT);
-                        MainActivity.edit.setVisibility(View.INVISIBLE);
                         MainActivity.setting.setVisibility(View.INVISIBLE);
                         MainActivity.about.setVisibility(View.INVISIBLE);
                         MainActivity.support.setVisibility(View.INVISIBLE);
@@ -1228,7 +1221,6 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, SharjActivity.class));
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.SupportContainer, new SupportFragment()).commit();
 //                        drawerLayout.closeDrawer(Gravity.RIGHT);
-//                        MainActivity.edit.setVisibility(View.INVISIBLE);
 //                        MainActivity.setting.setVisibility(View.INVISIBLE);
 //                        MainActivity.about.setVisibility(View.INVISIBLE);
 //                        MainActivity.support.setVisibility(View.VISIBLE);
@@ -1240,7 +1232,6 @@ public class MainActivity extends AppCompatActivity {
                     case 3:
                         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
-                        MainActivity.edit.setVisibility(View.INVISIBLE);
                         MainActivity.setting.setVisibility(View.INVISIBLE);
                         MainActivity.about.setVisibility(View.INVISIBLE);
                         MainActivity.support.setVisibility(View.INVISIBLE);
@@ -1253,7 +1244,6 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
-                        MainActivity.edit.setVisibility(View.INVISIBLE);
                         MainActivity.setting.setVisibility(View.INVISIBLE);
                         MainActivity.about.setVisibility(View.INVISIBLE);
                         MainActivity.support.setVisibility(View.INVISIBLE);
@@ -1482,7 +1472,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         MainActivity.layout_search.setVisibility(View.VISIBLE);
         getCreditRequest();
-
+        btnBack.setVisibility(View.GONE);
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(AppConfig.REGISTRATION_COMPLETE));
@@ -1735,4 +1725,18 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsonArrayRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        closeDrawer();
+    }
+
+    private void closeDrawer() {
+        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            drawerLayout.closeDrawer(Gravity.RIGHT);
+
+        } else {
+            drawerLayout.openDrawer(Gravity.RIGHT);
+        }
+    }
 }

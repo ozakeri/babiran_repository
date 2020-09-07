@@ -147,15 +147,19 @@ public class FactorListAdapter extends BaseAdapter {
         holder.state.setText(factors.get(i).state);
 //
         String ar[] = factors.get(i).piyek.split("##");
-        System.out.println("ar[]====" + Arrays.toString(ar));
-        System.out.println("pay_again====" + factors.get(i).pay_again);
+
+        System.out.println("ar[]====" + ar[0]);
+        System.out.println("ar[]====" +ar[1]);
+        System.out.println("ar[]====" +ar[2]);
+        System.out.println("ar[]====" +ar[3]);
+        System.out.println("ar[]====" +ar[4]);
+
+        holder.Sefaresh.setText(ar[3]);
         if (factors.get(i).pay_again.equals("1"))//3==> trak   4 ==> ref
         {
-            holder.Sefaresh.setText("0");
-            holder.Sefaresh.setVisibility(View.GONE);
             holder.btn_type_state_peygiri.setVisibility(View.VISIBLE);
         } else if (factors.get(i).pay_again.equals("0")) {
-            holder.Sefaresh.setText(ar[3]);
+
             holder.Peygiri.setVisibility(View.VISIBLE);
             holder.btn_type_state_peygiri.setVisibility(View.GONE);
         }
@@ -166,13 +170,11 @@ public class FactorListAdapter extends BaseAdapter {
             factor_id = ar[4];
         }
 
-        System.out.println("ar[4]====" + ar[4]);
 
         Log.e("orders:", factors.get(i).products.size() + "");
         //CheckInput(factors.get(i).state, viewGroup, holder.stateProgressBar);
 
 
-        System.out.println("input======" + factors.get(i).state);
         if (factors.get(i).state.equals("سفارش شما ثبت و در حال بررسی است")) {
             holder.stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
             holder.stateProgressBar.setStateDescriptionData(descriptionData1);

@@ -5,14 +5,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/img_background"
     android:layoutDirection="ltr"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:layout_marginTop="50dp">
+    tools:context=".MainActivity">
 
 
     <!-- TODO: Update blank fragment layout -->
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFactor"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blueDark">
+
+        <RelativeLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="#fff" />
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/label"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="پروفایل کاربری"
+                android:textColor="@color/white"
+                android:layout_marginRight="10dp"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
    <androidx.cardview.widget.CardView
        android:layout_width="match_parent"
@@ -20,216 +59,227 @@
        materialdesign:cardUseCompatPadding="true"
        materialdesign:cardCornerRadius="20dp"
        materialdesign:cardElevation="10dp"
-       materialdesign:cardBackgroundColor="@color/white">
-       <LinearLayout
-           android:id="@+id/main_layout"
+       materialdesign:cardBackgroundColor="@color/white"
+       android:layout_below="@+id/toolbarFactor">
+
+       <ScrollView
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:orientation="vertical"
-           android:padding="5dp">
+           android:layout_height="match_parent">
 
            <LinearLayout
+               android:id="@+id/main_layout"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
+               android:layout_height="match_parent"
+               android:orientation="vertical"
                android:padding="5dp">
 
-               <ui_elements.MyEditText
-                   android:id="@+id/name"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="نام کاربری"
-                   android:inputType="textPersonName"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
 
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:background="@drawable/person"
-                   android:layout_gravity="center_vertical"/>
+                   <ui_elements.MyEditText
+                       android:id="@+id/name"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="نام کاربری"
+                       android:inputType="textPersonName"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:background="@drawable/person"
+                       android:layout_gravity="center_vertical"/>
+
+               </LinearLayout>
+
+
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
+
+
+                   <ui_elements.MyEditText
+                       android:id="@+id/email"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="ایمیل"
+                       android:inputType="textEmailAddress"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:layout_gravity="center_vertical"
+                       android:background="@drawable/email"/>
+
+               </LinearLayout>
+
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
+
+
+                   <ui_elements.MyEditText
+                       android:id="@+id/address"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="آدرس اول"
+                       android:inputType="textMultiLine"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:layout_gravity="center_vertical"
+                       android:background="@drawable/location"/>
+
+               </LinearLayout>
+
+
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
+
+                   <ui_elements.MyEditText
+                       android:id="@+id/addressTwo"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="آدرس دوم"
+                       android:inputType="textPostalAddress"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:layout_gravity="center_vertical"
+                       android:background="@drawable/location"/>
+
+               </LinearLayout>
+
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
+
+                   <ui_elements.MyEditText
+                       android:id="@+id/phone"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="تلفن اول"
+                       android:inputType="textPostalAddress"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:layout_gravity="center_vertical"
+                       android:background="@drawable/phone"/>
+
+               </LinearLayout>
+
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_margin="5dp"
+                   android:padding="5dp">
+
+                   <ui_elements.MyEditText
+                       android:id="@+id/phoneTwo"
+                       android:layout_width="0dp"
+                       android:layout_height="50dp"
+                       android:layout_weight="3"
+                       android:gravity="right"
+                       android:hint="تلفن دوم"
+                       android:inputType="textPostalAddress"
+                       android:textColor="@color/colorPrimaryDark"
+                       android:textColorHint="@color/gray_light" />
+
+                   <androidx.appcompat.widget.AppCompatImageView
+                       android:layout_width="0dp"
+                       android:layout_height="30dp"
+                       android:layout_weight="0.2"
+                       android:layout_gravity="center_vertical"
+                       android:background="@drawable/phone"/>
+
+               </LinearLayout>
+
+
+               <RelativeLayout
+                   android:id="@+id/btn"
+                   android:layout_width="200dp"
+                   android:layout_height="55dp"
+                   android:layout_marginTop="20dp"
+                   android:layout_gravity="center_horizontal"
+                   android:background="@drawable/border_button">
+
+                   <ui_elements.MyTextView
+                       android:id="@+id/txt_search"
+                       android:layout_width="wrap_content"
+                       android:layout_height="match_parent"
+                       android:layout_centerInParent="true"
+                       android:gravity="center"
+                       android:scaleType="centerInside"
+                       android:textStyle="bold"
+                       android:text="ثبت"
+                       android:textColor="@color/white"
+                       android:textSize="14sp" />
+
+
+               </RelativeLayout>
+
 
            </LinearLayout>
 
+       </ScrollView>
 
 
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
-               android:padding="5dp">
-
-
-               <ui_elements.MyEditText
-                   android:id="@+id/email"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="ایمیل"
-                   android:inputType="textEmailAddress"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
-
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:layout_gravity="center_vertical"
-                   android:background="@drawable/email"/>
-
-           </LinearLayout>
-
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
-               android:padding="5dp">
-
-
-               <ui_elements.MyEditText
-                   android:id="@+id/address"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="آدرس اول"
-                   android:inputType="textMultiLine"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
-
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:layout_gravity="center_vertical"
-                   android:background="@drawable/location"/>
-
-           </LinearLayout>
-
-
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
-               android:padding="5dp">
-
-               <ui_elements.MyEditText
-                   android:id="@+id/addressTwo"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="آدرس دوم"
-                   android:inputType="textPostalAddress"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
-
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:layout_gravity="center_vertical"
-                   android:background="@drawable/location"/>
-
-           </LinearLayout>
-
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
-               android:padding="5dp">
-
-               <ui_elements.MyEditText
-                   android:id="@+id/phone"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="تلفن اول"
-                   android:inputType="textPostalAddress"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
-
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:layout_gravity="center_vertical"
-                   android:background="@drawable/phone"/>
-
-           </LinearLayout>
-
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:orientation="horizontal"
-               android:layout_margin="5dp"
-               android:padding="5dp">
-
-               <ui_elements.MyEditText
-                   android:id="@+id/phoneTwo"
-                   android:layout_width="0dp"
-                   android:layout_height="50dp"
-                   android:layout_weight="3"
-                   android:gravity="right"
-                   android:hint="تلفن دوم"
-                   android:inputType="textPostalAddress"
-                   android:textColor="@color/colorPrimaryDark"
-                   android:textColorHint="@color/gray_light" />
-
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:layout_width="0dp"
-                   android:layout_height="30dp"
-                   android:layout_weight="0.2"
-                   android:layout_gravity="center_vertical"
-                   android:background="@drawable/phone"/>
-
-           </LinearLayout>
-
-
-           <RelativeLayout
-               android:id="@+id/btn"
-               android:layout_width="200dp"
-               android:layout_height="55dp"
-               android:layout_marginTop="20dp"
-               android:layout_gravity="center_horizontal"
-               android:background="@drawable/border_button">
-
-               <ui_elements.MyTextView
-                   android:id="@+id/txt_search"
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:layout_centerInParent="true"
-                   android:gravity="center"
-                   android:scaleType="centerInside"
-                   android:textStyle="bold"
-                   android:text="ثبت"
-                   android:textColor="@color/white"
-                   android:textSize="14sp" />
-
-
-           </RelativeLayout>
-
-
-       </LinearLayout>
 
    </androidx.cardview.widget.CardView>
 </RelativeLayout>

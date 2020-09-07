@@ -117,7 +117,6 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
 
     }
-
     View v;
 
 
@@ -138,6 +137,7 @@ public class HomeFragment extends Fragment {
 
         AppConfig.frag = HomeFragment.this;
         MainActivity.home.setVisibility(View.VISIBLE);
+
 
         viewPager = (ViewPager) v.findViewById(R.id.home_viewpager);
         //viewPager2 = (ViewPager) v.findViewById(R.id.home_viewpager2);
@@ -1633,6 +1633,8 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+        MainActivity.btnBack.setVisibility(View.VISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {

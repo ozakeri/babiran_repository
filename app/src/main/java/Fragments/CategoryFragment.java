@@ -93,7 +93,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                    System.out.println("===MainActivity==111===");
+
                     //MainActivity.productlist.setVisibility(View.INVISIBLE);
                     FragmentManager fm = getFragmentManager();
                     if (fm != null) {
@@ -117,7 +117,6 @@ public class CategoryFragment extends Fragment {
 
 
                     if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                        System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
                         if (fm != null) {
@@ -129,7 +128,6 @@ public class CategoryFragment extends Fragment {
 
 
                     } else {
-                        System.out.println("===MainActivity==333===");
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
                         builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {

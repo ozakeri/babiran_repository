@@ -35,17 +35,16 @@
                     android:gravity="center_vertical"
                     android:paddingRight="18dp"
                     android:textColor="@color/white"
-                    android:text="نظرات محصول"
-                    android:textSize="17sp" />
+                    android:text="نظرات کاربران"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/btn_back"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="5dp"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:src="@drawable/ic_arrow_back_black_24dp"
                     android:tint="#fff" />
 
@@ -74,10 +73,19 @@
         android:text="نظری ثبت نشده است"
         android:layout_gravity="center"/>
 
+    <ui_elements.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="نظرات کاربران در مورد این محصول"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <ProgressBar
@@ -99,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="14dp"
-        android:src="@drawable/ic_comment_white_24dp"
+        app:srcCompat="@drawable/ic_comment_white_24dp"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:layout_behavior="net.babiran.app.FAB_Hide_on_Scroll" />

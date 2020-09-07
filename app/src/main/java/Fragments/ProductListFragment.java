@@ -347,14 +347,13 @@ public class ProductListFragment extends Fragment {
     public void backpress() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
-
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-
+                    System.out.println("====back2======");
                     MainActivity.productlist.setVisibility(View.INVISIBLE);
                     Log.e("previous", prev);
                     if (category_parent_id != null) {
@@ -385,6 +384,39 @@ public class ProductListFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+
+
+    public void backpress2() {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        System.out.println("====back2======");
+        MainActivity.productlist.setVisibility(View.INVISIBLE);
+        Log.e("previous", prev);
+        if (category_parent_id != null) {
+            if (category_parent_id.equals("0") || category_parent_id.equals("-1")) {
+                MainActivity.secondcategory.setVisibility(View.INVISIBLE);
+            } else {
+                if (!prev.equals("notcat")) {
+                    if (getCategoryID(category_parent_id).equals("0") || getCategoryID(category_parent_id).equals("-1")) {
+                        MainActivity.secondcategory.setVisibility(View.INVISIBLE);
+
+                    } else {
+                        if (prev.equals("second")) {
+                            AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id, "backToSecond")).commit();
+                        } else {
+                            AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(category_parent_id)).commit();
+                        }
+                    }
+
+                }
+
+            }
+        }
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+
+        MainActivity.btnBack.setVisibility(View.GONE);
     }
 
     public String getCategoryID(String ID) {

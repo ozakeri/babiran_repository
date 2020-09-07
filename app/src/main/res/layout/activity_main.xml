@@ -17,6 +17,7 @@
         tools:context=".MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -96,7 +97,7 @@
             <RelativeLayout
                 android:id="@+id/layout_search"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="55dp"
                 android:layout_margin="3dp"
                 android:visibility="gone"
                 android:background="@color/gray_lighter">
@@ -128,7 +129,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="55dp">
 
             <FrameLayout
                 android:id="@+id/Categorycontainer"
@@ -153,7 +154,7 @@
                 android:id="@+id/searchContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="-40dp"/>
+                android:layout_marginTop="-45dp"/>
 
             <FrameLayout
                 android:id="@+id/shajeContainer"
@@ -197,8 +198,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
                     android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="5dp">
+                    android:orientation="horizontal">
 
                     <!-- sharge-->
                     <RelativeLayout
@@ -208,23 +208,20 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_height="match_parent"
                             android:scaleType="centerInside"
-                            android:src="@drawable/shaje_icon" />
+                            android:src="@drawable/shaje_icon"
+                            android:layout_above="@+id/txt_sharje"/>
 
                         <ui_elements.MyTextView
+                            android:id="@+id/txt_sharje"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
                             android:text="شارژ"
                             android:textAlignment="center"
                             android:textColor="@color/blueDark" />
@@ -239,23 +236,20 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_height="match_parent"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_news" />
+                            android:src="@drawable/ic_news"
+                            android:layout_above="@+id/txt_blog"/>
 
                         <ui_elements.MyTextView
+                            android:id="@+id/txt_blog"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
                             android:text="بابی مگ"
                             android:textAlignment="center"
                             android:textColor="@color/blueDark" />
@@ -271,30 +265,29 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/sabadImage"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="0dp"
+                            android:layout_height="match_parent"
                             android:scaleType="centerInside"
-                            android:src="@drawable/vitrin" />
+                            android:src="@drawable/vitrin"
+                            android:layout_above="@+id/txt_home"/>
 
                         <ui_elements.MyTextView
+                            android:id="@+id/txt_home"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
                             android:text="خانه"
                             android:textAlignment="center"
                             android:textColor="@color/blueDark" />
 
+
                     </RelativeLayout>
 
-                    <!-- cat-->
+
+
                     <RelativeLayout
 
                         android:id="@+id/tab_category"
@@ -303,23 +296,20 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_height="match_parent"
                             android:scaleType="centerInside"
-                            android:src="@drawable/cats" />
+                            android:src="@drawable/cats"
+                            android:layout_above="@+id/txt_category"/>
 
                         <ui_elements.MyTextView
+                            android:id="@+id/txt_category"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
                             android:text="دسته بندی"
                             android:textAlignment="center"
                             android:textColor="@color/blueDark" />
@@ -336,24 +326,21 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="5dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="5dp"
                             android:scaleType="centerInside"
-                            android:src="@drawable/sabad2" />
+                            android:src="@drawable/sabad2"
+                            android:layout_above="@+id/txt_profile"/>
 
                         <ui_elements.MyTextView
+                            android:id="@+id/txt_profile"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="-5dp"
                             android:text="سبد خرید "
                             android:textAlignment="center"
                             android:textColor="@color/blueDark"
@@ -370,9 +357,9 @@
             <LinearLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_above="@id/opp"
-                android:background="@drawable/gradiant"
+                android:background="@color/black_lighter"
                 android:orientation="vertical"/>
 
             <FrameLayout
@@ -388,7 +375,8 @@
             <FrameLayout
                 android:id="@+id/Editcontainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginTop="-50dp"/>
 
             <FrameLayout
                 android:id="@+id/SettingContainer"
@@ -439,58 +427,6 @@
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:src="@drawable/deliverymanborder" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/WaitContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blueDark">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imgMain"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/babiran_wait" />
-
-                    <ui_elements.MyTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="لذت خرید آنلاین"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:layout_width="210dp"
-                    android:layout_height="110dp"
-                    android:scaleType="centerInside"
-                    android:layout_above="@+id/waitProg"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/enamad"/>
-
-                <com.github.rahatarmanahmed.cpv.CircularProgressView
-                    android:id="@+id/waitProg"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="50dp"
-                    app:cpv_animAutostart="true"
-                    app:cpv_color="@color/white"
-                    app:cpv_indeterminate="true" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -598,6 +534,58 @@
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <RelativeLayout
+        android:id="@+id/WaitContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blueDark">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgMain"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/babiran_wait" />
+
+            <ui_elements.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="لذت خرید آنلاین"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="210dp"
+            android:layout_height="110dp"
+            android:scaleType="centerInside"
+            android:layout_above="@+id/waitProg"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/enamad"/>
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            android:id="@+id/waitProg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="50dp"
+            app:cpv_animAutostart="true"
+            app:cpv_color="@color/white"
+            app:cpv_indeterminate="true" />
+
+    </RelativeLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="245dp"
@@ -624,5 +612,7 @@
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

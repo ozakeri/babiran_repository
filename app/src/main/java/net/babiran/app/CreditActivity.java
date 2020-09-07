@@ -177,8 +177,12 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                MainActivity.btnBack.setVisibility(View.INVISIBLE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
             }
         });
+
+
     }
 
     private void actionPay(int price) {

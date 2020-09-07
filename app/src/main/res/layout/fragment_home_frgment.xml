@@ -218,11 +218,12 @@
                             <ui_elements.MyTextView
                                 android:id="@+id/cardtextHome"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_margin="10dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
                                 android:text="پیشنهاد ویژه"
+                                android:textSize="18sp"
                                 android:textColor="@color/colorPrimaryDark" />
 
                             <RelativeLayout
@@ -436,10 +437,11 @@
                         <ui_elements.MyTextView
                             android:id="@+id/specialtondmarket"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             android:gravity="center"
                             android:text="ویژه تر از ویژه"
+                            android:textSize="18sp"
                             android:textColor="@color/colorPrimaryDark" />
 
                     </androidx.cardview.widget.CardView>

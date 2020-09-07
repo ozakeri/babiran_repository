@@ -199,6 +199,9 @@
         <activity
             android:name=".CreditActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="Fragments.EditProfileFrgment"
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name="tools.MyPushListener"

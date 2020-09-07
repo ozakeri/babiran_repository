@@ -564,42 +564,66 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
 
-                if ( MainActivity.product.getVisibility() == View.VISIBLE){
-                    MainActivity.product.setVisibility(View.INVISIBLE);
-                    MainActivity.btnBack.setVisibility(View.VISIBLE);
-                    MainActivity.layout_search.setVisibility(View.GONE);
-                    MainActivity.viewLogo.setVisibility(View.GONE);
-                    System.out.println("VISIBLE=====111====");
-                    return;
-                }
+                MainActivity.btnBack.setVisibility(View.GONE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
 
                 if ( MainActivity.search.getVisibility() == View.VISIBLE){
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
                     MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.home.setVisibility(View.VISIBLE);
                     System.out.println("VISIBLE=====222====");
                     return;
                 }
-/*
+
+                if ( MainActivity.product.getVisibility() == View.VISIBLE){
+                    MainActivity.product.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.viewLogo.setVisibility(View.GONE);
+                    System.out.println("VISIBLE=====111====");
+                    return;
+                }
+
+
                 if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
                     System.out.println("===MainActivity==111===");
                     //MainActivity.productlist.setVisibility(View.INVISIBLE);
                     FragmentManager fm = getFragmentManager();
                     if (fm != null) {
+                        System.out.println("===fm != null===");
                         ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
                         if (fragm != null) {
-                            fragm.backpress();
+                            System.out.println("===fragm != null===");
+                            Handler handler = new Handler();
+                            Thread someThread = new Thread() {
+
+                                @Override
+                                public void run() {
+
+                                    //some actions
+                                    handler.post(new Runnable() {
+                                        public void run() {
+                                            fragm.backpress2();
+                                        }
+                                    });
+                                }
+                            };
+
+                            someThread.start();
+
                         }
                     }
 
                     return;
-                }*/
+                }
                 MainActivity.product.setVisibility(View.INVISIBLE);
                 MainActivity.btnBack.setVisibility(View.GONE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
                 System.out.println("VISIBLE=====333====");
+
             }
         });
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -607,18 +631,65 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
-                    MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
 
                     if ( MainActivity.search.getVisibility() == View.VISIBLE){
-                        MainActivity.btnBack.setVisibility(View.VISIBLE);
-                        MainActivity.layout_search.setVisibility(View.GONE);
-                        MainActivity.viewLogo.setVisibility(View.GONE);
+                        MainActivity.search.setVisibility(View.INVISIBLE);
+                        MainActivity.btnBack.setVisibility(View.GONE);
+                        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                        MainActivity.layout_search.setVisibility(View.VISIBLE);
+                        MainActivity.product.setVisibility(View.INVISIBLE);
+                        MainActivity.home.setVisibility(View.VISIBLE);
+                        System.out.println("VISIBLE=====222====");
+                        return true;
                     }
 
-                    return true;
+                    if ( MainActivity.product.getVisibility() == View.VISIBLE){
+                        MainActivity.product.setVisibility(View.INVISIBLE);
+                        MainActivity.btnBack.setVisibility(View.VISIBLE);
+                        MainActivity.layout_search.setVisibility(View.VISIBLE);
+                        MainActivity.viewLogo.setVisibility(View.GONE);
+                        System.out.println("VISIBLE=====111====");
+                        return true;
+                    }
+
+
+                    if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
+                        System.out.println("===MainActivity==111===");
+                        //MainActivity.productlist.setVisibility(View.INVISIBLE);
+                        FragmentManager fm = getFragmentManager();
+                        if (fm != null) {
+                            System.out.println("===fm != null===");
+                            ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
+                            if (fragm != null) {
+                                System.out.println("===fragm != null===");
+                                Handler handler = new Handler();
+                                Thread someThread = new Thread() {
+
+                                    @Override
+                                    public void run() {
+
+                                        //some actions
+                                        handler.post(new Runnable() {
+                                            public void run() {
+                                                fragm.backpress2();
+                                            }
+                                        });
+                                    }
+                                };
+
+                                someThread.start();
+
+                            }
+                        }
+
+                        return true;
+                    }
+                    MainActivity.product.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    System.out.println("VISIBLE=====333====");
                 }
                 return false;
             }

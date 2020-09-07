@@ -2,73 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:id="@+id/factor_list_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/img_background"
     android:orientation="vertical">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFactor"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:tint="#fff" />
+
+
+            <ui_elements.MyTextView
+                android:id="@+id/label"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="3dp"
+                android:gravity="center_vertical"
+                android:text="سوابق سفارشات "
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".FactorList">
+        materialdesign:cardUseCompatPadding="true"
+        materialdesign:cardCornerRadius="20dp"
+        materialdesign:cardElevation="10dp"
+        materialdesign:cardBackgroundColor="@color/white"
+        android:layout_below="@+id/toolbarFactor">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <ListView
+            android:id="@+id/factor_listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarFactor"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/blueDark"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                <RelativeLayout
-                    android:id="@+id/llContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="5dp"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_arrow_back_black_24dp"
-                        android:tint="#fff" />
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"/>
+    </androidx.cardview.widget.CardView>
 
 
-                    <ui_elements.MyTextView
-                        android:id="@+id/label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="3dp"
-                        android:gravity="center_vertical"
-                        android:text="سوابق سفارشات "
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                </RelativeLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <ListView
-        android:id="@+id/factor_listView"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="57dp"
-        android:divider="@null" />
 
 
 </RelativeLayout>

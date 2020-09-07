@@ -183,12 +183,15 @@ public class SearchFrgment extends Fragment {
                 progressLayout.setVisibility(View.VISIBLE);
                 if (arg0.length() == 0) {
                     progressLayout.setVisibility(View.GONE);
-                    queue.cancelAll(new RequestQueue.RequestFilter() {
-                        @Override
-                        public boolean apply(Request<?> request) {
-                            return true;
-                        }
-                    });
+                    if (queue != null){
+                        queue.cancelAll(new RequestQueue.RequestFilter() {
+                            @Override
+                            public boolean apply(Request<?> request) {
+                                return true;
+                            }
+                        });
+                    }
+
                 }
                 if (arg0.length() >= 2) {
                     timer = new Timer();
@@ -286,6 +289,7 @@ public class SearchFrgment extends Fragment {
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
                     MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.secondcategory.setVisibility(View.INVISIBLE);
                     MainActivity.home.setVisibility(View.VISIBLE);
                 }
 
@@ -300,11 +304,15 @@ public class SearchFrgment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    MainActivity.search.setVisibility(View.INVISIBLE);
-                    MainActivity.btnBack.setVisibility(View.GONE);
-                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
-                    MainActivity.layout_search.setVisibility(View.VISIBLE);
-                    MainActivity.home.setVisibility(View.VISIBLE);
+                    if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                        System.out.println("=====btnBack=====");
+                        MainActivity.search.setVisibility(View.INVISIBLE);
+                        MainActivity.btnBack.setVisibility(View.GONE);
+                        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                        MainActivity.layout_search.setVisibility(View.VISIBLE);
+                        MainActivity.secondcategory.setVisibility(View.INVISIBLE);
+                        MainActivity.home.setVisibility(View.VISIBLE);
+                    }
 
                     return true;
                 }

@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -42,9 +44,8 @@ import Handlers.DatabaseHandler;
 import tools.AppConfig;
 
 
-public class EditProfileFrgment extends Fragment {
+public class EditProfileFrgment extends AppCompatActivity {
 
-    private View v;
     private RequestQueue queue;
     public static final String TAG = "TAG";
 
@@ -54,7 +55,7 @@ public class EditProfileFrgment extends Fragment {
     private TextView txt_email_error;
     private String phone;
     public static String prev_edit = "";
-
+    private AppCompatImageView btn_back;
 
     public EditProfileFrgment() {
 
@@ -68,39 +69,31 @@ public class EditProfileFrgment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_editprofile_frgment);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        v = inflater.inflate(R.layout.fragment_editprofile_frgment, container, false);
-
-        MainActivity.edit.setVisibility(View.VISIBLE);
-        //txt_email_error = (TextView) v.findViewById(R.id.email_error);
-        ed_name = (EditText) v.findViewById(R.id.name);
-        ed_email = (EditText) v.findViewById(R.id.email);
-        ed_address = (EditText) v.findViewById(R.id.address);
-        ed_address_two = (EditText) v.findViewById(R.id.addressTwo);
-        ed_phone = (EditText) v.findViewById(R.id.phone);
-        ed_phone_two = (EditText) v.findViewById(R.id.phoneTwo);
+        ed_name = (EditText) findViewById(R.id.name);
+        ed_email = (EditText) findViewById(R.id.email);
+        ed_address = (EditText) findViewById(R.id.address);
+        ed_address_two = (EditText) findViewById(R.id.addressTwo);
+        ed_phone = (EditText) findViewById(R.id.phone);
+        ed_phone_two = (EditText) findViewById(R.id.phoneTwo);
+        btn_back = findViewById(R.id.btn_back);
 
 
-        LinearLayout main = (LinearLayout) v.findViewById(R.id.main_layout);
-        final Animation j = AnimationUtils.loadAnimation(getActivity(), R.anim.fadein);
+        LinearLayout main = (LinearLayout) findViewById(R.id.main_layout);
+        final Animation j = AnimationUtils.loadAnimation(EditProfileFrgment.this, R.anim.fadein);
         j.setStartOffset(0);
         j.setDuration(300);
         j.setFillAfter(true);
         main.startAnimation(j);
 
-        SharedPreferences load = getActivity().getSharedPreferences("NUMBER", 0);
+        SharedPreferences load = EditProfileFrgment.this.getSharedPreferences("NUMBER", 0);
         String Phone = load.getString("TKN", "");
 
         Log.e("Phone", Phone);
         //get user details from local db
 
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+        DatabaseHandler db = new DatabaseHandler(EditProfileFrgment.this);
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();
 
@@ -142,7 +135,7 @@ public class EditProfileFrgment extends Fragment {
 
                 String email = ed_email.getText().toString().trim();
                 if (email.matches(emailPattern) && s.length() > 0) {
-                    //Toast.makeText(getActivity(),"valid email address",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditProfileFrgment.this,"valid email address",Toast.LENGTH_SHORT).show();
                     // or
                     txt_email_error.setVisibility(View.INVISIBLE);
                     ok = true;
@@ -150,7 +143,7 @@ public class EditProfileFrgment extends Fragment {
 
                     //textView.setText("valid email");
                 } else if (!email.matches(emailPattern) && s.length() > 0) {
-                    //Toast.makeText(getActivity(),"Invalid email address",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditProfileFrgment.this,"Invalid email address",Toast.LENGTH_SHORT).show();
                     //or
                     txt_email_error.setVisibility(View.VISIBLE);
                     ok = false;
@@ -171,9 +164,136 @@ public class EditProfileFrgment extends Fragment {
                 // other stuffs
             }
         });*/
+        
+        
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //   submit();
+                if (ok) {
+                    Log.d("here", "email ok");
+                    submit();
+
+                }
+
+            }
+        });
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                MainActivity.btnBack.setVisibility(View.INVISIBLE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+/*
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        v = inflater.inflate(R.layout.fragment_editprofile_frgment, container, false);
+
+        MainActivity.edit.setVisibility(View.VISIBLE);
+        //txt_email_error = (TextView) findViewById(R.id.email_error);
+        ed_name = (EditText) findViewById(R.id.name);
+        ed_email = (EditText) findViewById(R.id.email);
+        ed_address = (EditText) findViewById(R.id.address);
+        ed_address_two = (EditText) findViewById(R.id.addressTwo);
+        ed_phone = (EditText) findViewById(R.id.phone);
+        ed_phone_two = (EditText) findViewById(R.id.phoneTwo);
 
 
-        v.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        LinearLayout main = (LinearLayout) findViewById(R.id.main_layout);
+        final Animation j = AnimationUtils.loadAnimation(EditProfileFrgment.this, R.anim.fadein);
+        j.setStartOffset(0);
+        j.setDuration(300);
+        j.setFillAfter(true);
+        main.startAnimation(j);
+
+        SharedPreferences load = EditProfileFrgment.this.getSharedPreferences("NUMBER", 0);
+        String Phone = load.getString("TKN", "");
+
+        Log.e("Phone", Phone);
+        //get user details from local db
+
+        DatabaseHandler db = new DatabaseHandler(EditProfileFrgment.this);
+        if (db.getRowCount() > 0) {
+            HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+
+
+            String id = userDetailsHashMap.get("id");
+            phone = userDetailsHashMap.get("phone1");
+            String phoneTwo = userDetailsHashMap.get("phone2");
+            String name = userDetailsHashMap.get("name");
+            String email = userDetailsHashMap.get("email");
+            String address = userDetailsHashMap.get("address");
+            String addressTwo = userDetailsHashMap.get("address2");
+
+            if (!Phone.equals("")) {
+                ed_phone.setText(Phone);
+            }
+            if (phoneTwo != null && phoneTwo.length() > 0 && !(phoneTwo.equals("null"))) {
+                ed_phone_two.setText(phoneTwo);
+            }
+            if (name != null && name.length() > 0 && !(name.equals("null"))) {
+                ed_name.setText(name);
+            }
+            if (email != null && email.length() > 0 && !(email.equals("null"))) {
+                ed_email.setText(email);
+            }
+            if (address != null && address.length() > 0 && !(address.equals("null"))) {
+                ed_address.setText(address);
+            }
+            if (addressTwo != null && addressTwo.length() > 0 && !(addressTwo.equals("null"))) {
+                ed_address_two.setText(addressTwo);
+            }
+
+        }
+
+
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        *//*ed_email.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                String email = ed_email.getText().toString().trim();
+                if (email.matches(emailPattern) && s.length() > 0) {
+                    //Toast.makeText(EditProfileFrgment.this,"valid email address",Toast.LENGTH_SHORT).show();
+                    // or
+                    txt_email_error.setVisibility(View.INVISIBLE);
+                    ok = true;
+
+
+                    //textView.setText("valid email");
+                } else if (!email.matches(emailPattern) && s.length() > 0) {
+                    //Toast.makeText(EditProfileFrgment.this,"Invalid email address",Toast.LENGTH_SHORT).show();
+                    //or
+                    txt_email_error.setVisibility(View.VISIBLE);
+                    ok = false;
+
+                    //textView.setText("invalid email");
+                } else {
+                    txt_email_error.setVisibility(View.INVISIBLE);
+                    ok = true;
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // other stuffs
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // other stuffs
+            }
+        });*//*
+
+
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -191,18 +311,18 @@ public class EditProfileFrgment extends Fragment {
         return v;
 
 
-    }
+    }*/
 
 
     public void submit() {
         //Volley Start
-        queue = Volley.newRequestQueue(getActivity());
+        queue = Volley.newRequestQueue(EditProfileFrgment.this);
 
-        final DatabaseHandler db = new DatabaseHandler(getActivity());
+        final DatabaseHandler db = new DatabaseHandler(EditProfileFrgment.this);
         HashMap<String, String> user = db.getUserDetails();
         final String id = user.get("id").toString();
 
-        final ProgressDialog d = new ProgressDialog(getActivity());
+        final ProgressDialog d = new ProgressDialog(EditProfileFrgment.this);
         d.setMessage("در حال ثبت اطلاعات ...");
         d.setIndeterminate(true);
         d.setCancelable(false);
@@ -227,7 +347,7 @@ public class EditProfileFrgment extends Fragment {
                                 Log.d("jsonarray", edit + "");
 
 
-                                DatabaseHandler db = new DatabaseHandler(getActivity());
+                                DatabaseHandler db = new DatabaseHandler(EditProfileFrgment.this);
                                 db.update(id, edit.getString("name"), edit.getString("email"), edit.getString("address"), edit.getString("address2"), "", edit.getString("phone1"),
                                         edit.getString("phone2"));
 
@@ -265,16 +385,15 @@ public class EditProfileFrgment extends Fragment {
                                 if (!(addressTwo.equals("null")) && !(addressTwo.equals(""))) {
                                     ed_address_two.setText(addressTwo);
                                 }
-                                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                                AlertDialog alertDialog = new AlertDialog.Builder(EditProfileFrgment.this).create();
                                 alertDialog.setTitle("پروفایل با موفقیت ثبت شد");
                                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.dismiss();
-                                                MainActivity.edit.setVisibility(View.INVISIBLE);
-                                                MainActivity.home.setVisibility(View.VISIBLE);
-                                                BasketListFragment.needToRefrish = true;
-                                                AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+                                                //MainActivity.home.setVisibility(View.VISIBLE);
+                                                //AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();      BasketListFragment.needToRefrish = true;
+
                                             }
                                         });
                                 alertDialog.show();
@@ -292,7 +411,7 @@ public class EditProfileFrgment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         d.dismiss();
-                        //Toast.makeText(getActivity(), error.getMessage()+"", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(EditProfileFrgment.this, error.getMessage()+"", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -354,33 +473,6 @@ public class EditProfileFrgment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(strRequest);
         //Volley End
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (queue != null) {
-            queue.cancelAll(TAG);
-        }
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    // handle back button's click listener
-                    MainActivity.edit.setVisibility(View.INVISIBLE);
-
-                    // AppConfig.fragmentManager.beginTransaction().replace(R.id.container,new HomeFrgment()).commit();
-
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     @Override

@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        tools:context=".productInfo">
+        tools:context=".productInfo"
+        android:layout_alignParentLeft="true">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -42,19 +43,18 @@
                         android:layout_centerVertical="true"
                         android:layout_margin="3dp"
                         android:gravity="center_vertical"
-                        android:paddingRight="18dp"
+                        android:paddingRight="10dp"
                         android:text="راهنمای استفاده"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_margin="5dp"
-                        android:padding="12dp"
+                        android:padding="5dp"
                         android:src="@drawable/ic_arrow_back_black_24dp"
                         android:tint="#fff" />
 
