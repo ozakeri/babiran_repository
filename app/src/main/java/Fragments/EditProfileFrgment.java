@@ -186,6 +186,7 @@ public class EditProfileFrgment extends AppCompatActivity {
                 finish();
                 MainActivity.btnBack.setVisibility(View.INVISIBLE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
             }
         });
 
@@ -483,4 +484,12 @@ public class EditProfileFrgment extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
+    }
 }

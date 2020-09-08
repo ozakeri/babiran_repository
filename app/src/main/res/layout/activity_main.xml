@@ -100,14 +100,14 @@
                 android:layout_height="55dp"
                 android:layout_margin="3dp"
                 android:visibility="gone"
-                android:background="@color/gray_lighter">
+                android:background="@drawable/corner_ronde">
 
                 <ImageView
                     android:id="@+id/img_search"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/sear_blog"
+                    android:src="@drawable/search_red"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true" />
 
@@ -116,12 +116,12 @@
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/img_search"
                     android:textColor="@color/gray_light"
+                    android:layout_marginRight="30dp"
                     android:textSize="14sp"
                     android:layout_centerVertical="true"
                     android:text="جستجو در بابیران..."/>
 
             </RelativeLayout>
-
 
 
         </com.google.android.material.appbar.AppBarLayout>

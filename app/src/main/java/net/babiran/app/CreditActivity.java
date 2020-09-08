@@ -179,6 +179,7 @@ public class CreditActivity extends AppCompatActivity {
                 finish();
                 MainActivity.btnBack.setVisibility(View.INVISIBLE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
             }
         });
 
@@ -349,6 +350,15 @@ public class CreditActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
     }
 }
 

@@ -554,4 +554,5 @@ public class FactorList extends AppCompatActivity {
         queue.add(getRequest);
 
     }
+
 }

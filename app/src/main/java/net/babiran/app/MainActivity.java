@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
-
+                    System.out.println("=======onResume111=======");
                     homeGetRequest();
                     getCreditRequest();
                 } else {
@@ -1470,9 +1470,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MainActivity.layout_search.setVisibility(View.VISIBLE);
+        btnBack.setVisibility(View.INVISIBLE);
+        layout_search.setVisibility(View.VISIBLE);
+        viewLogo.setVisibility(View.VISIBLE);
         getCreditRequest();
-        btnBack.setVisibility(View.GONE);
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(AppConfig.REGISTRATION_COMPLETE));
@@ -1495,8 +1496,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("RESUME", "dkfjghskdfgh");
             viewLogo.setVisibility(View.VISIBLE);
             layout_favorite.setVisibility(View.GONE);
-
-            btnBack.setVisibility(View.GONE);
 
             findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
             findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
