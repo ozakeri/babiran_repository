@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.Rss.RecyclerItemClickListener;
 
@@ -69,8 +70,12 @@ public class ListFoodActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.btnBack.setVisibility(View.INVISIBLE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                MainActivity.home.setVisibility(View.VISIBLE);
                 finish();
                 AppConfig.BACK_TO_LIOST = "1";
+
             }
         });
         idSender = getIntent().getExtras().getString("IDD");
@@ -231,8 +236,10 @@ public class ListFoodActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+        MainActivity.home.setVisibility(View.VISIBLE);
         finish();
         AppConfig.BACK_TO_LIOST = "1";
-
     }
 }

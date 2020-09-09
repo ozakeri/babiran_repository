@@ -187,6 +187,7 @@ public class EditProfileFrgment extends AppCompatActivity {
                 MainActivity.btnBack.setVisibility(View.INVISIBLE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
                 MainActivity.layout_search.setVisibility(View.VISIBLE);
+                MainActivity.home.setVisibility(View.VISIBLE);
             }
         });
 
@@ -491,5 +492,6 @@ public class EditProfileFrgment extends AppCompatActivity {
         MainActivity.btnBack.setVisibility(View.INVISIBLE);
         MainActivity.viewLogo.setVisibility(View.VISIBLE);
         MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.home.setVisibility(View.VISIBLE);
     }
 }
