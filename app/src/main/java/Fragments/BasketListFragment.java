@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
@@ -43,7 +45,6 @@ import Models.EventbusModel;
 import tools.AppConfig;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
-import ui_elements.NonScrollListView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
@@ -60,7 +61,7 @@ public class BasketListFragment extends Fragment implements
     String[] payment = {"پرداخت با کارت خوان درب منزل", "پرداخت نقدی در محل تحویل", "پرداخت آنلاین از درگاه بانکی"};
     View v;
     RequestQueue queue;
-    NonScrollListView listView;
+    RecyclerView basket_recyclerView;
     String prev = "";
     String id = "";
     String address1 = "";
@@ -88,6 +89,7 @@ public class BasketListFragment extends Fragment implements
     DatabaseHandler db;
     ImageView listsabad;
     public static boolean needToRefrish = false;
+    private BasketListAdapter adp;
 
 
     public BasketListFragment() {
@@ -118,7 +120,7 @@ public class BasketListFragment extends Fragment implements
             address2 = userDetailsHashMap.get("address2");
 
 //            AppConfig.tempActivity = (MainActivity) getActivity();
-            listView =  v.findViewById(R.id.basket_listView);
+            basket_recyclerView = v.findViewById(R.id.basket_recyclerView);
 
             AddValue = (MyTextView) v.findViewById(R.id.addValue);
             PayValue = (MyTextView) v.findViewById(R.id.payValue);
@@ -131,9 +133,16 @@ public class BasketListFragment extends Fragment implements
             typePayLinear = (LinearLayout) v.findViewById(R.id.paymentLinear);
 
 
-
+            basket_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            basket_recyclerView.setNestedScrollingEnabled(false);
 
             updateList();
+            if (products != null){
+                adp = new BasketListAdapter(getActivity(), products,BasketListFragment.this);
+                adp.notifyDataSetChanged();
+                basket_recyclerView.setAdapter(adp);
+            }
+
 
             // discountPrice = rawPrice - TotalPrice ;
             discountPrice = rawPrice - rawPrice_dis;
@@ -645,12 +654,10 @@ public class BasketListFragment extends Fragment implements
         updateList();
 
 
-
         MainActivity.layout_search.setVisibility(View.VISIBLE);
         MainActivity.btnBack.setVisibility(View.INVISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
-
 
 
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -660,33 +667,33 @@ public class BasketListFragment extends Fragment implements
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-                        System.out.println("===MainActivity==333===");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
-                        builder.setTitle("می خواهید خارج شوید؟");
-                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                    System.out.println("===MainActivity==333===");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
+                    builder.setTitle("می خواهید خارج شوید؟");
+                    builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                                if (AppConfig.checkReciveSms == true) {
-                                    AppConfig.checkReciveSms = false;
-                                }
-                                if (AppConfig.btnSubmitOk == true) {
-                                    AppConfig.btnSubmitOk = false;
-                                }
-
-                                AppConfig.act.finish();
-
-
-                                dialog.dismiss();
+                            if (AppConfig.checkReciveSms == true) {
+                                AppConfig.checkReciveSms = false;
                             }
-                        });
-                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //TODO
-                                dialog.dismiss();
+                            if (AppConfig.btnSubmitOk == true) {
+                                AppConfig.btnSubmitOk = false;
                             }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+
+                            AppConfig.act.finish();
+
+
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //TODO
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
 
                     return true;
                 }
@@ -730,10 +737,6 @@ public class BasketListFragment extends Fragment implements
                 }
                 for (int i = 0; i < products.size(); i++) {
                     Basket basket = new Basket();
-
-                    System.out.println("getStock=-=-=-=-=-=" + products.get(i).getStock());
-                    System.out.println("getStock=-=-=-=-=-=" + products.get(i).getName());
-
                     basket.setProduct_id(products.get(i).getId());
                     basket.setCount(products.get(i).count);
                     basket.setColorName(products.get(i).getColorName());
@@ -742,9 +745,9 @@ public class BasketListFragment extends Fragment implements
                 }
                 Gson gson = new Gson();
                 basketjson = gson.toJson(baskets);
-                BasketListAdapter adp = new BasketListAdapter(getActivity(), products);
-                adp.notifyDataSetChanged();
-                listView.setAdapter(adp);
+               // adp = new BasketListAdapter(getActivity(), products,BasketListFragment.this);
+               // adp.notifyDataSetChanged();
+               // basket_recyclerView.setAdapter(adp);
 
                 for (int i = 0; i < products.size(); i++) {
 
@@ -773,8 +776,24 @@ public class BasketListFragment extends Fragment implements
                 listsabad.setImageResource(R.drawable.shopping_cart);
 
             }
+
+            if (rawPrice > 0) {
+                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
+            } else {
+                typePayLinear.setVisibility(View.GONE);
+                addLinear.setVisibility(View.GONE);
+                completeBuy.setVisibility(View.GONE);
+                discount.setVisibility(View.GONE);
+            }
+
+            discountPrice = rawPrice - rawPrice_dis;
+            if (discountPrice > 0) {
+                discount.setText(" تخفیف : " + ConvertEnToPe(convertToFormalString(String.valueOf(discountPrice))) + " تومان ");
+            }
+
+
         } else {
-            listView.setVisibility(View.GONE);
+            basket_recyclerView.setVisibility(View.GONE);
         }
     }
 

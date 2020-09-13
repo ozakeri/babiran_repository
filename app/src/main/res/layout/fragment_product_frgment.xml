@@ -68,7 +68,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/linearLayout2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/linearLayout2">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -372,8 +373,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="0.6"
                                     android:orientation="vertical"
-                                    android:visibility="gone
-">
+                                    android:visibility="gone">
 
                                     <ui_elements.MyTextView
                                         android:id="@+id/countpicker"

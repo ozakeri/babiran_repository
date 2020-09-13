@@ -8,46 +8,52 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
-import java.util.ArrayList;
-
-import Fragments.BasketListFragment;
-import Handlers.DatabaseHandler;
-import Models.Category;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
 import net.babiran.app.R;
 
+import java.util.ArrayList;
+
+import Fragments.BasketListFragment;
 import Fragments.ProductFragment;
+import Handlers.DatabaseHandler;
+import Models.Category;
 import Models.Product;
 import tools.AppConfig;
+import tools.Util;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by Tohid on 2/7/2017 AD.
  */
-public class BasketListAdapter extends BaseAdapter {
+public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.CustomView> {
     RequestQueue queue;
-    DatabaseHandler db ;
+    DatabaseHandler db;
     String id_user = "-1";
     Context context;
-    ProgressDialog d ;
-    public int dis1 = 0 ;
-    public int dis2 = 0 ;
-    public int dis3 = 0 ;
+    ProgressDialog d;
+    public int dis1 = 0;
+    public int dis2 = 0;
+    public int dis3 = 0;
     ArrayList<Product> products = new ArrayList<>();
     LayoutInflater inflater;
-    public BasketListAdapter(Context context, ArrayList<Product> products,Category category , boolean editable){
+    private int currentValue;
+    private BasketListFragment fragment;
+
+    public BasketListAdapter(Context context, ArrayList<Product> products, Category category, boolean editable) {
         this.context = context;
         this.products = products;
 
@@ -58,75 +64,42 @@ public class BasketListAdapter extends BaseAdapter {
 
     }
 
-    public BasketListAdapter(Context c){
-        this.context = c ;
+    public BasketListAdapter(Context c) {
+        this.context = c;
     }
-    public BasketListAdapter(Context context, ArrayList<Product> products){
+
+    public BasketListAdapter(Context context, ArrayList<Product> products, BasketListFragment fragment) {
         this.context = context;
         this.products = products;
-
+        this.fragment = fragment;
         this.inflater = LayoutInflater.from(context);
-
     }
 
-    public BasketListAdapter(Context context, ArrayList<Product> categories,String prev){
+    public BasketListAdapter(Context context, ArrayList<Product> categories, String prev) {
         this.context = context;
         this.products = categories;
-
         // this.prev = prev;
         this.inflater = LayoutInflater.from(context);
 
     }
 
 
-
+    @NonNull
     @Override
-    public int getCount() {
-        return products.size();
+    public CustomView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.basket_item, parent, false);
+        return new CustomView(view);
     }
 
     @Override
-    public Product getItem(int i) {
-        return products.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return Integer.parseInt(products.get(i).id);
-    }
-
-    @Override
-    public View getView(final int i, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder;
-        if (convertView == null) {
-
-            holder = new ViewHolder();
-            convertView = this.inflater.inflate(R.layout.basket_item,
-                    viewGroup, false);
-
-            holder.name = (MyTextView) convertView.findViewById(R.id.txt_name_basket);
-            holder.count = (MyTextView) convertView.findViewById(R.id.item_count);
-            holder.discount = (MyTextView) convertView.findViewById(R.id.item_discount);
-            holder.img = (ImageView) convertView.findViewById(R.id.img_basket);
-            holder.item_Button = (RelativeLayout) convertView.findViewById(R.id.item_content_basket) ;
-
-            holder.delete_button = (RelativeLayout) convertView.findViewById(R.id.deletebasket);
-
-
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-
-
+    public void onBindViewHolder(@NonNull CustomView holder, int i) {
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products.get(i))).commit();
             }
         });
+
 
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,67 +127,93 @@ public class BasketListAdapter extends BaseAdapter {
             }
         });
 
-        System.out.println("getStock======" + products.get(i).getStock());
-        System.out.println("getStock======" + products.get(i).getName());
-
-        for(int j = 0 ; j < products.get(i).getImages().size() ; j ++){
-            if(products.get(i).getImages().get(j) != null && products.get(i).getImages().get(j).toString().length()>5) {
-                Glide.with(context).load(products.get(i).getImages().get(j).image_link).diskCacheStrategy( DiskCacheStrategy.NONE )
-                        .skipMemoryCache( true ).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
+        for (int j = 0; j < products.get(i).getImages().size(); j++) {
+            if (products.get(i).getImages().get(j) != null && products.get(i).getImages().get(j).toString().length() > 5) {
+                Glide.with(context).load(products.get(i).getImages().get(j).image_link).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
             }
         }
 
         holder.name.setText(products.get(i).getName());
-        if(products.get(i).count != null && !products.get(i).count.equals("null") ){
-            holder.count.setText(ConvertEnToPe(products.get(i).count));
+        if (products.get(i).count != null && !products.get(i).count.equals("null")) {
+            holder.count.setText(Util.latinNumberToPersian(products.get(i).count));
+            holder.txt_value.setText(Util.latinNumberToPersian(products.get(i).count));
         }
 
-        final SharedPreferences prefs = context.getSharedPreferences("proCount", MODE_PRIVATE);
+        System.out.println("currentValue333===" + currentValue);
+        SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
 
+        holder.card_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentValue = Integer.valueOf(products.get(i).count);
+                System.out.println("currentValue11===" + currentValue);
+                if (currentValue < Integer.valueOf(products.get(i).stock)) {
+                    currentValue++;
+                    products.get(i).setCount(String.valueOf(currentValue));
+                } else {
+                    Toast.makeText(context, " حداکثر تعداد " + products.get(i).name + " را انتخاب کرده اید ", Toast.LENGTH_SHORT).show();
+                }
+                holder.txt_value.setText(Util.latinNumberToPersian(String.valueOf(currentValue)));
+                holder.count.setText(Util.latinNumberToPersian(String.valueOf(currentValue)));
+                Gson gson = new Gson();
+                String proObj = gson.toJson(products);
+                editor.putString("products", proObj);
+                editor.commit();
+                fragment.updateList();
+            }
+        });
+
+        holder.card_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentValue = Integer.valueOf(products.get(i).count);
+                System.out.println("currentValue22===" + currentValue);
+                if (currentValue >= 1) {
+                    if (currentValue == 1) {
+                        return;
+                    }
+                    currentValue--;
+                    holder.delete_button.setVisibility(View.VISIBLE);
+                    products.get(i).setCount(String.valueOf(currentValue));
+
+                }
+                holder.txt_value.setText(Util.latinNumberToPersian(String.valueOf(currentValue)));
+                holder.count.setText(Util.latinNumberToPersian(String.valueOf(currentValue)));
+                Gson gson = new Gson();
+                String proObj = gson.toJson(products);
+                editor.putString("products", proObj);
+                editor.commit();
+                fragment.updateList();
+            }
+        });
 
      /*   if(prefs.getString("pro_id","0").equals(products.get(i).id)){
             holder.count.setText(prefs.getString("count","0"));
         }*/
 
 
-        int Total = dis1 + dis2 + dis3 ;
-        holder.discount.setText(Total + "%") ;
-
-
-        return convertView;
-    }
-
-    public String ConvertEnToPe(String value){
-        char[] arabicChars = {'٠','١','٢','٣','٤','٥','٦','٧','٨','٩'};
-        StringBuilder builder = new StringBuilder();
-        for(int i =0;i<value.length();i++){
-            if(Character.isDigit(value.charAt(i))){
-                builder.append(arabicChars[(int)(value.charAt(i))-48]);
-            }
-            else{
-                builder.append(value.charAt(i));
-            }
-        }
-        return builder.toString();
-    }
-    private class ViewHolder {
-
-        MyTextView name;
-        MyTextView count;
-        MyTextView discount ;
-        RelativeLayout item_Button;
-        ImageView img;
-        RelativeLayout delete_button ;
+        int Total = dis1 + dis2 + dis3;
+        holder.discount.setText(Total + "%");
 
     }
 
+    @Override
+    public long getItemId(int i) {
+        return Integer.parseInt(products.get(i).id);
+    }
 
-    public void deleteFrombasket(final int id){
+    @Override
+    public int getItemCount() {
+        return products.size();
+    }
+
+    public void deleteFrombasket(final int id) {
 
 
-        SharedPreferences.Editor editor= context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         products.remove(id);
-        AppConfig.products = products ;
+        AppConfig.products = products;
 
 
         try {
@@ -222,15 +221,32 @@ public class BasketListAdapter extends BaseAdapter {
             String proObj = gson.toJson(AppConfig.products);
             editor.putString("products", proObj);
             editor.commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
 
-
     }
 
 
+    public class CustomView extends RecyclerView.ViewHolder {
+        MyTextView name, count, discount, txt_value;
+        RelativeLayout item_Button;
+        ImageView img;
+        CardView card_decrease,card_increase;
+        RelativeLayout delete_button;
 
-
+        public CustomView(@NonNull View convertView) {
+            super(convertView);
+            name = convertView.findViewById(R.id.txt_name_basket);
+            count = convertView.findViewById(R.id.item_count);
+            discount = convertView.findViewById(R.id.item_discount);
+            img = convertView.findViewById(R.id.img_basket);
+            item_Button = convertView.findViewById(R.id.item_content_basket);
+            delete_button = convertView.findViewById(R.id.deletebasket);
+            txt_value = convertView.findViewById(R.id.txt_value);
+            card_decrease = convertView.findViewById(R.id.card_decrease);
+            card_increase = convertView.findViewById(R.id.card_increase);
+        }
+    }
 }

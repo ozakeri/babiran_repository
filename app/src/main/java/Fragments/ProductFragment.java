@@ -714,8 +714,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             } else {
                 product.count = Count;
-
-
                 products.add(this.product);
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
@@ -792,13 +790,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         }
 
         Count = String.valueOf(numberPicker.getValue());
-
-        numberPicker.setValueChangedListener(new ValueChangedListener() {
-            @Override
-            public void valueChanged(int value, ActionEnum action) {
-                Count = String.valueOf(value);
-            }
-        });
 
 
         txt_action.setOnClickListener(new View.OnClickListener() {

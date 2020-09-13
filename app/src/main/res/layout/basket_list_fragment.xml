@@ -13,16 +13,14 @@
         android:layout_marginTop="55dp"
         android:background="@color/white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="3dp">
 
-        <ui_elements.NonScrollListView
-            android:id="@+id/basket_listView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/basket_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/addressLinear"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:divider="@null" />
+            android:divider="@null"
+            android:layout_marginBottom="10dp"/>
 
         <ImageView
             android:id="@+id/listsabad"
@@ -37,7 +35,7 @@
         <LinearLayout
             android:id="@+id/paymentLinear"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_above="@+id/completelayout"
             android:layout_margin="5dp"
             android:layout_weight="3"
@@ -53,7 +51,7 @@
                 android:layout_weight="0.5"
                 android:gravity="right|center"
                 android:text=""
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <ui_elements.MyTextView
                 android:layout_width="match_parent"
@@ -62,14 +60,14 @@
                 android:layout_weight="0.5"
                 android:gravity="right|center"
                 android:text="نحوه پرداخت : "
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/addressLinear"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_above="@id/paymentLinear"
             android:layout_margin="5dp"
             android:layout_weight="3"
@@ -87,7 +85,7 @@
                 android:layout_weight="0.5"
                 android:gravity="right|center"
                 android:text=""
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <ui_elements.MyTextView
                 android:layout_width="match_parent"
@@ -96,7 +94,7 @@
                 android:layout_weight="0.5"
                 android:gravity="start|center"
                 android:text="انتخاب آدرس : "
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
