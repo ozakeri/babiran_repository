@@ -309,7 +309,11 @@ public class ShowRssActivity extends AppCompatActivity {
                 }
             });
         } else {
-            new Title().execute((Void) null);
+
+            if (Url!= null){
+                new Title().execute();
+            }
+
         }
 
 
@@ -753,6 +757,7 @@ public class ShowRssActivity extends AppCompatActivity {
     }
 
     //// ///////////////////////////////       HTML             ////////////////////////////////////////////////////////////////
+    @SuppressLint("StaticFieldLeak")
     private class Title extends AsyncTask<Void, Void, Void> {
         String title;
         Elements pngs;

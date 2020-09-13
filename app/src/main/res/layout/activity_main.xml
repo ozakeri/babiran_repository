@@ -98,7 +98,6 @@
                 android:id="@+id/layout_search"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_margin="3dp"
                 android:visibility="gone"
                 android:background="@drawable/corner_ronde">
 
@@ -129,7 +128,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="55dp">
+            android:layout_marginTop="60dp">
 
             <FrameLayout
                 android:id="@+id/Categorycontainer"

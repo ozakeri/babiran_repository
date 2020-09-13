@@ -193,8 +193,8 @@ public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.Cu
         }*/
 
 
-        int Total = dis1 + dis2 + dis3;
-        holder.discount.setText(Total + "%");
+        //int Total = dis1 + dis2 + dis3;
+       // holder.discount.setText(Total + "%");
 
     }
 
@@ -230,7 +230,7 @@ public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.Cu
 
 
     public class CustomView extends RecyclerView.ViewHolder {
-        MyTextView name, count, discount, txt_value;
+        MyTextView name, count, txt_value;
         RelativeLayout item_Button;
         ImageView img;
         CardView card_decrease,card_increase;
@@ -240,7 +240,7 @@ public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.Cu
             super(convertView);
             name = convertView.findViewById(R.id.txt_name_basket);
             count = convertView.findViewById(R.id.item_count);
-            discount = convertView.findViewById(R.id.item_discount);
+           // discount = convertView.findViewById(R.id.item_discount);
             img = convertView.findViewById(R.id.img_basket);
             item_Button = convertView.findViewById(R.id.item_content_basket);
             delete_button = convertView.findViewById(R.id.deletebasket);

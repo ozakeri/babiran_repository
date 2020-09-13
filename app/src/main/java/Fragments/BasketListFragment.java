@@ -93,7 +93,7 @@ public class BasketListFragment extends Fragment implements
 
 
     public BasketListFragment() {
-
+        MainActivity.btnBack.setVisibility(View.VISIBLE);
     }
 
 

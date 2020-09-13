@@ -3,184 +3,160 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
-    app:cardBackgroundColor="@color/white"
-    android:layout_margin="2dp">
+    app:cardBackgroundColor="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/basket_list_item_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/item_basket"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.8">
-
-
-            <ui_elements.MyTextView
-                android:layout_width="35dp"
+            android:id="@+id/item_content_basket"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout_img_basket"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:layout_margin="2dp"
-                android:gravity="center"
-                android:textSize="14sp" />
+                android:background="@drawable/border_product_images"
+                android:scaleType="fitCenter">
 
-            <ui_elements.MyTextView
-                android:id="@+id/item_discount"
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_margin="1dp"
-                android:gravity="center"
-                android:text="10%"
-                android:textColor="@color/green"
-                android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/img_basket"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logoloading" />
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/item_count"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/circle_count_background"
+                        android:gravity="center"
+                        android:text="599"
+                        android:textColor="@color/WHITE"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <RelativeLayout
-                android:id="@+id/item_content_basket"
+                android:id="@+id/linearLayout7"
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/layout_img_basket"
+                android:layout_toLeftOf="@+id/layout_img_basket"
+                android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/layout_img_basket"
+                <ui_elements.MyTextView
+                    android:id="@+id/txt_name_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:ellipsize="marquee"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="فروش آپارتمان یک خوابه"
+                    android:textColor="#4c4c4c"
+                    android:textSize="14sp" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/border_product_images"
-                    android:scaleType="fitCenter">
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/img_basket"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/logoloading" />
+                        android:id="@+id/deletebasket"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:visibility="visible">
 
                         <ui_elements.MyTextView
-                            android:id="@+id/item_count"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_margin="5dp"
-                            android:background="@drawable/circle_count_background"
-                            android:gravity="center"
-                            android:text="599"
-                            android:textColor="@color/WHITE"
-                            android:textSize="14sp" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/delete_from_basket" />
 
                     </RelativeLayout>
 
-                </androidx.cardview.widget.CardView>
-
-                <RelativeLayout
-                    android:id="@+id/linearLayout7"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/layout_img_basket"
-                    android:orientation="vertical"
-                    android:layout_toStartOf="@+id/layout_img_basket">
-
-                    <ui_elements.MyTextView
-                        android:id="@+id/txt_name_basket"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:ellipsize="marquee"
-                        android:gravity="right"
-                        android:singleLine="true"
-                        android:text="فروش آپارتمان یک خوابه"
-                        android:textColor="#4c4c4c"
-                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginLeft="20dp"
                         android:gravity="center_vertical"
-                        android:layout_alignParentBottom="true">
+                        android:orientation="horizontal">
 
-                        <RelativeLayout
-                            android:id="@+id/deletebasket"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_margin="5dp"
-                            android:visibility="visible">
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_decrease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                            <ui_elements.MyTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_centerVertical="true"
-                                android:background="@drawable/delete_from_basket" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/img_decrease"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/minus" />
 
-                        </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
 
 
-                        <LinearLayout
+                        <ui_elements.MyTextView
+                            android:id="@+id/txt_value"
+                            style="@style/Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
                             android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginLeft="20dp">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/card_decrease"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_decrease"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:background="@drawable/minus"
-                                    android:layout_margin="10dp" />
-
-                            </androidx.cardview.widget.CardView>
+                            android:text="10"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_increase"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
-                            <ui_elements.MyTextView
-                                android:id="@+id/txt_value"
-                                style="@style/Bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="10"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:layout_margin="10dp" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/img_increase"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/plus" />
+                        </androidx.cardview.widget.CardView>
 
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/card_increase"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_increase"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:background="@drawable/plus"
-                                    android:layout_margin="10dp" />
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
+                </LinearLayout>
 
-                </RelativeLayout>
 
             </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_lighter"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

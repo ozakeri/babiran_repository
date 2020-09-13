@@ -40,6 +40,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
@@ -83,9 +84,11 @@ public class BlogFrgment extends Fragment {
 
     // private AlertDialog prograsDialog;
     private LinearLayout lnNews, lnNewsMy, layout_search;
-    private ImageView imNews, imNewsMy, closeImage, btn_search;
+    private ImageView imNews, imNewsMy, closeImage;
+    private FloatingActionButton floatingActionButton;
     private EditText search_bar;
     private RecyclerView recyclerView, recycler_view_search;
+    private RelativeLayout layout_recycler_view_search;
     private LinearLayoutManager linearLayoutManager;
     boolean b1 = false, b2 = false;
     private ProgressBar progress_bar;
@@ -296,16 +299,20 @@ public class BlogFrgment extends Fragment {
             public void onClick(View v) {
                 layout_search.setVisibility(View.GONE);
                 recycler_view_search.setVisibility(View.GONE);
+                layout_recycler_view_search.setVisibility(View.GONE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
 
-        btn_search.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 layout_search.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 recycler_view_search.setVisibility(View.VISIBLE);
+                layout_recycler_view_search.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.GONE);
             }
         });
 
@@ -389,9 +396,10 @@ public class BlogFrgment extends Fragment {
         // prograsDialog = new SpotsDialog(MainListActivity.this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rec_main);
         recycler_view_search = (RecyclerView) view.findViewById(R.id.recycler_view_search);
+        layout_recycler_view_search = view.findViewById(R.id.layout_recycler_view_search);
 
         closeImage = view.findViewById(R.id.closeImage);
-        btn_search = view.findViewById(R.id.btn_search);
+        floatingActionButton = view.findViewById(R.id.floatingActionButton);
         blogCardView = view.findViewById(R.id.blogCardView);
         newsCardView = view.findViewById(R.id.newsCardView);
 

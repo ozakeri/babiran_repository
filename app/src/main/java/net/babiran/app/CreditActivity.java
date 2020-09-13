@@ -351,6 +351,7 @@ public class CreditActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getCreditRequest();
     }
 
     @Override

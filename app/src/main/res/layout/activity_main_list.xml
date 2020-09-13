@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginBottom="40dp"
-    android:layout_marginTop="50dp"
+    android:layout_marginBottom="50dp"
     tools:context="net.babiran.app.Rss.MainListActivity">
 
-
     <LinearLayout
+        android:id="@+id/linearLayolt"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="60dp"
         android:orientation="horizontal"
         android:background="@color/gray_lighter">
 
@@ -21,7 +20,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="0.5dp"
-            android:layout_weight="0.4">
+            android:layout_weight="0.4"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_search"
@@ -65,40 +65,6 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/layout_search"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/corner_ronde"
-        android:layoutDirection="ltr"
-        android:padding="5dp"
-        android:visibility="gone">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/closeImage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_closee" />
-
-        <ui_elements.MyEditText
-            android:id="@+id/search_bar"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="3"
-            android:background="@null"
-            android:hint="جستجو در بلاگ"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:textColor="@color/black" />
-
-    </LinearLayout>
-
-
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -109,7 +75,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/linearLayolt">
 
         <LinearLayout
             android:id="@+id/ln_main_rss_news_my"
@@ -174,14 +141,62 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_recycler_view_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/corner_ronde"
+            android:layoutDirection="ltr"
+            android:padding="5dp"
+            android:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/closeImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_closee" />
+
+            <ui_elements.MyEditText
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@null"
+                android:hint="جستجو در بلاگ"
+                android:imeOptions="actionSearch"
+                android:layout_gravity="center_vertical"
+                android:inputType="text"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/layout_search"/>
 
+    </RelativeLayout>
 
-    </LinearLayout>
-
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/search_white"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_alignParentLeft="true"/>
+</RelativeLayout>
