@@ -108,7 +108,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     public AdvertisingDatabaseHandler dba;
     RequestQueue queue;
     public static final String TAG = "TAG";
-    MyTextView txt_colorName, noStock,btn_addToBasket;
+    MyTextView txt_colorName, noStock, btn_addToBasket;
     View v;
     String Count = "";
     String user_id = "-1";
@@ -265,7 +265,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             viewPager.setAdapter(mCustomPagerAdapterByUrlMain);
 
 
-            numberpicker.setMin(1);
+          /*  numberpicker.setMin(1);
             if (Integer.parseInt(product.getStock()) > 0) {
                 noStock.setVisibility(View.INVISIBLE);
                 numberpicker.setVisibility(View.VISIBLE);
@@ -282,7 +282,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             }
 
-            Count = String.valueOf(numberpicker.getValue());
+            Count = String.valueOf(numberpicker.getValue());*/
 
             numberpicker.setValueChangedListener(new ValueChangedListener() {
                 @Override
@@ -354,10 +354,24 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         if (!product.getStock().equals("") && !product.getStock().equals("null") && product.getStock() != null && Integer.parseInt(product.getStock()) < 1) {
                             Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();
                         } else {
+
+                            if (products != null) {
+                                System.out.println("==555555111111====");
+                                for (int i = 0; i < products.size(); i++) {
+                                    if (product.id.equals(products.get(i).id)) {
+                                        System.out.println("==1111====" + Integer.parseInt(products.get(i).count));
+                                        System.out.println("==1111====" + Integer.parseInt(products.get(i).stock));
+                                        if (Integer.parseInt(products.get(i).count) >= Integer.parseInt(products.get(i).stock)){
+                                            Toast.makeText(getActivity(), "حداکثر تعداد انتخاب شده است", Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                    }
+                                }
+                                showGuideDialog();
+                                return;
+                            }
                             showGuideDialog();
                         }
-
-
                     }
                 }
             });
@@ -391,7 +405,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             // just set viewPager
             customIndicator.setViewPager(viewPager);
 
-            if (Integer.parseInt(product.getStock()) == 0){
+            if (Integer.parseInt(product.getStock()) == 0) {
                 btn_addToBasket.setText("نا موجـــود");
                 btn_addToBasket.setEnabled(false);
             }
@@ -511,7 +525,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     public void UpdateCount() {
         int count = 0;
 
-        System.out.println("=-=-=-count-=-=-" + count);
         if (products != null) {
             for (int i = 0; i < products.size(); i++) {
                 if (this.product.getId().equals(products.get(i).getId())) {
@@ -520,6 +533,8 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     IsUpdateCount = true;
                 }
             }
+            System.out.println("=-=-=-count1=====" + count);
+            System.out.println("=-=-=-count1=====" + Count);
         }
     }
 
@@ -531,6 +546,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 count = Integer.parseInt(Count);
             }
         }
+        System.out.println("=-=-=-count2=====" + count);
         return count;
     }
 
@@ -567,7 +583,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 MainActivity.btnBack.setVisibility(View.GONE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
 
-                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                if (MainActivity.search.getVisibility() == View.VISIBLE) {
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
@@ -578,7 +594,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
 
-                if ( MainActivity.product.getVisibility() == View.VISIBLE){
+                if (MainActivity.product.getVisibility() == View.VISIBLE) {
                     MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.VISIBLE);
                     MainActivity.layout_search.setVisibility(View.VISIBLE);
@@ -634,7 +650,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
 
-                    if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    if (MainActivity.search.getVisibility() == View.VISIBLE) {
                         MainActivity.search.setVisibility(View.INVISIBLE);
                         MainActivity.btnBack.setVisibility(View.GONE);
                         MainActivity.viewLogo.setVisibility(View.VISIBLE);
@@ -645,7 +661,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         return true;
                     }
 
-                    if ( MainActivity.product.getVisibility() == View.VISIBLE){
+                    if (MainActivity.product.getVisibility() == View.VISIBLE) {
                         MainActivity.product.setVisibility(View.INVISIBLE);
                         MainActivity.btnBack.setVisibility(View.VISIBLE);
                         MainActivity.layout_search.setVisibility(View.VISIBLE);
@@ -706,11 +722,24 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         Log.e("IsUpdate", IsUpdateCount + "");
 
         if (products != null) {
+
+
             if (IsUpdateCount) {
-                Gson gson = new Gson();
-                String proObj = gson.toJson(products);
-                editor.putString("products", proObj);
-                editor.commit();
+                for (int i = 0; i < products.size(); i++) {
+                    if (this.product.id.equals(products.get(i).id)) {
+                        System.out.println("=====Count======" + Integer.parseInt(products.get(i).count));
+                        System.out.println("=====Count======" + Integer.parseInt(products.get(i).stock));
+                        if (Integer.parseInt(products.get(i).count) > Integer.parseInt(products.get(i).stock)) {
+                            Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            Gson gson = new Gson();
+                            String proObj = gson.toJson(products);
+                            editor.putString("products", proObj);
+                            editor.commit();
+                        }
+                    }
+                }
 
             } else {
                 product.count = Count;
@@ -777,25 +806,32 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             noStock.setVisibility(View.INVISIBLE);
             numberPicker.setVisibility(View.VISIBLE);
             Log.e("stock", product.getStock());
-            numberPicker.setMax(Integer.parseInt(product.getStock()));
+
+
+
+            if (products != null) {
+                for (int i = 0; i < products.size(); i++) {
+                    if (this.product.id.equals(products.get(i).id)) {
+                        numberPicker.setMax(Integer.parseInt(products.get(i).stock) - Integer.parseInt(products.get(i).count));
+                    }
+                }
+            }else {
+                numberPicker.setMax(Integer.parseInt(product.getStock()));
+            }
+
+
         } else {
             numberPicker.setVisibility(View.INVISIBLE);
             noStock.setVisibility(View.VISIBLE);
         }
-
-        try {
-            numberPicker.setValue(SetCount());
-        } catch (Exception e) {
-
-        }
-
-        Count = String.valueOf(numberPicker.getValue());
 
 
         txt_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppConfig.frag = ProductFragment.this;
+                Count = String.valueOf(numberPicker.getValue());
+                System.out.println("txt_action====" + Count);
                 addtoBasket();
                 alert.dismiss();
             }
