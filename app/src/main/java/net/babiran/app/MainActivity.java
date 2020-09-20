@@ -978,7 +978,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
-                MainActivity.layout_search.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.GONE);
 
                 if (tab_situation.equals("category")) {
 
@@ -1080,7 +1080,7 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.show();
                 } else {
 
-
+                    AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                     findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.shajeContainer).setVisibility(View.INVISIBLE);
                     findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);

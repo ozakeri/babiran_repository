@@ -112,10 +112,14 @@ public class FactorList extends AppCompatActivity {
                 } else {
                     AppConfig.NULLBASKET = "";
                     Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
-
                     startActivity(intent);
                     finish();
                 }
+
+                MainActivity.btnBack.setVisibility(View.INVISIBLE);
+                MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                MainActivity.layout_search.setVisibility(View.VISIBLE);
+                MainActivity.home.setVisibility(View.VISIBLE);
 
             }
         });
@@ -464,6 +468,11 @@ public class FactorList extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        MainActivity.btnBack.setVisibility(View.INVISIBLE);
+        MainActivity.viewLogo.setVisibility(View.VISIBLE);
+        MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.home.setVisibility(View.VISIBLE);
     }
 
     @Override

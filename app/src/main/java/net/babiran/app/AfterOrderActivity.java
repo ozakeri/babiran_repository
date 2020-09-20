@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Fragments.BasketListFragment;
+import Fragments.ShajeFrgment;
 import Handlers.DatabaseHandler;
 import Models.Product;
 import tools.AppConfig;
@@ -52,6 +53,7 @@ public class AfterOrderActivity extends AppCompatActivity {
         txt_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (server != null) {
                     System.out.println("server=====" + server);
                     if (server.equals("credit")) {
@@ -59,7 +61,8 @@ public class AfterOrderActivity extends AppCompatActivity {
                     }
 
                     if (server.equals("sharj")) {
-                        startActivity(new Intent(AfterOrderActivity.this, SharjActivity.class));
+                        startActivity(new Intent(AfterOrderActivity.this, MainActivity.class));
+
                     }
 
                     if (server.equals("pay")) {

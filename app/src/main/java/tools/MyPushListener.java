@@ -208,9 +208,8 @@ public class MyPushListener extends PusheListenerService {
                                         showNotificationBlog(getApplicationContext(), intent, title, body);
                                     }
                                 }else if (type.equals("user")) {
-                                    if (blog_id != null) {
-                                        showNotificationCopy(getApplicationContext(), title, body);
-                                    }
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    showNotification(getApplicationContext(), intent, title, body);
                                 } else {
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     showNotification(getApplicationContext(), intent, title, body);

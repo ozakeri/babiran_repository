@@ -84,7 +84,7 @@ public class BlogFrgment extends Fragment {
 
     // private AlertDialog prograsDialog;
     private LinearLayout lnNews, lnNewsMy, layout_search;
-    private ImageView imNews, imNewsMy, closeImage;
+    private ImageView imNews, imNewsMy;
     private FloatingActionButton floatingActionButton;
     private EditText search_bar;
     private RecyclerView recyclerView, recycler_view_search;
@@ -125,7 +125,7 @@ public class BlogFrgment extends Fragment {
         list.clear();
         Listed();
 
-        layout_search.setVisibility(View.GONE);
+        //layout_search.setVisibility(View.GONE);
         //////My
         lnNewsMy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +197,7 @@ public class BlogFrgment extends Fragment {
         blogCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                search_bar.setText("");
                 b1 = true;
                 b2 = false;
                 imNewsMy.setVisibility(View.VISIBLE);
@@ -210,7 +211,7 @@ public class BlogFrgment extends Fragment {
         newsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                search_bar.setText("");
                 b2 = true;
                 b1 = false;
                 imNewsMy.setVisibility(View.GONE);
@@ -294,25 +295,13 @@ public class BlogFrgment extends Fragment {
             }
         }));
 
-        closeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout_search.setVisibility(View.GONE);
-                recycler_view_search.setVisibility(View.GONE);
-                layout_recycler_view_search.setVisibility(View.GONE);
-                MainActivity.layout_search.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-        });
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        layout_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout_search.setVisibility(View.VISIBLE);
+                //layout_search.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 recycler_view_search.setVisibility(View.VISIBLE);
-                layout_recycler_view_search.setVisibility(View.VISIBLE);
-                MainActivity.layout_search.setVisibility(View.GONE);
             }
         });
 
@@ -325,7 +314,7 @@ public class BlogFrgment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.layout_search.setVisibility(View.GONE);
         MainActivity.btnBack.setVisibility(View.INVISIBLE);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
@@ -396,10 +385,7 @@ public class BlogFrgment extends Fragment {
         // prograsDialog = new SpotsDialog(MainListActivity.this);
         recyclerView = (RecyclerView) view.findViewById(R.id.rec_main);
         recycler_view_search = (RecyclerView) view.findViewById(R.id.recycler_view_search);
-        layout_recycler_view_search = view.findViewById(R.id.layout_recycler_view_search);
 
-        closeImage = view.findViewById(R.id.closeImage);
-        floatingActionButton = view.findViewById(R.id.floatingActionButton);
         blogCardView = view.findViewById(R.id.blogCardView);
         newsCardView = view.findViewById(R.id.newsCardView);
 

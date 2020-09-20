@@ -188,7 +188,7 @@ public class SharjActivity extends AppCompatActivity {
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
-                layout_irancell.setBackgroundResource(R.color.yellow_transparent);
+                layout_irancell.setBackgroundResource(R.color.forooze_transparent);
                 layout_hamrah.setBackgroundResource(0);
                 layout_ritel.setBackgroundResource(0);
             }
@@ -200,7 +200,7 @@ public class SharjActivity extends AppCompatActivity {
                 operator = "2";
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
-                layout_hamrah.setBackgroundResource(R.color.green_transparent);
+                layout_hamrah.setBackgroundResource(R.drawable.hamrah_background);
                 layout_irancell.setBackgroundResource(0);
                 layout_ritel.setBackgroundResource(0);
             }
@@ -212,7 +212,8 @@ public class SharjActivity extends AppCompatActivity {
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
-                layout_ritel.setBackgroundResource(R.color.forooze_transparent);
+                //layout_ritel.setBackgroundResource(R.color.forooze_transparent);
+                layout_ritel.setBackgroundResource(R.drawable.rigtel_background);
                 layout_irancell.setBackgroundResource(0);
                 layout_hamrah.setBackgroundResource(0);
             }

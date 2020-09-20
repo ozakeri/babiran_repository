@@ -60,7 +60,7 @@ public class MainListActivity extends AppCompatActivity {
 
     // private AlertDialog prograsDialog;
     private LinearLayout lnNews, lnNewsMy, layout_search;
-    private ImageView imNews, imNewsMy, closeImage, btn_search;
+    private ImageView imNews, imNewsMy, btn_search;
     private EditText search_bar;
     private RecyclerView recyclerView, recycler_view_search;
     private LinearLayoutManager linearLayoutManager;
@@ -266,15 +266,6 @@ public class MainListActivity extends AppCompatActivity {
             }
         }));
 
-        closeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                coordinator.setVisibility(View.VISIBLE);
-                layout_search.setVisibility(View.GONE);
-                recycler_view_search.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-        });
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -294,7 +285,6 @@ public class MainListActivity extends AppCompatActivity {
         recycler_view_search = (RecyclerView) findViewById(R.id.recycler_view_search);
 
         coordinator = findViewById(R.id.coordinator);
-        closeImage = findViewById(R.id.closeImage);
         btn_search = findViewById(R.id.btn_search);
         blogCardView = findViewById(R.id.blogCardView);
         newsCardView = findViewById(R.id.newsCardView);

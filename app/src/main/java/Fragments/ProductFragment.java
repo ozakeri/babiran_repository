@@ -264,6 +264,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             viewPager.setAdapter(mCustomPagerAdapterByUrlMain);
 
+            System.out.println("getStock====" + product.getStock());
+            if (Integer.parseInt(product.getStock()) <= 0) {
+                btn_addToBasket.setText("نا موجـــود");
+                btn_addToBasket.setEnabled(false);
+            }
+
 
           /*  numberpicker.setMin(1);
             if (Integer.parseInt(product.getStock()) > 0) {
@@ -313,6 +319,8 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 }
             });
+
+
             addToBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -351,7 +359,8 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         alertDialog.show();
                     } else {
                         //Log.e("stockkk", product.stock);
-                        if (!product.getStock().equals("") && !product.getStock().equals("null") && product.getStock() != null && Integer.parseInt(product.getStock()) < 1) {
+
+                        if (Integer.parseInt(product.getStock()) <= 0) {
                             Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();
                         } else {
 
@@ -361,7 +370,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     if (product.id.equals(products.get(i).id)) {
                                         System.out.println("==1111====" + Integer.parseInt(products.get(i).count));
                                         System.out.println("==1111====" + Integer.parseInt(products.get(i).stock));
-                                        if (Integer.parseInt(products.get(i).count) >= Integer.parseInt(products.get(i).stock)){
+                                        if (Integer.parseInt(products.get(i).count) >= Integer.parseInt(products.get(i).stock)) {
                                             Toast.makeText(getActivity(), "حداکثر تعداد انتخاب شده است", Toast.LENGTH_LONG).show();
                                             return;
                                         }
@@ -404,11 +413,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             // just set viewPager
             customIndicator.setViewPager(viewPager);
-
-            if (Integer.parseInt(product.getStock()) == 0) {
-                btn_addToBasket.setText("نا موجـــود");
-                btn_addToBasket.setEnabled(false);
-            }
 
             name.setText(product.name);
             System.out.println("providerName=========" + product.providerName);
@@ -761,7 +765,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+        //AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
 
     }
 
@@ -808,14 +812,13 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             Log.e("stock", product.getStock());
 
 
-
             if (products != null) {
                 for (int i = 0; i < products.size(); i++) {
                     if (this.product.id.equals(products.get(i).id)) {
                         numberPicker.setMax(Integer.parseInt(products.get(i).stock) - Integer.parseInt(products.get(i).count));
                     }
                 }
-            }else {
+            } else {
                 numberPicker.setMax(Integer.parseInt(product.getStock()));
             }
 
@@ -892,6 +895,20 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
                                     try {
                                         JSONObject im = images.getJSONObject(img);
+                                        Image image = new Image(
+                                                im.getString("image_link"));
+                                        imagesArray.add(img, image);
+                                    } catch (JSONException ex) {
+
+                                    }
+                                }
+
+                                JSONArray colors = c.getJSONArray("newColors");
+
+                                for (int img = 0; img < colors.length(); img++) {
+
+                                    try {
+                                        JSONObject im = colors.getJSONObject(img);
                                         Image image = new Image(
                                                 im.getString("image_link"));
                                         imagesArray.add(img, image);

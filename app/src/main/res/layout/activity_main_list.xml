@@ -5,35 +5,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginBottom="50dp"
     tools:context="net.babiran.app.Rss.MainListActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayolt"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        android:background="@color/gray_lighter">
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:context=".FactorList">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarFactor"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/blueDark"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:id="@+id/llContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_arrow_back_black_24dp"
+                        android:tint="#fff" />
+
+
+                    <ImageView
+                        android:id="@+id/btn_search"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/btn_back"
+                        android:padding="10dp"
+                        android:src="@drawable/sear"
+                        android:tint="#fff" />
+
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="3dp"
+                        android:gravity="center_vertical"
+                        android:text="رویداد ها و مطالب گوناگون"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/corner_ronde"
+        android:layoutDirection="ltr"
+        android:padding="5dp"
+        android:visibility="visible"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <ui_elements.MyEditText
+            android:id="@+id/search_bar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="0.5dp"
-            android:layout_weight="0.4"
-            android:visibility="gone">
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            android:background="@null"
+            android:hint="جستجو در بلاگ"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="@color/black" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_search"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/sear_blog" />
+    </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
+    <LinearLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/gray_lighter"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/layout_search">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/blogCardView"
@@ -69,14 +144,16 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@+id/linearLayolt">
+        android:layout_below="@+id/tab_layout"
+        android:layout_marginBottom="40dp">
 
         <LinearLayout
             android:id="@+id/ln_main_rss_news_my"
@@ -141,62 +218,14 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
 
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_recycler_view_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/layout_search"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/corner_ronde"
-            android:layoutDirection="ltr"
-            android:padding="5dp"
-            android:visibility="visible">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/closeImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_closee" />
-
-            <ui_elements.MyEditText
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@null"
-                android:hint="جستجو در بلاگ"
-                android:imeOptions="actionSearch"
-                android:layout_gravity="center_vertical"
-                android:inputType="text"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_below="@+id/layout_search"/>
+            android:layout_marginRight="5dp" />
 
-    </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:src="@drawable/search_white"
-        app:backgroundTint="@color/colorAccent"
-        android:layout_alignParentLeft="true"/>
+    </LinearLayout>
+
 </RelativeLayout>

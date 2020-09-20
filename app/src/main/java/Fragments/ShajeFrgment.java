@@ -6,21 +6,15 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -28,19 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
@@ -48,29 +30,10 @@ import net.babiran.app.Servic.MyInterFace;
 import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
 import net.babiran.app.Sharj.SharjHistoryActivity;
-import net.babiran.app.SharjActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import Adapters.ProductListAdapter;
-import Models.Color;
-import Models.Feature;
-import Models.Image;
-import Models.Moshakhasat;
-import Models.Product;
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
-import tools.Util;
 
 public class ShajeFrgment extends Fragment {
 
@@ -108,6 +71,7 @@ public class ShajeFrgment extends Fragment {
         return view;
 
     }
+
     private void INIT(View view) {
         Irancell = view.findViewById(R.id.irancel);
         Hamrah = view.findViewById(R.id.hamrahaval);
@@ -137,7 +101,12 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(editText.getText().toString())) {
+
+                    System.out.println("Mablagh===" + Mablagh);
+                    System.out.println("Type===" + Type);
+                    System.out.println("operator===" + operator);
                     if (!Mablagh.equals("88") && !Type.equals("88") && !operator.equals("88")) {
+                        //startActivity(new Intent(getActivity(), AfterOrderActivity.class));
                         SenDToServer();
                     } else {
                         Toast.makeText(getActivity(), "تمام موارد را به درستی انتخاب نمایید", Toast.LENGTH_LONG).show();
@@ -148,6 +117,7 @@ public class ShajeFrgment extends Fragment {
             }
         });
     }
+
     private void RadioBTNMablagh(View view) {
         //RadioGroup rg = (RadioGroup) view.findViewById(R.id.myRadioGroup);
         RadioButton r1 = view.findViewById(R.id.hezar);
@@ -265,7 +235,7 @@ public class ShajeFrgment extends Fragment {
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
-                layout_irancell.setBackgroundResource(R.color.yellow_transparent);
+                layout_irancell.setBackgroundResource(R.color.forooze_transparent);
                 layout_hamrah.setBackgroundResource(0);
                 layout_ritel.setBackgroundResource(0);
             }
@@ -277,7 +247,7 @@ public class ShajeFrgment extends Fragment {
                 operator = "2";
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
-                layout_hamrah.setBackgroundResource(R.color.green_transparent);
+                layout_hamrah.setBackgroundResource(R.drawable.hamrah_background);
                 layout_irancell.setBackgroundResource(0);
                 layout_ritel.setBackgroundResource(0);
             }
@@ -289,7 +259,7 @@ public class ShajeFrgment extends Fragment {
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
-                layout_ritel.setBackgroundResource(R.color.forooze_transparent);
+                layout_ritel.setBackgroundResource(R.drawable.rigtel_background);
                 layout_irancell.setBackgroundResource(0);
                 layout_hamrah.setBackgroundResource(0);
             }
@@ -323,7 +293,8 @@ public class ShajeFrgment extends Fragment {
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
                                 //startActivityForResult(intent, REQUEST_CODE_PAY);
                                 startActivity(browserIntent);
-                                getActivity().finish();
+                                //AppConfig.fragmentManager.beginTransaction().replace(R.id.shajeContainer, new ShajeFrgment()).commit();
+
                             } else {
                                 Toast.makeText(getActivity(), "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
                             }
@@ -377,35 +348,35 @@ public class ShajeFrgment extends Fragment {
 
 
                     } else {*/
-                        System.out.println("===MainActivity==333===");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
-                        builder.setTitle("می خواهید خارج شوید؟");
-                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                    System.out.println("===MainActivity==333===");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
+                    builder.setTitle("می خواهید خارج شوید؟");
+                    builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                                if (AppConfig.checkReciveSms == true) {
-                                    AppConfig.checkReciveSms = false;
-                                }
-                                if (AppConfig.btnSubmitOk == true) {
-                                    AppConfig.btnSubmitOk = false;
-                                }
-
-                                AppConfig.act.finish();
-
-
-                                dialog.dismiss();
+                            if (AppConfig.checkReciveSms == true) {
+                                AppConfig.checkReciveSms = false;
                             }
-                        });
-                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //TODO
-                                dialog.dismiss();
+                            if (AppConfig.btnSubmitOk == true) {
+                                AppConfig.btnSubmitOk = false;
                             }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
 
-                   // }
+                            AppConfig.act.finish();
+
+
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //TODO
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    // }
 
 
                     return true;

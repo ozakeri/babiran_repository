@@ -69,7 +69,7 @@ public class ShowRssActivity extends AppCompatActivity {
     MyTextView txt, txt_html_ffff;
     MyTextView titl, txt_newsDate;
     String SSS;
-    String Url,desc,Titlea,imgUrl = null;
+    String Url, desc, Titlea, imgUrl = null;
     String RRR;
     private Toolbar toolbar;
     Typeface font;
@@ -80,7 +80,7 @@ public class ShowRssActivity extends AppCompatActivity {
     ImageView imgComment, imglike;
     boolean LikeDisLike = false;
     ImageView imgzoom, imgzoomOut;
-    LinearLayout likeLn, lnComment,layout_img_html_show;
+    LinearLayout likeLn, lnComment, layout_img_html_show;
     private GlobalValues globalValues = new GlobalValues();
     private boolean isPush = false;
     private RelativeLayout relativeLayout;
@@ -121,7 +121,7 @@ public class ShowRssActivity extends AppCompatActivity {
         likeLn = findViewById(R.id.dfdfdfdfd);
         lnComment = findViewById(R.id.dffdfdfdfd);
         ln = findViewById(R.id.ln_ln_ln);
-        recyclerView =  findViewById(R.id.recccccc);
+        recyclerView = findViewById(R.id.recccccc);
         layout_img_html_show = findViewById(R.id.layout_img_html_show);
 
         Bundle bundle = getIntent().getExtras();
@@ -133,7 +133,7 @@ public class ShowRssActivity extends AppCompatActivity {
 
             titl.setText(Titlea);
             txt.setText(desc);
-            Linkify.addLinks(txt,Linkify.ALL);
+            Linkify.addLinks(txt, Linkify.ALL);
             System.out.println("Link====222" + Url);
             System.out.println("tit====222" + Titlea);
             System.out.println("description====" + desc);
@@ -310,7 +310,7 @@ public class ShowRssActivity extends AppCompatActivity {
             });
         } else {
 
-            if (Url!= null){
+            if (Url != null) {
                 new Title().execute();
             }
 
@@ -476,14 +476,14 @@ public class ShowRssActivity extends AppCompatActivity {
 
         MyButton telegram = (MyButton) dialog.findViewById(R.id.eafbghm);
 
-        final MyEditText sourush = (MyEditText) dialog.findViewById(R.id.dfghfghbfghb);
+        final MyEditText txt_comment = dialog.findViewById(R.id.txt_comment);
 
         telegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!TextUtils.isEmpty(sourush.getText().toString())) {
-                    ListedSetCommet(sourush.getText().toString(), dialog);
+                if (!TextUtils.isEmpty(txt_comment.getText().toString())) {
+                    ListedSetCommet(txt_comment.getText().toString(), dialog);
                 } else {
                     Toast.makeText(ShowRssActivity.this, "فیلد نمی تواند خالی باشد", Toast.LENGTH_SHORT).show();
 
@@ -590,14 +590,14 @@ public class ShowRssActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<GetSucc> call, @NonNull retrofit2.Response<GetSucc> response) {
 
                     dialog.dismiss();
-                    if (response.body().getSuccess() == 0) {
-                        //imglike.setImageResource(R.drawable.ic_like);
-                        Toast.makeText(ShowRssActivity.this, "با موفقیت ثبت نشد", Toast.LENGTH_SHORT).show();
-                    } else if (response.body().getSuccess() == 1) {
-                        Toast.makeText(ShowRssActivity.this, "با موفقیت ثبت شد بعد از بررسی ادمین منشر میگردد", Toast.LENGTH_SHORT).show();
-
+                    if (response.body() != null){
+                        if (response.body().getSuccess() == 0) {
+                            //imglike.setImageResource(R.drawable.ic_like);
+                            Toast.makeText(ShowRssActivity.this, "خطا در ارسال", Toast.LENGTH_SHORT).show();
+                        } else if (response.body().getSuccess() == 1) {
+                            Toast.makeText(ShowRssActivity.this, "با موفقیت ثبت شد", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                 }
 
                 @Override
