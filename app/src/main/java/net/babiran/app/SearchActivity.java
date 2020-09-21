@@ -206,10 +206,21 @@ public class SearchActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
+                                ArrayList<String> newColorsArrayList = new ArrayList<>();
+                                if (!c.isNull("newcolors")) {
+                                    JSONArray jsonArray1 = c.getJSONArray("newcolors");
+                                    for (int colors = 0; colors < jsonArray1.length(); colors++) {
+                                        try {
+                                            String im = jsonArray1.getString(colors);
+                                            newColorsArrayList.add(colors, im.toString());
+                                        } catch (JSONException ex) {
 
+                                        }
+                                    }
+                                }
 
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
 
                                 products.add(product);
 

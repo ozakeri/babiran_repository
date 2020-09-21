@@ -273,7 +273,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
                                         android:orientation="horizontal"
-                                        android:visibility="gone">
+                                        android:visibility="visible"
+                                        android:gravity="center_vertical">
 
                                         <ui_elements.MyTextView
                                             android:layout_width="wrap_content"
@@ -284,15 +285,12 @@
                                             android:textColor="@color/black"
                                             android:textSize="12sp" />
 
-                                        <ui_elements.MyTextView
-                                            android:id="@+id/txt_colorName"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_margin="6dp"
-                                            android:inputType="textMultiLine"
-                                            android:text="---"
-                                            android:textColor="@color/black_lighter"
-                                            android:textSize="12sp" />
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:id="@+id/img_color"
+                                            android:layout_width="40dp"
+                                            android:layout_height="30dp"
+                                            android:background="@color/blueDark"/>
+
 
                                     </LinearLayout>
 

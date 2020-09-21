@@ -19,17 +19,16 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import Models.Color;
 import Models.EventbusModel;
 import ui_elements.MyTextView;
 
 public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.CustomView> {
 
     private Context context;
-    private List<Color> colors;
+    private List<String> colors;
     private String selectedItemId;
 
-    public ListColorAdapter(Context context, List<Color> colors) {
+    public ListColorAdapter(Context context, List<String> colors) {
         this.colors = colors;
         this.context = context;
     }
@@ -44,35 +43,30 @@ public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.Cust
     @Override
     public void onBindViewHolder(@NonNull CustomView holder, int position) {
 
-        Color color = colors.get(position);
+        String color = colors.get(position);
 
-        if (color != null){
+        if (color != null) {
             //holder.im_color.setBackgroundResource(R.drawable.circle_background_select_color);
-            Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.circle_background_select_color);
-            if (unwrappedDrawable != null){
+            Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.border_select_color);
+            if (unwrappedDrawable != null) {
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, android.graphics.Color.parseColor("#" + color.colorCode));
-                holder.im_color.setBackgroundResource(R.drawable.circle_background_select_color);
+                DrawableCompat.setTint(wrappedDrawable, android.graphics.Color.parseColor(color));
+                holder.im_color.setBackgroundResource(R.drawable.border_select_color);
             }
-
-            holder.txt_colorName.setText(color.getColorName());
-            System.out.println("getColorName===" + color.getColorName());
-            System.out.println("getColorName===" + color.getId());
-            System.out.println("getColorName===" + color.getColorCode());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedItemId = color.getId();
+                    selectedItemId = color;
                     //notifyDataSetChanged();
-                    EventBus.getDefault().post(new EventbusModel("",color.getColorName(),position));
+                    EventBus.getDefault().post(new EventbusModel("", color, position));
 
                 }
             });
 
-            if(color.getId().equals(selectedItemId)){
+            if (color.equals(selectedItemId)) {
                 holder.card_layout_main.setBackgroundResource(R.drawable.circle_background_selected);
-            }else {
+            } else {
                 holder.card_layout_main.setBackgroundResource(R.drawable.border_select_color);
             }
         }
@@ -86,13 +80,11 @@ public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.Cust
 
     public class CustomView extends RecyclerView.ViewHolder {
         private AppCompatImageView im_color;
-        private MyTextView txt_colorName;
         private RelativeLayout card_layout_main;
 
         public CustomView(@NonNull View itemView) {
             super(itemView);
             im_color = itemView.findViewById(R.id.im_color);
-            txt_colorName = itemView.findViewById(R.id.txt_colorName);
             card_layout_main = itemView.findViewById(R.id.card_layout_main);
         }
     }

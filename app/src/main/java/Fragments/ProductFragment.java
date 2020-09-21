@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -30,7 +31,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -108,16 +111,17 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     public AdvertisingDatabaseHandler dba;
     RequestQueue queue;
     public static final String TAG = "TAG";
-    MyTextView txt_colorName, noStock, btn_addToBasket;
+    MyTextView noStock, btn_addToBasket;
     View v;
     String Count = "";
     String user_id = "-1";
     String id = "-1";
-    ImageView fav;
+    ImageView img_color;
     private boolean getProduct = false;
     NumberPicker numberpicker;
     public CustomPagerAdapterProduct mCustomPagerAdapterByUrlMain;
     private ListColorAdapter listColorAdapter;
+    private String colorCode = "";
 
     @SuppressLint("ValidFragment")
     public ProductFragment(Product product, Category category, String prev) {
@@ -170,7 +174,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
         noStock = v.findViewById(R.id.nostock);
         btn_addToBasket = v.findViewById(R.id.btn_addToBasket);
-        txt_colorName = v.findViewById(R.id.txt_colorName);
+        img_color = v.findViewById(R.id.img_color);
         layout_selectColor = v.findViewById(R.id.layout_selectColor);
         recyclerView_colorList = v.findViewById(R.id.recyclerView_colorList);
         layout_color = v.findViewById(R.id.layout_color);
@@ -436,12 +440,12 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             recyclerView_colorList.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Color color = product.getColors().get(position);
-                    product.setColorName(color.getColorName());
-                    product.setColorCode(color.getColorCode());
+                    String color = product.getColors().get(position);
+                    //product.setColorName(color.getColorName());
+                   // product.setColorCode(color.getColorCode());
 
-                    System.out.println("color=========" + color.getColorName());
-                    System.out.println("color=========" + color.getColorCode());
+                   // System.out.println("color=========" + color.getColorName());
+                    //System.out.println("color=========" + color.getColorCode());
                 }
             }));
 
@@ -747,6 +751,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             } else {
                 product.count = Count;
+                product.setColorCode(colorCode);
                 products.add(this.product);
                 Gson gson = new Gson();
                 String proObj = gson.toJson(products);
@@ -903,19 +908,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
-                                JSONArray colors = c.getJSONArray("newColors");
-
-                                for (int img = 0; img < colors.length(); img++) {
-
-                                    try {
-                                        JSONObject im = colors.getJSONObject(img);
-                                        Image image = new Image(
-                                                im.getString("image_link"));
-                                        imagesArray.add(img, image);
-                                    } catch (JSONException ex) {
-
-                                    }
-                                }
 
                                 if (!c.isNull("moshakhasat")) {
                                     JSONArray jsonArray1 = c.getJSONArray("moshakhasat");
@@ -948,10 +940,22 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                                     }
                                 }
 
+                                ArrayList<String> newColorsArrayList = new ArrayList<>();
+                                if (!c.isNull("newcolors")) {
+                                    JSONArray jsonArray1 = c.getJSONArray("newcolors");
+                                    for (int colors = 0; colors < jsonArray1.length(); colors++) {
+                                        try {
+                                            String im = jsonArray1.getString(colors);
+                                            newColorsArrayList.add(colors, im);
+                                        } catch (JSONException ex) {
+
+                                        }
+                                    }
+                                }
 
                                 //c.getString("category_id1")
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
 
                                 products.add(product);
                             }
@@ -1019,7 +1023,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     @Subscribe
     public void getEvent(EventbusModel model) {
         if (model.getColor() != null) {
-            txt_colorName.setText(model.getColor());
+            System.out.println("model=======" + model.getColor());
+            colorCode = model.getColor();
+            int greenColor = android.graphics.Color.parseColor(model.getColor());
+            img_color.setBackgroundColor(greenColor);
             int position = model.getPosition();
             listColorAdapter.notifyDataSetChanged();
             recyclerView_colorList.setAdapter(listColorAdapter);
@@ -1046,6 +1053,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Log.d(TAG, " Name " + ((RadioButton) v).getText() + " Id is " + v.getId());
-        txt_colorName.setText(((RadioButton) v).getText());
+        //txt_colorName.setText(((RadioButton) v).getText());
     }
 }

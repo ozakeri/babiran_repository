@@ -32,6 +32,7 @@ public class MyEditText extends androidx.appcompat.widget.AppCompatEditText {
         //this.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //this.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         this.setTextSize(12);
+        this.setFocusable(true);
         this.setShadowLayer(0f, 5, 5, getContext().getResources().getColor(R.color.white));
     }
 }

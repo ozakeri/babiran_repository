@@ -44,6 +44,7 @@
                 android:background="@null"
                 android:hint="جستجو در بابیران"
                 android:imeOptions="actionSearch"
+                android:cursorVisible="true"
                 android:inputType="text" />
 
         </LinearLayout>

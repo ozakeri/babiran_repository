@@ -13,14 +13,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -109,11 +108,29 @@ public class SearchFrgment extends Fragment {
         AppConfig.frag = SearchFrgment.this;
         handler = new Handler();
 
-        DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
-        int width = metrics.widthPixels;
-
-
         ed_name = v.findViewById(R.id.search);
+
+        Handler handler = new Handler();
+        Thread someThread = new Thread() {
+
+            @Override
+            public void run() {
+
+                //some actions
+                handler.post(new Runnable() {
+                    public void run() {
+                        ed_name.setFocusable(true);
+                        ed_name.requestFocusFromTouch();
+                        InputMethodManager imgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imgr.showSoftInput(ed_name, 0);
+                        ed_name.requestFocus();
+                    }
+                });
+            }
+        };
+
+        someThread.start();
+
         searchImg = (ImageView) v.findViewById(R.id.searchImage);
         // RelativeLayout_search = (RelativeLayout) v.findViewById(R.id.RelativeLayout_search);
 
@@ -183,7 +200,7 @@ public class SearchFrgment extends Fragment {
                 progressLayout.setVisibility(View.VISIBLE);
                 if (arg0.length() == 0) {
                     progressLayout.setVisibility(View.GONE);
-                    if (queue != null){
+                    if (queue != null) {
                         queue.cancelAll(new RequestQueue.RequestFilter() {
                             @Override
                             public boolean apply(Request<?> request) {
@@ -283,7 +300,7 @@ public class SearchFrgment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                if (MainActivity.search.getVisibility() == View.VISIBLE) {
                     System.out.println("=====btnBack=====");
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
@@ -304,7 +321,7 @@ public class SearchFrgment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                    if (MainActivity.search.getVisibility() == View.VISIBLE) {
                         System.out.println("=====btnBack=====");
                         MainActivity.search.setVisibility(View.INVISIBLE);
                         MainActivity.btnBack.setVisibility(View.GONE);
@@ -354,6 +371,7 @@ public class SearchFrgment extends Fragment {
                                 ArrayList<Moshakhasat> moshakhasatArrayList = new ArrayList<>();
                                 ArrayList<Color> colorArrayList = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
+                                System.out.println("id=========" + jsonArray.getJSONObject(i).toString());
 
                                 JSONArray features = c.getJSONArray("features");
                                 for (int fea = 0; fea < features.length(); fea++) {
@@ -411,9 +429,21 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
+                                ArrayList<String> newColorsArrayList = new ArrayList<>();
+                                if (!c.isNull("newcolors")) {
+                                    JSONArray jsonArray1 = c.getJSONArray("newcolors");
+                                    for (int colors = 0; colors < jsonArray1.length(); colors++) {
+                                        try {
+                                            String im = jsonArray1.getString(colors);
+                                            newColorsArrayList.add(colors, im.toString());
+                                        } catch (JSONException ex) {
+
+                                        }
+                                    }
+                                }
 
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
 
                                 products.add(product);
 
@@ -568,9 +598,20 @@ public class SearchFrgment extends Fragment {
                                     }
                                 }
 
+                                ArrayList<String> newColorsArrayList = new ArrayList<>();
+                                if (!c.isNull("newcolors")) {
+                                    JSONArray jsonArray1 = c.getJSONArray("newcolors");
+                                    for (int colors = 0; colors < jsonArray1.length(); colors++) {
+                                        try {
+                                            String im = jsonArray1.getString(colors);
+                                            newColorsArrayList.add(colors, im.toString());
+                                        } catch (JSONException ex) {
 
+                                        }
+                                    }
+                                }
                                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
-                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, colorArrayList, c.getString("provider_name"));
+                                        c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
 
                                 products.add(product);
                             }
