@@ -20,6 +20,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -38,7 +39,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -60,7 +60,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import net.babiran.app.Rss.FavListActivity;
-import net.babiran.app.Rss.MainListActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     private String catId;
     private String proId;
     private boolean getProduct = false;
-    public static FrameLayout product, secondcategory, sharje,search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
+    public static FrameLayout product, secondcategory, sharje, search, blogContainer, category, basketlist, productlist, about, factorcontainer, home, nazarsanji, setting, mostfactor, fullbanner, card_banner, bigtile_banner, smalltile_banner, support;
     public static RelativeLayout wait;
     public static View viewLogo, btnBack;
     MyTextView voiceText, label;
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     public String phone = "";
     RelativeLayout notif_Relative;
     MyTextView notif_title, notif_body;
-    ImageView notif_img;
+    ImageView notif_img,img_wait;
     MyTextView phone_txt;
     ArrayList<Menu> menu;
     ListView listView;
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             layout_search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                    // startActivity(new Intent(MainActivity.this, SearchActivity.class));
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer, new SearchFrgment()).commit();
                     MainActivity.search.setVisibility(View.VISIBLE);
                     MainActivity.sharje.setVisibility(View.INVISIBLE);
@@ -316,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
                                 // now subscribe to `global` topic to receive app wide notifications
                                 //FirebaseMessaging.getInstance().subscribeToTopic(AppConfig.TOPIC_GLOBAL);
 
-                                displayFirebaseRegId();
+                                //displayFirebaseRegId();
 
                             } else if (intent.getAction().equals(AppConfig.PUSH_NOTIFICATION)) {
                                 // new push notification is received
@@ -362,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     };
-                    displayFirebaseRegId();
+                    //displayFirebaseRegId();
                     initNavigationDrawer(id);
 
                     deliver = (RelativeLayout) findViewById(R.id.motor);
@@ -390,10 +389,12 @@ public class MainActivity extends AppCompatActivity {
                     setting = (FrameLayout) findViewById(R.id.SettingContainer);
                     about = (FrameLayout) findViewById(R.id.AboutContainer);
                     wait = (RelativeLayout) findViewById(R.id.WaitContainer);
+                    img_wait = findViewById(R.id.img_wait);
                     bigtile_banner = (FrameLayout) findViewById(R.id.BigTileContainer);
                     smalltile_banner = (FrameLayout) findViewById(R.id.SmallTileContainer);
                     support = (FrameLayout) findViewById(R.id.SupportContainer);
 
+                    Glide.with(this).load(R.drawable.loading).into(img_wait);
                     ///// Rss is set
 
                     Typeface type = Typeface.createFromAsset(getAssets(), "IRANSansMobile_Bold.ttf");
@@ -463,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             wait.setVisibility(View.INVISIBLE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+            //getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
         }
 
         if (b) {
@@ -474,7 +475,7 @@ public class MainActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( MainActivity.search.getVisibility() == View.VISIBLE){
+                if (MainActivity.search.getVisibility() == View.VISIBLE) {
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
@@ -870,6 +871,11 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setVisibility(View.VISIBLE);
         layout_search.setVisibility(View.VISIBLE);
+
+        if (findViewById(R.id.blogContainer).getVisibility() == View.VISIBLE) {
+            layout_search.setVisibility(View.GONE);
+        }
+
     }
 
     private void tabListeners() {
@@ -949,7 +955,7 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "search";
-                }else if (tab_situation.equals("blog")) {
+                } else if (tab_situation.equals("blog")) {
 
                     findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
@@ -995,7 +1001,7 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "blog";
-                }else if (tab_situation.equals("search")) {
+                } else if (tab_situation.equals("search")) {
                     findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                     findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                     tab_situation = "blog";
@@ -1107,7 +1113,7 @@ public class MainActivity extends AppCompatActivity {
                         findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                         findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                         tab_situation = "profile";
-                    }else if (tab_situation.equals("blog")) {
+                    } else if (tab_situation.equals("blog")) {
                         findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
                         findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
                         tab_situation = "profile";
@@ -1523,9 +1529,28 @@ public class MainActivity extends AppCompatActivity {
                 tab_situation = "category";
             }
 
+
         }
 
 
+        Handler handler = new Handler();
+        Thread someThread = new Thread() {
+
+            @Override
+            public void run() {
+
+                //some actions
+                handler.post(new Runnable() {
+                    public void run() {
+                        if (findViewById(R.id.blogContainer).getVisibility() == View.VISIBLE) {
+                            MainActivity.layout_search.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+        };
+
+        someThread.start();
     }
 
     public boolean isOnline() {

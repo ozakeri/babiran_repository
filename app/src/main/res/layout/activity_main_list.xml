@@ -115,12 +115,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="0.5dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardBackgroundColor="@drawable/background_button_main">
 
             <ui_elements.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="مطالب گوناگون" />
         </androidx.cardview.widget.CardView>
 
@@ -129,12 +132,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="0.5dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            app:cardBackgroundColor="@drawable/background_button_main">
 
             <ui_elements.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="خبر ها" />
         </androidx.cardview.widget.CardView>
 

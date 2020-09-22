@@ -74,7 +74,7 @@ public class ShowRssActivity extends AppCompatActivity {
     private Toolbar toolbar;
     Typeface font;
     LinearLayout ln;
-    int id_blog, LIKE;
+    int id_blog = 0, LIKE;
     RecyclerView recyclerView;
     TextView txtLike, txt_titleComment;
     ImageView imgComment, imglike;
@@ -83,6 +83,7 @@ public class ShowRssActivity extends AppCompatActivity {
     LinearLayout likeLn, lnComment, layout_img_html_show;
     private GlobalValues globalValues = new GlobalValues();
     private boolean isPush = false;
+    private String push_blog_id = "";
     private RelativeLayout relativeLayout;
 
     ImageView SaveAImg, Sahe;
@@ -102,6 +103,7 @@ public class ShowRssActivity extends AppCompatActivity {
         Bundle pudhBndle = getIntent().getExtras();
         if (pudhBndle != null) {
             isPush = pudhBndle.getBoolean("isPush");
+            push_blog_id = pudhBndle.getString("push_blog_id");
         }
 
         txt_html_ffff = findViewById(R.id.txt_html_ffff);
@@ -422,7 +424,7 @@ public class ShowRssActivity extends AppCompatActivity {
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<GETINGBlog> call = n.getBlogById(Integer.parseInt(ListtoListActivity.ID_ME));
-            System.out.println("ID_ME====" + Integer.parseInt(ListtoListActivity.ID_ME));
+            System.out.println("ID_ME33====" + Integer.parseInt(ListtoListActivity.ID_ME));
 
             call.enqueue(new Callback<GETINGBlog>() {
                 @SuppressLint("SetTextI18n")
@@ -581,6 +583,14 @@ public class ShowRssActivity extends AppCompatActivity {
 
     private void ListedSetCommet(String msg, final Dialog dialog) {
 
+        if (isPush && push_blog_id != null) {
+            id_blog = Integer.parseInt(push_blog_id);
+        }
+
+        System.out.println("id_blog===" + id_blog);
+        System.out.println("id_blog===" + ListtoListActivity.ID_ME);
+        System.out.println("id_blog===" + AppConfig.id);
+        System.out.println("id_blog===" + push_blog_id);
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<GetSucc> call = n.add_comment(id_blog, Integer.parseInt(AppConfig.id), msg);
@@ -590,7 +600,7 @@ public class ShowRssActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<GetSucc> call, @NonNull retrofit2.Response<GetSucc> response) {
 
                     dialog.dismiss();
-                    if (response.body() != null){
+                    if (response.body() != null) {
                         if (response.body().getSuccess() == 0) {
                             //imglike.setImageResource(R.drawable.ic_like);
                             Toast.makeText(ShowRssActivity.this, "خطا در ارسال", Toast.LENGTH_SHORT).show();
@@ -897,6 +907,8 @@ public class ShowRssActivity extends AppCompatActivity {
         if (isPush) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+        } else {
+            finish();
         }
     }
 

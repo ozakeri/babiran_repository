@@ -202,9 +202,12 @@ public class MyPushListener extends PusheListenerService {
                                     }
                                 } else if (type.equals("blog")) {
                                     if (blog_id != null) {
+
+                                        System.out.println("-=-=blog_id-=-=" + blog_id);
                                         ListtoListActivity.ID_ME = blog_id;
                                         Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
                                         intent.putExtra("isPush", true);
+                                        intent.putExtra("push_blog_id", blog_id);
                                         showNotificationBlog(getApplicationContext(), intent, title, body);
                                     }
                                 }else if (type.equals("user")) {

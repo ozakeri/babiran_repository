@@ -191,8 +191,8 @@ public class BlogFrgment extends Fragment {
 
         //////////
 
-        blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
-        newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
+        blogCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
+        newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
 
         blogCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,8 +202,8 @@ public class BlogFrgment extends Fragment {
                 b2 = false;
                 imNewsMy.setVisibility(View.VISIBLE);
                 imNews.setVisibility(View.GONE);
-                blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
-                newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
+                blogCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
+                newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
                 Listed();
             }
         });
@@ -217,8 +217,8 @@ public class BlogFrgment extends Fragment {
                 imNewsMy.setVisibility(View.GONE);
                 imNews.setVisibility(View.VISIBLE);
                 Listed2();
-                blogCardView.setBackgroundColor(getResources().getColor(R.color.white));
-                newsCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
+                blogCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
+                newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
 
             }
         });

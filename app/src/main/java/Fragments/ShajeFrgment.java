@@ -44,7 +44,7 @@ public class ShajeFrgment extends Fragment {
     private TextView tx;
     public static final int REQUEST_CODE_PAY = 101;
     private RelativeLayout layout_irancell, layout_hamrah, layout_ritel;
-    private LinearLayout layout_afterSelect;
+    private LinearLayout layout_afterSelect, pymeny_sharj;
 
 
     public ShajeFrgment() {
@@ -62,7 +62,6 @@ public class ShajeFrgment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.activity_transaction, container, false);
-
         AppConfig.frag = ShajeFrgment.this;
 
         INIT(view);
@@ -80,6 +79,7 @@ public class ShajeFrgment extends Fragment {
         layout_hamrah = view.findViewById(R.id.layout_hamrah);
         layout_ritel = view.findViewById(R.id.layout_ritel);
         layout_afterSelect = view.findViewById(R.id.layout_afterSelect);
+        pymeny_sharj = view.findViewById(R.id.pymeny_sharj);
         editText = (EditText) view.findViewById(R.id.ed_number);
         tx = (TextView) view.findViewById(R.id.txt_show_op);
         editText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
@@ -232,6 +232,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
+                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
@@ -244,6 +245,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
+                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "2";
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
@@ -256,6 +258,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
+                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
@@ -385,4 +388,5 @@ public class ShajeFrgment extends Fragment {
             }
         });
     }
+
 }

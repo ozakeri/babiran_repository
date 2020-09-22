@@ -69,7 +69,7 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
                 ListtoListActivity.ID_ME = list.id;
                 Intent intent = new Intent(mContext, ShowRssActivity.class);
                 mContext.startActivity(intent);
-                System.out.println("ID_ME====" + ListtoListActivity.ID_ME);
+                System.out.println("ID_ME11====" + ListtoListActivity.ID_ME);
             }
         });
 
@@ -79,7 +79,7 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
                 ListtoListActivity.ID_ME = list.id;
                 Intent intent = new Intent(mContext, ShowRssActivity.class);
                 mContext.startActivity(intent);
-                System.out.println("ID_ME====" + ListtoListActivity.ID_ME);
+                System.out.println("ID_ME22====" + ListtoListActivity.ID_ME);
             }
         });
 

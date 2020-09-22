@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="52dp"
             android:orientation="horizontal"
-            android:paddingBottom="5dp"
+            android:paddingBottom="2dp"
             android:layout_marginRight="3dp"
             android:layout_marginLeft="3dp">
 
@@ -158,7 +158,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/linear"
             android:background="@color/white"
-            android:textAlignment="center">
+            android:textAlignment="center"
+            android:gravity="center_horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -314,7 +315,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layoutDirection="ltr"
                         android:layout_below="@+id/card1"
                         android:scrollbars="none">
 
@@ -451,7 +451,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layoutDirection="ltr"
                         android:scrollbars="none"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
