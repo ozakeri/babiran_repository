@@ -245,7 +245,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
         if (product != null) {
 
-            System.out.println("product=====" + product.toString());
             this.id = product.id;
             DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
@@ -268,7 +267,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
             viewPager.setAdapter(mCustomPagerAdapterByUrlMain);
 
-            System.out.println("getStock====" + product.getStock());
             if (Integer.parseInt(product.getStock()) <= 0) {
                 btn_addToBasket.setText("نا موجـــود");
                 btn_addToBasket.setEnabled(false);
@@ -369,11 +367,8 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         } else {
 
                             if (products != null) {
-                                System.out.println("==555555111111====");
                                 for (int i = 0; i < products.size(); i++) {
                                     if (product.id.equals(products.get(i).id)) {
-                                        System.out.println("==1111====" + Integer.parseInt(products.get(i).count));
-                                        System.out.println("==1111====" + Integer.parseInt(products.get(i).stock));
                                         if (Integer.parseInt(products.get(i).count) >= Integer.parseInt(products.get(i).stock)) {
                                             Toast.makeText(getActivity(), "حداکثر تعداد انتخاب شده است", Toast.LENGTH_LONG).show();
                                             return;
@@ -419,7 +414,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             customIndicator.setViewPager(viewPager);
 
             name.setText(product.name);
-            System.out.println("providerName=========" + product.providerName);
             if (product.providerName != null) {
                 providerName.setText(product.providerName);
             } else {
@@ -440,12 +434,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             recyclerView_colorList.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    String color = product.getColors().get(position);
-                    //product.setColorName(color.getColorName());
-                   // product.setColorCode(color.getColorCode());
 
-                   // System.out.println("color=========" + color.getColorName());
-                    //System.out.println("color=========" + color.getColorCode());
                 }
             }));
 
@@ -541,8 +530,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     IsUpdateCount = true;
                 }
             }
-            System.out.println("=-=-=-count1=====" + count);
-            System.out.println("=-=-=-count1=====" + Count);
         }
     }
 
@@ -554,7 +541,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 count = Integer.parseInt(Count);
             }
         }
-        System.out.println("=-=-=-count2=====" + count);
         return count;
     }
 
@@ -598,7 +584,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     MainActivity.layout_search.setVisibility(View.VISIBLE);
                     MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.home.setVisibility(View.VISIBLE);
-                    System.out.println("VISIBLE=====222====");
                     return;
                 }
 
@@ -607,20 +592,16 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     MainActivity.btnBack.setVisibility(View.VISIBLE);
                     MainActivity.layout_search.setVisibility(View.VISIBLE);
                     MainActivity.viewLogo.setVisibility(View.GONE);
-                    System.out.println("VISIBLE=====111====");
                     return;
                 }
 
 
                 if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                    System.out.println("===MainActivity==111===");
                     //MainActivity.productlist.setVisibility(View.INVISIBLE);
                     FragmentManager fm = getFragmentManager();
                     if (fm != null) {
-                        System.out.println("===fm != null===");
                         ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
                         if (fragm != null) {
-                            System.out.println("===fragm != null===");
                             Handler handler = new Handler();
                             Thread someThread = new Thread() {
 
@@ -646,8 +627,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 MainActivity.product.setVisibility(View.INVISIBLE);
                 MainActivity.btnBack.setVisibility(View.GONE);
                 MainActivity.viewLogo.setVisibility(View.VISIBLE);
-                System.out.println("VISIBLE=====333====");
-
             }
         });
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -665,7 +644,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         MainActivity.layout_search.setVisibility(View.VISIBLE);
                         MainActivity.product.setVisibility(View.INVISIBLE);
                         MainActivity.home.setVisibility(View.VISIBLE);
-                        System.out.println("VISIBLE=====222====");
                         return true;
                     }
 
@@ -674,20 +652,16 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                         MainActivity.btnBack.setVisibility(View.VISIBLE);
                         MainActivity.layout_search.setVisibility(View.VISIBLE);
                         MainActivity.viewLogo.setVisibility(View.GONE);
-                        System.out.println("VISIBLE=====111====");
                         return true;
                     }
 
 
                     if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                        System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
                         if (fm != null) {
-                            System.out.println("===fm != null===");
                             ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
                             if (fragm != null) {
-                                System.out.println("===fragm != null===");
                                 Handler handler = new Handler();
                                 Thread someThread = new Thread() {
 
@@ -713,7 +687,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     MainActivity.product.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
-                    System.out.println("VISIBLE=====333====");
                 }
                 return false;
             }
@@ -735,8 +708,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             if (IsUpdateCount) {
                 for (int i = 0; i < products.size(); i++) {
                     if (this.product.id.equals(products.get(i).id)) {
-                        System.out.println("=====Count======" + Integer.parseInt(products.get(i).count));
-                        System.out.println("=====Count======" + Integer.parseInt(products.get(i).stock));
                         if (Integer.parseInt(products.get(i).count) > Integer.parseInt(products.get(i).stock)) {
                             Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
                             return;
@@ -757,7 +728,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 String proObj = gson.toJson(products);
                 editor.putString("products", proObj);
                 editor.commit();
-                System.out.println("proObj======" + proObj);
             }
         }
 
@@ -839,7 +809,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 AppConfig.frag = ProductFragment.this;
                 Count = String.valueOf(numberPicker.getValue());
-                System.out.println("txt_action====" + Count);
                 addtoBasket();
                 alert.dismiss();
             }
@@ -863,7 +832,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
-        System.out.println("url=====" + url);
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -1023,7 +991,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     @Subscribe
     public void getEvent(EventbusModel model) {
         if (model.getColor() != null) {
-            System.out.println("model=======" + model.getColor());
             colorCode = model.getColor();
             int greenColor = android.graphics.Color.parseColor(model.getColor());
             img_color.setBackgroundColor(greenColor);

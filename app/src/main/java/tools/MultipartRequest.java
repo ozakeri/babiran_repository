@@ -71,7 +71,6 @@ public class MultipartRequest extends Request<String> {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
-            System.out.println("Network Response " + new String(response.data, "UTF-8"));
             return Response.success(new String(response.data, "UTF-8"),
                     getCacheEntry());
         } catch (UnsupportedEncodingException e) {

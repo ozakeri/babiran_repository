@@ -136,7 +136,6 @@ public class FactorList extends AppCompatActivity {
         if (extras != null) {
             id = extras.getString("id");
             pageName = extras.getString("page");
-            System.out.println("pageName====" + pageName);
             //  id="55";
             getFactor();
             getCreditRequest();
@@ -169,7 +168,6 @@ public class FactorList extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(FactorList.this);
 
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
-        System.out.println("url=====" + url);
         // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -177,8 +175,6 @@ public class FactorList extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-
-                            System.out.println("response=====" + response);
 
                             factorArrayList = new ArrayList<>();
                             for (int i = 0; i < response.length(); i++) {
@@ -451,7 +447,6 @@ public class FactorList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        System.out.println("pageName====" + pageName);
         if (pageName != null && pageName.equals("AfterOrderActivity")) {
             AppConfig.NULLBASKET = "";
             Intent intent = new Intent(getApplicationContext(), BlankAcct.class);
@@ -521,7 +516,6 @@ public class FactorList extends AppCompatActivity {
             if (db.getRowCount() > 0) {
                 HashMap<String, String> userDetailsHashMap = db.getUserDetails();
                 id = userDetailsHashMap.get("id");
-                System.out.println("id===========" + id);
                 getFactor();
             }
         }
@@ -545,7 +539,6 @@ public class FactorList extends AppCompatActivity {
                                     credit = "0";
                                 }
                                 EventBus.getDefault().post(new EventbusModel(credit));
-                                System.out.println("====credit====" + credit);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

@@ -58,8 +58,6 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
         }
 
         holder.txt_newsDate.setText(Util.convertEnToPe(list.created_at_int));
-        System.out.println("created_at_int====" + list.created_at_int);
-        System.out.println("created_at_int====" + Util.convertEnToPe(list.created_at_int));
 
         //holder.txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
 
@@ -69,7 +67,6 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
                 ListtoListActivity.ID_ME = list.id;
                 Intent intent = new Intent(mContext, ShowRssActivity.class);
                 mContext.startActivity(intent);
-                System.out.println("ID_ME11====" + ListtoListActivity.ID_ME);
             }
         });
 
@@ -79,7 +76,6 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
                 ListtoListActivity.ID_ME = list.id;
                 Intent intent = new Intent(mContext, ShowRssActivity.class);
                 mContext.startActivity(intent);
-                System.out.println("ID_ME22====" + ListtoListActivity.ID_ME);
             }
         });
 

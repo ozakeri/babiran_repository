@@ -400,7 +400,6 @@ public class HomeFragment extends Fragment {
             v.findViewById(R.id.newpro).post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("b====" + b);
                     v.findViewById(R.id.newpro).performClick();
 
                     SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
@@ -551,7 +550,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + Newproducts.size() + "/" + "20";
-        System.out.println("getNewPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -697,7 +695,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSells/" + Topproducts.size() + "/" + "20";
-        System.out.println("getTopPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -843,7 +840,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSeenLazy/20/" + Disproducts.size();
-        System.out.println("getDisPro====" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -1265,8 +1261,6 @@ public class HomeFragment extends Fragment {
             try {
                 JSONObject c = AppConfig.topseenPro.getJSONObject(i);
 
-                System.out.println("ccccccccccccccc====" + c.toString());
-
                 JSONArray features = c.getJSONArray("features");
                 for (int fea = 0; fea < features.length(); fea++) {
                     try {
@@ -1338,13 +1332,9 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                System.out.println();
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
-                System.out.println("product====" + product.getName());
-                System.out.println("product====" + product.getDis_price());
-                System.out.println("product====" + product.getProviderName());
-                System.out.println("product====" + product.getStock());
+
                 Card card = new Card(AppConfig.act, product);
                 cards.add(card);
                 secondHorizontal.addView(card);
@@ -1375,7 +1365,6 @@ public class HomeFragment extends Fragment {
             colorArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.newPro.getJSONObject(i);
-                System.out.println("ccccccc===" + c);
                 JSONArray features = c.getJSONArray("features");
                 for (int fea = 0; fea < features.length(); fea++) {
                     try {
@@ -1473,7 +1462,6 @@ public class HomeFragment extends Fragment {
             colorArrayList = new ArrayList<>();
             try {
                 JSONObject c = AppConfig.specialPro.getJSONObject(i);
-                System.out.println("Special=====" + c.toString());
 
                 JSONArray features = c.getJSONArray("features");
                 for (int fea = 0; fea < features.length(); fea++) {
@@ -1544,7 +1532,6 @@ public class HomeFragment extends Fragment {
                 }
 
 
-                //System.out.println("homecategory_id1==" + c.getString("category_id1"));
                 Product product = new Product(c.getString("category_id1"), c.getString("id"), c.getString("name"), c.getString("description"),
                         c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray, moshakhasatArrayList, newColorsArrayList, c.getString("provider_name"));
 

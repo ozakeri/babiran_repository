@@ -667,7 +667,6 @@ public class BasketListFragment extends Fragment implements
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
 
-                    System.out.println("===MainActivity==333===");
                     AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                     builder.setTitle("می خواهید خارج شوید؟");
                     builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {

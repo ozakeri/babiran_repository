@@ -75,7 +75,6 @@ public class FullScreenActivity extends AppCompatActivity {
 
         if (bundle != null) {
             String path = bundle.getString("imgUrl");
-            System.out.println("path=====" + path);
             if (path != null){
                 Glide.with(FullScreenActivity.this).load(path).diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(image_View);

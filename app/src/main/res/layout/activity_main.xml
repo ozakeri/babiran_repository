@@ -216,6 +216,7 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@drawable/shaje_icon"
+                            android:layout_marginTop="2dp"
                             android:layout_above="@+id/txt_sharje"/>
 
                         <ui_elements.MyTextView
@@ -244,6 +245,7 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_news"
+                            android:layout_marginTop="2dp"
                             android:layout_above="@+id/txt_blog"/>
 
                         <ui_elements.MyTextView
@@ -273,6 +275,7 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@drawable/vitrin"
+                            android:layout_marginTop="2dp"
                             android:layout_above="@+id/txt_home"/>
 
                         <ui_elements.MyTextView
@@ -304,6 +307,7 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@drawable/cats"
+                            android:layout_marginTop="2dp"
                             android:layout_above="@+id/txt_category"/>
 
                         <ui_elements.MyTextView
@@ -335,6 +339,7 @@
                             android:layout_alignParentTop="true"
                             android:scaleType="centerInside"
                             android:src="@drawable/sabad2"
+                            android:layout_marginTop="2dp"
                             android:layout_above="@+id/txt_profile"/>
 
                         <ui_elements.MyTextView

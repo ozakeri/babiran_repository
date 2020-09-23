@@ -65,13 +65,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public void onBindViewHolder(@NonNull CustomView holder, final int position) {
 
-        System.out.println("categories=====" + categories.size());
         if (!categories.get(position).name.equals("null") && !categories.get(position).name.equals("") && categories.get(position).name != null) {
 
             holder.name.setText(categories.get(position).name);
             Picasso.with(context).load(categories.get(position).icon).into(holder.img_icon);
-            System.out.println("icon=====" + categories.get(position).icon);
-            System.out.println("slide_image=====" + categories.get(position).slide_image);
 
             holder.item_Button.setOnClickListener(new View.OnClickListener() {
                 @Override

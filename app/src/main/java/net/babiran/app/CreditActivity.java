@@ -147,7 +147,6 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String s = edt_price.getText().toString().replaceAll(",", "");
-                System.out.println("onClick=====" + s);
                 if (s.length() > 0) {
 
                     Handler handler = new Handler();
@@ -188,15 +187,11 @@ public class CreditActivity extends AppCompatActivity {
     }
 
     private void actionPay(int price) {
-        System.out.println("price1=====" + price);
         waitProgress.setVisibility(View.VISIBLE);
         try {
-        System.out.println("AppConfig.id=====" + AppConfig.id);
-        System.out.println("AppConfig.id=====" + id);
 
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<MyMesa> call = n.BuyCredit(Integer.parseInt(id), price);
-            System.out.println("price2=====" + price);
             call.enqueue(new Callback<MyMesa>() {
                 @Override
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
@@ -263,7 +258,6 @@ public class CreditActivity extends AppCompatActivity {
         }
 
         final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
-        System.out.println("getCredit=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -307,7 +301,6 @@ public class CreditActivity extends AppCompatActivity {
         if (db.getRowCount() > 0) {
             HashMap<String, String> userDetailsHashMap = db.getUserDetails();
             id = userDetailsHashMap.get("id");
-            System.out.println("=====id=====" + id);
             if (id != null) {
                 getCreditRequest();
             }

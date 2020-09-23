@@ -105,7 +105,6 @@ public class CountDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (!product.getStock().equals("0")) {
-                    System.out.println("Count====" + Count);
                     addtoBasket(Count);
                 } else {
                     Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();

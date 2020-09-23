@@ -70,7 +70,6 @@ public class productInfo extends AppCompatActivity {
                     name.setText(product.name);
                 }
 
-                System.out.println("size=======" + product.getMo().size());
                 ProductFeaAdapter adp = new ProductFeaAdapter(productInfo.this, product.getMo());
                 recycler_view.setAdapter(adp);
                 //adp.notifyDataSetChanged();

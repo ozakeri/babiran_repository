@@ -34,7 +34,6 @@ public class LastListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_last_list);
         id=getIntent().getExtras().getString("id");
-        System.out.println("id====" + id);
         INIT();
         /////////////////////////////////////
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -101,21 +100,14 @@ public class LastListActivity extends AppCompatActivity {
         for (int i = 0 ; i<s.size() ; i++)
         {
 
-
-            System.out.println("getParentId====" + s.get(i).getParentId());
-            System.out.println("id====" + id);
-
             if(s.get(i).getParentId()==Integer.parseInt(id))
             {
                 AppConfig.GETT =s;
                 list.add(s.get(i).getName()+"##"+s.get(i).getId()+"##"+s.get(i).getHasChild());
-                System.out.println("response22====" + s.get(i).getId());
-                System.out.println("response22====" + s.get(i).getParentId());
             }
         }
         prograsDialog.dismiss();
         mAdaptermy = new AdapterUserListMy(LastListActivity.this, list);
-        System.out.println("list====" + list.size());
         recyclerView.setAdapter(mAdaptermy);
 
 

@@ -16,7 +16,6 @@ class SMSReceiver : BroadcastReceiver() {
         val extractMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
         extractMessages.forEach {
             smsMessage -> Log.v(TAG, smsMessage.displayMessageBody)
-            System.out.println("smsMessage===" + smsMessage.displayMessageBody)
         }
         //TODO
     }

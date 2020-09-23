@@ -48,9 +48,6 @@ public class MyPushListener extends PusheListenerService {
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
 
-        System.out.println("message=====" + message.toString());
-        System.out.println("content=====" + content.toString());
-
         try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
             // System.out.println("contentJson=====" + contentJson);
@@ -60,17 +57,11 @@ public class MyPushListener extends PusheListenerService {
 
                 if (!jsonObjectStr.isEmpty()) {
 
-                    System.out.println("jsonObjectStrcontent=====" + jsonObjectStr);
-                    // jsonObjectStr = "{\"ref_id\":\"E19865A785EA71C9\",\"success\":1,\"track_code\":173383938702,\"factorcode\":885,\"type\":\"neworder\"}";
-
                     try {
                         JSONObject contentJSONObject = new JSONObject(jsonObjectStr);
                         if (!contentJSONObject.isNull("factorcode") && !contentJSONObject.isNull("type")) {
                             String factorCode = contentJSONObject.getString("factorcode");
                             String type = contentJSONObject.getString("type");
-
-                            System.out.println("factorCode=====" + factorCode);
-                            System.out.println("type=====" + type);
 
                             if (type.equals("neworder")) {
                                 body = " تامین کننده گرامی سفارش با کد " + factorCode + " برای شما ثبت شده است ";
@@ -93,7 +84,6 @@ public class MyPushListener extends PusheListenerService {
                     for (String kvPair : kvPairs) {
                         try {
                             String[] kv = kvPair.split("=");
-                            System.out.println("kv=====" + kv);
                             String key = kv[0];
                             String value = kv[1];
                             key = key.replaceAll("([{-}])", "");
@@ -101,9 +91,6 @@ public class MyPushListener extends PusheListenerService {
 
                             key = key.replaceAll("([{-}])", "");
                             value = value.replaceAll("([{-}])", "");
-
-                            System.out.println("key=====" + key);
-                            System.out.println("value=====" + value);
 
                             if (key.equals(" type")) {
                                 key = key.replace(" type", "type");
@@ -173,19 +160,8 @@ public class MyPushListener extends PusheListenerService {
 
                             if (key.equals("pro_image")) {
                                 pro_image = value;
-                                System.out.println("pro_image23=====" + value);
                             }
 
-                            System.out.println("pro_id=====" + pro_id);
-                            System.out.println("cat_id=====" + cat_id);
-                            System.out.println("title=====" + title);
-                            System.out.println("body=====" + body);
-                            System.out.println("type=====" + type);
-
-                           /* if (success != null) {
-                                showNotificationCopy(getApplicationContext(), title, body);
-                                //new Thread(new Task()).start();
-                            }*/
                             if (type != null) {
                                 if (type.equals("product")) {
                                     if (pro_id != null && cat_id != null) {
@@ -203,7 +179,6 @@ public class MyPushListener extends PusheListenerService {
                                 } else if (type.equals("blog")) {
                                     if (blog_id != null) {
 
-                                        System.out.println("-=-=blog_id-=-=" + blog_id);
                                         ListtoListActivity.ID_ME = blog_id;
                                         Intent intent = new Intent(getApplicationContext(), ShowRssActivity.class);
                                         intent.putExtra("isPush", true);
@@ -286,7 +261,6 @@ public class MyPushListener extends PusheListenerService {
 
 
         if (pro_image != null) {
-            System.out.println("pro_image===" + pro_image);
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(pro_image).getContent());
                 contentView.setImageViewBitmap(R.id.image, bitmap);
@@ -342,7 +316,6 @@ public class MyPushListener extends PusheListenerService {
 
 
         if (pro_image != null) {
-            System.out.println("pro_image===" + pro_image);
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(pro_image).getContent());
                 contentView.setImageViewBitmap(R.id.image, bitmap);

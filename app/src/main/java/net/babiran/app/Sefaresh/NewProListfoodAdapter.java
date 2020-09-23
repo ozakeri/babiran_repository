@@ -113,9 +113,6 @@ public class NewProListfoodAdapter extends RecyclerView.Adapter<NewProListfoodAd
         } else {
             holder.item_Button.setBackgroundResource(R.color.bac2);
         }
-        System.out.println("iiiiiiiiiiiiiiiiiiiii====" + i);
-        System.out.println("name====" + productArray.get(i).name);
-        System.out.println("getStock====" + productArray.get(i).getStock());
         if (productArray.get(i).getStock() != null) {
             if (productArray.get(i).getStock().equals("0")) {
                 holder.noProduct.setVisibility(View.VISIBLE);

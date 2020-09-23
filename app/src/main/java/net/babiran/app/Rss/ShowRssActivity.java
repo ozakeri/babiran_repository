@@ -136,10 +136,6 @@ public class ShowRssActivity extends AppCompatActivity {
             titl.setText(Titlea);
             txt.setText(desc);
             Linkify.addLinks(txt, Linkify.ALL);
-            System.out.println("Link====222" + Url);
-            System.out.println("tit====222" + Titlea);
-            System.out.println("description====" + desc);
-            System.out.println("imgUrl====" + imgUrl);
 
             if (Url != null && Titlea != null && desc != null) {
                 txt_newsDate.setVisibility(View.GONE);
@@ -202,14 +198,10 @@ public class ShowRssActivity extends AppCompatActivity {
                 for (int i = 0; i < s.size(); i++) {
                     prograsDialog.dismiss();
 
-                    System.out.println("Url1111=======" + s.get(i).getId());
-                    System.out.println("Url1111=======" + ListtoListActivity.ID_ME);
-
                     if (s.get(i).getId() == Integer.parseInt(ListtoListActivity.ID_ME)) {
                         //txt_html_ffff.setVisibility(View.VISIBLE);
                         //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
-                        System.out.println("---------------" + s.get(i).getCreatedAtInt());
                         txtLike.setText(s.get(i).getLike() + 1 + "");
                         titl.setText(s.get(i).getSubject());
 
@@ -424,7 +416,6 @@ public class ShowRssActivity extends AppCompatActivity {
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<GETINGBlog> call = n.getBlogById(Integer.parseInt(ListtoListActivity.ID_ME));
-            System.out.println("ID_ME33====" + Integer.parseInt(ListtoListActivity.ID_ME));
 
             call.enqueue(new Callback<GETINGBlog>() {
                 @SuppressLint("SetTextI18n")
@@ -432,7 +423,6 @@ public class ShowRssActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<GETINGBlog> call, @NonNull retrofit2.Response<GETINGBlog> response) {
                     prograsDialog.dismiss();
                     GETINGBlog s = response.body();
-                    System.out.println("response=======" + response.body());
 
                     if (s != null) {
                         txtLike.setText(s.getLike() + 1 + "");
@@ -441,7 +431,6 @@ public class ShowRssActivity extends AppCompatActivity {
                         Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img_html_show);
                         imgUrl = s.getImageLink();
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.getCreatedAtInt()));
-                        System.out.println("img====" + s.getImageLink());
 
                         id_blog = s.getId();
                         ListedGetLike();
@@ -501,7 +490,6 @@ public class ShowRssActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            System.out.println("AppConfig.id======" + AppConfig.id);
             Call<GetSucc> call = n.setLike(id_blog, Integer.parseInt(AppConfig.id), like);
 
             call.enqueue(new Callback<GetSucc>() {
@@ -587,10 +575,6 @@ public class ShowRssActivity extends AppCompatActivity {
             id_blog = Integer.parseInt(push_blog_id);
         }
 
-        System.out.println("id_blog===" + id_blog);
-        System.out.println("id_blog===" + ListtoListActivity.ID_ME);
-        System.out.println("id_blog===" + AppConfig.id);
-        System.out.println("id_blog===" + push_blog_id);
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
             Call<GetSucc> call = n.add_comment(id_blog, Integer.parseInt(AppConfig.id), msg);
@@ -776,7 +760,6 @@ public class ShowRssActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // Connect to the web site
-            System.out.println("Url=======" + Url);
             Document doc = null;
             try {
                 doc = Jsoup.connect(Url).get();
@@ -808,7 +791,6 @@ public class ShowRssActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             Picasso.with(ShowRssActivity.this).load(RRR).into(img_html_show);
-            System.out.println("img==RRR==" + RRR);
             txt.setText(pngs.text());
             prograsDialog.dismiss();
             SaveAImg.setVisibility(View.GONE);

@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ public class ShajeFrgment extends Fragment {
 
     private String Mablagh = "88", Type = "88", operator = "88"; //Type=1=>mostaghim   && operator= 1 =>irancel ,2=>hamrahaval ,3=>rightel
     private ImageView Irancell, Hamrah, Righttel;
-    private LinearLayout btn, History;
+    private LinearLayout History;
     private EditText editText;
     private TextView tx;
     public static final int REQUEST_CODE_PAY = 101;
@@ -91,20 +93,38 @@ public class ShajeFrgment extends Fragment {
             }
         });
 
-        btn = (LinearLayout) view.findViewById(R.id.pymeny_sharj);
         RadioBTNMablagh(view);
         RadioBTNType(view);
         opretator();
 
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText.getText().toString().length() > 0) {
+                    pymeny_sharj.setVisibility(View.VISIBLE);
+                } else {
+                    pymeny_sharj.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        pymeny_sharj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(editText.getText().toString())) {
 
-                    System.out.println("Mablagh===" + Mablagh);
-                    System.out.println("Type===" + Type);
-                    System.out.println("operator===" + operator);
                     if (!Mablagh.equals("88") && !Type.equals("88") && !operator.equals("88")) {
                         //startActivity(new Intent(getActivity(), AfterOrderActivity.class));
                         SenDToServer();
@@ -232,7 +252,6 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "1";
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
@@ -245,7 +264,6 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "2";
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
@@ -258,7 +276,6 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                pymeny_sharj.setVisibility(View.VISIBLE);
                 operator = "3";
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
@@ -274,7 +291,6 @@ public class ShajeFrgment extends Fragment {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            System.out.println("---------" + editText.getText().toString() + " - " + Mablagh + " - " + Type + " - " + operator);
             Call<MyMesa> call = n.BuySahrj(editText.getText().toString(), Mablagh, Type, operator);
 
             call.enqueue(new Callback<MyMesa>() {
@@ -282,7 +298,6 @@ public class ShajeFrgment extends Fragment {
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
                     try {
                         if (response.body() != null) {
-                            System.out.println("response======" + response.body());
                             Integer fetching = response.body().getSuccess();
 
                             if (fetching == 1) {
@@ -351,7 +366,6 @@ public class ShajeFrgment extends Fragment {
 
 
                     } else {*/
-                    System.out.println("===MainActivity==333===");
                     AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                     builder.setTitle("می خواهید خارج شوید؟");
                     builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {

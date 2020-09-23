@@ -125,7 +125,6 @@ public class SearchActivity extends AppCompatActivity {
         recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(SearchActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                System.out.println("position=========" + products.get(position));
                 //AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products.get(position))).commit();
             }
         }));
@@ -142,7 +141,6 @@ public class SearchActivity extends AppCompatActivity {
                         try {
                             products = new ArrayList<>();
                             jsonArray = new JSONArray(response);
-                            System.out.println("jsonArray====" + jsonArray.length());
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
@@ -275,9 +273,6 @@ public class SearchActivity extends AppCompatActivity {
                 //params.put("limit", String.valueOf(limit));
                 params.put("key", s);
                 JSONObject obj = new JSONObject(params);
-                System.out.println("params====" + obj);
-
-
                 return params;
             }
 

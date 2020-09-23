@@ -280,7 +280,6 @@ public class BlogFrgment extends Fragment {
                 } else {
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
-                    System.out.println("b1======" + Link2);
                     Intent intent2 = new Intent(getActivity(), ListRssActivity.class);
                     intent2.putExtra("link", Link2);
                     startActivity(intent2);
@@ -331,7 +330,6 @@ public class BlogFrgment extends Fragment {
                     //MainActivity.layout_search.setVisibility(View.VISIBLE);
                     //MainActivity.blogContainer.setVisibility(View.INVISIBLE);
                     if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                        System.out.println("===MainActivity==111===");
                         //MainActivity.productlist.setVisibility(View.INVISIBLE);
                         FragmentManager fm = getFragmentManager();
                         if (fm != null) {
@@ -343,7 +341,6 @@ public class BlogFrgment extends Fragment {
 
 
                     } else {
-                        System.out.println("===MainActivity==333===");
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                         builder.setTitle("می خواهید خارج شوید؟");
                         builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
@@ -426,8 +423,6 @@ public class BlogFrgment extends Fragment {
                         if (s.get(i).getParentId() == 0) {
                             AppConfig.GETT = s;
                             list.add(s.get(i).getName() + "##" + s.get(i).getId() + "##" + s.get(i).getIcon());
-
-                            System.out.println("icon====" + s.get(i).getIcon());
 
                         }
                     }

@@ -131,8 +131,6 @@ public class ListRssActivity extends AppCompatActivity {
             // new FetchFeedTask().execute((Void) null);//XML
             Url = getIntent().getExtras().getString("link");
             name = getIntent().getExtras().getString("name");
-            System.out.println("bundle====" + Url);
-            System.out.println("bundle====" + name);
             this.getXmlFromUrl(Url);
             Handler handler = new Handler();
             Thread someThread = new Thread() {
@@ -148,15 +146,10 @@ public class ListRssActivity extends AppCompatActivity {
                             try {
                                 List<RssItem> rssItems = rssReader.getItems();
                                 for (RssItem r:rssItems) {
-                                    System.out.println("getTitle====" + r.getTitle());
-                                    System.out.println("getDescription====" + r.getDescription());
-                                    System.out.println("getLink====" + r.getLink());
-                                    System.out.println("getLink====" + r.getImageUrl());
                                     RssFeedModel rssItem = new RssFeedModel(r.getTitle(), r.getLink(), r.getDescription(), r.getImageUrl());
                                     // adding item to list
                                     itemsList.add(rssItem);
                                 }
-                                System.out.println("itemsListsize11====" + itemsList.size());
                                 mAdapter = new AdapterUserList(ListRssActivity.this, itemsList);
                                 recyclerView.setAdapter(mAdapter);
                             } catch (Exception e) {
@@ -188,7 +181,6 @@ public class ListRssActivity extends AppCompatActivity {
                     intent.putExtra("id", Link);
                     startActivity(intent);
 
-                    System.out.println("id=====11=" + Link);
                 } else {
                /*     String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_link)).getText().toString();
@@ -206,11 +198,6 @@ public class ListRssActivity extends AppCompatActivity {
                     intent.putExtra("title", rssFeedModel.title);
                     intent.putExtra("desc", rssFeedModel.description);
                     intent.putExtra("imgUrl", rssFeedModel.img_url);
-
-                    System.out.println("Link111====" + rssFeedModel.link);
-                    System.out.println("tit====111" + rssFeedModel.title);
-                    System.out.println("description====111" + rssFeedModel.description);
-                    System.out.println("img_url====111" + rssFeedModel.img_url);
 
                     startActivity(intent);
                 }
@@ -234,8 +221,6 @@ public class ListRssActivity extends AppCompatActivity {
             if (s.get(i).getParentId() == Integer.parseInt(getIntent().getExtras().getString("id"))) {
                 AppConfig.GETT = s;
                 list.add(s.get(i).getName() + "##" + s.get(i).getId() + "##" + s.get(i).getHasChild());
-                System.out.println("response====" + s.get(i).getId());
-                System.out.println("response====" + s.get(i).getParentId());
             }
         }
         prograsDialog.dismiss();

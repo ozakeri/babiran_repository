@@ -59,7 +59,6 @@ public class SearchProductListAdapter extends RecyclerView.Adapter<SearchProduct
 
         if (!categories.get(i).name.equals("null") && !categories.get(i).name.equals("") && categories.get(i).name != null) {
             holder.name.setText(categories.get(i).name);
-            System.out.println("name====" + categories.get(i).name);
         }
 
 

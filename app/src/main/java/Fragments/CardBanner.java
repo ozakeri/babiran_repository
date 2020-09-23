@@ -100,7 +100,6 @@ public class CardBanner extends Fragment {
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
 
-        System.out.println("======url=====" + url);
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

@@ -96,7 +96,6 @@ public class SearchFrgment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("=====onCreate=====");
     }
 
     @Override
@@ -104,7 +103,6 @@ public class SearchFrgment extends Fragment {
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_search_frgment, container, false);
-        System.out.println("=====onCreateView=====");
         AppConfig.frag = SearchFrgment.this;
         handler = new Handler();
 
@@ -289,7 +287,6 @@ public class SearchFrgment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("=====onResume=====");
         MainActivity.btnBack.setVisibility(View.VISIBLE);
         MainActivity.viewLogo.setVisibility(View.GONE);
         MainActivity.layout_search.setVisibility(View.GONE);
@@ -301,7 +298,6 @@ public class SearchFrgment extends Fragment {
             public void onClick(View view) {
 
                 if (MainActivity.search.getVisibility() == View.VISIBLE) {
-                    System.out.println("=====btnBack=====");
                     MainActivity.search.setVisibility(View.INVISIBLE);
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);
@@ -322,7 +318,6 @@ public class SearchFrgment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
                     if (MainActivity.search.getVisibility() == View.VISIBLE) {
-                        System.out.println("=====btnBack=====");
                         MainActivity.search.setVisibility(View.INVISIBLE);
                         MainActivity.btnBack.setVisibility(View.GONE);
                         MainActivity.viewLogo.setVisibility(View.VISIBLE);
@@ -355,7 +350,6 @@ public class SearchFrgment extends Fragment {
         queue = Volley.newRequestQueue(getActivity());
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
-        System.out.println("url=====" + url);
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -363,7 +357,6 @@ public class SearchFrgment extends Fragment {
                         try {
                             List<Product> products = new ArrayList<>();
                             jsonArray = new JSONArray(response);
-                            System.out.println("jsonArray====" + jsonArray.length());
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
@@ -371,7 +364,6 @@ public class SearchFrgment extends Fragment {
                                 ArrayList<Moshakhasat> moshakhasatArrayList = new ArrayList<>();
                                 ArrayList<Color> colorArrayList = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
-                                System.out.println("id=========" + jsonArray.getJSONObject(i).toString());
 
                                 JSONArray features = c.getJSONArray("features");
                                 for (int fea = 0; fea < features.length(); fea++) {
@@ -498,7 +490,6 @@ public class SearchFrgment extends Fragment {
                 //params.put("limit", String.valueOf(limit));
                 params.put("key", s);
                 JSONObject obj = new JSONObject(params);
-                System.out.println("params====" + obj);
 
 
                 return params;

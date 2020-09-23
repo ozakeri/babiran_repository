@@ -157,7 +157,6 @@ public class ListFoodActivity extends AppCompatActivity {
                     e.getMessage();
                 }
 
-                System.out.println("IDDD=======" + id);
                 Intent intent = new Intent(ListFoodActivity.this, ShowActivity.class);
                 intent.putExtra("IDDD", id);
                 intent.putExtra("IsdfDDD", pic);
@@ -187,7 +186,6 @@ public class ListFoodActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + 0 + "/" + "202";
-        System.out.println("url=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

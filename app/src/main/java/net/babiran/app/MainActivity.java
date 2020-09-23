@@ -172,9 +172,6 @@ public class MainActivity extends AppCompatActivity {
                 getProduct = true;
                 proId = getIntent().getExtras().getString("pro_id");
                 catId = getIntent().getExtras().getString("cat_id");
-                System.out.println("proId===" + proId);
-                System.out.println("catId===" + catId);
-                System.out.println("getProduct===" + getProduct);
                 getCompaniesByID(catId, proId);
             } catch (Exception e) {
                 e.getMessage();
@@ -416,7 +413,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
-                    System.out.println("=======onResume111=======");
                     homeGetRequest();
                     getCreditRequest();
                 } else {
@@ -542,7 +538,6 @@ public class MainActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(MainActivity.this);
         String url = AppConfig.BASE_URL + "api/main/search";
-        System.out.println("url=====" + url);
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -661,7 +656,6 @@ public class MainActivity extends AppCompatActivity {
 
         String url = AppConfig.BASE_URL + "api/user/updateAUser/" + id;
         // Request a string response from the provided URL.
-        System.out.println("url=====" + url);
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -746,7 +740,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getHome2/" + id;
-        System.out.println("url=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -818,7 +811,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final String url = AppConfig.BASE_URL + "api/main/getCredit/" + id;
-        System.out.println("getCredit=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -1645,8 +1637,6 @@ public class MainActivity extends AppCompatActivity {
                                 ArrayList<Feature> featuresArray = new ArrayList<>();
                                 ArrayList<Image> imagesArray = new ArrayList<>();
                                 JSONObject c = jsonArray.getJSONObject(i);
-
-                                System.out.println("c===============" + c.toString());
 
                                 JSONArray features = c.getJSONArray("features");
                                 for (int fea = 0; fea < features.length(); fea++) {

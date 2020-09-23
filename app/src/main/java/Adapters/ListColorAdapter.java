@@ -66,8 +66,10 @@ public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.Cust
 
             if (color.equals(selectedItemId)) {
                 holder.card_layout_main.setBackgroundResource(R.drawable.circle_background_selected);
+                //holder.view_line.setVisibility(View.VISIBLE);
             } else {
                 holder.card_layout_main.setBackgroundResource(R.drawable.border_select_color);
+               // holder.view_line.setVisibility(View.GONE);
             }
         }
 
@@ -81,11 +83,13 @@ public class ListColorAdapter extends RecyclerView.Adapter<ListColorAdapter.Cust
     public class CustomView extends RecyclerView.ViewHolder {
         private AppCompatImageView im_color;
         private RelativeLayout card_layout_main;
+       // private View view_line;
 
         public CustomView(@NonNull View itemView) {
             super(itemView);
             im_color = itemView.findViewById(R.id.im_color);
             card_layout_main = itemView.findViewById(R.id.card_layout_main);
+          //  view_line = itemView.findViewById(R.id.view_line);
         }
     }
 }

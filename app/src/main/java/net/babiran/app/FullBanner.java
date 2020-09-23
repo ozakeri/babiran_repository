@@ -180,7 +180,6 @@ public class FullBanner extends Fragment {
                                     }
                                 }
 
-                                System.out.println("category_id1=====" + c.getString("category_id1"));
                                 Product  product = new Product(c.getString("category_id1"),c.getString("id"), c.getString("name"), c.getString("description"),
                                         c.getString("price"), c.getString("stock"),"",c.getString("discount_price"), imagesArray, featuresArray,moshakhasatArrayList,newColorsArrayList,c.getString("provider_name"));
 

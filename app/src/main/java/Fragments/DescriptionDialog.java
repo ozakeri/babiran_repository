@@ -250,7 +250,6 @@ public class DescriptionDialog extends DialogFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("response======" + response);
                         d.dismiss();
                         try {
 
@@ -280,8 +279,6 @@ public class DescriptionDialog extends DialogFragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("error=====" + error);
-                Log.e("Volley", error.toString());
                 Toast.makeText(context, error != null && !TextUtils.isEmpty(error.getMessage()) ? error.getMessage() : "خطای سرور رخ داده است. لطفا دوباره تلاش کنید.", Toast.LENGTH_LONG)
                         .show();
                 d.dismiss();
@@ -306,13 +303,6 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("selected_pay", selected_Pay);
                 params.put("credit", String.valueOf(credit));
                 params.put("productsArray", productArray);
-
-                System.out.println("user_id==" + user_id);
-                System.out.println("description==" + description);
-                System.out.println("address==" + address);
-                System.out.println("selected_Pay==" + selected_Pay);
-                System.out.println("productArray==" + productArray);
-
                 return params;
             }
 
@@ -346,7 +336,6 @@ public class DescriptionDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PAY) {
-            System.out.println("=======REQUEST_CODE_PAY====");
             if (resultCode == Activity.RESULT_OK) {
 
                 NullBasket();
@@ -428,7 +417,6 @@ public class DescriptionDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("====dialog onResume====");
     }
 
     public void getFactorId() {

@@ -148,13 +148,12 @@ public class FactorListAdapter extends BaseAdapter {
 //
         String ar[] = factors.get(i).piyek.split("##");
 
-        System.out.println("ar[]====" + ar[0]);
-        System.out.println("ar[]====" +ar[1]);
-        System.out.println("ar[]====" +ar[2]);
-        System.out.println("ar[]====" +ar[3]);
-        System.out.println("ar[]====" +ar[4]);
+        if (ar[3]!= null){
+            holder.Sefaresh.setText(ar[3]);
+        }else {
+            holder.Sefaresh.setVisibility(View.GONE);
+        }
 
-        holder.Sefaresh.setText(ar[3]);
         if (factors.get(i).pay_again.equals("1"))//3==> trak   4 ==> ref
         {
             holder.btn_type_state_peygiri.setVisibility(View.VISIBLE);

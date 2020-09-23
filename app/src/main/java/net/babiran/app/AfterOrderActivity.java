@@ -55,7 +55,6 @@ public class AfterOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (server != null) {
-                    System.out.println("server=====" + server);
                     if (server.equals("credit")) {
                         startActivity(new Intent(AfterOrderActivity.this, CreditActivity.class));
                     }

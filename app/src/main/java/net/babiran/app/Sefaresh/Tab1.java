@@ -68,9 +68,6 @@ public class Tab1 extends Fragment {
 
         if (Newproducts != null) {
 
-            System.out.println("Newproducts=====" + Newproducts.size());
-            System.out.println("NewproductsO=====" + NewproductsO.size());
-
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
 
             recyclerView.setAdapter(newProListfoodAdapter);
@@ -119,8 +116,6 @@ public class Tab1 extends Fragment {
                 }
 
                 String gh = c.getString("category_id1");
-                System.out.println("IDs==Tab1====" + IDs);
-                System.out.println("gh==Tab1====" + gh);
 
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");

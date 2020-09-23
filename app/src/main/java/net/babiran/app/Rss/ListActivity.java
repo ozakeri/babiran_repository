@@ -88,14 +88,11 @@ public class ListActivity extends AppCompatActivity {
                         Intent intent = new Intent(ListActivity.this, ListRssActivity.class);
                         intent.putExtra("id", Link);
                         intent.putExtra("name", name);
-                        System.out.println("name=====" + Link);
-                        System.out.println("name=====" + name);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(ListActivity.this, ListtoListActivity.class);
                         intent.putExtra("id", Link);
                         intent.putExtra("title", name);
-                        System.out.println("Link=====" + Link);
                         startActivity(intent);
                     }
 //                    Intent intent =new Intent(ListActivity.this,ListRssActivity.class);
@@ -119,7 +116,6 @@ public class ListActivity extends AppCompatActivity {
 
     private void Listed() {
         List<GETING> s = AppConfig.GETT;
-        System.out.println("ListActivity=====" + id);
         for (int i = 0; i < s.size(); i++) {
             if (s.get(i).getParentId() == Integer.parseInt(id)) {
                 AppConfig.GETT = s;

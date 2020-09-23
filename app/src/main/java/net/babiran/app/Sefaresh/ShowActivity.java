@@ -114,9 +114,6 @@ public class ShowActivity extends AppCompatActivity {
         // textView = (TextView) findViewById(R.id.id_txt_sssss);
 
         pathpic = getIntent().getExtras().getString("IsdfDDD");
-        System.out.println("pathpic===" + pathpic);
-        //text = getIntent().getExtras().getString("title");
-
 
         imageViewl = (ImageView) findViewById(R.id.img_show);
         new DownLoadImageTask(imageViewl, this).execute(pathpic);

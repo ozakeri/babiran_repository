@@ -37,23 +37,22 @@
 
                         android:id="@+id/kdjfnbgkjdfnkj"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="5sp"
                             android:src="@drawable/ic_history" />
 
                         <ui_elements.MyTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="15sp"
+                            android:layout_marginRight="15dp"
                             android:text="تاریخچه خرید شارژ"
                             android:textColor="@color/red"
-                            android:textSize="18sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
 
@@ -70,7 +69,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="10dp"
                             android:gravity="right"
                             android:orientation="horizontal">
 
@@ -80,7 +78,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
                                 android:text="اپراتور  خود را انتخاب نمایید : "
                                 android:textColor="@color/Black"
                                 android:textStyle="bold" />
@@ -91,7 +88,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_marginBottom="10dp"
                                 android:text="هقشدزثمم"
                                 android:textColor="@color/blueDark"
                                 android:textSize="18sp"
@@ -113,8 +109,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 materialdesign:cardBackgroundColor="@color/white"
-                                materialdesign:cardCornerRadius="10dp"
-                                materialdesign:cardElevation="10dp"
+                                materialdesign:cardCornerRadius="5dp"
+                                materialdesign:cardElevation="5dp"
                                 materialdesign:cardUseCompatPadding="true">
 
                                 <RelativeLayout
@@ -136,17 +132,18 @@
                                         android:layout_centerInParent="true"
                                         android:text="شارژ ایرانسل"
                                         android:textColor="@color/black"
-                                        android:textSize="18sp" />
+                                        android:textSize="14sp" />
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
+
 
                             <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 materialdesign:cardBackgroundColor="@color/white"
-                                materialdesign:cardCornerRadius="10dp"
-                                materialdesign:cardElevation="10dp"
+                                materialdesign:cardCornerRadius="5dp"
+                                materialdesign:cardElevation="5dp"
                                 materialdesign:cardUseCompatPadding="true">
 
                                 <RelativeLayout
@@ -168,7 +165,7 @@
                                         android:layout_centerInParent="true"
                                         android:text="شارژ همراه اول"
                                         android:textColor="@color/black"
-                                        android:textSize="18sp" />
+                                        android:textSize="14sp" />
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -178,8 +175,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 materialdesign:cardBackgroundColor="@color/white"
-                                materialdesign:cardCornerRadius="10dp"
-                                materialdesign:cardElevation="10dp"
+                                materialdesign:cardCornerRadius="5dp"
+                                materialdesign:cardElevation="5dp"
                                 materialdesign:cardUseCompatPadding="true">
 
                                 <RelativeLayout
@@ -201,7 +198,7 @@
                                         android:layout_centerInParent="true"
                                         android:text="شارژ رایتل"
                                         android:textColor="@color/black"
-                                        android:textSize="18sp" />
+                                        android:textSize="14sp" />
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -214,20 +211,18 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:windowSoftInputMode="adjustPan"
-                            android:visibility="visible">
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
                                 android:gravity="right">
 
                                 <ui_elements.MyTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginRight="5dp"
                                     android:text="مقدار شارژ خود را انتخاب نمایید : "
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
@@ -244,8 +239,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     materialdesign:cardBackgroundColor="@color/white"
-                                    materialdesign:cardCornerRadius="10dp"
-                                    materialdesign:cardElevation="10dp"
+                                    materialdesign:cardCornerRadius="5dp"
+                                    materialdesign:cardElevation="5dp"
                                     materialdesign:cardUseCompatPadding="true">
 
                                     <RadioButton
@@ -263,8 +258,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     materialdesign:cardBackgroundColor="@color/white"
-                                    materialdesign:cardCornerRadius="10dp"
-                                    materialdesign:cardElevation="10dp"
+                                    materialdesign:cardCornerRadius="5dp"
+                                    materialdesign:cardElevation="5dp"
                                     materialdesign:cardUseCompatPadding="true">
                                     <RadioButton
                                         android:id="@+id/dohezar"
@@ -281,8 +276,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     materialdesign:cardBackgroundColor="@color/white"
-                                    materialdesign:cardCornerRadius="10dp"
-                                    materialdesign:cardElevation="10dp"
+                                    materialdesign:cardCornerRadius="5dp"
+                                    materialdesign:cardElevation="5dp"
                                     materialdesign:cardUseCompatPadding="true">
                                     <RadioButton
                                         android:id="@+id/hezar5"
@@ -299,8 +294,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     materialdesign:cardBackgroundColor="@color/white"
-                                    materialdesign:cardCornerRadius="10dp"
-                                    materialdesign:cardElevation="10dp"
+                                    materialdesign:cardCornerRadius="5dp"
+                                    materialdesign:cardElevation="5dp"
                                     materialdesign:cardUseCompatPadding="true">
                                     <RadioButton
                                         android:id="@+id/hezar10"
@@ -320,7 +315,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginRight="10dp"
                                 android:gravity="center">
 
@@ -335,14 +329,14 @@
                                         android:id="@+id/mostaghim"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="10dp"
+                                        android:layout_margin="5dp"
                                         android:text="شارژ  مستقیم" />
 
                                     <RadioButton
                                         android:id="@+id/ghiremostaghim"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_margin="10dp"
+                                        android:layout_margin="5dp"
                                         android:enabled="false"
                                         android:text="شارژ غیر مستقیم" />
 
@@ -352,77 +346,90 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="30dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
                                 android:layout_marginRight="10dp"
                                 android:gravity="right">
 
                                 <ui_elements.MyTextView
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="شماره همراه خود را وارد نمایید :"
                                     android:textColor="@color/Black"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
-                            <RelativeLayout
+                            <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginTop="10dp">
+                                materialdesign:cardBackgroundColor="@color/white"
+                                materialdesign:cardCornerRadius="5dp"
+                                materialdesign:cardElevation="5dp"
+                                materialdesign:cardUseCompatPadding="true">
 
-                                <LinearLayout
+                                <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@+id/pymeny_sharj">
+                                    android:orientation="horizontal"
+                                    android:layout_gravity="center_vertical">
 
-                                    <androidx.appcompat.widget.AppCompatEditText
-                                        android:id="@+id/ed_number"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="50dp"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_margin="10dp"
-                                        android:focusable="true"
-                                        android:gravity="center"
-                                        android:hint="*********09"
-                                        android:inputType="number"
-                                        android:maxLength="11"
-                                        android:textColor="@color/black"
-                                        android:textColorHint="@color/gray_light"
-                                        android:textSize="16sp"
-                                        android:textStyle="bold" />
-                                </LinearLayout>
+                                        android:layout_height="wrap_content"
+                                        android:layout_toRightOf="@+id/pymeny_sharj"
+                                        android:layout_centerVertical="true">
 
-                                <LinearLayout
-                                    android:id="@+id/pymeny_sharj"
-                                    android:layout_width="100dp"
-                                    android:layout_height="wrap_content"
-                                   android:layout_alignParentLeft="true">
-                                    <androidx.cardview.widget.CardView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        materialdesign:cardBackgroundColor="@color/white"
-                                        materialdesign:cardCornerRadius="10dp"
-                                        materialdesign:cardElevation="10dp"
-                                        materialdesign:cardUseCompatPadding="true">
+                                        <androidx.appcompat.widget.AppCompatEditText
+                                            android:id="@+id/ed_number"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="10dp"
+                                            android:focusable="true"
+                                            android:gravity="center"
+                                            android:hint="*********09"
+                                            android:inputType="number"
+                                            android:maxLength="11"
+                                            android:textColor="@color/black"
+                                            android:textColorHint="@color/gray_light"
+                                            android:textSize="22sp"
+                                            android:background="@null"
+                                            android:focusableInTouchMode="true"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
 
-                                        <ui_elements.MyTextView
-                                            android:id="@+id/FinishText"
+                                    <LinearLayout
+                                        android:id="@+id/pymeny_sharj"
+                                        android:layout_width="100dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:visibility="gone">
+
+                                        <androidx.cardview.widget.CardView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:text="تایید"
-                                            android:textColor="@color/black"
-                                            android:gravity="center"
-                                            android:layout_gravity="center"
-                                            android:padding="15dp"
-                                            android:textSize="12sp" />
+                                            materialdesign:cardBackgroundColor="@color/white"
+                                            materialdesign:cardCornerRadius="10dp"
+                                            materialdesign:cardElevation="10dp"
+                                            materialdesign:cardUseCompatPadding="true">
 
-                                    </androidx.cardview.widget.CardView>
-                                </LinearLayout>
+                                            <ui_elements.MyTextView
+                                                android:id="@+id/FinishText"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:text="تایید"
+                                                android:textColor="@color/white"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:padding="15dp"
+                                                android:textSize="14sp"
+                                                style="@style/Bold"
+                                                android:background="#ED967B"/>
 
-                            </RelativeLayout>
+                                        </androidx.cardview.widget.CardView>
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
 
                         </LinearLayout>
 

@@ -68,11 +68,9 @@ public class SharjActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri uri = intent.getData();
-            System.out.println("===uri===" + uri);
             if (uri != null) {
                 String success = uri.getQueryParameter("success");
                 showGuideDialog(success);
-                System.out.println("===success===" + success);
             }
         }
 
@@ -225,7 +223,6 @@ public class SharjActivity extends AppCompatActivity {
 
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            System.out.println("---------" + editText.getText().toString() + " - " + Mablagh + " - " + Type + " - " + operator);
             Call<MyMesa> call = n.BuySahrj(editText.getText().toString(), Mablagh, Type, operator);
 
             call.enqueue(new Callback<MyMesa>() {
@@ -233,7 +230,6 @@ public class SharjActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<MyMesa> call, @NonNull retrofit2.Response<MyMesa> response) {
                     try {
                         if (response.body() != null) {
-                            System.out.println("response======" + response.body());
                             Integer fetching = response.body().getSuccess();
 
                             if (fetching == 1) {

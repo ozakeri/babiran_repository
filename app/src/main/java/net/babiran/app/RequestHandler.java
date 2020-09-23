@@ -150,7 +150,6 @@ public class RequestHandler {
 
         };
         AppController.getInstance().addToRequestQueue(jsonObjectRequest, url);
-        System.out.println("url====" + url);
         return url;
     }
 
@@ -289,9 +288,6 @@ public class RequestHandler {
         };
         AppController.getInstance().addToRequestQueue(jsonObjectRequest, url);
 
-        System.out.println("jsonObjectRequest==" +
-                "==" + jsonObjectRequest);
-        System.out.println("jsonObjectRequest====" + url);
         return url;
     }
 }
