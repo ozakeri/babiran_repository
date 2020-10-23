@@ -61,6 +61,8 @@ public class FactorList extends AppCompatActivity {
     private String pageName = null;
     private ArrayList<Product> productArrayList;
     private ArrayList<Factor> factorArrayList;
+    private ArrayList<String> timeList;
+    private ArrayList<String> dateList;
     private String What = AppConfig.NULLBASKET;
     private DatabaseHandler db;
 

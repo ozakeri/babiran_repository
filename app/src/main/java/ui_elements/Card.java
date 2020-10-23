@@ -21,7 +21,6 @@ import tools.Util;
 
 public class Card extends RelativeLayout {
 
-
     public Context context;
     public ImageView productThumbnailImage;
     public String productId;

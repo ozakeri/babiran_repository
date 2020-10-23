@@ -2,6 +2,7 @@ package Fragments;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -22,26 +23,44 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
+import net.babiran.app.AppController;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Adapters.BasketListAdapter;
+import Fragments.dynamicfragment.TabAdapter;
 import Handlers.DatabaseHandler;
 import Models.Basket;
+import Models.DeliveryTime;
 import Models.EventbusModel;
+import Models.TimeList;
+import saman.zamani.persiandate.PersianDate;
 import tools.AppConfig;
 import tools.GlobalValues;
 import ui_elements.MyTextView;
@@ -55,8 +74,7 @@ public class BasketListFragment extends Fragment implements
         AdapterView.OnItemSelectedListener {
 
     public String category_id = "0";
-    public String category_parent_id = "-1";
-    private GlobalValues globalValues = new GlobalValues();
+
 
     String[] payment = {"پرداخت با کارت خوان درب منزل", "پرداخت نقدی در محل تحویل", "پرداخت آنلاین از درگاه بانکی"};
     View v;
@@ -66,31 +84,44 @@ public class BasketListFragment extends Fragment implements
     String id = "";
     String address1 = "";
     String address2 = "";
-    MyTextView totalprice, AddValue, PayValue;
-    MyTextView discount;
+    MyTextView totalprice, AddValue, PayValue, discount;
+    private static MyTextView txt_selected;
     public ArrayList<String> addresses;
-
+    private GlobalValues globalValues = new GlobalValues();
     LinearLayout addLinear, typePayLinear;
-
     String selectedAdd = "";
     String selectedPay = "";
     private int credit = 0;
-
+    public static View persistentbottomSheet;
+    private CoordinatorLayout coordinatorLayout;
     PopupWindow mPopupWindow;
     int TotalPrice = 0;
     int discountPrice = 0;
     int rawPrice = 0;
-
+    private static BottomSheetBehavior behavior;
     int rawPrice_dis = 0;
     String basketjson = "";
-
-    RelativeLayout completeBuy;
+    RelativeLayout completeBuy, selectTime, relativeLayout, linearLayout;
     public static final String TAG = "TAG";
     DatabaseHandler db;
     ImageView listsabad;
     public static boolean needToRefrish = false;
     private BasketListAdapter adp;
-
+    private String selectTimeStr;
+    private static String timeId = null;
+    SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+    //*****************************
+    private ArrayList<TimeList> timeLists = new ArrayList<>();
+    private ArrayList<DeliveryTime> dateTimes = new ArrayList<>();
+    private RecyclerView recycler_view;
+    private Context context;
+    private TextView txt_date;
+    private CircularProgressView circularProgressView;
+    private TabLayout tab;
+    private ViewPager viewPager;
+    private TabAdapter adapter;
+    private boolean success = false;
+    private JSONArray response = null;
 
     public BasketListFragment() {
         MainActivity.btnBack.setVisibility(View.VISIBLE);
@@ -128,17 +159,23 @@ public class BasketListFragment extends Fragment implements
             totalprice = (MyTextView) v.findViewById(R.id.totalprice);
             discount = (MyTextView) v.findViewById(R.id.dis_txt);
             completeBuy = (RelativeLayout) v.findViewById(R.id.compelete);
-
+            selectTime = (RelativeLayout) v.findViewById(R.id.selectTime);
+            txt_selected = v.findViewById(R.id.txt_selected);
+            coordinatorLayout = (CoordinatorLayout) v.findViewById(R.id.coordinator);
+            tab = v.findViewById(R.id.tabLayout);
+            viewPager = v.findViewById(R.id.viewPager);
             addLinear = (LinearLayout) v.findViewById(R.id.addressLinear);
             typePayLinear = (LinearLayout) v.findViewById(R.id.paymentLinear);
-
-
+            circularProgressView = v.findViewById(R.id.waitProgress);
+            circularProgressView.setVisibility(View.GONE);
+            //tab = v.findViewById(R.id.tabLayout);
+            //viewPager = v.findViewById(R.id.viewPager);
             basket_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             basket_recyclerView.setNestedScrollingEnabled(false);
 
             updateList();
-            if (products != null){
-                adp = new BasketListAdapter(getActivity(), products,BasketListFragment.this);
+            if (products != null) {
+                adp = new BasketListAdapter(getActivity(), products, BasketListFragment.this);
                 adp.notifyDataSetChanged();
                 basket_recyclerView.setAdapter(adp);
             }
@@ -485,6 +522,8 @@ public class BasketListFragment extends Fragment implements
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
+                selectTime.setVisibility(View.GONE);
+                txt_selected.setVisibility(View.GONE);
                 discount.setVisibility(View.GONE);
             }
 
@@ -492,6 +531,26 @@ public class BasketListFragment extends Fragment implements
                 discount.setText(" تخفیف : " + ConvertEnToPe(convertToFormalString(String.valueOf(discountPrice))) + " تومان ");
             }
 
+
+            init_persistent_bottomsheet();
+
+            selectTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    persistentbottomSheet.setVisibility(View.VISIBLE);
+                    if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        linearLayout.setBackgroundResource(R.color.white);
+                    } else {
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+
+                    //init_persistent_bottomsheet();
+
+                    // startActivity(new Intent(getActivity(), DateTimeDialog.class));
+                }
+            });
             completeBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -511,7 +570,7 @@ public class BasketListFragment extends Fragment implements
 
                                     FragmentManager fm = getActivity().getFragmentManager();
 
-                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor);
+                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor,timeId);
                                     descriptionDialog.show(fm, "DescriptionDialog");
 
                                     //totalprice.setText("");
@@ -534,59 +593,16 @@ public class BasketListFragment extends Fragment implements
 
         }
 
-        /*getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    // handle back button's click listener
-                    if (MainActivity.product.getVisibility() == View.VISIBLE) {
-                        MainActivity.product.setVisibility(View.INVISIBLE);
-
-                    }
-                   *//* if(prev.equals("category")){
-                        OtherCategoryActivity.productContainer.setVisibility(View.INVISIBLE);
-
-                    }*//*
-                    else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
-                        builder.setTitle("می خواهید خارج شوید؟");
-                        builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                if (AppConfig.checkReciveSms == true) {
-                                    AppConfig.checkReciveSms = false;
-                                }
-                                if (AppConfig.btnSubmitOk == true) {
-                                    AppConfig.btnSubmitOk = false;
-                                }
-
-                                AppConfig.act.finish();
+        txt_date = v.findViewById(R.id.txt_date);
+        recycler_view = v.findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recycler_view.setLayoutManager(layoutManager);
 
 
-                                dialog.dismiss();
-                            }
-                        });
-                        builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //TODO
-                                dialog.dismiss();
-                            }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-
-                    }*/
-        // return true;
-
-        //}
-
-        // return false;
-        //}
-
-        // });
+        PersianDate persianDate = new PersianDate();
+        txt_date.setText(" امروز " + persianDate.dayName() + " " + persianDate.getShYear() + "/" + persianDate.getShMonth() + "/" + persianDate.getShDay());
 
         return v;
 
@@ -743,9 +759,9 @@ public class BasketListFragment extends Fragment implements
                 }
                 Gson gson = new Gson();
                 basketjson = gson.toJson(baskets);
-               // adp = new BasketListAdapter(getActivity(), products,BasketListFragment.this);
-               // adp.notifyDataSetChanged();
-               // basket_recyclerView.setAdapter(adp);
+                // adp = new BasketListAdapter(getActivity(), products,BasketListFragment.this);
+                // adp.notifyDataSetChanged();
+                // basket_recyclerView.setAdapter(adp);
 
                 for (int i = 0; i < products.size(); i++) {
 
@@ -781,6 +797,8 @@ public class BasketListFragment extends Fragment implements
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
+                selectTime.setVisibility(View.GONE);
+                txt_selected.setVisibility(View.GONE);
                 discount.setVisibility(View.GONE);
             }
 
@@ -795,4 +813,134 @@ public class BasketListFragment extends Fragment implements
         }
     }
 
+    public void init_persistent_bottomsheet() {
+        persistentbottomSheet = coordinatorLayout.findViewById(R.id.bottomsheet);
+        relativeLayout = (RelativeLayout) persistentbottomSheet.findViewById(R.id.relativeLayout);
+        linearLayout = persistentbottomSheet.findViewById(R.id.linearLayout);
+        behavior = BottomSheetBehavior.from(persistentbottomSheet);
+        persistentbottomSheet.setVisibility(View.GONE);
+
+        editor.putString("selectTimeStr", null);
+        editor.putString("timeId", null);
+        editor.putString("timeValue", null);
+        editor.apply();
+        getTime();
+
+        if (behavior != null)
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    //showing the different states
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            // iv_trigger.setBackgroundResource(R.drawable.negative_icon);
+                            linearLayout.setBackgroundResource(R.color.white);
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            // iv_trigger.setBackgroundResource(R.drawable.plus_icon);
+                            linearLayout.setBackgroundResource(0);
+                            break;
+                        case BottomSheetBehavior.STATE_DRAGGING:
+                            linearLayout.setBackgroundResource(R.color.white);
+                            break;
+                        case BottomSheetBehavior.STATE_SETTLING:
+                            break;
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    // React to dragging events
+
+                }
+            });
+    }
+
+    public static void hidden() {
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        persistentbottomSheet.setVisibility(View.GONE);
+        String selectTimeStr = AppController.getInstance().getSharedPreferences().getString("selectTimeStr", null);
+        timeId = AppController.getInstance().getSharedPreferences().getString("timeId", null);
+        String timeValue = AppController.getInstance().getSharedPreferences().getString("timeValue", null);
+
+        System.out.println("selectTimeStr====" + selectTimeStr);
+        System.out.println("timeId====" + timeId);
+        System.out.println("timeValue====" + timeValue);
+
+        txt_selected.setText(" شما بازه زمانی " + timeValue + " " + selectTimeStr + " را انتخاب کرده اید  ");
+
+    }
+
+    public void getTime() {
+        circularProgressView.setVisibility(View.VISIBLE);
+
+        SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+        editor.putString("delivery_time", null);
+        editor.apply();
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        final String url = AppConfig.BASE_URL + "api/main/delivery_time";
+
+        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        circularProgressView.setVisibility(View.GONE);
+                        if (response != null) {
+                            globalValues.setJsonArray(response);
+                            SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+                            editor.putString("delivery_time", String.valueOf(response));
+                            editor.apply();
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+                                    timeLists.clear();
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    tab.addTab(tab.newTab().setText(jsonObject.getString("date")));
+                                }
+
+                                adapter = new TabAdapter(getActivity().getSupportFragmentManager(), tab.getTabCount());
+                                viewPager.setAdapter(adapter);
+                                viewPager.setOffscreenPageLimit(1);
+                                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
+                                tab.setOnTabSelectedListener(onTabSelectedListener(viewPager));
+
+                            } catch (Exception e) {
+
+                                AppConfig.error(e);
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                        circularProgressView.setVisibility(View.GONE);
+                    }
+                }
+        );
+        queue.add(getRequest);
+    }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener(final ViewPager pager) {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
+    }
 }

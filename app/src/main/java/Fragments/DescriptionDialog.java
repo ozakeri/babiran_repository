@@ -79,11 +79,12 @@ public class DescriptionDialog extends DialogFragment {
     String descriptionFactor = "";
     private int credit;
     private DatabaseHandler db;
+    private String timeId;
 
     AudioRecorder audioRecorder;
     public static final int REQUEST_CODE_PAY = 1001;
 
-    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, int credit, SharedPreferences.Editor editor) {
+    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, int credit, SharedPreferences.Editor editor,String timeId) {
         this.id = id;
         this.address = address;
         this.productArray = productsArray;
@@ -91,6 +92,7 @@ public class DescriptionDialog extends DialogFragment {
         this.editor = editor;
         this.context = context;
         this.credit = credit;
+        this.timeId = timeId;
     }
 
     public DescriptionDialog() {
@@ -221,11 +223,9 @@ public class DescriptionDialog extends DialogFragment {
                 }
                 Log.e("descript", descriptionFactor);
                 Log.e("selected_Pay==", selected_Pay);
-                completeBUY(id, address, productArray, selected_Pay, credit, edt_description.getText().toString());
+                completeBUY(id, address, productArray, selected_Pay, credit, edt_description.getText().toString(),timeId);
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
-
-
             }
         });
 
@@ -233,7 +233,7 @@ public class DescriptionDialog extends DialogFragment {
 
     }
 
-    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final int credit, final String description) {
+    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final int credit, final String description,String timeId) {
         queue = Volley.newRequestQueue(getActivity());
 //        getDialog().dismiss();
         final ProgressDialog d = new ProgressDialog(getActivity());
@@ -254,6 +254,9 @@ public class DescriptionDialog extends DialogFragment {
                         try {
 
                             JSONObject jsonObject = new JSONObject(response);
+                            System.out.println("response=====" + response);
+                            System.out.println("success=====" + jsonObject.getString("success"));
+
                             if (jsonObject.getString("success").equals("1")) {
                                 if (!jsonObject.isNull("url")) {
                                     String urlStr = jsonObject.getString("url");
@@ -303,6 +306,7 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("selected_pay", selected_Pay);
                 params.put("credit", String.valueOf(credit));
                 params.put("productsArray", productArray);
+                params.put("timeId", timeId);
                 return params;
             }
 

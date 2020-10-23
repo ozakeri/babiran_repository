@@ -203,8 +203,8 @@ public class ShowRssActivity extends AppCompatActivity {
                         //txt_html_ffff.setText(s.get(i).getCreatedAtInt());
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
                         txtLike.setText(s.get(i).getLike() + 1 + "");
-                        titl.setText(s.get(i).getSubject());
-
+                        titl.setText(s.get(i).getSubject() + " " + s.get(i).getId());
+                        System.out.println("======1111==========");
                         Pattern p = Pattern.compile("\\d+");
                         String SSS1 = null;
                         if (s.get(i).getBody() != null) {
@@ -427,6 +427,7 @@ public class ShowRssActivity extends AppCompatActivity {
                     if (s != null) {
                         txtLike.setText(s.getLike() + 1 + "");
                         titl.setText(s.getSubject());
+                        System.out.println("======2222==========");
                         txt.setText(s.getBody());
                         Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img_html_show);
                         imgUrl = s.getImageLink();

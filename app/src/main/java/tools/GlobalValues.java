@@ -2,6 +2,8 @@ package tools;
 
 import net.babiran.app.Servic.GETINGBlog;
 
+import org.json.JSONArray;
+
 import java.util.List;
 
 import retrofit2.Response;
@@ -13,6 +15,7 @@ public class GlobalValues {
     private boolean isPush;
     private boolean searchOpen;
     private String creditValue;
+    private JSONArray jsonArray;
 
     public String getFirstId() {
         return firstId;
@@ -62,5 +65,13 @@ public class GlobalValues {
 
     public void setSearchOpen(boolean searchOpen) {
         this.searchOpen = searchOpen;
+    }
+
+    public JSONArray getJsonArray() {
+        return jsonArray;
+    }
+
+    public void setJsonArray(JSONArray jsonArray) {
+        this.jsonArray = jsonArray;
     }
 }

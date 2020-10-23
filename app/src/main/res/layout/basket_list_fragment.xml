@@ -1,167 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
-    <LinearLayout
-        android:id="@+id/product_list_main"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="3dp">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/basket_recyclerView"
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:layout_marginBottom="10dp"/>
-
-        <ImageView
-            android:id="@+id/listsabad"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_above="@+id/addressLinear"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerInside"
-            android:visibility="gone" />
-
-
-        <LinearLayout
-            android:id="@+id/paymentLinear"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_above="@+id/completelayout"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="3"
-            android:background="@drawable/corner_ronde"
-            android:layoutDirection="ltr"
-            android:weightSum="1">
-
-            <ui_elements.MyTextView
-                android:id="@+id/payValue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0.5"
-                android:gravity="right|center"
-                android:text=""
-                android:textSize="14sp" />
-
-            <ui_elements.MyTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0.5"
-                android:gravity="right|center"
-                android:text="نحوه پرداخت : "
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/addressLinear"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_above="@id/paymentLinear"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="3"
-            android:background="@drawable/corner_ronde"
-            android:layoutDirection="ltr"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-
-            <ui_elements.MyTextView
-                android:id="@+id/addValue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0.5"
-                android:gravity="right|center"
-                android:text=""
-                android:textSize="14sp" />
-
-            <ui_elements.MyTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0.5"
-                android:gravity="start|center"
-                android:text="انتخاب آدرس : "
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/completelayout"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp">
-
-
-            <RelativeLayout
-                android:id="@+id/compelete"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/border_button">
-
-                <ui_elements.MyTextView
-                    android:id="@+id/FinishText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="تکمیل خرید"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-            <ui_elements.MyTextView
-                android:id="@+id/dis_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/compelete"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:text="تخفیف موجود نیست" />
+            android:background="@color/white">
 
 
             <LinearLayout
-                android:id="@+id/linearbasket"
-                android:layout_width="220dp"
-                android:layout_height="0.5dp"
-                android:layout_above="@+id/dis_txt"
-                android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/gradiant"
-                android:orientation="horizontal" />
-
-            <ui_elements.MyTextView
-                android:id="@+id/totalprice"
+                android:id="@+id/product_list_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/linearbasket"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text=" سبد خالی است"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:layout_marginTop="55dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="3dp">
 
-        </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/basket_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:divider="@null" />
 
-    </LinearLayout>
-</ScrollView>
+                <ImageView
+                    android:id="@+id/listsabad"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_above="@+id/addressLinear"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerInside"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/paymentLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/completelayout"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/corner_ronde"
+                    android:layoutDirection="ltr"
+                    android:weightSum="1">
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/payValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.5"
+                        android:gravity="right|center"
+                        android:text=""
+                        android:textSize="14sp" />
+
+                    <ui_elements.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.5"
+                        android:gravity="right|center"
+                        android:text="نحوه پرداخت : "
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addressLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_above="@id/paymentLinear"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/corner_ronde"
+                    android:layoutDirection="ltr"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/addValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.5"
+                        android:gravity="right|center"
+                        android:text=""
+                        android:textSize="14sp" />
+
+                    <ui_elements.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.5"
+                        android:gravity="start|center"
+                        android:text="انتخاب آدرس : "
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/completelayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/dis_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/compelete"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="تخفیف موجود نیست" />
+
+
+                    <LinearLayout
+                        android:id="@+id/linearbasket"
+                        android:layout_width="220dp"
+                        android:layout_height="0.5dp"
+                        android:layout_above="@+id/dis_txt"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/gradiant"
+                        android:orientation="horizontal" />
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/totalprice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/linearbasket"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="20dp"
+                        android:gravity="center"
+                        android:text=" سبد خالی است"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/selectTime"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/border_button">
+
+                        <ui_elements.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="انتاخب بازه زمانی"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <ui_elements.MyTextView
+                        android:id="@+id/txt_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/brown"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+
+                    <RelativeLayout
+                        android:id="@+id/compelete"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/selectTime"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="50dp"
+                        android:background="@drawable/border_button">
+
+                        <ui_elements.MyTextView
+                            android:id="@+id/FinishText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="تکمیل خرید"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/persistent_bottomsheet" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

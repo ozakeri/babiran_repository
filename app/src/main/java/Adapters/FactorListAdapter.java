@@ -29,7 +29,6 @@ import net.babiran.app.R;
 import net.babiran.app.Rss.FullScreenActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import Fragments.DescriptionDialog;
@@ -148,9 +147,9 @@ public class FactorListAdapter extends BaseAdapter {
 //
         String ar[] = factors.get(i).piyek.split("##");
 
-        if (ar[3]!= null){
+        if (ar[3] != null) {
             holder.Sefaresh.setText(ar[3]);
-        }else {
+        } else {
             holder.Sefaresh.setVisibility(View.GONE);
         }
 
@@ -252,7 +251,7 @@ public class FactorListAdapter extends BaseAdapter {
                         System.out.println("basketjson2===" + basketjson);
 
                         FragmentManager fm = ((Activity) context).getFragmentManager();
-                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, 0, editor);
+                        DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, 0, editor, null);
                         descriptionDialog.show(fm, "DescriptionDialog");
                     }
                 }
