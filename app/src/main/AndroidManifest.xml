@@ -190,6 +190,8 @@
         <activity
             android:name="Fragments.EditProfileFrgment"
             android:screenOrientation="portrait"></activity>
+        <activity android:name="Fragments.DateTimeDialog"
+            android:theme="@style/AppDialogScreenTheme"/>
 
         <service
             android:name="tools.MyPushListener"

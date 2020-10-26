@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -63,6 +64,7 @@ import Models.TimeList;
 import saman.zamani.persiandate.PersianDate;
 import tools.AppConfig;
 import tools.GlobalValues;
+import tools.Util;
 import ui_elements.MyTextView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -85,10 +87,10 @@ public class BasketListFragment extends Fragment implements
     String address1 = "";
     String address2 = "";
     MyTextView totalprice, AddValue, PayValue, discount;
-    private static MyTextView txt_selected;
+    private static MyTextView txt_time;
     public ArrayList<String> addresses;
     private GlobalValues globalValues = new GlobalValues();
-    LinearLayout addLinear, typePayLinear;
+    LinearLayout addLinear, typePayLinear, layout_time;
     String selectedAdd = "";
     String selectedPay = "";
     private int credit = 0;
@@ -101,7 +103,7 @@ public class BasketListFragment extends Fragment implements
     private static BottomSheetBehavior behavior;
     int rawPrice_dis = 0;
     String basketjson = "";
-    RelativeLayout completeBuy, selectTime, relativeLayout, linearLayout;
+    RelativeLayout completeBuy, relativeLayout, linearLayout;
     public static final String TAG = "TAG";
     DatabaseHandler db;
     ImageView listsabad;
@@ -159,21 +161,26 @@ public class BasketListFragment extends Fragment implements
             totalprice = (MyTextView) v.findViewById(R.id.totalprice);
             discount = (MyTextView) v.findViewById(R.id.dis_txt);
             completeBuy = (RelativeLayout) v.findViewById(R.id.compelete);
-            selectTime = (RelativeLayout) v.findViewById(R.id.selectTime);
-            txt_selected = v.findViewById(R.id.txt_selected);
+            txt_time = v.findViewById(R.id.txt_time);
             coordinatorLayout = (CoordinatorLayout) v.findViewById(R.id.coordinator);
             tab = v.findViewById(R.id.tabLayout);
             viewPager = v.findViewById(R.id.viewPager);
             addLinear = (LinearLayout) v.findViewById(R.id.addressLinear);
+            layout_time = (LinearLayout) v.findViewById(R.id.layout_time);
             typePayLinear = (LinearLayout) v.findViewById(R.id.paymentLinear);
             circularProgressView = v.findViewById(R.id.waitProgress);
             circularProgressView.setVisibility(View.GONE);
             //tab = v.findViewById(R.id.tabLayout);
             //viewPager = v.findViewById(R.id.viewPager);
-            basket_recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            basket_recyclerView.setNestedScrollingEnabled(false);
 
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getActivity() );
+            linearLayoutManager.setOrientation( LinearLayoutManager.VERTICAL );
+            linearLayoutManager.setAutoMeasureEnabled( true );
+            basket_recyclerView.setLayoutManager(linearLayoutManager);
+            basket_recyclerView.setNestedScrollingEnabled(false);
+            basket_recyclerView.setHasFixedSize(true);
             updateList();
+            System.out.println("products=====" + products.size());
             if (products != null) {
                 adp = new BasketListAdapter(getActivity(), products, BasketListFragment.this);
                 adp.notifyDataSetChanged();
@@ -514,30 +521,9 @@ public class BasketListFragment extends Fragment implements
                     mPopupWindow.showAtLocation(addLinear, Gravity.CENTER, 0, 0);
                 }
             });
-
-
-            if (rawPrice > 0) {
-                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
-            } else {
-                typePayLinear.setVisibility(View.GONE);
-                addLinear.setVisibility(View.GONE);
-                completeBuy.setVisibility(View.GONE);
-                selectTime.setVisibility(View.GONE);
-                txt_selected.setVisibility(View.GONE);
-                discount.setVisibility(View.GONE);
-            }
-
-            if (discountPrice > 0) {
-                discount.setText(" تخفیف : " + ConvertEnToPe(convertToFormalString(String.valueOf(discountPrice))) + " تومان ");
-            }
-
-
-            init_persistent_bottomsheet();
-
-            selectTime.setOnClickListener(new View.OnClickListener() {
+            layout_time.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     persistentbottomSheet.setVisibility(View.VISIBLE);
                     if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -545,15 +531,34 @@ public class BasketListFragment extends Fragment implements
                     } else {
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     }
-
-                    //init_persistent_bottomsheet();
-
-                    // startActivity(new Intent(getActivity(), DateTimeDialog.class));
                 }
             });
+
+
+            if (rawPrice > 0) {
+                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
+            } else {
+                typePayLinear.setVisibility(View.GONE);
+                addLinear.setVisibility(View.GONE);
+                layout_time.setVisibility(View.GONE);
+                completeBuy.setVisibility(View.GONE);
+                discount.setVisibility(View.GONE);
+            }
+
+            if (discountPrice > 0) {
+                discount.setText(" تخفیف : " + ConvertEnToPe(convertToFormalString(String.valueOf(discountPrice))) + " تومان ");
+            }
+
+            init_persistent_bottomsheet();
+
             completeBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if (timeId == null || timeId.equals("")) {
+                        Toast.makeText(getActivity(), "بازه زمانی ارسال را انتخاب کنید", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
 //
                     if (products.size() > 0) {
@@ -570,7 +575,7 @@ public class BasketListFragment extends Fragment implements
 
                                     FragmentManager fm = getActivity().getFragmentManager();
 
-                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor,timeId);
+                                    DescriptionDialog descriptionDialog = new DescriptionDialog(getActivity(), id, selectedAdd, basketjson, selectedPay, credit, editor, timeId);
                                     descriptionDialog.show(fm, "DescriptionDialog");
 
                                     //totalprice.setText("");
@@ -602,7 +607,7 @@ public class BasketListFragment extends Fragment implements
 
 
         PersianDate persianDate = new PersianDate();
-        txt_date.setText(" امروز " + persianDate.dayName() + " " + persianDate.getShYear() + "/" + persianDate.getShMonth() + "/" + persianDate.getShDay());
+        txt_date.setText(Util.latinNumberToPersian(" امروز " + persianDate.dayName() + " " + persianDate.getShYear() + "/" + persianDate.getShMonth() + "/" + persianDate.getShDay()));
 
         return v;
 
@@ -796,9 +801,8 @@ public class BasketListFragment extends Fragment implements
             } else {
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
+                layout_time.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
-                selectTime.setVisibility(View.GONE);
-                txt_selected.setVisibility(View.GONE);
                 discount.setVisibility(View.GONE);
             }
 
@@ -869,7 +873,7 @@ public class BasketListFragment extends Fragment implements
         System.out.println("timeId====" + timeId);
         System.out.println("timeValue====" + timeValue);
 
-        txt_selected.setText(" شما بازه زمانی " + timeValue + " " + selectTimeStr + " را انتخاب کرده اید  ");
+        txt_time.setText(Util.latinNumberToPersian(" شما بازه زمانی " + timeValue + " " + selectTimeStr + " را انتخاب کرده اید  "));
 
     }
 
@@ -942,5 +946,21 @@ public class BasketListFragment extends Fragment implements
 
             }
         };
+    }
+
+    public class CustomLayoutManager extends LinearLayoutManager {
+        private boolean isScrollEnabled;
+
+        // orientation should be LinearLayoutManager.VERTICAL or HORIZONTAL
+        public CustomLayoutManager(Context context, int orientation, boolean isScrollEnabled) {
+            super(context, orientation, false);
+            this.isScrollEnabled = isScrollEnabled;
+        }
+
+        @Override
+        public boolean canScrollVertically() {
+            //Similarly you can customize "canScrollHorizontally()" for managing horizontal scroll
+            return isScrollEnabled && super.canScrollVertically();
+        }
     }
 }

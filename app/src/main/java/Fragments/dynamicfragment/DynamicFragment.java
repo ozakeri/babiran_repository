@@ -3,6 +3,7 @@ package Fragments.dynamicfragment;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.List;
 import Fragments.BasketListFragment;
 import Models.TimeList;
 import tools.AppConfig;
+import tools.Util;
 import ui_elements.DateTime;
 
 
@@ -79,10 +81,10 @@ public class DynamicFragment extends Fragment {
                     System.out.println("status====" + jsonObject1.getString("status"));
                     int status = Integer.parseInt(jsonObject1.getString("status"));
                     RadioButton radioButtonView = new RadioButton(getActivity());
-                    TextView textView = new TextView(getActivity());
-                    textView.setText("sdfsadfdsff");
-                    radioButtonView.setText(jsonObject1.getString("text"));
+                    radioButtonView.setText(Util.latinNumberToPersian(jsonObject1.getString("text")));
                     radioButtonView.setId(Integer.parseInt(jsonObject1.getString("id")));
+                    radioButtonView.setTextSize(14);
+                    radioButtonView.setTypeface((Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf")));
                     RadioGroup.LayoutParams params1 = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     params1.setMargins(15, 15, 15, 15);
                     radioButtonView.setLayoutParams(params1);

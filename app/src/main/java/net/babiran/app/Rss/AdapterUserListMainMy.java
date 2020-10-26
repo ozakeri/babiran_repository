@@ -49,6 +49,8 @@ public class AdapterUserListMainMy extends RecyclerView.Adapter<AdapterUserListM
         holder.link.setText(list[1]);
         holder.title.setText(list[0]);
         Glide.with(mContext).load(list[2]).fitCenter().placeholder(R.drawable.logoloading).into(holder.img_blog);
+
+        System.out.println("title=-=-=-=-=" + holder.title.getText().toString());
     }
 
     @Override
