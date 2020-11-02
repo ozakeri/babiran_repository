@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -33,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public String phone = "";
     RelativeLayout notif_Relative;
     MyTextView notif_title, notif_body;
-    ImageView notif_img,img_wait;
+    ImageView notif_img, img_wait;
     MyTextView phone_txt;
     ArrayList<Menu> menu;
     ListView listView;
@@ -135,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout layout_favorite;
     public static final String TAG = "TAG";
     GlobalValues globalValues = new GlobalValues();
+    private int android_version;
+    private boolean android_ver_is_critical = false;
+    private int versionCode;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -182,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.GONE);
-
+        versionCode = BuildConfig.VERSION_CODE;
         layout_search = findViewById(R.id.layout_search);
         layout_search.setVisibility(View.GONE);
         MainActivity.layout_search.setVisibility(View.VISIBLE);
+
 
         if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
             viewLogo = findViewById(R.id.btn_logo);
@@ -740,12 +746,26 @@ public class MainActivity extends AppCompatActivity {
         Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getHome2/" + id;
+        System.out.println("getHome2=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
+                            if (!response.isNull("android_version") && !response.isNull("android_ver_is_critical")) {
+                                android_ver_is_critical = response.getBoolean("android_ver_is_critical");
+                                android_version = response.getInt("android_version");
+
+                               /* if (android_ver_is_critical) {
+                                    if (versionCode < android_version) {
+                                        showDialog();
+                                        return;
+                                    }
+                                }*/
+                            }
+
                             AppConfig.slides1 = response.getJSONArray("slides1");
                             AppConfig.topsellpro = response.getJSONArray("topSellsProducts");
                             AppConfig.topseenPro = response.getJSONArray("topSeenProducts");
@@ -1752,5 +1772,36 @@ public class MainActivity extends AppCompatActivity {
         } else {
             drawerLayout.openDrawer(Gravity.RIGHT);
         }
+    }
+
+    public void showDialog() {
+        final Dialog dialog_wait = new Dialog(this, R.style.Theme_Dialog);
+        dialog_wait.setContentView(R.layout.dialog_alert_update);
+        dialog_wait.show();
+        dialog_wait.setCancelable(false);
+        Window window = dialog_wait.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.CENTER);
+
+        TextView ok = dialog_wait.findViewById(R.id.ok);
+        TextView cancel = dialog_wait.findViewById(R.id.cancel);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
+                startActivity(intent);
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 }

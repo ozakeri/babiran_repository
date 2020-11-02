@@ -266,7 +266,14 @@ public class DescriptionDialog extends DialogFragment {
                                 } else if (!jsonObject.isNull("result")) {
                                     showGuideDialog();
                                 }
+                            } else if (jsonObject.getString("success").equals("2")) {
+                                d.dismiss();
+                                if (!jsonObject.isNull("message")) {
+                                    Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                }
+
                             } else if (jsonObject.getString("success").equals("3")) {
+                                d.dismiss();
                                 Toast.makeText(getActivity(), "در خواست شما با موفقیت ثبت شد", Toast.LENGTH_LONG).show();
                                 getFactorId();
                                 getDialog().dismiss();
@@ -303,13 +310,13 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("address", address);
                 params.put("selected_pay", selected_Pay);
                 params.put("credit", String.valueOf(credit));
-                params.put("productsArray", productArray);
+                //  params.put("productsArray", productArray);
+                params.put("productsArray", "[{\"count\":\"10\",\"product_id\":\"2826\"},{\"count\":\"2\",\"product_id\":\"1336\"},{\"count\":\"1\",\"product_id\":\"4586\"},{\"count\":\"1\",\"product_id\":\"4663\"}]");
                 params.put("timeId", timeId);
 
                 System.out.println("user_id=====" + user_id);
                 System.out.println("description=====" + description);
                 System.out.println("selected_Pay=====" + selected_Pay);
-                System.out.println("productArray=====" + productArray);
                 System.out.println("timeId=====" + timeId);
                 System.out.println("params=====" + params.toString());
                 return params;
