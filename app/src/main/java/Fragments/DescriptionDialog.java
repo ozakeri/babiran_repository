@@ -37,10 +37,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import net.babiran.app.BlankAcct;
 import net.babiran.app.FactorList;
+import net.babiran.app.MainActivity;
 import net.babiran.app.R;
-import net.babiran.app.commnets.UNIQ;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +53,6 @@ import Handlers.DatabaseHandler;
 import Models.Product;
 import tools.AppConfig;
 import tools.AudioRecorder;
-import ui_elements.MyEditText;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -84,7 +82,7 @@ public class DescriptionDialog extends DialogFragment {
     AudioRecorder audioRecorder;
     public static final int REQUEST_CODE_PAY = 1001;
 
-    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, int credit, SharedPreferences.Editor editor,String timeId) {
+    public DescriptionDialog(Context context, String id, String address, String productsArray, String selected_pay, int credit, SharedPreferences.Editor editor, String timeId) {
         this.id = id;
         this.address = address;
         this.productArray = productsArray;
@@ -223,7 +221,7 @@ public class DescriptionDialog extends DialogFragment {
                 }
                 Log.e("descript", descriptionFactor);
                 Log.e("selected_Pay==", selected_Pay);
-                completeBUY(id, address, productArray, selected_Pay, credit, edt_description.getText().toString(),timeId);
+                completeBUY(id, address, productArray, selected_Pay, credit, edt_description.getText().toString(), timeId);
                 //DescriptionDialog descriptionDialog = new DescriptionDialog();
                 //descriptionDialog.dismiss();
             }
@@ -233,7 +231,7 @@ public class DescriptionDialog extends DialogFragment {
 
     }
 
-    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final int credit, final String description,String timeId) {
+    public void completeBUY(final String user_id, final String address, final String productArray, final String selected_Pay, final int credit, final String description, String timeId) {
         queue = Volley.newRequestQueue(getActivity());
 //        getDialog().dismiss();
         final ProgressDialog d = new ProgressDialog(getActivity());
@@ -307,6 +305,13 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("credit", String.valueOf(credit));
                 params.put("productsArray", productArray);
                 params.put("timeId", timeId);
+
+                System.out.println("user_id=====" + user_id);
+                System.out.println("description=====" + description);
+                System.out.println("selected_Pay=====" + selected_Pay);
+                System.out.println("productArray=====" + productArray);
+                System.out.println("timeId=====" + timeId);
+                System.out.println("params=====" + params.toString());
                 return params;
             }
 
@@ -381,15 +386,16 @@ public class DescriptionDialog extends DialogFragment {
 
     public void NullBasket() {
 
+        MainActivity.basketlist.setVisibility(View.GONE);
         SharedPreferences pro_prefs;
         pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = pro_prefs.getString("products", "");
         ArrayList<Product> arrayList = gson.fromJson(json, new TypeToken<List<Product>>() {
         }.getType());
-        SharedPreferences.Editor editor= context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
         arrayList.removeAll(arrayList);
-        AppConfig.products = arrayList ;
+        AppConfig.products = arrayList;
 
         try {
             Gson gson1 = new Gson();
@@ -399,7 +405,7 @@ public class DescriptionDialog extends DialogFragment {
             editor.commit();
 
             AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
 

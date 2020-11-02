@@ -3,11 +3,8 @@ package Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,16 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,14 +43,11 @@ import net.babiran.app.Rss.AdapterUserListToTo;
 import net.babiran.app.Rss.BLOGME;
 import net.babiran.app.Rss.ListActivity;
 import net.babiran.app.Rss.ListRssActivity;
-import net.babiran.app.Rss.MainListActivity;
 import net.babiran.app.Rss.RecyclerItemClickListener;
 import net.babiran.app.Rss.RssList;
 import net.babiran.app.Servic.GETING;
 import net.babiran.app.Servic.MyInterFace;
-import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
-import net.babiran.app.Sharj.SharjHistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -319,7 +309,6 @@ public class BlogFrgment extends Fragment {
         getView().requestFocus();
 
 
-
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -416,6 +405,7 @@ public class BlogFrgment extends Fragment {
                 public void onResponse(@NonNull Call<List<GETING>> call, @NonNull retrofit2.Response<List<GETING>> response) {
 
                     List<GETING> s = response.body();
+                    System.out.println("response.body()======" + response.body());
 
                     for (int i = 0; i < s.size(); i++) {
 
@@ -468,7 +458,7 @@ public class BlogFrgment extends Fragment {
         Link.add("https://www.khabaronline.ir/rss");
 
         name.add("عناوین کل اخبار (khabaronline.ir)");
-   /*     name.add("سیاسی");
+   /*name.add("سیاسی");
         name.add("اقتصادی");
         name.add("اجتماعی");
         name.add("فرهنگی");
@@ -480,7 +470,7 @@ public class BlogFrgment extends Fragment {
         name.add("صفحه اول");*/
 
         int lio = name.size();
-        for (int i = 0; i <lio ; i++) {
+        for (int i = 0; i < lio; i++) {
             Listed.add(new RssList(name.get(i), Link.get(i)));
         }
 

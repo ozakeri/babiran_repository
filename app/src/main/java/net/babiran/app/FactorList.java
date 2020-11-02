@@ -469,6 +469,7 @@ public class FactorList extends AppCompatActivity {
         MainActivity.btnBack.setVisibility(View.INVISIBLE);
         MainActivity.viewLogo.setVisibility(View.VISIBLE);
         MainActivity.layout_search.setVisibility(View.VISIBLE);
+        MainActivity.basketlist.setVisibility(View.INVISIBLE);
         MainActivity.home.setVisibility(View.VISIBLE);
     }
 
