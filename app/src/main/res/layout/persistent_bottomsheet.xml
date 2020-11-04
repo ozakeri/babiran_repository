@@ -72,14 +72,14 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabTextAppearance="@style/tab_text"
                     android:background="#7AF8F4F4"
                     app:tabGravity="fill"
                     app:tabMode="fixed"
-                    app:tabIndicatorColor="@color/blueDark"
-                    app:tabTextColor="@color/blueDark"
+                    app:tabIndicatorColor="@color/organizationColor"
+                    app:tabTextColor="@color/organizationColor"
                     app:tabSelectedTextColor="@color/brown"
-                    android:layout_below="@+id/txt_date" />
+                    android:layout_below="@+id/txt_date"
+                    app:tabTextAppearance="@style/MineCustomTabText"/>
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"

@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -173,9 +173,9 @@ public class BasketListFragment extends Fragment implements
             //tab = v.findViewById(R.id.tabLayout);
             //viewPager = v.findViewById(R.id.viewPager);
 
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getActivity() );
-            linearLayoutManager.setOrientation( LinearLayoutManager.VERTICAL );
-            linearLayoutManager.setAutoMeasureEnabled( true );
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            linearLayoutManager.setAutoMeasureEnabled(true);
             basket_recyclerView.setLayoutManager(linearLayoutManager);
             basket_recyclerView.setNestedScrollingEnabled(false);
             basket_recyclerView.setHasFixedSize(true);
@@ -887,6 +887,8 @@ public class BasketListFragment extends Fragment implements
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/main/delivery_time";
+
+        System.out.println("delivery_time===" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

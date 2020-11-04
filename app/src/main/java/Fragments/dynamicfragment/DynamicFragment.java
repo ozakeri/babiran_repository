@@ -92,6 +92,7 @@ public class DynamicFragment extends Fragment {
 
                     if (status == 0){
                         radioButtonView.setTextColor(getResources().getColor(R.color.blue_semi_transparent_pressed));
+                        radioButtonView.setText(Util.latinNumberToPersian(jsonObject1.getString("text")) + "      تکمیل ");
                         radioButtonView.setEnabled(false);
                     }
 
