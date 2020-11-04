@@ -31,6 +31,7 @@ import tools.AppConfig;
 import ui_elements.MyTextView;
 
 import static android.content.Context.MODE_PRIVATE;
+import static tools.AppConfig.products;
 
 /**
  * Created by Mohammad on 6/16/2017.
@@ -90,7 +91,7 @@ public class CountDialog extends DialogFragment {
             noStock.setVisibility(View.VISIBLE);
         }
 
-        numberpicker.setValue(SetCount());
+        numberpicker.setValue(1);
 
         Count = String.valueOf(numberpicker.getValue());
 
@@ -105,6 +106,19 @@ public class CountDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (!product.getStock().equals("0")) {
+
+                    if (products != null && products.size() > 0) {
+                        for (int j = 0; j < products.size(); j++) {
+                            if (products.get(j).getId().equals(product.getId())){
+                                if (Integer.parseInt(products.get(j).getCount()) + Integer.parseInt(Count) > Integer.parseInt(product.getStock())) {
+                                    System.out.println("ERRRREOOOOE");
+                                    Toast.makeText(getActivity(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
                     addtoBasket(Count);
                 } else {
                     Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();

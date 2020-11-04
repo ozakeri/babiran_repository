@@ -39,8 +39,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_margin="1dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/headertexture" />
 
@@ -128,19 +127,21 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="50dp">
 
             <FrameLayout
                 android:id="@+id/Categorycontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"/>
+                android:layout_above="@+id/opp"
+                android:layout_marginTop="5dp"/>
 
             <FrameLayout
                 android:id="@+id/Homecontainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/opp"/>
+                android:layout_above="@+id/opp"
+                android:layout_marginTop="10dp"/>
 
 
             <FrameLayout
@@ -158,7 +159,8 @@
             <FrameLayout
                 android:id="@+id/shajeContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"/>
 
             <FrameLayout
                 android:id="@+id/blogContainer"
@@ -171,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/opp"
-                android:layout_marginBottom="0dp"/>
+                android:layout_marginTop="10dp"/>
 
             <FrameLayout
                 android:id="@+id/ProductListcontainer"
@@ -397,7 +399,7 @@
             <FrameLayout
                 android:id="@+id/FullbannerContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <FrameLayout
                 android:id="@+id/CardbannerContainer"

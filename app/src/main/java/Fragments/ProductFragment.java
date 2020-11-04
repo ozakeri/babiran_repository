@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -31,9 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -366,19 +363,18 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getActivity(), "این محصول ناموجود است", Toast.LENGTH_LONG).show();
                         } else {
 
-                            if (products != null) {
-                                for (int i = 0; i < products.size(); i++) {
-                                    if (product.id.equals(products.get(i).id)) {
-                                        if (Integer.parseInt(products.get(i).count) >= Integer.parseInt(products.get(i).stock)) {
-                                            Toast.makeText(getActivity(), "حداکثر تعداد انتخاب شده است", Toast.LENGTH_LONG).show();
+
+                            if (products != null && products.size() > 0) {
+                                for (int j = 0; j < products.size(); j++) {
+                                    if (products.get(j).getId().equals(product.getId())) {
+                                        if (Integer.parseInt(products.get(j).getCount()) >= Integer.parseInt(product.getStock())) {
+                                            Toast.makeText(getActivity(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
                                             return;
                                         }
                                     }
                                 }
-                                showGuideDialog();
-                                return;
                             }
-                            showGuideDialog();
+                            showGuideDialog(product.getStock());
                         }
                     }
                 }
@@ -706,19 +702,10 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
 
 
             if (IsUpdateCount) {
-                for (int i = 0; i < products.size(); i++) {
-                    if (this.product.id.equals(products.get(i).id)) {
-                        if (Integer.parseInt(products.get(i).count) > Integer.parseInt(products.get(i).stock)) {
-                            Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            Gson gson = new Gson();
-                            String proObj = gson.toJson(products);
-                            editor.putString("products", proObj);
-                            editor.commit();
-                        }
-                    }
-                }
+                Gson gson = new Gson();
+                String proObj = gson.toJson(products);
+                editor.putString("products", proObj);
+                editor.commit();
 
             } else {
                 product.count = Count;
@@ -772,12 +759,15 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void showGuideDialog() {
+    public void showGuideDialog(String count) {
         final Dialog alert = new Dialog(getActivity());
         alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alert.setContentView(R.layout.custom_dialog_select_count);
         NumberPicker numberPicker = alert.findViewById(R.id.numberPicker);
         TextView txt_action = alert.findViewById(R.id.txt_action);
+        TextView txt_count = alert.findViewById(R.id.txt_count);
+
+        txt_count.setText(" موجودی انبار" + Util.latinNumberToPersian(count) + " عدد ");
 
 
         numberPicker.setMin(1);
@@ -785,18 +775,7 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             noStock.setVisibility(View.INVISIBLE);
             numberPicker.setVisibility(View.VISIBLE);
             Log.e("stock", product.getStock());
-
-
-            if (products != null) {
-                for (int i = 0; i < products.size(); i++) {
-                    if (this.product.id.equals(products.get(i).id)) {
-                        numberPicker.setMax(Integer.parseInt(products.get(i).stock) - Integer.parseInt(products.get(i).count));
-                    }
-                }
-            } else {
-                numberPicker.setMax(Integer.parseInt(product.getStock()));
-            }
-
+            numberPicker.setMax(Integer.parseInt(product.getStock()));
 
         } else {
             numberPicker.setVisibility(View.INVISIBLE);
@@ -809,6 +788,18 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 AppConfig.frag = ProductFragment.this;
                 Count = String.valueOf(numberPicker.getValue());
+
+                if (products != null && products.size() > 0) {
+                    for (int j = 0; j < products.size(); j++) {
+                        if (products.get(j).getId().equals(product.getId())){
+                            if (Integer.parseInt(products.get(j).getCount()) + Integer.parseInt(Count) > Integer.parseInt(product.getStock())) {
+                                System.out.println("ERRRREOOOOE");
+                                Toast.makeText(getActivity(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                    }
+                }
                 addtoBasket();
                 alert.dismiss();
             }

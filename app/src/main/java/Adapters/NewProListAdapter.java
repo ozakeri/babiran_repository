@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
@@ -28,6 +29,8 @@ import tools.AppConfig;
 import tools.Util;
 import ui_elements.MyTextView;
 
+import static tools.AppConfig.products;
+
 public class NewProListAdapter extends BaseAdapter {
     RequestQueue queue;
     DatabaseHandler db;
@@ -37,10 +40,10 @@ public class NewProListAdapter extends BaseAdapter {
     ArrayList<Product> productArray = new ArrayList<>();
     LayoutInflater inflater;
 
-    public NewProListAdapter(Context context, ArrayList<Product> products) {
+    public NewProListAdapter(Context context, ArrayList<Product> products1) {
 
         this.context = context;
-        this.productArray = products;
+        this.productArray = products1;
         this.inflater = LayoutInflater.from(context);
 
     }
@@ -122,6 +125,16 @@ public class NewProListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
+                if (products != null && products.size() > 0) {
+                    for (int j = 0; j < products.size(); j++) {
+                        if (products.get(j).getId().equals(productArray.get(i).getId())){
+                            if (Integer.parseInt(products.get(j).getCount()) >= Integer.parseInt(productArray.get(i).getStock())) {
+                                Toast.makeText(view.getContext(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                    }
+                }
                 FragmentManager fm = ((Activity) context).getFragmentManager();
                 CountDialog countDialog = new CountDialog(productArray.get(i));
                 countDialog.show(fm, "CountDialog");

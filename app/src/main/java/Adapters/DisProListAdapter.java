@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.bumptech.glide.Glide;
@@ -29,18 +30,20 @@ import tools.AppConfig;
 import tools.Util;
 import ui_elements.MyTextView;
 
+import static tools.AppConfig.products;
+
 public class DisProListAdapter extends BaseAdapter {
     RequestQueue queue;
     DatabaseHandler db ;
     String id_user = "-1";
     Context context;
     ProgressDialog d ;
-    ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Product> products1 = new ArrayList<>();
     LayoutInflater inflater;
 
-    public DisProListAdapter(Context context, ArrayList<Product> products){
+    public DisProListAdapter(Context context, ArrayList<Product> products1){
         this.context = context;
-        this.products = products;
+        this.products1 = products1;
 
         this.inflater = LayoutInflater.from(context);
 
@@ -49,17 +52,17 @@ public class DisProListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return products.size();
+        return products1.size();
     }
 
     @Override
     public Product getItem(int i) {
-        return products.get(i);
+        return products1.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return Integer.parseInt(products.get(i).id);
+        return Integer.parseInt(products1.get(i).id);
     }
 
     @Override
@@ -89,7 +92,7 @@ public class DisProListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String s =products.get(i).name;
+        String s =products1.get(i).name;
         if (s.length() <= 20) {
             holder.name.setText(s);
         } else {
@@ -112,15 +115,30 @@ public class DisProListAdapter extends BaseAdapter {
         holder.item_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products.get(i))).commit();
+                AppConfig.fragmentManager.beginTransaction().replace(R.id.Productcontainer, new ProductFragment(products1.get(i))).commit();
             }
         });
         holder.addToBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if (products != null && products.size() > 0) {
+                    for (int j = 0; j < products.size(); j++) {
+                        if (products.get(j).getId().equals(products1.get(i).getId())){
+                            System.out.println("=======1========" + products.get(j).getCount());
+                            System.out.println("=======2========" + products1.get(i).getStock());
+
+                            if (Integer.parseInt(products.get(j).getCount()) >= Integer.parseInt(products1.get(i).getStock())) {
+                                System.out.println("ERRRREOOOOE");
+                                Toast.makeText(view.getContext(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                    }
+                }
+
                 FragmentManager fm = ((Activity)context).getFragmentManager();
-                CountDialog countDialog = new CountDialog(products.get(i));
+                CountDialog countDialog = new CountDialog(products1.get(i));
                 countDialog.show(fm,"CountDialog");
 
             }
@@ -131,20 +149,20 @@ public class DisProListAdapter extends BaseAdapter {
         int Percentage2 = 0;
         int result = 0;
 
-        if(!products.get(i).dis_price.equals("null") && !products.get(i).dis_price.equals("") && products.get(i).dis_price != null){
-            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(products.get(i).dis_price)+""))+" ت ");
-            Percentage1 = Integer.parseInt(products.get(i).dis_price);
+        if(!products1.get(i).dis_price.equals("null") && !products1.get(i).dis_price.equals("") && products1.get(i).dis_price != null){
+            holder.price_dis.setText(ConvertEnToPe(convertToFormalString(Integer.parseInt(products1.get(i).dis_price)+""))+" ت ");
+            Percentage1 = Integer.parseInt(products1.get(i).dis_price);
             //   price_free.setVisibility(INVISIBLE);
         }
 
-        if(!products.get(i).price.equals("null") && !products.get(i).price.equals("") && products.get(i).price != null) {
-            holder.price_free.setText(ConvertEnToPe(convertToFormalString(products.get(i).price + "")) + " ت ");
+        if(!products1.get(i).price.equals("null") && !products1.get(i).price.equals("") && products1.get(i).price != null) {
+            holder.price_free.setText(ConvertEnToPe(convertToFormalString(products1.get(i).price + "")) + " ت ");
             holder.price_free.setPaintFlags(holder.price_free.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            Percentage2 = Integer.parseInt(products.get(i).price);
+            Percentage2 = Integer.parseInt(products1.get(i).price);
         }
 
-        if (products.get(i).getStock() != null){
-            if (products.get(i).getStock().equals("0")) {
+        if (products1.get(i).getStock() != null){
+            if (products1.get(i).getStock().equals("0")) {
                 holder.noProduct.setVisibility(View.VISIBLE);
                 holder.addToBasket.setVisibility(View.GONE);
             } else {
@@ -164,9 +182,9 @@ public class DisProListAdapter extends BaseAdapter {
         }
 
 
-        for(int j = 0 ; j < products.get(i).images.size() ; j ++){
-            if(products.get(i).images.get(j) != null && products.get(i).images.get(j).toString().length()>5) {
-                Glide.with(context).load(products.get(i).images.get(j).image_link).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
+        for(int j = 0 ; j < products1.get(i).images.size() ; j ++){
+            if(products1.get(i).images.get(j) != null && products1.get(i).images.get(j).toString().length()>5) {
+                Glide.with(context).load(products1.get(i).images.get(j).image_link).fitCenter().placeholder(R.drawable.logoloading).into(holder.img);
             }
         }
 

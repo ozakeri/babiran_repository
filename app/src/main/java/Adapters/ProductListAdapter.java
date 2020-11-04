@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -26,6 +27,8 @@ import Models.Product;
 import tools.AppConfig;
 import tools.Util;
 import ui_elements.MyTextView;
+
+import static tools.AppConfig.products;
 
 
 /**
@@ -137,6 +140,17 @@ public class ProductListAdapter extends BaseAdapter {
         holder.addToBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (products != null && products.size() > 0) {
+                    for (int j = 0; j < products.size(); j++) {
+                        if (products.get(j).getId().equals(categories.get(i).getId())){
+                            if (Integer.parseInt(products.get(j).getCount()) >= Integer.parseInt(categories.get(i).getStock())) {
+                                Toast.makeText(view.getContext(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                    }
+                }
 
                 FragmentManager fm = ((Activity) context).getFragmentManager();
                 CountDialog countDialog = new CountDialog(categories.get(i));
