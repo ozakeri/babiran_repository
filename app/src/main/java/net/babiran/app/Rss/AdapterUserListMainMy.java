@@ -69,8 +69,6 @@ public class AdapterUserListMainMy extends RecyclerView.Adapter<AdapterUserListM
             title = (TextView) view.findViewById(R.id.txt_rc_rss_mainn_des);
             img_blog = view.findViewById(R.id.img_blog);
         }
-
-
     }
 
 }

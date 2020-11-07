@@ -1151,8 +1151,8 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
         //menu.add(new Menu("شارژ سیمکارت اعتباری", R.drawable.shaje_icon));
-        menu.add(new Menu("دسته بندی", R.drawable.cats));
-        menu.add(new Menu("سبد خرید", R.drawable.sabad2));
+       // menu.add(new Menu("دسته بندی", R.drawable.cats));
+       // menu.add(new Menu("سبد خرید", R.drawable.sabad2));
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
         //menu.add(new Menu("رویداد ها و مطالب گوناگون", R.drawable.ic_news));
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
@@ -1179,6 +1179,11 @@ public class MainActivity extends AppCompatActivity {
                         if (!userID.equals("")) {
                             startActivity(new Intent(MainActivity.this, EditProfileFrgment.class));
                             drawerLayout.closeDrawer(Gravity.RIGHT);
+                            MainActivity.setting.setVisibility(View.INVISIBLE);
+                            MainActivity.about.setVisibility(View.INVISIBLE);
+                            MainActivity.support.setVisibility(View.INVISIBLE);
+                            MainActivity.category.setVisibility(View.INVISIBLE);
+                            MainActivity.basketlist.setVisibility(View.INVISIBLE);
                             break;
 
                         } else {
@@ -1213,6 +1218,11 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         startActivity(new Intent(MainActivity.this, CreditActivity.class));
                         drawerLayout.closeDrawer(Gravity.RIGHT);
+                        MainActivity.setting.setVisibility(View.INVISIBLE);
+                        MainActivity.about.setVisibility(View.INVISIBLE);
+                        MainActivity.support.setVisibility(View.INVISIBLE);
+                        MainActivity.category.setVisibility(View.INVISIBLE);
+                        MainActivity.basketlist.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
                         Intent intent = new Intent(MainActivity.this, FactorList.class);
@@ -1247,7 +1257,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;*/
-                    case 3:
+                 /*   case 3:
                         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.setting.setVisibility(View.INVISIBLE);
@@ -1257,9 +1267,9 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.category.setVisibility(View.VISIBLE);
                         MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
-                        break;
+                        break;*/
 
-                    case 4:
+                   /* case 4:
                         getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         MainActivity.setting.setVisibility(View.INVISIBLE);
@@ -1269,24 +1279,24 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.category.setVisibility(View.INVISIBLE);
                         MainActivity.basketlist.setVisibility(View.VISIBLE);
 
-                        break;
+                        break;*/
                   /*  case 6:
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, MainListActivity.class));
 
                         break;*/
-                    case 5:
+                    case 3:
                         Di();
                         //kif pool
                         break;
-                    case 6:
+                    case 4:
 
                         intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("https://cafebazaar.ir/app/net.babiran.app"));
                         startActivity(intent);
 
                         break;
-                    case 7:
+                    case 5:
                         // solat motedavel
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, CommonQuestionActivity.class));
@@ -1294,11 +1304,16 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-                    case 8:
+                    case 6:
 
                         //rahnama
                         drawerLayout.closeDrawer(Gravity.RIGHT);
                         startActivity(new Intent(MainActivity.this, GuideUsageActivity.class));
+                        MainActivity.setting.setVisibility(View.INVISIBLE);
+                        MainActivity.about.setVisibility(View.INVISIBLE);
+                        MainActivity.support.setVisibility(View.INVISIBLE);
+                        MainActivity.category.setVisibility(View.INVISIBLE);
+                        MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
                         break;
                     /*case 11:
@@ -1319,7 +1334,7 @@ public class MainActivity extends AppCompatActivity {
                       //  startActivity(new Intent(MainActivity.this, SettingActivity.class));
 
                         break;*/
-                    case 9:
+                    case 7:
 
                         //khoroj
                         AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);

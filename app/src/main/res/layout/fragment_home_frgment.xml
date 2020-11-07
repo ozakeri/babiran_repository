@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="52dp"
             android:orientation="horizontal"
@@ -41,7 +41,8 @@
                     android:layout_centerVertical="true"
                     android:text="ویترین"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:id="@+id/layspecial"
@@ -71,7 +72,8 @@
                     android:layout_centerVertical="true"
                     android:text="پربازدید ترین ها"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:id="@+id/laydiscount"
@@ -100,7 +102,8 @@
                     android:layout_centerVertical="true"
                     android:text="جدید ترین ها"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textStyle="bold"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:id="@+id/laynew"
@@ -113,31 +116,23 @@
 
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/background_button_main"
-                android:layout_margin="3dp"
-                android:visibility="gone"/>
-
                 <RelativeLayout
                     android:id="@+id/selltop"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/background_button_main"
                     android:layout_margin="1dp">
 
                     <ui_elements.MyTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:gravity="center"
                         android:text="پر فروش ترین ها"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textStyle="bold"
+                        android:textSize="10sp" />
 
                     <LinearLayout
                         android:id="@+id/laytopsell"

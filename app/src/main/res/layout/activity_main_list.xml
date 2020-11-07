@@ -82,6 +82,7 @@
         android:layoutDirection="ltr"
         android:padding="5dp"
         android:visibility="visible"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 
@@ -160,7 +161,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_below="@+id/tab_layout"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:id="@+id/ln_main_rss_news_my"
