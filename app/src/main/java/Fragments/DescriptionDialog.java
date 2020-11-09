@@ -310,8 +310,8 @@ public class DescriptionDialog extends DialogFragment {
                 params.put("address", address);
                 params.put("selected_pay", selected_Pay);
                 params.put("credit", String.valueOf(credit));
-                //  params.put("productsArray", productArray);
-                params.put("productsArray", "[{\"count\":\"10\",\"product_id\":\"2826\"},{\"count\":\"2\",\"product_id\":\"1336\"},{\"count\":\"1\",\"product_id\":\"4586\"},{\"count\":\"1\",\"product_id\":\"4663\"}]");
+                params.put("productsArray", productArray);
+                //params.put("productsArray", "[{\"count\":\"10\",\"product_id\":\"2826\"},{\"count\":\"2\",\"product_id\":\"1336\"},{\"count\":\"1\",\"product_id\":\"4586\"},{\"count\":\"1\",\"product_id\":\"4663\"}]");
                 params.put("timeId", timeId);
 
                 System.out.println("user_id=====" + user_id);

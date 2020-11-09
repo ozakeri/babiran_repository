@@ -51,7 +51,7 @@ public class EditProfileFrgment extends AppCompatActivity {
 
     private boolean ok = true;
     private boolean ok_site = true;
-    private EditText ed_name, ed_email, ed_address, ed_address_two, ed_phone, ed_phone_two;
+    private EditText ed_name, ed_email, ed_address, ed_address_two, ed_phone_two;
     private TextView txt_email_error;
     private String phone;
     public static String prev_edit = "";
@@ -75,7 +75,6 @@ public class EditProfileFrgment extends AppCompatActivity {
         ed_email = (EditText) findViewById(R.id.email);
         ed_address = (EditText) findViewById(R.id.address);
         ed_address_two = (EditText) findViewById(R.id.addressTwo);
-        ed_phone = (EditText) findViewById(R.id.phone);
         ed_phone_two = (EditText) findViewById(R.id.phoneTwo);
         btn_back = findViewById(R.id.btn_back);
 
@@ -106,9 +105,6 @@ public class EditProfileFrgment extends AppCompatActivity {
             String address = userDetailsHashMap.get("address");
             String addressTwo = userDetailsHashMap.get("address2");
 
-            if (!Phone.equals("")) {
-                ed_phone.setText(Phone);
-            }
             if (phoneTwo != null && phoneTwo.length() > 0 && !(phoneTwo.equals("null"))) {
                 ed_phone_two.setText(phoneTwo);
             }
@@ -332,6 +328,7 @@ public class EditProfileFrgment extends AppCompatActivity {
 
         Log.e("id", id);
         String url = AppConfig.BASE_URL + "api/user/updateAUser/" + id;
+        System.out.println("updateAUser====" + url);
         // Request a string response from the provided URL.
         StringRequest strRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -364,9 +361,6 @@ public class EditProfileFrgment extends AppCompatActivity {
                                 String addressTwo = userDetailsHashMap.get("address2");
 
 
-                                if (!(phone.equals("null")) && !(phone.equals(""))) {
-                                    ed_phone.setText(phone);
-                                }
                                 if (!(phoneTwo.equals("null")) && !(phoneTwo.equals(""))) {
                                     ed_phone_two.setText(phoneTwo);
                                 }
@@ -447,12 +441,6 @@ public class EditProfileFrgment extends AppCompatActivity {
                 } else {
                     params.put("address2", "KmD3487f83nDFrm448Fp03Az4wl4F1sPPwkm38dGdek5km");
 
-                }
-                if (ed_phone.getText().length() > 0) {
-
-                    params.put("phone1", ed_phone.getText().toString() + "");
-                } else {
-                    params.put("phone1", "KmD3487f83nDFrm448Fp03Az4wl4F1sPPwkm38dGdek5km");
                 }
 
                 if (ed_phone_two.getText().length() > 0) {

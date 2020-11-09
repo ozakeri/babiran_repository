@@ -29,7 +29,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/secure_icon"/>
 
-                <TextView
+                <ui_elements.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -49,7 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical">
 
-                <TextView
+                <ui_elements.MyTextView
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <TextView
+                <ui_elements.MyTextView
                     android:id="@+id/txt_action"
                     android:layout_width="100dp"
                     android:layout_height="50dp"

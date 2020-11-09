@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,13 +24,14 @@ import androidx.core.content.ContextCompat;
 import java.util.Random;
 
 import tools.AppConfig;
+import tools.Util;
 import ui_elements.CustomFontEditText;
 
 
 public class Sms_Register extends AppCompatActivity {
 
     RelativeLayout BTNSend;
-    CustomFontEditText ETName;
+    EditText edt_Phone;
 
     private static String receptor10;
     private static String message10;
@@ -54,8 +56,8 @@ public class Sms_Register extends AppCompatActivity {
         requestSmsPermission();
 
         BTNSend = (RelativeLayout) findViewById(R.id.BTNSend);
-        ETName = (CustomFontEditText) findViewById(R.id.ETPhon);
-        PhoneNumberUtils.formatNumber(ETName.getText().toString());
+        edt_Phone = (CustomFontEditText) findViewById(R.id.edt_Phone);
+        PhoneNumberUtils.formatNumber(edt_Phone.getText().toString());
         final ProgressDialog d = new ProgressDialog(Sms_Register.this);
         d.setMessage("در حال ارسال کد فعالسازی...");
         BTNSend.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +68,7 @@ public class Sms_Register extends AppCompatActivity {
 
 
                 BTNSend.setEnabled(false);
-                if (TextUtils.isEmpty(ETName.getText().toString())) {
+                if (TextUtils.isEmpty(edt_Phone.getText().toString())) {
                     Toast.makeText(Sms_Register.this, "شماره موبایل را وارد کنید", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -77,17 +79,17 @@ public class Sms_Register extends AppCompatActivity {
                         final String random = getRandomCode();
                         SharedPreferences save = getSharedPreferences("NUMBER", MODE_PRIVATE);
                         SharedPreferences.Editor editor = save.edit();
-                        editor.putString("TKN", ETName.getText().toString());
+                        editor.putString("TKN", Util.persianNumberToLatin(edt_Phone.getText().toString()));
                         editor.apply();
 
                         Log.e("G=====", random + "");
-                        RequestHandler.sendSMS2(token, random, ETName.getText().toString(), new SendSmsCallback() {
+                        RequestHandler.sendSMS2(token, random, Util.persianNumberToLatin(edt_Phone.getText().toString()), new SendSmsCallback() {
                             @Override
                             public void onSendSmsSuccessAction() {
                                 d.dismiss();
 
                                 AppConfig.sent = random;
-                                AppConfig.phone = ETName.getText().toString();
+                                AppConfig.phone = Util.persianNumberToLatin(edt_Phone.getText().toString());
                                 Toast.makeText(Sms_Register.this, "پیامک حاوی کد فعالسازی به زودی برای شما ارسال می شود.", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(Sms_Register.this, To_Start.class));
                                 finish();

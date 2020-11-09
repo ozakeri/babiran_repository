@@ -68,7 +68,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         if (!categories.get(position).name.equals("null") && !categories.get(position).name.equals("") && categories.get(position).name != null) {
 
             holder.name.setText(categories.get(position).name);
-            Picasso.with(context).load(categories.get(position).icon).into(holder.img_icon);
+            Picasso.get().load(categories.get(position).icon).into(holder.img_icon);
 
             holder.item_Button.setOnClickListener(new View.OnClickListener() {
                 @Override

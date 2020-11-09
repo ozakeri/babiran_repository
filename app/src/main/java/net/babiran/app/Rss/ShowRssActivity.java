@@ -143,7 +143,7 @@ public class ShowRssActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.GONE);
                 txt_titleComment.setVisibility(View.GONE);
-                Picasso.with(ShowRssActivity.this).load(imgUrl).into(img_html_show);
+                Picasso.get().load(imgUrl).into(img_html_show);
                 return;
             }
         }
@@ -244,7 +244,7 @@ public class ShowRssActivity extends AppCompatActivity {
                         }
 
                         //txt.setText(SSS1);
-                        Picasso.with(ShowRssActivity.this).load(s.get(i).getImageLink()).into(img_html_show);
+                        Picasso.get().load(s.get(i).getImageLink()).into(img_html_show);
                         imgUrl = s.get(i).getImageLink();
                         id_blog = s.get(i).getId();
                         ListedGetLike();
@@ -429,7 +429,7 @@ public class ShowRssActivity extends AppCompatActivity {
                         titl.setText(s.getSubject());
                         System.out.println("======2222==========");
                         txt.setText(s.getBody());
-                        Picasso.with(ShowRssActivity.this).load(s.getImageLink()).into(img_html_show);
+                        Picasso.get().load(s.getImageLink()).into(img_html_show);
                         imgUrl = s.getImageLink();
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.getCreatedAtInt()));
 
@@ -791,7 +791,7 @@ public class ShowRssActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            Picasso.with(ShowRssActivity.this).load(RRR).into(img_html_show);
+            Picasso.get().load(RRR).into(img_html_show);
             txt.setText(pngs.text());
             prograsDialog.dismiss();
             SaveAImg.setVisibility(View.GONE);

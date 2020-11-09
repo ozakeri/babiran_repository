@@ -48,7 +48,7 @@ public class AdapterUserListToTo extends RecyclerView.Adapter<AdapterUserListToT
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         final BLOGME list = listProducts.get(position);
-        Picasso.with(mContext).load(list.image_link).into(holder.imageView);
+        Picasso.get().load(list.image_link).into(holder.imageView);
 
         String s = list.titr;
         if (s.length() <= 50) {

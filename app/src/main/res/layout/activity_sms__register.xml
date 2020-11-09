@@ -62,7 +62,7 @@
                     android:textStyle="bold" />
 
                 <ui_elements.CustomFontEditText
-                    android:id="@+id/ETPhon"
+                    android:id="@+id/edt_Phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textmob"
@@ -79,7 +79,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_below="@id/ETPhon"
+                    android:layout_below="@id/edt_Phone"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/btn_background_corner">

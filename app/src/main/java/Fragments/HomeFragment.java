@@ -107,6 +107,9 @@ public class HomeFragment extends Fragment {
     public static final String TAG = "TAG";
     private RecyclerView recycler_view, recycler_view_smallTile, recycler_view_bigTile;
     private GlobalValues globalValues = new GlobalValues();
+    private boolean isScrollNewProduct = false;
+    private boolean isScrollTopPro = false;
+    private boolean isScrollDisPro = false;
 
 
     DatabaseHandler db;
@@ -117,6 +120,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
 
     }
+
     View v;
 
 
@@ -379,7 +383,11 @@ public class HomeFragment extends Fragment {
                             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                                     && (DisProList.getLastVisiblePosition() - DisProList.getHeaderViewsCount() -
                                     DisProList.getFooterViewsCount()) >= (adpDis.getCount() - 1)) {
-                                getDisPro();
+
+                                if (!isScrollDisPro) {
+                                    getDisPro();
+                                }
+
                             }
                         }
 
@@ -443,7 +451,10 @@ public class HomeFragment extends Fragment {
                                     && (NewProList.getLastVisiblePosition() - NewProList.getHeaderViewsCount() -
                                     NewProList.getFooterViewsCount()) >= (adp.getCount() - 1)) {
 
-                                getNewPro();
+                                if (!isScrollNewProduct) {
+                                    getNewPro();
+                                }
+
                             }
                         }
 
@@ -498,7 +509,11 @@ public class HomeFragment extends Fragment {
                             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
                                     && (TopProList.getLastVisiblePosition() - TopProList.getHeaderViewsCount() -
                                     TopProList.getFooterViewsCount()) >= (adpTop.getCount() - 1)) {
-                                getTopPro();
+
+                                if (!isScrollTopPro) {
+                                    getTopPro();
+                                }
+
                             }
                         }
 
@@ -546,10 +561,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void getNewPro() {
-
+        isScrollNewProduct = true;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + Newproducts.size() + "/" + "20";
+        System.out.println("getNewPro=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -563,7 +579,7 @@ public class HomeFragment extends Fragment {
                             ArrayList<Image> imagesArray;
                             ArrayList<Moshakhasat> moshakhasatArrayList;
                             ArrayList<Color> colorArrayList;
-
+                            isScrollNewProduct = false;
                             for (int i = 0; i < AppConfig.newPro.length(); i++) {
                                 featuresArray = new ArrayList<>();
                                 imagesArray = new ArrayList<>();
@@ -692,9 +708,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void getTopPro() {
+        isScrollTopPro = true;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSells/" + Topproducts.size() + "/" + "20";
+        System.out.println("getTopPro=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -707,7 +725,7 @@ public class HomeFragment extends Fragment {
                             ArrayList<Image> imagesArray;
                             ArrayList<Moshakhasat> moshakhasatArrayList;
                             ArrayList<Color> colorArrayList;
-
+                            isScrollTopPro = false;
                             for (int i = 0; i < AppConfig.topsellpro.length(); i++) {
                                 featuresArray = new ArrayList<>();
                                 imagesArray = new ArrayList<>();
@@ -837,10 +855,12 @@ public class HomeFragment extends Fragment {
     }
 
     public void getDisPro() {
+
+        isScrollDisPro = true;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSeenLazy/20/" + Disproducts.size();
-
+        System.out.println("getDisPro=======" + url);
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -852,7 +872,7 @@ public class HomeFragment extends Fragment {
                             ArrayList<Image> imagesArray;
                             ArrayList<Moshakhasat> moshakhasatArrayList;
                             ArrayList<Color> colorArrayList;
-
+                            isScrollDisPro = false;
                             for (int i = 0; i < AppConfig.topseenPro.length(); i++) {
                                 featuresArray = new ArrayList<>();
                                 imagesArray = new ArrayList<>();
@@ -1357,6 +1377,7 @@ public class HomeFragment extends Fragment {
         ArrayList<Color> colorArrayList;
 
         //  cards = new ArrayList<>();
+
         for (int i = 0; i < AppConfig.newPro.length(); i++) {
 
             featuresArray = new ArrayList<>();
@@ -1454,6 +1475,8 @@ public class HomeFragment extends Fragment {
         ArrayList<Image> imagesArray;
         ArrayList<Moshakhasat> moshakhasatArrayList;
         ArrayList<Color> colorArrayList;
+
+        System.out.println("specialPro======" + AppConfig.specialPro);
 
         for (int i = 0; i < AppConfig.specialPro.length(); i++) {
             featuresArray = new ArrayList<>();

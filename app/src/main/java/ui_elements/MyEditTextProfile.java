@@ -30,7 +30,7 @@ public class MyEditTextProfile extends androidx.appcompat.widget.AppCompatEditTe
                 "iransans.ttf"));
         //this.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //this.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        this.setTextSize(16);
+        this.setTextSize(14);
         this.setShadowLayer(0f, 5, 5, getContext().getResources().getColor(R.color.white));
     }
 }

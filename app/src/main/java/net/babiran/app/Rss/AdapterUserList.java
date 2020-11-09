@@ -50,7 +50,7 @@ public class AdapterUserList extends RecyclerView.Adapter<AdapterUserList.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         RssFeedModel list = listProducts.get(position);
-        Picasso.with(mContext).load(list.img_url).into(holder.imageView);
+        Picasso.get().load(list.img_url).into(holder.imageView);
         holder.SeenP.setText(list.title);
         holder.link.setText(list.link);
     }

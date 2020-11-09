@@ -67,7 +67,7 @@ public class AdapterfoolplaceList extends RecyclerView.Adapter<AdapterfoolplaceL
         }
 
 
-        Picasso.with(mContext).load(lCategory.icon).into(holder.imageView);
+        Picasso.get().load(lCategory.icon).into(holder.imageView);
         holder.id.setText(lCategory.id);
         holder.plink.setText(lCategory.icon);
 
