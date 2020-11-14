@@ -32,7 +32,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -1639,82 +1638,33 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
-
-        ImageView telegram = (ImageView) dialog.findViewById(R.id.kjdnfgbkjn1);
-
-        ImageView sourush = (ImageView) dialog.findViewById(R.id.kjdnfgbkjn3);
-
-        ImageView whats_up = (ImageView) dialog.findViewById(R.id.whats_up);
-
-        LinearLayout linearLayout = dialog.findViewById(R.id.linearLayout);
         TextView txt_close = dialog.findViewById(R.id.txt_close);
         RelativeLayout relativeLayout = dialog.findViewById(R.id.relativeLayout);
         RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
-        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         final ArrayList<String> list = new ArrayList<String>();
-        if (jsonArray != null){
+
+        if (jsonArray != null && jsonArray.length() != 0) {
             for (int i = 0; i < jsonArray.length(); ++i) {
                 list.add(String.valueOf(jsonArray.get(i)));
                 recycler_view.setAdapter(new WhatsAppNumberListAdapter(this, list));
             }
+        } else {
+            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
         }
 
-
-        relativeLayout.setVisibility(View.GONE);
-        linearLayout.setVisibility(View.VISIBLE);
 
         txt_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                relativeLayout.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        whats_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (jsonArray != null && jsonArray.length() != 0) {
-                    relativeLayout.setVisibility(View.VISIBLE);
-                    linearLayout.setVisibility(View.GONE);
-                    return;
-                }
-
-                String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                dialog.dismiss();
             }
         });
 
 
-        telegram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse("https://t.me/babiran2"); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
-
-//        whats.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_DIAL);
-//                intent.setData(Uri.parse("tel:+989143185242"));
-//                startActivity(intent);
-//            }
-//        });
-
-        sourush.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse("https://sapp.ir/babiran2"); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
     }
 
     public void getCompaniesByID(final String catId, final String proId) {

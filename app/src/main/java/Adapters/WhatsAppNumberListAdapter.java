@@ -16,6 +16,7 @@ import net.babiran.app.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.Util;
 import ui_elements.MyTextView;
 
 
@@ -43,9 +44,10 @@ public class WhatsAppNumberListAdapter extends RecyclerView.Adapter<WhatsAppNumb
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int i) {
         if (stringList != null) {
             if (stringList.size() > 0) {
-                holder.txt_title.setText(" اپراتور شماره " + " ( " + (i + 1) + " ) ");
+                holder.txt_title.setText(" اپراتور " + (Util.latinNumberToPersian(String.valueOf(i + 1))));
             }
         }
+
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
