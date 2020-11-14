@@ -30,8 +30,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +47,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -52,6 +56,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -78,6 +83,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Adapters.MenuAdapter;
+import Adapters.WhatsAppNumberListAdapter;
 import Fragments.BasketListFragment;
 import Fragments.BlogFrgment;
 import Fragments.CategoryFragment;
@@ -140,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     private int android_version;
     private boolean android_ver_is_critical = false;
     private int versionCode;
+    private JSONArray jsonArray = null;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -421,6 +428,7 @@ public class MainActivity extends AppCompatActivity {
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
                     homeGetRequest();
                     getCreditRequest();
+                    getWhatsAppNumbers();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
@@ -867,6 +875,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void getWhatsAppNumbers() {
+
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        if (id.equals("")) {
+            id = "-1";
+        }
+
+        final String url = "http://babiran.net/api/whatsappnumbers";
+
+        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        if (response != null) {
+                            jsonArray = response;
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+
+    }
+
     private void loadfragments() {
         getSupportFragmentManager().beginTransaction().replace(R.id.Homecontainer, new HomeFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.Categorycontainer, new CategoryFragment()).commit();
@@ -1151,8 +1190,8 @@ public class MainActivity extends AppCompatActivity {
         menu.add(new Menu("سوابق و پیگیری سفارشات", R.drawable.sefaresh));
         //menu.add(new Menu("خرید بلیط", R.drawable.ic_ticket));
         //menu.add(new Menu("شارژ سیمکارت اعتباری", R.drawable.shaje_icon));
-       // menu.add(new Menu("دسته بندی", R.drawable.cats));
-       // menu.add(new Menu("سبد خرید", R.drawable.sabad2));
+        // menu.add(new Menu("دسته بندی", R.drawable.cats));
+        // menu.add(new Menu("سبد خرید", R.drawable.sabad2));
         //menu.add(new Menu("آخرین اخبار", R.drawable.ic_news));
         //menu.add(new Menu("رویداد ها و مطالب گوناگون", R.drawable.ic_news));
         menu.add(new Menu("پشتیبانی", R.drawable.ic_suport));
@@ -1286,7 +1325,11 @@ public class MainActivity extends AppCompatActivity {
 
                         break;*/
                     case 3:
-                        Di();
+                        try {
+                            Di();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         //kif pool
                         break;
                     case 4:
@@ -1588,7 +1631,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void Di() {
+    private void Di() throws JSONException {
         Dialog dialog = new Dialog(this);
 
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -1604,13 +1647,41 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView whats_up = (ImageView) dialog.findViewById(R.id.whats_up);
 
+        LinearLayout linearLayout = dialog.findViewById(R.id.linearLayout);
+        TextView txt_close = dialog.findViewById(R.id.txt_close);
+        RelativeLayout relativeLayout = dialog.findViewById(R.id.relativeLayout);
+        RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
+
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < jsonArray.length(); ++i) {
+            list.add(String.valueOf(jsonArray.get(i)));
+
+        }
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setAdapter(new WhatsAppNumberListAdapter(this,list));
+
+        relativeLayout.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+
+        txt_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                relativeLayout.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
         whats_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+                relativeLayout.setVisibility(View.VISIBLE);
+                linearLayout.setVisibility(View.GONE);
+
+
+             /*   String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
-                startActivity(i);
+                startActivity(i);*/
             }
         });
 
@@ -1816,7 +1887,5 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 }
