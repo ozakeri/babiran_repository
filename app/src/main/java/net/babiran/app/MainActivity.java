@@ -32,7 +32,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -144,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
     private int android_version;
     private boolean android_ver_is_critical = false;
     private int versionCode;
-    private JSONArray jsonArray = null;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -426,7 +427,6 @@ public class MainActivity extends AppCompatActivity {
                     AppConfig.fragmentManager = this.getSupportFragmentManager();
                     homeGetRequest();
                     getCreditRequest();
-                    getWhatsAppNumbers();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
@@ -888,7 +888,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         if (response != null) {
-                            jsonArray = response;
+
                         }
                     }
                 },
@@ -1323,11 +1323,13 @@ public class MainActivity extends AppCompatActivity {
 
                         break;*/
                     case 3:
+
                         try {
                             Di();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                         //kif pool
                         break;
                     case 4:
@@ -1638,29 +1640,63 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
+        ProgressBar progress_bar = dialog.findViewById(R.id.progress_bar);
         TextView txt_close = dialog.findViewById(R.id.txt_close);
-        RelativeLayout relativeLayout = dialog.findViewById(R.id.relativeLayout);
+        LinearLayout linearLayout = dialog.findViewById(R.id.linearLayout);
         RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
         recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         final ArrayList<String> list = new ArrayList<String>();
 
-        if (jsonArray != null && jsonArray.length() != 0) {
-            for (int i = 0; i < jsonArray.length(); ++i) {
-                list.add(String.valueOf(jsonArray.get(i)));
-                recycler_view.setAdapter(new WhatsAppNumberListAdapter(this, list));
-            }
-        } else {
-            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+        if (id.equals("")) {
+            id = "-1";
         }
+
+        final String url = "http://babiran.net/api/whatsappnumbers";
+        progress_bar.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
+        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        progress_bar.setVisibility(View.GONE);
+                        linearLayout.setVisibility(View.VISIBLE);
+                        if (response != null && response.length() != 0) {
+                            for (int i =0;i<response.length();i++){
+                                try {
+                                    list.add(String.valueOf(response.get(i)));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            recycler_view.setAdapter(new WhatsAppNumberListAdapter(MainActivity.this, list));
+                        } else {
+                            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(url));
+                            startActivity(i);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                        progress_bar.setVisibility(View.GONE);
+                        dialog.dismiss();
+                    }
+                }
+        );
+
+        queue.add(getRequest);
 
 
         txt_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                progress_bar.setVisibility(View.GONE);
             }
         });
 
