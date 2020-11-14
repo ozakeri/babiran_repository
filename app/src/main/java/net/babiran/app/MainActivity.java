@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -1651,14 +1650,15 @@ public class MainActivity extends AppCompatActivity {
         TextView txt_close = dialog.findViewById(R.id.txt_close);
         RelativeLayout relativeLayout = dialog.findViewById(R.id.relativeLayout);
         RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < jsonArray.length(); ++i) {
-            list.add(String.valueOf(jsonArray.get(i)));
-
-        }
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
-        recycler_view.setAdapter(new WhatsAppNumberListAdapter(this,list));
+        final ArrayList<String> list = new ArrayList<String>();
+        if (jsonArray != null){
+            for (int i = 0; i < jsonArray.length(); ++i) {
+                list.add(String.valueOf(jsonArray.get(i)));
+                recycler_view.setAdapter(new WhatsAppNumberListAdapter(this, list));
+            }
+        }
+
 
         relativeLayout.setVisibility(View.GONE);
         linearLayout.setVisibility(View.VISIBLE);
@@ -1674,14 +1674,17 @@ public class MainActivity extends AppCompatActivity {
         whats_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                relativeLayout.setVisibility(View.VISIBLE);
-                linearLayout.setVisibility(View.GONE);
 
+                if (jsonArray != null && jsonArray.length() != 0) {
+                    relativeLayout.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                    return;
+                }
 
-             /*   String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+                String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
-                startActivity(i);*/
+                startActivity(i);
             }
         });
 
