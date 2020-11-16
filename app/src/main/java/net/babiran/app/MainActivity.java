@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean android_ver_is_critical = false;
     private int versionCode;
     private JSONArray jsonArray = null;
+    private String number1,number2,number3 = "+989143185242";
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -1318,16 +1320,7 @@ public class MainActivity extends AppCompatActivity {
                         break;*/
                     case 3:
 
-                        if (jsonArray != null && jsonArray.length() != 0) {
-                            Di();
-                        } else {
-                            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(url));
-                            startActivity(i);
-                        }
-
-
+                        Di();
                         //kif pool
                         break;
                     case 4:
@@ -1630,7 +1623,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void Di() {
+    /*private void Di() {
         Dialog dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.coustom_dilog_sup);
@@ -1665,6 +1658,67 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }*/
+
+    private void Di() {
+        Dialog dialog = new Dialog(this);
+
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.coustom_dilog_sup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.show();
+
+        if (jsonArray != null){
+
+            try {
+                Log.e("jsonArray====", String.valueOf(jsonArray.get(0)));
+                Log.e("jsonArray====", String.valueOf(jsonArray.get(1)));
+                Log.e("jsonArray====", String.valueOf(jsonArray.get(2)));
+                number1 = String.valueOf(jsonArray.get(0));
+                number2 = String.valueOf(jsonArray.get(1));
+                number3 = String.valueOf(jsonArray.get(2));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        ImageView whats_up1 = dialog.findViewById(R.id.whats_up1);
+
+        ImageView whats_up2 = dialog.findViewById(R.id.whats_up2);
+
+        ImageView whats_up3 = dialog.findViewById(R.id.whats_up3);
+
+        whats_up1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://api.whatsapp.com/send?phone=" + number1;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+
+        whats_up2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://api.whatsapp.com/send?phone=" + number2;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+        whats_up3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://api.whatsapp.com/send?phone=" + number3;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
     }
 
     public void getCompaniesByID(final String catId, final String proId) {
