@@ -168,7 +168,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <Button
+                    <ui_elements.MyTextView
                         android:id="@+id/btn_type_state_peygiri"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -178,7 +178,8 @@
                         android:background="@drawable/border_button"
                         android:text="پرداخت مجدد"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
+                        android:gravity="center"
                         android:visibility="visible" />
 
                     <ui_elements.MyTextView

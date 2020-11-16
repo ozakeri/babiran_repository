@@ -17,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -114,7 +115,7 @@ public class FactorListAdapter extends BaseAdapter {
             holder.state = (MyTextView) convertView.findViewById(R.id.txt_type_state);
             holder.stateProgressBar = (StateProgressBar) convertView.findViewById(R.id.your_state_progress_bar_id);
 
-            holder.btn_type_state_peygiri = (Button) convertView.findViewById(R.id.btn_type_state_peygiri);
+            holder.btn_type_state_peygiri = convertView.findViewById(R.id.btn_type_state_peygiri);
             holder.Peygiri = (MyTextView) convertView.findViewById(R.id.txt_type_state_peygiri);
             holder.Sefaresh = (MyTextView) convertView.findViewById(R.id.txt_type_state_sefartesh);
 
@@ -297,7 +298,7 @@ public class FactorListAdapter extends BaseAdapter {
         StateProgressBar stateProgressBar;
         ListView orders;
         LinearLayout item_Button, LnPiyk;
-        Button btn_type_state_peygiri;
+        TextView btn_type_state_peygiri;
 
     }
 

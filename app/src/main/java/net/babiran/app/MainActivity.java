@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -32,9 +31,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,6 +99,7 @@ import Models.Menu;
 import Models.Product;
 import co.ronash.pushe.Pushe;
 import tools.AppConfig;
+import tools.DialogUtil;
 import tools.GlobalValues;
 import tools.NotificationUtils;
 import tools.Util;
@@ -146,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     private int android_version;
     private boolean android_ver_is_critical = false;
     private int versionCode;
+    private JSONArray jsonArray = null;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -876,11 +875,6 @@ public class MainActivity extends AppCompatActivity {
     public void getWhatsAppNumbers() {
 
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-
-        if (id.equals("")) {
-            id = "-1";
-        }
-
         final String url = "http://babiran.net/api/whatsappnumbers";
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -888,7 +882,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         if (response != null) {
-
+                            jsonArray = response;
                         }
                     }
                 },
@@ -1324,11 +1318,15 @@ public class MainActivity extends AppCompatActivity {
                         break;*/
                     case 3:
 
-                        try {
+                        if (jsonArray != null && jsonArray.length() != 0) {
                             Di();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(url));
+                            startActivity(i);
                         }
+
 
                         //kif pool
                         break;
@@ -1550,6 +1548,7 @@ public class MainActivity extends AppCompatActivity {
         layout_search.setVisibility(View.VISIBLE);
         viewLogo.setVisibility(View.VISIBLE);
         getCreditRequest();
+        getWhatsAppNumbers();
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(AppConfig.REGISTRATION_COMPLETE));
@@ -1631,72 +1630,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void Di() throws JSONException {
-        Dialog dialog = new Dialog(this);
-
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+    private void Di() {
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.coustom_dilog_sup);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
-        dialog.show();
+        DialogUtil.showDialog(this, dialog, false);
+        //dialog.show();
 
-        ProgressBar progress_bar = dialog.findViewById(R.id.progress_bar);
         TextView txt_close = dialog.findViewById(R.id.txt_close);
-        LinearLayout linearLayout = dialog.findViewById(R.id.linearLayout);
         RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
-        recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recycler_view.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
         final ArrayList<String> list = new ArrayList<String>();
 
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        System.out.println("jsonArray=====" + jsonArray.length());
 
-        if (id.equals("")) {
-            id = "-1";
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                list.add(String.valueOf(jsonArray.get(i)));
+            }
+            recycler_view.setAdapter(new WhatsAppNumberListAdapter(MainActivity.this, list));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        final String url = "http://babiran.net/api/whatsappnumbers";
-        progress_bar.setVisibility(View.VISIBLE);
-        linearLayout.setVisibility(View.GONE);
-        JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        progress_bar.setVisibility(View.GONE);
-                        linearLayout.setVisibility(View.VISIBLE);
-                        if (response != null && response.length() != 0) {
-                            for (int i =0;i<response.length();i++){
-                                try {
-                                    list.add(String.valueOf(response.get(i)));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            recycler_view.setAdapter(new WhatsAppNumberListAdapter(MainActivity.this, list));
-                        } else {
-                            String url = "https://api.whatsapp.com/send?phone=" + "+989143185242";
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(url));
-                            startActivity(i);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        AppConfig.error(error);
-                        progress_bar.setVisibility(View.GONE);
-                        dialog.dismiss();
-                    }
-                }
-        );
-
-        queue.add(getRequest);
 
 
         txt_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                progress_bar.setVisibility(View.GONE);
+                //progress_bar.setVisibility(View.GONE);
             }
         });
 

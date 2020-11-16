@@ -9,7 +9,7 @@ import android.widget.EditText;
  * Created by Mohammad on 9/14/2017.
  */
 
-public class CustomFontEditText extends EditText {
+public class CustomFontEditText extends androidx.appcompat.widget.AppCompatEditText {
 
 
     private Context context;

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import net.babiran.app.R;
 
 
-public class MyButton extends Button {
+public class MyButton extends androidx.appcompat.widget.AppCompatButton {
 
     public MyButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
