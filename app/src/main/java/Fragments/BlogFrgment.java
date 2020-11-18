@@ -246,9 +246,11 @@ public class BlogFrgment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
 
+                System.out.println("bbbbbbbbbbbb"+b1);
+                System.out.println("bbbbbbbbbbbb"+b2);
 
                 if (b1) {
-
+                    System.out.println("111111111111111111");
                     String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
 
@@ -268,6 +270,7 @@ public class BlogFrgment extends Fragment {
                     System.out.println("b1======" + Link1);*/
                     //b1 = false;
                 } else {
+                    System.out.println("22222222222222222");
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
                     Intent intent2 = new Intent(getActivity(), ListRssActivity.class);

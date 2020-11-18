@@ -45,6 +45,8 @@ public class ListActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             id = getIntent().getExtras().getString("id");
             title = getIntent().getExtras().getString("title");
+            System.out.println("id==========" + id);
+            System.out.println("title==========" + title);
         }
 
         INIT();
@@ -85,7 +87,7 @@ public class ListActivity extends AppCompatActivity {
                         .itemView.findViewById(R.id.tfghjkhjkhjkk)).getText().toString();
                 if (!TextUtils.isEmpty(getIntent().getExtras().getString("id"))) {
                     if (chi.equals("true")) {
-                        Intent intent = new Intent(ListActivity.this, ListRssActivity.class);
+                        Intent intent = new Intent(ListActivity.this, ListtoListActivity.class);
                         intent.putExtra("id", Link);
                         intent.putExtra("name", name);
                         startActivity(intent);

@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -49,6 +48,7 @@ import net.babiran.app.R;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -117,13 +117,16 @@ public class BasketListFragment extends Fragment implements
     private ArrayList<DeliveryTime> dateTimes = new ArrayList<>();
     private RecyclerView recycler_view;
     private Context context;
-    private TextView txt_date;
+    private TextView txt_date, txt_cost;
     private CircularProgressView circularProgressView;
     private TabLayout tab;
     private ViewPager viewPager;
     private TabAdapter adapter;
     private boolean success = false;
     private JSONArray response = null;
+    private int fromCost = 0;
+    private int toCost = 0;
+    private int cost = 0;
 
     public BasketListFragment() {
         MainActivity.btnBack.setVisibility(View.VISIBLE);
@@ -160,6 +163,7 @@ public class BasketListFragment extends Fragment implements
 
             totalprice = (MyTextView) v.findViewById(R.id.totalprice);
             discount = (MyTextView) v.findViewById(R.id.dis_txt);
+            txt_cost = v.findViewById(R.id.txt_cost);
             completeBuy = (RelativeLayout) v.findViewById(R.id.compelete);
             txt_time = v.findViewById(R.id.txt_time);
             coordinatorLayout = (CoordinatorLayout) v.findViewById(R.id.coordinator);
@@ -536,7 +540,7 @@ public class BasketListFragment extends Fragment implements
 
 
             if (rawPrice > 0) {
-                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
+                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis + getCost()))) + " تومان ");
             } else {
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
@@ -741,6 +745,7 @@ public class BasketListFragment extends Fragment implements
         discountPrice = 0;
         rawPrice = 0;
         rawPrice_dis = 0;
+        cost = 0;
         int p = 0;
         int p_dis = 0;
         int dis1 = 0;
@@ -797,7 +802,7 @@ public class BasketListFragment extends Fragment implements
             }
 
             if (rawPrice > 0) {
-                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis))) + " تومان ");
+                totalprice.setText(" جمع کل : " + ConvertEnToPe(convertToFormalString(String.valueOf(rawPrice_dis + getCost()))) + " تومان ");
             } else {
                 typePayLinear.setVisibility(View.GONE);
                 addLinear.setVisibility(View.GONE);
@@ -964,5 +969,27 @@ public class BasketListFragment extends Fragment implements
             //Similarly you can customize "canScrollHorizontally()" for managing horizontal scroll
             return isScrollEnabled && super.canScrollVertically();
         }
+    }
+
+    private int getCost() {
+        for (int i = 0; i < AppConfig.carriercost.length(); i++) {
+            try {
+                JSONObject c = AppConfig.carriercost.getJSONObject(i);
+                fromCost = Integer.parseInt(c.getString("from_cost"));
+                toCost = Integer.parseInt(c.getString("to_cost"));
+                if (rawPrice_dis >= fromCost && rawPrice_dis <= toCost) {
+                    cost = Integer.parseInt(c.getString("cost"));
+                    txt_cost.setText(Util.latinNumberToPersian("  هزینه ارسال  " + cost + " تومان "));
+                } else if (rawPrice_dis > toCost) {
+                    txt_cost.setText("  هزینه ارسال رایگان ");
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return cost;
     }
 }

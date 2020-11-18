@@ -230,7 +230,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="3"
                         android:gravity="right"
-                        android:hint="لفن دوم"
+                        android:hint="تلفن دوم"
                         android:inputType="number"
                         android:textColor="@color/colorPrimaryDark"
                         android:textColorHint="@color/gray_light" />

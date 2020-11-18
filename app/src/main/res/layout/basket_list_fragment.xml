@@ -149,6 +149,17 @@
                 android:background="@drawable/gradiant"
                 android:orientation="horizontal" />
 
+
+            <ui_elements.MyTextView
+                android:id="@+id/txt_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/compelete"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="هزینه پیک" />
+
             <ui_elements.MyTextView
                 android:id="@+id/totalprice"
                 android:layout_width="match_parent"

@@ -48,7 +48,7 @@ public class AppConfig {
     public static boolean checkReciveSms = false, btnSubmitOk = false, checkExistDb = false;
     public static JSONObject myJsonObject = null;
     public static JSONArray slides1 = null, slides2 = null, categories = null, restaurants_info = null, topsellpro = null, topseenPro = null,footerBanner = null, newPro = null, NewPro = null, specialPro = null, discountpro = null, basket = null, mostorder = null, fullbanner = null , cardbanner = null,
-            smallTile = null, bigTile = null, getproduct = null;
+            smallTile = null, bigTile = null, carriercost = null, getproduct = null;
     public static boolean isEnter = false;
     public static final int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;

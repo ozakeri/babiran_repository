@@ -5,19 +5,10 @@
 
     <uses-sdk tools:overrideLibrary="co.ronash.pushe" />
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <permission
-        android:name="com.paratic.paratic.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.paratic.paratic.permission.C2D_MESSAGE" /> <!-- Optional permissions -->
-    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:name=".AppController"
@@ -156,17 +147,7 @@
                     android:scheme="package" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.paratic.paratic" />
-            </intent-filter>
-        </receiver>
 
         <meta-data
             android:name="co.ronash.pushe.token"
@@ -180,38 +161,27 @@
         <activity android:name=".Rss.LastListActivity" />
         <activity
             android:name=".FactorList"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SharjActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CreditActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name="Fragments.EditProfileFrgment"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name="Fragments.DateTimeDialog"
             android:theme="@style/AppDialogScreenTheme"/>
 
         <service
             android:name="tools.MyPushListener"
+            android:process="net.babiran.app.MyServiceProcess"
             android:exported="false">
             <intent-filter>
                 <action android:name="co.ronash.pushe.RECEIVE" />
             </intent-filter>
         </service>
-
-        <receiver
-            android:name="receiver.SMSListener"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="2147483647">
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
 
         <uses-library
             android:name="org.apache.http.legacy"

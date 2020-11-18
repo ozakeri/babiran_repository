@@ -765,12 +765,12 @@ public class MainActivity extends AppCompatActivity {
                                 android_ver_is_critical = response.getBoolean("android_ver_is_critical");
                                 android_version = response.getInt("android_version");
 
-                               /* if (android_ver_is_critical) {
+                                if (android_ver_is_critical) {
                                     if (versionCode < android_version) {
-                                        showDialog();
-                                        return;
+                                        //showDialog();
+                                       // return;
                                     }
-                                }*/
+                                }
                             }
 
                             AppConfig.slides1 = response.getJSONArray("slides1");
@@ -788,6 +788,7 @@ public class MainActivity extends AppCompatActivity {
                             AppConfig.cardbanner = response.getJSONArray("cardBannerCategory");
                             AppConfig.smallTile = response.getJSONArray("smallTileCategory");
                             AppConfig.bigTile = response.getJSONArray("bigTileCategory");
+                            AppConfig.carriercost = response.getJSONArray("carriercost");
 
                             if (pro_prefs != null) {
                                 Gson gson = new Gson();
