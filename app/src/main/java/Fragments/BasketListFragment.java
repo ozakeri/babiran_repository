@@ -547,6 +547,7 @@ public class BasketListFragment extends Fragment implements
                 layout_time.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
                 discount.setVisibility(View.GONE);
+                txt_cost.setVisibility(View.GONE);
             }
 
             if (discountPrice > 0) {
@@ -809,6 +810,7 @@ public class BasketListFragment extends Fragment implements
                 layout_time.setVisibility(View.GONE);
                 completeBuy.setVisibility(View.GONE);
                 discount.setVisibility(View.GONE);
+                txt_cost.setVisibility(View.GONE);
             }
 
             discountPrice = rawPrice - rawPrice_dis;

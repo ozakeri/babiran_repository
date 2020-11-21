@@ -767,8 +767,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 if (android_ver_is_critical) {
                                     if (versionCode < android_version) {
-                                        //showDialog();
-                                       // return;
+                                        showDialog();
+                                        return;
                                     }
                                 }
                             }
