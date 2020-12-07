@@ -252,8 +252,6 @@ public class DescriptionDialog extends DialogFragment {
                         try {
 
                             JSONObject jsonObject = new JSONObject(response);
-                            System.out.println("response=====" + response);
-                            System.out.println("success=====" + jsonObject.getString("success"));
 
                             if (jsonObject.getString("success").equals("1")) {
                                 if (!jsonObject.isNull("url")) {
@@ -299,12 +297,6 @@ public class DescriptionDialog extends DialogFragment {
 
                 Map<String, String> params = new HashMap<String, String>();
 
-               /* params.put("price",String.valueOf(TotalPrice));
-                params.put("user_id",id);
-                params.put("payment_id",selectedPay);
-                params.put("address",selectedAdd);
-                params.put("price_under_discount",String.valueOf(rawPrice));*/
-                //  Log.e("factorJSON:",factorJson);
                 params.put("user_id", user_id);
                 params.put("description", description);
                 params.put("address", address);
@@ -314,11 +306,6 @@ public class DescriptionDialog extends DialogFragment {
                 //params.put("productsArray", "[{\"count\":\"10\",\"product_id\":\"2826\"},{\"count\":\"2\",\"product_id\":\"1336\"},{\"count\":\"1\",\"product_id\":\"4586\"},{\"count\":\"1\",\"product_id\":\"4663\"}]");
                 params.put("timeId", timeId);
 
-                System.out.println("user_id=====" + user_id);
-                System.out.println("description=====" + description);
-                System.out.println("selected_Pay=====" + selected_Pay);
-                System.out.println("timeId=====" + timeId);
-                System.out.println("params=====" + params.toString());
                 return params;
             }
 
@@ -355,37 +342,11 @@ public class DescriptionDialog extends DialogFragment {
             if (resultCode == Activity.RESULT_OK) {
 
                 NullBasket();
-              /*  getDialog().dismiss();
-                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
-                Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);
 
-                SharedPreferences pro_prefs;
-                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-                Gson gson = new Gson();
-                String json = pro_prefs.getString("products", "");
-                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
-                }.getType());
-                Log.e("objGson", obj + "");
-                AppConfig.products = obj;*/
 
             } else {
 
                 NullBasket();
-             /*   getDialog().dismiss();
-                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
-                Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);
-
-                SharedPreferences pro_prefs;
-                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-                Gson gson = new Gson();
-                String json = pro_prefs.getString("products", "");
-                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
-                }.getType());
-                Log.e("objGson", obj + "");
-                AppConfig.products = obj;*/
-
 
             }
         }
@@ -417,18 +378,6 @@ public class DescriptionDialog extends DialogFragment {
         }
 
 
-       /* final SharedPreferences.Editor editor = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE).edit();
-        editor.putString("products", "");
-        editor.apply();
-        SharedPreferences pro_prefs;
-        pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = pro_prefs.getString("products", "");
-        ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
-        }.getType());
-        Log.e("objGson", obj + "");
-        AppConfig.products = obj;
-        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();*/
     }
 
     @Override
@@ -440,11 +389,6 @@ public class DescriptionDialog extends DialogFragment {
 
         NullBasket();
 
-       /* NullBasket();
-        getDialog().dismiss();
-        AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
-        Intent intent = new Intent(getActivity(), BlankAcct.class);
-        startActivity(intent);*/
 
         db = new DatabaseHandler(context);
         if (db.getRowCount() > 0) {
@@ -471,20 +415,6 @@ public class DescriptionDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
-                /*NullBasket();
-                getDialog().dismiss();
-                AppConfig.NULLBASKET = UNIQ.BASKET_NULL;
-                Intent intent = new Intent(getActivity(), BlankAcct.class);
-                startActivity(intent);*/
-
-                /*SharedPreferences pro_prefs;
-                pro_prefs = getActivity().getSharedPreferences("productsArray", MODE_PRIVATE);
-                Gson gson = new Gson();
-                String json = pro_prefs.getString("products", "");
-                ArrayList<Product> obj = gson.fromJson(json, new TypeToken<List<Product>>() {
-                }.getType());
-                Log.e("objGson", obj + "");
-                AppConfig.products = obj;*/
 
                 alert.dismiss();
                 getFactorId();

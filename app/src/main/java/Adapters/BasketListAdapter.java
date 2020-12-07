@@ -140,14 +140,12 @@ public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.Cu
             holder.txt_value.setText(Util.latinNumberToPersian(products.get(i).count));
         }
 
-        System.out.println("currentValue333===" + currentValue);
         SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
 
         holder.card_increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentValue = Integer.valueOf(products.get(i).count);
-                System.out.println("currentValue11===" + currentValue);
                 if (currentValue < Integer.valueOf(products.get(i).stock)) {
                     currentValue++;
                     products.get(i).setCount(String.valueOf(currentValue));
@@ -168,7 +166,6 @@ public class BasketListAdapter extends RecyclerView.Adapter<BasketListAdapter.Cu
             @Override
             public void onClick(View view) {
                 currentValue = Integer.valueOf(products.get(i).count);
-                System.out.println("currentValue22===" + currentValue);
                 if (currentValue >= 1) {
                     if (currentValue == 1) {
                         return;

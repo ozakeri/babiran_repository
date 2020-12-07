@@ -111,7 +111,6 @@ public class CountDialog extends DialogFragment {
                         for (int j = 0; j < products.size(); j++) {
                             if (products.get(j).getId().equals(product.getId())){
                                 if (Integer.parseInt(products.get(j).getCount()) + Integer.parseInt(Count) > Integer.parseInt(product.getStock())) {
-                                    System.out.println("ERRRREOOOOE");
                                     Toast.makeText(getActivity(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
@@ -184,7 +183,7 @@ public class CountDialog extends DialogFragment {
 
 
         } catch (Exception e) {
-            AppConfig.REFRESH = "qqqqqqqqqqqqqqqqqqqqqqqq";
+            AppConfig.REFRESH = "qqqq";
         }
 
 
@@ -205,43 +204,6 @@ public class CountDialog extends DialogFragment {
     }
 
 
-//    public void addtoBasket()
-//    {
-//
-//        final SharedPreferences.Editor editor = context.getSharedPreferences("productsArray", MODE_PRIVATE).edit();
-//
-//        UpdateCount();
-//        Log.e("IsUpdate", IsUpdateCount + "");
-//        if (IsUpdateCount)
-//        {
-//            Gson gson = new Gson();
-//            String proObj = gson.toJson(AppConfig.products);
-//            editor.putString("products", proObj);
-//            editor.commit();
-//        }
-//        else
-//        {
-//            product.count = Count;
-//            AppConfig.products.add(this.product);
-//            Gson gson = new Gson();
-//            String proObj = gson.toJson(AppConfig.products);
-//            editor.putString("products", proObj);
-//
-//            editor.commit();
-//        }
-//
-//
-//        Toast.makeText(context, "به سبد خرید اضافه شد ", Toast.LENGTH_LONG).show();
-//        try {
-//            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//            Ringtone r = RingtoneManager.getRingtone(context, notification);
-//            r.play();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
-//
-//    }
 
 
     @Override
@@ -252,8 +214,6 @@ public class CountDialog extends DialogFragment {
         int width = metrics.widthPixels;
 
         int w = (int) (width * 0.7);
-//        getDialog().getWindow().setLayout(w, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        getDialog().getWindow().setGravity(Gravity.CENTER);
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = w;
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;

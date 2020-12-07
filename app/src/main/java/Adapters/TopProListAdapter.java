@@ -130,11 +130,8 @@ public class TopProListAdapter extends BaseAdapter {
                 if (products != null && products.size() > 0) {
                     for (int j = 0; j < products.size(); j++) {
                         if (products.get(j).getId().equals(products1.get(i).getId())){
-                            System.out.println("=======1========" + products.get(j).getCount());
-                            System.out.println("=======2========" + products1.get(i).getStock());
 
                             if (Integer.parseInt(products.get(j).getCount()) >= Integer.parseInt(products1.get(i).getStock())) {
-                                System.out.println("ERRRREOOOOE");
                                 Toast.makeText(view.getContext(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
                                 return;
                             }

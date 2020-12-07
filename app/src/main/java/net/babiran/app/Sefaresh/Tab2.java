@@ -49,8 +49,6 @@ public class Tab2 extends Fragment {
         INIT();
 
         if (Newproducts != null) {
-            System.out.println("Tab2Newproducts=====" + Newproducts.size());
-            System.out.println("Tab2NewproductsO=====" + NewproductsO.size());
             newProListfoodAdapter = new NewProListfoodAdapter(getActivity(), Newproducts, NewproductsO, startTime, endTime);
             recyclerView.setAdapter(newProListfoodAdapter);
         }
@@ -98,8 +96,6 @@ public class Tab2 extends Fragment {
                 }
 
                 String gh = c.getString("category_id1");
-                System.out.println("IDs==Tab2====" + IDs);
-                System.out.println("gh==Tab2====" + gh);
 
                 if (gh.equals(IDs)) {
                     String fg = c.getString("foodcat_id");
@@ -111,9 +107,6 @@ public class Tab2 extends Fragment {
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
                         Product producto = new Product(c.getString("id"), c.getString("name"), c.getString("description"),
                                 c.getString("price"), c.getString("stock"), "", c.getString("discount_price"), imagesArray, featuresArray);
-
-                        System.out.println("-==-=-=-=-=-=--=-=-=-=-=" + c.getString("mokhalafat") + "*" + c.getString("id") + "*" + c.getString("name")
-                                + "*" + c.getString("description") + "*" + c.getString("discount_price"));
 
                         NewproductsO.add(producto);
                         Newproducts.add(product);

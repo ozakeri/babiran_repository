@@ -204,22 +204,8 @@ public class ShowRssActivity extends AppCompatActivity {
                         txt_newsDate.setText(" تاریخ خبر " + Util.convertEnToPe(s.get(i).getCreatedAtInt()));
                         txtLike.setText(s.get(i).getLike() + 1 + "");
                         titl.setText(s.get(i).getSubject() + " " + s.get(i).getId());
-                        System.out.println("======1111==========");
                         Pattern p = Pattern.compile("\\d+");
-                        String SSS1 = null;
                         if (s.get(i).getBody() != null) {
-
-                           /* Pattern pattern = Pattern.compile("123456789");
-                            Linkify.TransformFilter username = new Linkify.TransformFilter() {
-                                @Override
-                                public String transformUrl(Matcher match, String url) {
-                                    return "123456789";
-                                }
-                            };*/
-
-                            // txt.setText("امید ذاکری  یک پیغامی 123456789 برای شما ارسال کرده است");
-                            // Linkify.addLinks(txt, pattern, "myScheme://?username=", null, username);
-                            //System.out.println("username====" + username);
 
                             txt.setText(s.get(i).getBody());
                             Matcher m = p.matcher(s.get(i).getBody());
@@ -427,7 +413,6 @@ public class ShowRssActivity extends AppCompatActivity {
                     if (s != null) {
                         txtLike.setText(s.getLike() + 1 + "");
                         titl.setText(s.getSubject());
-                        System.out.println("======2222==========");
                         txt.setText(s.getBody());
                         Picasso.get().load(s.getImageLink()).into(img_html_show);
                         imgUrl = s.getImageLink();

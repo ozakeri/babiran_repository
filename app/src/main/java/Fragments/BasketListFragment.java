@@ -42,6 +42,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import net.babiran.app.AppController;
+import net.babiran.app.EditProfileActivity;
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 
@@ -87,7 +88,7 @@ public class BasketListFragment extends Fragment implements
     String address1 = "";
     String address2 = "";
     MyTextView totalprice, AddValue, PayValue, discount;
-    private static MyTextView txt_time;
+    private static TextView txt_time;
     public ArrayList<String> addresses;
     private GlobalValues globalValues = new GlobalValues();
     LinearLayout addLinear, typePayLinear, layout_time;
@@ -117,7 +118,7 @@ public class BasketListFragment extends Fragment implements
     private ArrayList<DeliveryTime> dateTimes = new ArrayList<>();
     private RecyclerView recycler_view;
     private Context context;
-    private TextView txt_date, txt_cost;
+    private TextView txt_cost;
     private CircularProgressView circularProgressView;
     private TabLayout tab;
     private ViewPager viewPager;
@@ -163,9 +164,9 @@ public class BasketListFragment extends Fragment implements
 
             totalprice = (MyTextView) v.findViewById(R.id.totalprice);
             discount = (MyTextView) v.findViewById(R.id.dis_txt);
-            txt_cost = v.findViewById(R.id.txt_cost);
+            txt_cost = (TextView) v.findViewById(R.id.txt_cost);
             completeBuy = (RelativeLayout) v.findViewById(R.id.compelete);
-            txt_time = v.findViewById(R.id.txt_time);
+            txt_time = (TextView)v.findViewById(R.id.txt_time);
             coordinatorLayout = (CoordinatorLayout) v.findViewById(R.id.coordinator);
             tab = v.findViewById(R.id.tabLayout);
             viewPager = v.findViewById(R.id.viewPager);
@@ -184,7 +185,6 @@ public class BasketListFragment extends Fragment implements
             basket_recyclerView.setNestedScrollingEnabled(false);
             basket_recyclerView.setHasFixedSize(true);
             updateList();
-            System.out.println("products=====" + products.size());
             if (products != null) {
                 adp = new BasketListAdapter(getActivity(), products, BasketListFragment.this);
                 adp.notifyDataSetChanged();
@@ -208,7 +208,7 @@ public class BasketListFragment extends Fragment implements
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
 
                     if ((address1.equals("") && address2.equals("")) || (address1.equals("null") && address2.equals("null")) || (address1 == null && address2 == null)) {
-                        EditProfileFrgment.prev_edit = "basket";
+                        EditProfileActivity.prev_edit = "basket";
 
 
                         //Toast.makeText(getActivity(), "لطفا مشخصات خود را تکمیل کنید", Toast.LENGTH_LONG).show();
@@ -223,7 +223,7 @@ public class BasketListFragment extends Fragment implements
                         toast.setDuration(Toast.LENGTH_LONG);
                         toast.setView(layout);
                         toast.show();
-                        //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment(EditProfileFrgment.prev_edit, true)).commit();
+                        //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileActivity(EditProfileActivity.prev_edit, true)).commit();
                         //MainActivity.basketlist.setVisibility(View.INVISIBLE);
                         return;
                     }
@@ -568,9 +568,9 @@ public class BasketListFragment extends Fragment implements
 //
                     if (products.size() > 0) {
                         if ((address1.equals("") && address2.equals("")) || (address1.equals("null") && address2.equals("null")) || (address1 == null && address2 == null)) {
-                            EditProfileFrgment.prev_edit = "basket";
+                            EditProfileActivity.prev_edit = "basket";
                             Toast.makeText(getActivity(), "لطفا پروفایل کاربری خود را تکمیل کنید", Toast.LENGTH_LONG).show();
-                            //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileFrgment(EditProfileFrgment.prev_edit,true)).commit();
+                            //AppConfig.fragmentManager.beginTransaction().replace(R.id.Editcontainer, new EditProfileActivity(EditProfileActivity.prev_edit,true)).commit();
                             //MainActivity.basketlist.setVisibility(View.INVISIBLE);
 
                         } else {
@@ -603,7 +603,7 @@ public class BasketListFragment extends Fragment implements
 
         }
 
-        txt_date = v.findViewById(R.id.txt_date);
+        TextView txt_date = v.findViewById(R.id.txt_date);
         recycler_view = v.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setReverseLayout(true);
@@ -876,9 +876,6 @@ public class BasketListFragment extends Fragment implements
         timeId = AppController.getInstance().getSharedPreferences().getString("timeId", null);
         String timeValue = AppController.getInstance().getSharedPreferences().getString("timeValue", null);
 
-        System.out.println("selectTimeStr====" + selectTimeStr);
-        System.out.println("timeId====" + timeId);
-        System.out.println("timeValue====" + timeValue);
 
         txt_time.setText(Util.latinNumberToPersian(" شما بازه زمانی " + timeValue + " " + selectTimeStr + " را انتخاب کرده اید  "));
 
@@ -894,8 +891,6 @@ public class BasketListFragment extends Fragment implements
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/main/delivery_time";
-
-        System.out.println("delivery_time===" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

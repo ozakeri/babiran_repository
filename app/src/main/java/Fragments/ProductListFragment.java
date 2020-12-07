@@ -130,7 +130,6 @@ public class ProductListFragment extends Fragment {
         d.setCancelable(false);
         d.show();
 
-        System.out.println("ProductListFragment==="+url);
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -269,7 +268,6 @@ public class ProductListFragment extends Fragment {
                 if (id != null) {
                     Log.d("cat id", id);
                     params.put("category_id", id);
-                    System.out.println("category_id===" + id);
 
                 }
 
@@ -366,7 +364,6 @@ public class ProductListFragment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-                    System.out.println("====back2======");
                     MainActivity.productlist.setVisibility(View.INVISIBLE);
                     Log.e("previous", prev);
                     if (category_parent_id != null) {
@@ -404,7 +401,6 @@ public class ProductListFragment extends Fragment {
     public void backpress2() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
-        System.out.println("====back2======");
         MainActivity.productlist.setVisibility(View.INVISIBLE);
         Log.e("previous", prev);
         if (category_parent_id != null) {

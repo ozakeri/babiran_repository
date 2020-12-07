@@ -89,7 +89,7 @@ public class BlogFrgment extends Fragment {
     private RequestQueue queue;
     public static final String TAG = "TAG";
     private AdapterUserListToTo adapterUserListToTo;
-    private CardView blogCardView, newsCardView;
+   // private CardView blogCardView, newsCardView;
 
 
     public BlogFrgment() {
@@ -181,10 +181,10 @@ public class BlogFrgment extends Fragment {
 
         //////////
 
-        blogCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
-        newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
+        //blogCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
+       // newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
 
-        blogCardView.setOnClickListener(new View.OnClickListener() {
+       /* blogCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 search_bar.setText("");
@@ -196,9 +196,9 @@ public class BlogFrgment extends Fragment {
                 newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main));
                 Listed();
             }
-        });
+        });*/
 
-        newsCardView.setOnClickListener(new View.OnClickListener() {
+       /* newsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 search_bar.setText("");
@@ -211,7 +211,7 @@ public class BlogFrgment extends Fragment {
                 newsCardView.setBackground(getResources().getDrawable(R.drawable.background_button_main_selected));
 
             }
-        });
+        });*/
 
         lnNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,11 +246,7 @@ public class BlogFrgment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
 
-                System.out.println("bbbbbbbbbbbb"+b1);
-                System.out.println("bbbbbbbbbbbb"+b2);
-
                 if (b1) {
-                    System.out.println("111111111111111111");
                     String Link = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
 
@@ -270,7 +266,6 @@ public class BlogFrgment extends Fragment {
                     System.out.println("b1======" + Link1);*/
                     //b1 = false;
                 } else {
-                    System.out.println("22222222222222222");
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
                     Intent intent2 = new Intent(getActivity(), ListRssActivity.class);
@@ -353,7 +348,6 @@ public class BlogFrgment extends Fragment {
                         });
                         builder.setNegativeButton("انصراف", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO
                                 dialog.dismiss();
                             }
                         });
@@ -375,8 +369,8 @@ public class BlogFrgment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rec_main);
         recycler_view_search = (RecyclerView) view.findViewById(R.id.recycler_view_search);
 
-        blogCardView = view.findViewById(R.id.blogCardView);
-        newsCardView = view.findViewById(R.id.newsCardView);
+        //blogCardView = view.findViewById(R.id.blogCardView);
+        //newsCardView = view.findViewById(R.id.newsCardView);
 
         imNews = (ImageView) view.findViewById(R.id.img_main_rss_news_clos);
         lnNews = (LinearLayout) view.findViewById(R.id.ln_main_rss_news);
@@ -408,7 +402,6 @@ public class BlogFrgment extends Fragment {
                 public void onResponse(@NonNull Call<List<GETING>> call, @NonNull retrofit2.Response<List<GETING>> response) {
 
                     List<GETING> s = response.body();
-                    System.out.println("response.body()======" + response.body());
 
                     for (int i = 0; i < s.size(); i++) {
 

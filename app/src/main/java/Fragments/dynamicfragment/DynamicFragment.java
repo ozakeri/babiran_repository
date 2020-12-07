@@ -49,7 +49,6 @@ public class DynamicFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_dynamic, container, false);
         val = getArguments().getInt("someInt", 0);
-        System.out.println("val=-=-=-=-" + val);
         horizontal = view.findViewById(R.id.horizontal);
         leftLayoutRadioButton = view.findViewById(R.id.leftLayoutRadioButton);
 
@@ -77,8 +76,6 @@ public class DynamicFragment extends Fragment {
                     horizontal.addView(dateTime);
                     timeLists.add(timeList);
 
-
-                    System.out.println("status====" + jsonObject1.getString("status"));
                     int status = Integer.parseInt(jsonObject1.getString("status"));
                     RadioButton radioButtonView = new RadioButton(getActivity());
                     radioButtonView.setText(Util.latinNumberToPersian(jsonObject1.getString("text")));
@@ -115,10 +112,6 @@ public class DynamicFragment extends Fragment {
                         }
                     });
                 }
-                // recycler_view = view.findViewById(R.id.recycler_view);
-                // recycler_view.setLayoutManager(new LinearLayoutManager(getActivity()));
-                //recycler_view.setAdapter(new TimeListAdapter(getActivity(), timeLists));
-
 
             } catch (JSONException e) {
                 e.printStackTrace();

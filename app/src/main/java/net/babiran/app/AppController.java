@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.yandex.metrica.YandexMetrica;
+import com.yandex.metrica.YandexMetricaConfig;
 
 import net.babiran.app.Servic.GETINGBlog;
 
@@ -29,9 +31,17 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
+        //StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        //StrictMode.setVmPolicy(builder.build());
         mInstance = this;
+
+
+        // Creating an extended library configuration.
+        YandexMetricaConfig config = YandexMetricaConfig.newConfigBuilder("f059987f-3b27-4aba-8d92-4ae048eb92b8").build();
+        // Initializing the AppMetrica SDK.
+        YandexMetrica.activate(getApplicationContext(), config);
+        // Automatic tracking of user activity.
+        YandexMetrica.enableActivityAutoTracking(this);
 
         //  Pushe.initialize(this,true);
 //        OneSignal.startInit(this)

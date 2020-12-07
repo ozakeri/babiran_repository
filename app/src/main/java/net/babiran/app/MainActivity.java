@@ -45,8 +45,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -81,11 +79,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import Adapters.MenuAdapter;
-import Adapters.WhatsAppNumberListAdapter;
 import Fragments.BasketListFragment;
 import Fragments.BlogFrgment;
 import Fragments.CategoryFragment;
-import Fragments.EditProfileFrgment;
 import Fragments.FactorFragment;
 import Fragments.HomeFragment;
 import Fragments.ProductFragment;
@@ -100,7 +96,6 @@ import Models.Menu;
 import Models.Product;
 import co.ronash.pushe.Pushe;
 import tools.AppConfig;
-import tools.DialogUtil;
 import tools.GlobalValues;
 import tools.NotificationUtils;
 import tools.Util;
@@ -753,7 +748,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getHome2/" + id;
-        System.out.println("getHome2=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -1211,7 +1205,7 @@ public class MainActivity extends AppCompatActivity {
                         break;*/
                     case 0:
                         if (!userID.equals("")) {
-                            startActivity(new Intent(MainActivity.this, EditProfileFrgment.class));
+                            startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
                             drawerLayout.closeDrawer(Gravity.RIGHT);
                             MainActivity.setting.setVisibility(View.INVISIBLE);
                             MainActivity.about.setVisibility(View.INVISIBLE);
@@ -1622,44 +1616,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
-
-    /*private void Di() {
-        Dialog dialog = new Dialog(MainActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.coustom_dilog_sup);
-        dialog.setCancelable(true);
-        DialogUtil.showDialog(this, dialog, false);
-        //dialog.show();
-
-        TextView txt_close = dialog.findViewById(R.id.txt_close);
-        RecyclerView recycler_view = dialog.findViewById(R.id.recycler_view);
-        recycler_view.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-        final ArrayList<String> list = new ArrayList<String>();
-
-        System.out.println("jsonArray=====" + jsonArray.length());
-
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                list.add(String.valueOf(jsonArray.get(i)));
-            }
-            recycler_view.setAdapter(new WhatsAppNumberListAdapter(MainActivity.this, list));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        txt_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                //progress_bar.setVisibility(View.GONE);
-            }
-        });
-
-
-    }*/
 
     private void Di() {
         Dialog dialog = new Dialog(this);

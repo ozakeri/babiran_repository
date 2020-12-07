@@ -45,8 +45,6 @@ public class ListActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             id = getIntent().getExtras().getString("id");
             title = getIntent().getExtras().getString("title");
-            System.out.println("id==========" + id);
-            System.out.println("title==========" + title);
         }
 
         INIT();

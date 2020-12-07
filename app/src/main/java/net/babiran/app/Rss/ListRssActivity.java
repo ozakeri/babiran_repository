@@ -312,69 +312,6 @@ public class ListRssActivity extends AppCompatActivity {
         return "";
     }
 
- /*   private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
-
-        private String urlLink;
-
-        @Override
-        protected void onPreExecute() {
-
-            System.out.println("Url=======" + Url);
-            //  mSwipeLayout.setRefreshing(true);
-            // urlLink = mEditText.getText().toString();
-            //urlLink="http://www.irna.ir/fa/rss.aspx?kind=-1";
-            urlLink = Url;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            if (TextUtils.isEmpty(urlLink))
-                return false;
-
-            try {
-                if (!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
-                    urlLink = "http://" + urlLink;
-
-                URL url = new URL(urlLink);
-                InputStream inputStream = url.openConnection().getInputStream();
-                mFeedModelList = parseFeed(inputStream);
-                return true;
-            } catch (IOException e) {
-                Log.e(TAG, "Error", e);
-            } catch (XmlPullParserException e) {
-                Log.e(TAG, "Error", e);
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            //   mSwipeLayout.setRefreshing(false);
-
-            if (success) {
-                //  textView.setText("Feed Title: " + mFeedTitle +"\n" );
-                //  textView.setText("Feed Description: " + mFeedDescription+"\n" );
-                //   textView.setText("Feed Link: " + mFeedLink+"\n" );
-
-                recyclerView.setVisibility(View.VISIBLE);
-                mAdapter = new AdapterUserList(ListRssActivity.this, mFeedModelList);
-
-                recyclerView.setAdapter(mAdapter);
-                prograsDialog.dismiss();
-
-                // Fill RecyclerView
-                //    mRecyclerView.setAdapter(new RssFeedListAdapter(mFeedModelList));
-                //    Log.e("LIST    :  ","L      "+mFeedModelList.get(5).link);
-
-            } else {
-                Toast.makeText(ListRssActivity.this,
-                        "Enter a valid Rss feed url",
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-    }*/
-
-
     public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException,
             IOException {
         String title = null;

@@ -74,7 +74,7 @@ public class MainListActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
     private AdapterUserListToTo adapterUserListToTo;
     private CoordinatorLayout coordinator;
-    private CardView blogCardView, newsCardView;
+   // private CardView blogCardView, newsCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,10 +164,10 @@ public class MainListActivity extends AppCompatActivity {
 
         //////////
 
-        blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
-        newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
+        //blogCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
+        //newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
 
-        blogCardView.setOnClickListener(new View.OnClickListener() {
+      /*  blogCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 b1 = true;
@@ -178,9 +178,9 @@ public class MainListActivity extends AppCompatActivity {
                 newsCardView.setBackgroundColor(getResources().getColor(R.color.white));
                 //Listed();
             }
-        });
+        });*/
 
-        newsCardView.setOnClickListener(new View.OnClickListener() {
+      /*  newsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -192,7 +192,7 @@ public class MainListActivity extends AppCompatActivity {
                 newsCardView.setBackgroundColor(getResources().getColor(R.color.gray_lighter));
 
             }
-        });
+        });*/
 
         lnNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,13 +241,6 @@ public class MainListActivity extends AppCompatActivity {
                     intent.putExtra("title", title);
                     startActivity(intent);
 
-                  /*  String Link1 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
-                            .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
-                    Intent intent1 = new Intent(MainListActivity.this, ListActivity.class);
-                    intent.putExtra("id", Link1);
-                    startActivity(intent1);
-                    System.out.println("b1======" + Link1);*/
-                    //b1 = false;
                 } else {
                     String Link2 = ((TextView) recyclerView.findViewHolderForAdapterPosition(position)
                             .itemView.findViewById(R.id.txt_rc_rss_mainn_link)).getText().toString();
@@ -285,8 +278,8 @@ public class MainListActivity extends AppCompatActivity {
 
         coordinator = findViewById(R.id.coordinator);
         btn_search = findViewById(R.id.btn_search);
-        blogCardView = findViewById(R.id.blogCardView);
-        newsCardView = findViewById(R.id.newsCardView);
+       // blogCardView = findViewById(R.id.blogCardView);
+       // newsCardView = findViewById(R.id.newsCardView);
 
         imNews = (ImageView) findViewById(R.id.img_main_rss_news_clos);
         lnNews = (LinearLayout) findViewById(R.id.ln_main_rss_news);

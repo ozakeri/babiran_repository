@@ -45,8 +45,6 @@ public class DateListAdapter extends RecyclerView.Adapter<DateListAdapter.Custom
 
         DeliveryTime deliveryTime = deliveryTimes.get(i);
 
-        System.out.println("deliveryTime====" + deliveryTime.getDate());
-        System.out.println("deliveryTime====" + deliveryTime.getTimeLists().size());
         holder.txt_date.setText(deliveryTime.getDate());
         holder.recycler_view.setLayoutManager(new LinearLayoutManager(context));
         holder.recycler_view.setAdapter(new TimeListAdapter(context,deliveryTime.getTimeLists()));

@@ -115,7 +115,7 @@ public class FactorListAdapter extends BaseAdapter {
             holder.state = (MyTextView) convertView.findViewById(R.id.txt_type_state);
             holder.stateProgressBar = (StateProgressBar) convertView.findViewById(R.id.your_state_progress_bar_id);
 
-            holder.btn_type_state_peygiri = convertView.findViewById(R.id.btn_type_state_peygiri);
+            holder.btn_type_state_peygiri = (TextView)convertView.findViewById(R.id.btn_type_state_peygiri);
             holder.Peygiri = (MyTextView) convertView.findViewById(R.id.txt_type_state_peygiri);
             holder.Sefaresh = (MyTextView) convertView.findViewById(R.id.txt_type_state_sefartesh);
 
@@ -239,17 +239,14 @@ public class FactorListAdapter extends BaseAdapter {
                 if (db.getRowCount() > 0) {
                     HashMap<String, String> userDetailsHashMap = db.getUserDetails();
                     mainId = userDetailsHashMap.get("id");
-                    System.out.println("mainId===" + mainId);
 
                     if (factors.get(i).products != null && factors.get(i).products.size() > 0) {
                         for (int j = 0; j < factors.get(i).products.size(); j++) {
-                            System.out.println("Sefaresh====" + holder.Sefaresh.getText().toString());
                             Basket basket = new Basket(factors.get(i).products.get(j).id, factors.get(i).products.get(j).count, factor_id);
                             baskets.add(basket);
                         }
                         Gson gson = new Gson();
                         basketjson = gson.toJson(baskets);
-                        System.out.println("basketjson2===" + basketjson);
 
                         FragmentManager fm = ((Activity) context).getFragmentManager();
                         DescriptionDialog descriptionDialog = new DescriptionDialog(context, mainId, factors.get(i).address, basketjson, factors.get(i).type, 0, editor, null);
@@ -263,34 +260,6 @@ public class FactorListAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-
-    private void CheckInput(String input, View view, StateProgressBar stateProgressBar) {
-
-        System.out.println("input======" + input);
-
-
-    }
-
-    private void StateProgresbarNewOreder(View V, String A, String B, String C, String D, StateProgressBar stateProgressBar) {
-        String[] descriptionData = {"ثبت شده", "در حال آماده سازی", "تحویل پیک شده", "در حال ارسال", "تحویل داده"};
-
-        // StateProgressBar stateProgressBar = (StateProgressBar)  v. findViewById(R.id.your_state_progress_bar_id);
-        //stateProgressBar.setStateDescriptionData(descriptionData);
-
-        if (TextUtils.isEmpty(A)) {
-            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
-        } else if (TextUtils.isEmpty(B)) {
-            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
-        } else if (TextUtils.isEmpty(C)) {
-            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
-        } else if (TextUtils.isEmpty(D)) {
-            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
-        }
-
-
-    }
-
 
     private class ViewHolder {
 

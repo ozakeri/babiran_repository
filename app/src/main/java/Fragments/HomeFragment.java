@@ -565,7 +565,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getNewProducts/" + Newproducts.size() + "/" + "20";
-        System.out.println("getNewPro=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -712,7 +711,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSells/" + Topproducts.size() + "/" + "20";
-        System.out.println("getTopPro=======" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -860,7 +858,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         final String url = AppConfig.BASE_URL + "api/product/getTopSeenLazy/20/" + Disproducts.size();
-        System.out.println("getDisPro=======" + url);
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -1475,8 +1472,6 @@ public class HomeFragment extends Fragment {
         ArrayList<Image> imagesArray;
         ArrayList<Moshakhasat> moshakhasatArrayList;
         ArrayList<Color> colorArrayList;
-
-        System.out.println("specialPro======" + AppConfig.specialPro);
 
         for (int i = 0; i < AppConfig.specialPro.length(); i++) {
             featuresArray = new ArrayList<>();

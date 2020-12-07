@@ -48,13 +48,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     }
 
-
-   /* @Override
-    public Category getItem(int i) {
-        return categories.get(i);
-    }*/
-
-
     @NonNull
     @Override
     public CustomView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,47 +83,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return categories.size();
     }
 
-  /*  @Override
-    public View getView(final int i, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder;
-        if (convertView == null) {
-
-            holder = new ViewHolder();
-            convertView = this.inflater.inflate(R.layout.category_item,
-                    viewGroup, false);
-
-
-            holder.name = (MyTextView) convertView.findViewById(R.id.txt_name);
-            holder.img_icon = (ImageView)convertView.findViewById(R.id.img_icon);
-
-
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-
-        if(!categories.get(i).name.equals("null") && !categories.get(i).name.equals("") && categories.get(i).name != null ){
-
-            holder.name.setText(categories.get(i).name);
-            Picasso.with(context).load(categories.get(i).icon).into(holder.img_icon);
-            System.out.println("icon=====" + categories.get(i).icon);
-
-        }
-       *//* if(!categories.get(i).description.equals("null") && !categories.get(i).description.equals("") && categories.get(i).description != null ) {
-
-            holder.description.setText(categories.get(i).description);
-        }*//*
-        convertView.findViewById(R.id.item_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer,new SecondCategoryFragment(categories.get(i).id)).commit();
-            }
-        });
-
-        return convertView;
-    }*/
 
      class CustomView extends RecyclerView.ViewHolder {
 

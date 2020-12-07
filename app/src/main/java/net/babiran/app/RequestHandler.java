@@ -208,7 +208,6 @@ public class RequestHandler {
     }
 
     public static String sendSMS2(final String token, String code, String mobile, final SendSmsCallback callback) {
-        System.out.println("mobile=======" + mobile);
         final String url = "http://RestfulSms.com/api/UltraFastSend";
 
 

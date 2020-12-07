@@ -350,22 +350,7 @@ public class ShajeFrgment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    // handle back button's click listener
 
-
-                    /*if (MainActivity.productlist.getVisibility() == View.VISIBLE) {
-                        System.out.println("===MainActivity==111===");
-                        //MainActivity.productlist.setVisibility(View.INVISIBLE);
-                        FragmentManager fm = getFragmentManager();
-                        if (fm != null) {
-                            ProductListFragment fragm = (ProductListFragment) fm.findFragmentById(R.id.ProductListcontainer);
-                            if (fragm != null) {
-                                fragm.backpress();
-                            }
-                        }
-
-
-                    } else {*/
                     AlertDialog.Builder builder = new AlertDialog.Builder(AppConfig.act);
                     builder.setTitle("می خواهید خارج شوید؟");
                     builder.setPositiveButton("بله", new DialogInterface.OnClickListener() {

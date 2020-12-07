@@ -93,7 +93,7 @@ public class ProfileFrgment extends Fragment {
 
 
 
-                      //  AppConfig.fragmentManager.beginTransaction().replace(R.id.container, new EditProfileFrgment()).commit();
+                      //  AppConfig.fragmentManager.beginTransaction().replace(R.id.container, new EditProfileActivity()).commit();
 
 
 

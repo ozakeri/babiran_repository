@@ -106,17 +106,7 @@ public class SecondCategoryFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-        System.out.println("=-=-=-=-id=-=-=-=-=-" + id);
-
-        //    AppConfig.frag = SecondCategoryFragment.this;
-        // calcute();
-
         if (Mainprev.equals("backInSecond")) {
-            System.out.println("===backInSecond111");
-            System.out.println("===backInSecond111" + getCategory(globalValues.getFirstId()).size());
-            System.out.println("===backInSecond111" + globalValues.getFirstId());
-
             CategoryListAdapter adp = new CategoryListAdapter(getActivity(), getCategory(globalValues.getFirstId()));
             globalValues.setFirstId(null);
             //listView.setAdapter(adp);
@@ -125,15 +115,10 @@ public class SecondCategoryFragment extends Fragment {
 
             if (categoryArrayList != null) {
 
-                // CategoryListAdapter adp = new CategoryListAdapter(getActivity(), categoryArrayList);
-                //listView.setAdapter(adp);
-                //recyclerView.setAdapter(adp);
-                //adp.notifyDataSetChanged();
             }
 
         } else {
             if (prev.equals("backToSecond")) {
-                System.out.println("===backInSecond222");
                 if (getCategory(getCategoryID(globalValues.getSecondId())).size() > 0) {
                     globalValues.setSecondId(null);
                     CategoryListAdapter adp = new CategoryListAdapter(getActivity(), getCategory(getCategoryID(id)));
@@ -147,33 +132,17 @@ public class SecondCategoryFragment extends Fragment {
 
 
                 if (id.equals("1197")) {
-//                    if(getCategory(id).size() > 0)
-//                    {
-//                        Log.e("111","here");
-//                        CategoryListAdapterNew adp = new CategoryListAdapterNew(getActivity(),getCategoryZS(id));
-//                        listView.setAdapter(adp);
-//                        adp.notifyDataSetChanged();
-//                    }
+
                 } else if (id.equals("1196")) {
-//                    if(getCategory(id).size() > 0)
-//                    {
-//                        Log.e("111","here");
-//
-//                        CategoryListAdapterNew adp = new CategoryListAdapterNew(getActivity(),getCategoryZS(id));
-//                        listView.setAdapter(adp);
-//                        adp.notifyDataSetChanged();
-//                    }
+
                 } else {
                     if (getCategory(id).size() > 0) {
-                        System.out.println("===backInSecond333");
                         if (globalValues.getFirstId() != null) {
                             globalValues.setSecondId(id);
                         } else {
                             globalValues.setFirstId(id);
                         }
 
-                        System.out.println("globalValues====" + globalValues.getFirstId());
-                        System.out.println("globalValues===" + globalValues.getSecondId());
                         CategoryListAdapter adp = new CategoryListAdapter(getActivity(), getCategory(id));
                         //listView.setAdapter(adp);
                         recyclerView.setAdapter(adp);
@@ -283,8 +252,6 @@ public class SecondCategoryFragment extends Fragment {
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
 
-        System.out.println("=====url=========" + url);
-
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -387,16 +354,7 @@ public class SecondCategoryFragment extends Fragment {
                             Log.e("compSize", products.size() + "");
 
                             if (products.size() > 0) {
-                               /* Gson gson = new Gson();
-                                String compObj = gson.toJson(companies);
-                                Intent intent = new Intent(SecondCategory.this,CompanyList.class);
-                                intent.putExtra("companies",compObj);
-                                startActivity(intent);
-                                SecondCategory.secondCategory.finish();*/
 
-                                //  MainActivity.secondcategory.setVisibility(View.VISIBLE);
-
-                                System.out.println("id=======" + id);
                                 AppConfig.fragmentManager.beginTransaction().replace(R.id.ProductListcontainer, new ProductListFragment(products, id, "second")).commit();
 
                             } else {
@@ -468,7 +426,6 @@ public class SecondCategoryFragment extends Fragment {
                         MainActivity.secondcategory.setVisibility(View.INVISIBLE);
                     } else {
                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(getCategory(getCategoryID(id)), "backInSecond")).commit();
-                        System.out.println("===backInSecond555");
                     }
 
                 } else {
@@ -492,34 +449,14 @@ public class SecondCategoryFragment extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    Log.e("previous", prev);
-                    System.out.println("===KEYCODE_BACK111");
-                    // handle back button's click listener
-
-
                     Log.e("parentID", getCategoryID(id));
                     if (!getCategoryID(id).equals("0") && !getCategoryID(id).equals("-1") && !getCategoryID(id).equals("null")
                             && !getCategoryID(id).equals("") && getCategoryID(id) != null) {
-                        System.out.println("===KEYCODE_BACK222");
-                        System.out.println("===KEYCODE_BACK222" + globalValues.getFirstId());
-
 
                         AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(getCategory(getCategoryID(globalValues.getFirstId())), "backInSecond")).commit();
-                        //globalValues.setFirstId(null);
-                        System.out.println("===backInSecond444");
-                       /* if (getCategoryID(getCategoryID(id)).equals("0") || getCategoryID(getCategoryID(id)).equals("-1")) {
-                            MainActivity.secondcategory.setVisibility(View.INVISIBLE);
-                        } else {
-                            AppConfig.fragmentManager.beginTransaction().replace(R.id.SecondCategorycontainer, new SecondCategoryFragment(getCategory(getCategoryID(globalValues.getFirstId())), "backInSecond")).commit();
-                            //globalValues.setFirstId(null);
-                            System.out.println("===backInSecond444");
-                        }*/
 
                     } else {
-                        System.out.println("===KEYCODE_BACK333");
-
                         MainActivity.secondcategory.setVisibility(View.INVISIBLE);
-
                     }
                     MainActivity.btnBack.setVisibility(View.GONE);
                     MainActivity.viewLogo.setVisibility(View.VISIBLE);

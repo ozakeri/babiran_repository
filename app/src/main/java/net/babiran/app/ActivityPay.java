@@ -62,8 +62,8 @@ public class ActivityPay extends AppCompatActivity
 
 
 
-        final WebView webView = (WebView) findViewById(R.id.webview);
-        webView.getSettings().setJavaScriptEnabled(true);
+       // final WebView webView = (WebView) findViewById(R.id.webview);
+     /*   webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new MyJavaScriptInterface(this), "HtmlViewer");
         webView.setWebViewClient(new MyWebViewClient() {
 
@@ -81,17 +81,17 @@ public class ActivityPay extends AppCompatActivity
                 progressBar.setProgress(progress);
 
             }
-        });
+        });*/
 
 
-        webView.loadUrl(getIntent().getStringExtra("url"));
+      /*  webView.loadUrl(getIntent().getStringExtra("url"));
         SHARJ = getIntent().getStringExtra("sharj");
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
     }
 
     class MyJavaScriptInterface {
@@ -198,7 +198,7 @@ public class ActivityPay extends AppCompatActivity
         finish();
     }
 
-    public class MyWebViewClient extends WebViewClient {
+   /* public class MyWebViewClient extends WebViewClient {
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
@@ -208,5 +208,5 @@ public class ActivityPay extends AppCompatActivity
             return true;
         }
 
-    }
+    }*/
 }

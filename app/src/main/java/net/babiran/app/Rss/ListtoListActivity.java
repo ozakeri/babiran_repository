@@ -77,7 +77,6 @@ public class ListtoListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         TextView label_title = (TextView) findViewById(R.id.label_title);
         label_title.setText(title);
-        System.out.println("cat_id====" + cat_id);
         Listed();
     }
 

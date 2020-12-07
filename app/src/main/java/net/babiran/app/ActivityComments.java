@@ -53,13 +53,12 @@ public class ActivityComments extends AppCompatActivity {
     private boolean loading = false;
     int pastVisibleItems, visibleItemCount, totalItemCount;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_comment);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         if (getIntent() != null) {
             if (getIntent().hasExtra("product_id") && getIntent().hasExtra("product")) {
                 String mProductId = getIntent().getStringExtra("product_id");

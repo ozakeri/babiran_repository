@@ -77,25 +77,6 @@ public class FactorList extends AppCompatActivity {
         NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         nMgr.cancel(1);
 
-        /*Intent intent = getIntent();
-        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
-
-            db = new DatabaseHandler(getApplicationContext());
-            if (db.getRowCount() > 0) {
-                HashMap<String, String> userDetailsHashMap = db.getUserDetails();
-                id = userDetailsHashMap.get("id");
-            }
-
-            Uri uri = intent.getData();
-            System.out.println("===uri===" + uri);
-            if (uri != null) {
-                String success = uri.getQueryParameter("success");
-                showGuideDialog(success);
-                System.out.println("===success===" + success);
-            }
-        }*/
-
-
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +152,6 @@ public class FactorList extends AppCompatActivity {
 
         final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
         // final String url = AppConfig.BASE_URL + "api/factor/getAUserFactorsLazy/" + id + "/10/0";
-        System.out.println("getAUserFactorsLazy==" + url);
 
         JsonArrayRequest getRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

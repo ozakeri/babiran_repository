@@ -30,8 +30,8 @@ import ui_elements.CustomFontEditText;
 
 public class Sms_Register extends AppCompatActivity {
 
-    RelativeLayout BTNSend;
-    EditText edt_Phone;
+    private RelativeLayout BTNSend;
+    private EditText edt_Phone;
 
     private static String receptor10;
     private static String message10;

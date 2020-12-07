@@ -50,7 +50,6 @@ public class MyPushListener extends PusheListenerService {
 
         try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
-            // System.out.println("contentJson=====" + contentJson);
             if (!contentJson.isNull("content")) {
 
                 String jsonObjectStr = contentJson.getString("content");
@@ -200,37 +199,6 @@ public class MyPushListener extends PusheListenerService {
                         }
                     }
                 }
-
-
-              /*  JSONObject jsonObject = new JSONObject(jsonObjectStr);
-                if (!jsonObject.isNull("pro_id") && !jsonObject.isNull("cat_id")) {
-
-                    String pro_idStr = jsonObject.getString("pro_id");
-                    System.out.println("pro_idStr=====" + pro_idStr);
-
-                    String cat_idStr = jsonObject.getString("cat_id");
-                    System.out.println("cat_id=====" + cat_idStr);
-
-                    String titleStr = jsonObject.getString("title");
-                    System.out.println("titleStr=====" + titleStr);
-
-                    String bodyStr = jsonObject.getString("body");
-                    System.out.println("bodyStr=====" + bodyStr);
-
-
-                    if (pro_idStr != null && cat_idStr != null) {
-                        editor = AppController.getInstance().getSharedPreferences().edit();
-                        editor.putBoolean("getProduct", true);
-                        editor.apply();
-
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("cat_id", pro_idStr);
-                        intent.putExtra("pro_id", cat_idStr);
-                        // showNotification(getApplicationContext(), intent, titleStr, bodyStr);
-                        showNotification(getApplicationContext(), titleStr, bodyStr, intent);
-                    }
-                }*/
-
 
             }
         } catch (JSONException e) {

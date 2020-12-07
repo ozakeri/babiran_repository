@@ -212,34 +212,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         LinearLayout featureCard = (LinearLayout) v.findViewById(R.id.productlinear);
 
 
-
-       /* try {
-            colorList = new ArrayList<>();
-            root = new JSONObject(json);
-            array = root.getJSONArray("color");
-            System.out.println("array=======" + array.length());
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject object = array.getJSONObject(i);
-                String colorName = object.getString("color_name");
-                String colorCode = object.getString("color_code");
-
-                Color color = new Color(colorName,colorCode);
-                colorList.add(color);
-
-            }
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-            recyclerView_colorList.setLayoutManager(linearLayoutManager);
-            listColorAdapter = new ListColorAdapter(getActivity(),colorList);
-            listColorAdapter.notifyDataSetChanged();
-            recyclerView_colorList.setAdapter(listColorAdapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-        //addRadioButtons(4);
-
-
         if (product != null) {
 
             this.id = product.id;
@@ -269,25 +241,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                 btn_addToBasket.setEnabled(false);
             }
 
-
-          /*  numberpicker.setMin(1);
-            if (Integer.parseInt(product.getStock()) > 0) {
-                noStock.setVisibility(View.INVISIBLE);
-                numberpicker.setVisibility(View.VISIBLE);
-                Log.e("stock", product.getStock());
-                numberpicker.setMax(Integer.parseInt(product.getStock()));
-            } else {
-                numberpicker.setVisibility(View.INVISIBLE);
-                noStock.setVisibility(View.VISIBLE);
-            }
-
-            try {
-                numberpicker.setValue(SetCount());
-            } catch (Exception e) {
-
-            }
-
-            Count = String.valueOf(numberpicker.getValue());*/
 
             numberpicker.setValueChangedListener(new ValueChangedListener() {
                 @Override
@@ -323,13 +276,8 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             addToBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    try {
-//                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//                        Ringtone r = RingtoneManager.getRingtone(getContext(), notification);
-//                        r.play();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+
+
                     if (user_id.equals("-1")) {
 
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
@@ -470,34 +418,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
             if (description.getText().toString().equals("") || description.getText().toString().isEmpty()) {
                 v.findViewById(R.id.linearLayout_description).setBackground(null);
             }
-
-
-
-               /* switch (product.rate) {
-                    case 0:
-                        rate.setImageResource(R.drawable.zerostar);
-                        break;
-
-                    case 1:
-                        rate.setImageResource(R.drawable.onestar);
-                        break;
-
-                    case 2:
-                        rate.setImageResource(R.drawable.twostar);
-                        break;
-
-                    case 3:
-                        rate.setImageResource(R.drawable.threestar);
-                        break;
-
-                    case 4 :
-                        rate.setImageResource(R.drawable.fourstar);
-                        break;
-
-                    case 5 :
-                        rate.setImageResource(R.drawable.fivestar);
-                        break;
-                }*/
 
 
             featureCard.removeAllViews();
@@ -727,7 +647,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //AppConfig.fragmentManager.beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
 
     }
 
@@ -793,7 +712,6 @@ public class ProductFragment extends Fragment implements View.OnClickListener {
                     for (int j = 0; j < products.size(); j++) {
                         if (products.get(j).getId().equals(product.getId())){
                             if (Integer.parseInt(products.get(j).getCount()) + Integer.parseInt(Count) > Integer.parseInt(product.getStock())) {
-                                System.out.println("ERRRREOOOOE");
                                 Toast.makeText(getActivity(), "درخواست بیش از موجودی امکان پذیر نیست.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
