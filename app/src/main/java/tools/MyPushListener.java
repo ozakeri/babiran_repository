@@ -48,6 +48,9 @@ public class MyPushListener extends PusheListenerService {
     @Override
     public void onMessageReceived(final JSONObject message, final JSONObject content) {
 
+        System.out.println("message====" + message);
+        System.out.println("content====" + content);
+
         try {
             JSONObject contentJson = new JSONObject(String.valueOf(content));
             if (!contentJson.isNull("content")) {
@@ -55,6 +58,14 @@ public class MyPushListener extends PusheListenerService {
                 String jsonObjectStr = contentJson.getString("content");
 
                 if (!jsonObjectStr.isEmpty()) {
+
+                    if (jsonObjectStr.contains("شارژ") || jsonObjectStr.contains("شارژ شگفت انگیز") || jsonObjectStr.contains("شارژ هدیه")){
+
+                        System.out.println("====شارژ======");
+                        SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+                        editor.putString("sharjNotify", "sharjNotify");
+                        editor.apply();
+                    }
 
                     try {
                         JSONObject contentJSONObject = new JSONObject(jsonObjectStr);

@@ -31,8 +31,10 @@ import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
 import net.babiran.app.Sharj.SharjHistoryActivity;
 
+import Fragments.ShajeFrgment;
 import retrofit2.Call;
 import retrofit2.Callback;
+import tools.AppConfig;
 import ui_elements.MyTextView;
 
 public class SharjActivity extends AppCompatActivity {
@@ -50,6 +52,10 @@ public class SharjActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+
+
+        AppConfig.fragmentManager.beginTransaction().replace(R.id.shajeContainer, new ShajeFrgment()).commit();
+        finish();
 //
         /////////////////////////////////////
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

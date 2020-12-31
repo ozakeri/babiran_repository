@@ -141,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean android_ver_is_critical = false;
     private int versionCode;
     private JSONArray jsonArray = null;
-    private String number1,number2,number3 = "+989143185242";
+    private String number1, number2, number3 = "+989143185242";
+    private String sharjNotify = null;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         Pushe.initialize(this, true);
+
 
         //  registerInBackground();
 //        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
@@ -176,10 +178,12 @@ public class MainActivity extends AppCompatActivity {
             //notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
             //notif_Relative.setVisibility(View.GONE);
             try {
-                getProduct = true;
-                proId = getIntent().getExtras().getString("pro_id");
-                catId = getIntent().getExtras().getString("cat_id");
-                getCompaniesByID(catId, proId);
+                if (getIntent().getExtras() != null) {
+                    getProduct = true;
+                    proId = getIntent().getExtras().getString("pro_id");
+                    catId = getIntent().getExtras().getString("cat_id");
+                    getCompaniesByID(catId, proId);
+                }
             } catch (Exception e) {
                 e.getMessage();
             }
@@ -474,7 +478,6 @@ public class MainActivity extends AppCompatActivity {
         if (b) {
             notif_Relative.setVisibility(View.GONE);
         }
-
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -802,8 +805,57 @@ public class MainActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 e.getMessage();
                             }
+
                             tabListeners();
 
+                            sharjNotify = AppController.getInstance().getSharedPreferences().getString("sharjNotify", "");
+                            if (sharjNotify != null && sharjNotify.equals("sharjNotify")) {
+
+                                System.out.println("====sharjNotify======" + sharjNotify);
+
+                                viewLogo.setVisibility(View.VISIBLE);
+                                layout_favorite.setVisibility(View.GONE);
+                                EventBus.getDefault().post(new EventbusModel(false));
+                                btnBack.setVisibility(View.GONE);
+
+                                findViewById(R.id.Homecontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.shajeContainer).setVisibility(View.VISIBLE);
+                                findViewById(R.id.Categorycontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.BasketListcontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.blogContainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.SecondCategorycontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.Productcontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.ProductListcontainer).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.searchContainer).setVisibility(View.INVISIBLE);
+                                MainActivity.layout_search.setVisibility(View.VISIBLE);
+
+
+                                if (tab_situation.equals("category")) {
+
+                                    findViewById(R.id.tab_category).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                                    tab_situation = "search";
+                                } else if (tab_situation.equals("profile")) {
+
+                                    findViewById(R.id.tab_profile).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                                    tab_situation = "search";
+                                } else if (tab_situation.equals("home")) {
+
+                                    findViewById(R.id.tab_home).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                                    tab_situation = "search";
+                                } else if (tab_situation.equals("blog")) {
+
+                                    findViewById(R.id.tab_blog).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_out_tab));
+                                    findViewById(R.id.tab_sharje).startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.zoom_in_tab));
+                                    tab_situation = "search";
+                                }
+
+                                SharedPreferences.Editor editor = AppController.getInstance().getSharedPreferences().edit();
+                                editor.putString("sharjNotify", null);
+                                editor.apply();
+                            }
 
                         } catch (JSONException e) {
 
@@ -1626,7 +1678,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
-        if (jsonArray != null){
+        if (jsonArray != null) {
 
             try {
                 Log.e("jsonArray====", String.valueOf(jsonArray.get(0)));
