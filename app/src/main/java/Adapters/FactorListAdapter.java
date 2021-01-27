@@ -110,6 +110,7 @@ public class FactorListAdapter extends BaseAdapter {
             holder.dis_price = (MyTextView) convertView.findViewById(R.id.txt_price);
             holder.type = (MyTextView) convertView.findViewById(R.id.txt_type);
             holder.date = (MyTextView) convertView.findViewById(R.id.txt_date);
+            holder.txt_time = (MyTextView) convertView.findViewById(R.id.txt_time);
             holder.item_Button = (LinearLayout) convertView.findViewById(R.id.item_button);
             holder.LnPiyk = (LinearLayout) convertView.findViewById(R.id.LnPiyk);
             holder.state = (MyTextView) convertView.findViewById(R.id.txt_type_state);
@@ -133,6 +134,10 @@ public class FactorListAdapter extends BaseAdapter {
         if (!factors.get(i).dis_price.equals("null") && !factors.get(i).dis_price.equals("") && factors.get(i).dis_price != null) {
             holder.dis_price.setText(ConvertEnToPe(factors.get(i).dis_price) + " تومان ");
 
+        }
+
+        if (!factors.get(i).selected_delivery_time.equals("null") && !factors.get(i).selected_delivery_time.equals("") && factors.get(i).selected_delivery_time != null) {
+            holder.txt_time.setText(factors.get(i).selected_delivery_time);
         }
 
         if (!factors.get(i).date.equals("null") && !factors.get(i).date.equals("") && factors.get(i).date != null) {
@@ -263,7 +268,7 @@ public class FactorListAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        MyTextView free_price, dis_price, type, date, state, Peygiri, Sefaresh;
+        MyTextView free_price, dis_price, type, date, state, Peygiri, Sefaresh,txt_time;
         StateProgressBar stateProgressBar;
         ListView orders;
         LinearLayout item_Button, LnPiyk;
