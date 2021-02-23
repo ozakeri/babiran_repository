@@ -251,6 +251,7 @@ public class SecondCategoryFragment extends Fragment {
 
         String url = AppConfig.BASE_URL + "api/main/search";
         // Request a string response from the provided URL.
+        System.out.println("url====" + url);
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

@@ -13,9 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Typeface;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -39,7 +37,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +45,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -61,13 +57,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.engine.Resource;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -81,7 +71,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public String phone = "";
     RelativeLayout notif_Relative;
     MyTextView notif_title, notif_body;
-    ImageView notif_img, img_wait,img_enamad,imgMain;
+    ImageView notif_img, img_wait;
     MyTextView phone_txt;
     ArrayList<Menu> menu;
     ListView listView;
@@ -168,355 +157,340 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         Pushe.initialize(this, true);
+
+
         //  registerInBackground();
 //        OSPermissionSubscriptionState status = OneSignal.getPermissionSubscriptionState();
 //        status.getSubscriptionStatus().getUserId();
 //        Log.e("Dsdssssss",status.getSubscriptionStatus().getUserId()+"");
+
+
         /*SharedPreferences.Editor editor1 = AppController.getInstance().getSharedPreferences().edit();
         editor1.putBoolean("getProduct", false);
         editor1.apply();*/
+
         txt_credit = findViewById(R.id.txt_credit);
         txt_credit.setTypeface(Typeface.createFromAsset(getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+
+        AppConfig.fragmentManager = this.getSupportFragmentManager();
+        final boolean b = AppController.getInstance().getSharedPreferences().getBoolean("getProduct", false);
+        if (b) {
+            //notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
+            //notif_Relative.setVisibility(View.GONE);
+            try {
+                if (getIntent().getExtras() != null) {
+                    getProduct = true;
+                    proId = getIntent().getExtras().getString("pro_id");
+                    catId = getIntent().getExtras().getString("cat_id");
+                    getCompaniesByID(catId, proId);
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.GONE);
         versionCode = BuildConfig.VERSION_CODE;
         layout_search = findViewById(R.id.layout_search);
-        viewLogo = findViewById(R.id.btn_logo);
-        layout_favorite = findViewById(R.id.layout_favorite);
-        btnBack = findViewById(R.id.btn_back);
-        layout_favorite.setVisibility(View.GONE);
         layout_search.setVisibility(View.GONE);
         MainActivity.layout_search.setVisibility(View.VISIBLE);
-        imgMain = findViewById(R.id.imgMain);
-       // Glide.with(this).load(R.drawable.loading_test).into(imgMain);
-       // Glide.with(this).asGif().load(R.drawable.loading_test).into(imgMain);
 
 
-        Glide.with(this).asGif().load(R.drawable.loading_test2).listener(new RequestListener<GifDrawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
-                return false;
-            }
+        if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
+            viewLogo = findViewById(R.id.btn_logo);
+            layout_favorite = findViewById(R.id.layout_favorite);
+            btnBack = findViewById(R.id.btn_back);
 
-            @Override
-            public boolean onResourceReady(GifDrawable resource, Object model, Target<GifDrawable> target, DataSource dataSource, boolean isFirstResource) {
-                resource.setLoopCount(1);
-                resource.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-                    @Override
-                    public void onAnimationEnd(Drawable drawable) {
-                        //Glide.with(MainActivity.this).load(R.drawable.loading1).into(img_wait);
-                        AppConfig.fragmentManager = getSupportFragmentManager();
-                        final boolean b = AppController.getInstance().getSharedPreferences().getBoolean("getProduct", false);
-                        if (b) {
-                            //notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
-                            //notif_Relative.setVisibility(View.GONE);
-                            try {
-                                if (getIntent().getExtras() != null) {
-                                    getProduct = true;
-                                    proId = getIntent().getExtras().getString("pro_id");
-                                    catId = getIntent().getExtras().getString("cat_id");
-                                    getCompaniesByID(catId, proId);
-                                }
-                            } catch (Exception e) {
-                                e.getMessage();
-                            }
-                        }
 
-                        if (TextUtils.isEmpty(getIntent().getStringExtra("AA"))) {
-                            layout_favorite.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    startActivity(new Intent(MainActivity.this, FavListActivity.class));
-                                }
-                            });
-                            layout_search.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                                    getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer, new SearchFrgment()).commit();
-                                    MainActivity.search.setVisibility(View.VISIBLE);
-                                    MainActivity.sharje.setVisibility(View.INVISIBLE);
-                                    MainActivity.setting.setVisibility(View.INVISIBLE);
-                                    MainActivity.about.setVisibility(View.INVISIBLE);
-                                    MainActivity.support.setVisibility(View.INVISIBLE);
-                                    MainActivity.home.setVisibility(View.INVISIBLE);
-                                    MainActivity.category.setVisibility(View.INVISIBLE);
-                                    MainActivity.basketlist.setVisibility(View.INVISIBLE);
-                                    MainActivity.blogContainer.setVisibility(View.INVISIBLE);
-                                    MainActivity.product.setVisibility(View.INVISIBLE);
-                                    MainActivity.productlist.setVisibility(View.INVISIBLE);
-                                }
-                            });
+            layout_favorite.setVisibility(View.GONE);
+            layout_favorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, FavListActivity.class));
+                }
+            });
 
-                            if (TextUtils.isEmpty(AppConfig.NULLBASKET)) {
-                                if (isOnline()) {
-                                    PremissionCheck();
-                                    AppConfig.act = MainActivity.this;
-                                    db = new DatabaseHandler(getApplicationContext());
+            layout_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer, new SearchFrgment()).commit();
+                    MainActivity.search.setVisibility(View.VISIBLE);
+                    MainActivity.sharje.setVisibility(View.INVISIBLE);
+                    MainActivity.setting.setVisibility(View.INVISIBLE);
+                    MainActivity.about.setVisibility(View.INVISIBLE);
+                    MainActivity.support.setVisibility(View.INVISIBLE);
+                    MainActivity.home.setVisibility(View.INVISIBLE);
+                    MainActivity.category.setVisibility(View.INVISIBLE);
+                    MainActivity.basketlist.setVisibility(View.INVISIBLE);
+                    MainActivity.blogContainer.setVisibility(View.INVISIBLE);
+                    MainActivity.product.setVisibility(View.INVISIBLE);
+                    MainActivity.productlist.setVisibility(View.INVISIBLE);
+                }
+            });
 
-                                    pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);
+            if (TextUtils.isEmpty(AppConfig.NULLBASKET)) {
+                if (isOnline()) {
+                    PremissionCheck();
+                    AppConfig.act = MainActivity.this;
+                    db = new DatabaseHandler(getApplicationContext());
 
-                                    notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
-                                    notif_title = (MyTextView) findViewById(R.id.title_value);
-                                    notif_body = (MyTextView) findViewById(R.id.body_value);
-                                    notif_img = (ImageView) findViewById(R.id.notif_img);
-                                    phone_txt = (MyTextView) findViewById(R.id.phonenumber);
+                    pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);
 
-                                    if (db.getRowCount() > 0) {
+                    notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
+                    notif_title = (MyTextView) findViewById(R.id.title_value);
+                    notif_body = (MyTextView) findViewById(R.id.body_value);
+                    notif_img = (ImageView) findViewById(R.id.notif_img);
+                    phone_txt = (MyTextView) findViewById(R.id.phonenumber);
 
-                                        HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+                    if (db.getRowCount() > 0) {
 
-                                        id = userDetailsHashMap.get("id");
+                        HashMap<String, String> userDetailsHashMap = db.getUserDetails();
 
-                                        nameHeader = userDetailsHashMap.get("name");
-                                        phone = userDetailsHashMap.get("phone1");
+                        id = userDetailsHashMap.get("id");
 
-                                    }
+                        nameHeader = userDetailsHashMap.get("name");
+                        phone = userDetailsHashMap.get("phone1");
+
+                    }
 
 
 /////////////////////////////////////////////////////////
-                                    Bundle bundle = getIntent().getExtras();
-                                    if (bundle != null) {
+                    Bundle bundle = getIntent().getExtras();
+                    if (bundle != null) {
 
-                                        //bundle must contain all info sent in "data" field of the notification
-                                        Log.e("bundle", bundle.getString("image") + "");
+                        //bundle must contain all info sent in "data" field of the notification
+                        Log.e("bundle", bundle.getString("image") + "");
 
-                                        String body = bundle.getString("body");
-                                        String title = bundle.getString("title");
-                                        String tag = bundle.getString("has_image");
-                                        if (tag != null) {
-                                            if (tag.equals("1")) {
-                                                image_from_notif = bundle.getString("image");
-                                                category_id_notif = bundle.getString("category_id");
+                        String body = bundle.getString("body");
+                        String title = bundle.getString("title");
+                        String tag = bundle.getString("has_image");
+                        if (tag != null) {
+                            if (tag.equals("1")) {
+                                image_from_notif = bundle.getString("image");
+                                category_id_notif = bundle.getString("category_id");
 
-                                                if (image_from_notif != null && !image_from_notif.equals("") && !image_from_notif.equals("null")) {
-                                                    Glide.with(MainActivity.this).load(image_from_notif).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                                            .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(notif_img);
-                                                }
-                                            }
-                                        }
-
-
-                                        //Toast.makeText(getApplicationContext(), "Push notification: " + body, Toast.LENGTH_LONG).show();
-
-                                        Log.e("dataInRece", body + " " + title + " " + category_id_notif + " " + image_from_notif);
-
-                                        notif_Relative.setVisibility(View.VISIBLE);
-
-
-                                        if (title != null && !title.equals("") && !title.equals("null")) {
-                                            notif_title.setText(title);
-                                        }
-                                        if (body != null && !body.equals("") && !body.equals("null")) {
-                                            notif_body.setText(body);
-                                        }
-
-                                        findViewById(R.id.deny_notif).setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                notif_Relative.setVisibility(View.INVISIBLE);
-                                            }
-                                        });
-
-                                        notif_Relative.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                if (image_from_notif != null && !image_from_notif.equals("") && !image_from_notif.equals("null") && category_id_notif != null &&
-                                                        !category_id_notif.equals("") && !category_id_notif.equals("null")) {
-                                                    submit(category_id_notif);
-                                                }
-                                            }
-                                        });
-                                    }
-
-
-                                    mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-                                        @Override
-                                        public void onReceive(Context context, Intent intent) {
-                                            Log.e("intent", intent.getAction());
-                                            // checking for type intent filter
-                                            if (intent.getAction().equals(AppConfig.REGISTRATION_COMPLETE)) {
-                                                // gcm successfully registered
-                                                // now subscribe to `global` topic to receive app wide notifications
-                                                //FirebaseMessaging.getInstance().subscribeToTopic(AppConfig.TOPIC_GLOBAL);
-
-                                                //displayFirebaseRegId();
-
-                                            } else if (intent.getAction().equals(AppConfig.PUSH_NOTIFICATION)) {
-                                                // new push notification is received
-
-                                                String body = intent.getStringExtra("body");
-                                                String title = intent.getStringExtra("title");
-                                                final String category_id = intent.getStringExtra("cat_id");
-                                                final String image = intent.getStringExtra("image");
-                                                Toast.makeText(getApplicationContext(), "Push notification: " + body, Toast.LENGTH_LONG).show();
-
-                                                Log.e("dataInRece", body + " " + title + " " + category_id + " " + image);
-
-                                                notif_Relative.setVisibility(View.VISIBLE);
-
-                                                if (image != null && !image.equals("") && !image.equals("null")) {
-                                                    Glide.with(MainActivity.this).load(image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                                            .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(notif_img);
-                                                }
-                                                if (title != null && !title.equals("") && !title.equals("null")) {
-                                                    notif_title.setText(title);
-                                                }
-                                                if (body != null && !body.equals("") && !body.equals("null")) {
-                                                    notif_body.setText(body);
-                                                }
-
-                                                findViewById(R.id.deny_notif).setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        notif_Relative.setVisibility(View.INVISIBLE);
-                                                    }
-                                                });
-
-                                                notif_Relative.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        if (image != null && !image.equals("") && !image.equals("null") && category_id != null &&
-                                                                !category_id.equals("") && !category_id.equals("null")) {
-                                                            submit(category_id);
-                                                        }
-                                                    }
-                                                });
-                                                //txtMessage.setText(message);
-                                            }
-                                        }
-                                    };
-                                    //displayFirebaseRegId();
-                                    initNavigationDrawer(id);
-
-                                    deliver = (RelativeLayout) findViewById(R.id.motor);
-                                    SharedPreferences prefs = getSharedPreferences("factor", MODE_PRIVATE);
-
-                                    if (prefs.getString("motor", "deactive").equals("active")) {
-                                        //deliver.setVisibility(View.VISIBLE);
-                                    } else {
-                                        // deliver.setVisibility(View.INVISIBLE);
-                                    }
-
-                                    home = (FrameLayout) findViewById(R.id.Homecontainer);
-                                    product = (FrameLayout) findViewById(R.id.Productcontainer);
-                                    secondcategory = (FrameLayout) findViewById(R.id.SecondCategorycontainer);
-                                    productlist = (FrameLayout) findViewById(R.id.ProductListcontainer);
-                                    sharje = (FrameLayout) findViewById(R.id.shajeContainer);
-                                    search = (FrameLayout) findViewById(R.id.searchContainer);
-                                    blogContainer = (FrameLayout) findViewById(R.id.blogContainer);
-                                    category = (FrameLayout) findViewById(R.id.Categorycontainer);
-                                    basketlist = (FrameLayout) findViewById(R.id.BasketListcontainer);
-                                    factorcontainer = (FrameLayout) findViewById(R.id.Factorcontainer);
-                                    fullbanner = (FrameLayout) findViewById(R.id.FullbannerContainer);
-                                    card_banner = (FrameLayout) findViewById(R.id.CardbannerContainer);
-                                    nazarsanji = (FrameLayout) findViewById(R.id.Nazarcontainer);
-                                    setting = (FrameLayout) findViewById(R.id.SettingContainer);
-                                    about = (FrameLayout) findViewById(R.id.AboutContainer);
-                                    wait = (RelativeLayout) findViewById(R.id.WaitContainer);
-                                    img_wait = findViewById(R.id.img_wait);
-                                    img_enamad = findViewById(R.id.img_enamad);
-
-                                    bigtile_banner = (FrameLayout) findViewById(R.id.BigTileContainer);
-                                    smalltile_banner = (FrameLayout) findViewById(R.id.SmallTileContainer);
-                                    support = (FrameLayout) findViewById(R.id.SupportContainer);
-
-                                    img_enamad.setVisibility(View.VISIBLE);
-                                    Glide.with(MainActivity.this).load(R.drawable.loading1).into(img_wait);
-                                    ///// Rss is set
-
-                                    Typeface type = Typeface.createFromAsset(getAssets(), "IRANSansMobile_Bold.ttf");
-
-                                    label = (MyTextView) findViewById(R.id.label);
-
-
-                                    //  label.setTypeface(null, Typeface.BOLD);
-                                    label.setTypeface(type);
-
-
-                                    deliver.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            MainActivity.factorcontainer.setVisibility(View.VISIBLE);
-                                            getSupportFragmentManager().beginTransaction().replace(R.id.Factorcontainer, new FactorFragment()).commit();
-                                        }
-                                    });
-
-
-                                    AppConfig.fragmentManager = getSupportFragmentManager();
-                                    homeGetRequest();
-                                    getCreditRequest();
-                                } else {
-                                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                                    alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
-                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                    finish();
-                                                }
-                                            });
-                                    alertDialog.show();
+                                if (image_from_notif != null && !image_from_notif.equals("") && !image_from_notif.equals("null")) {
+                                    Glide.with(MainActivity.this).load(image_from_notif).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(notif_img);
                                 }
-
-                            } else   // Refresh Bascket Frahment
-                            {
-                                db = new DatabaseHandler(getApplicationContext());
-
-                                pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);
-
-                                notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
-                                notif_title = (MyTextView) findViewById(R.id.title_value);
-                                notif_body = (MyTextView) findViewById(R.id.body_value);
-                                notif_img = (ImageView) findViewById(R.id.notif_img);
-                                phone_txt = (MyTextView) findViewById(R.id.phonenumber);
-
-                                if (db.getRowCount() > 0) {
-
-                                    HashMap<String, String> userDetailsHashMap = db.getUserDetails();
-
-                                    id = userDetailsHashMap.get("id");
-                                    nameHeader = userDetailsHashMap.get("name");
-                                    phone = userDetailsHashMap.get("phone1");
-
-                                }
-
-
-                                Intent intent = new Intent(MainActivity.this, FactorList.class);
-                                intent.putExtra("id", id);
-                                startActivity(intent);
-                                finish();
-
-
                             }
-                        } else {
-                            wait.setVisibility(View.INVISIBLE);
-                            //getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
                         }
 
-                        if (b) {
-                            notif_Relative.setVisibility(View.GONE);
+
+                        //Toast.makeText(getApplicationContext(), "Push notification: " + body, Toast.LENGTH_LONG).show();
+
+                        Log.e("dataInRece", body + " " + title + " " + category_id_notif + " " + image_from_notif);
+
+                        notif_Relative.setVisibility(View.VISIBLE);
+
+
+                        if (title != null && !title.equals("") && !title.equals("null")) {
+                            notif_title.setText(title);
+                        }
+                        if (body != null && !body.equals("") && !body.equals("null")) {
+                            notif_body.setText(body);
                         }
 
-                        btnBack.setOnClickListener(new View.OnClickListener() {
+                        findViewById(R.id.deny_notif).setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
-                                if (MainActivity.search.getVisibility() == View.VISIBLE) {
-                                    MainActivity.search.setVisibility(View.INVISIBLE);
-                                    MainActivity.btnBack.setVisibility(View.GONE);
-                                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
-                                    MainActivity.layout_search.setVisibility(View.VISIBLE);
-                                    MainActivity.home.setVisibility(View.VISIBLE);
+                            public void onClick(View v) {
+                                notif_Relative.setVisibility(View.INVISIBLE);
+                            }
+                        });
+
+                        notif_Relative.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (image_from_notif != null && !image_from_notif.equals("") && !image_from_notif.equals("null") && category_id_notif != null &&
+                                        !category_id_notif.equals("") && !category_id_notif.equals("null")) {
+                                    submit(category_id_notif);
                                 }
                             }
                         });
                     }
-                });
-                return false;
+
+
+                    mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            Log.e("intent", intent.getAction());
+                            // checking for type intent filter
+                            if (intent.getAction().equals(AppConfig.REGISTRATION_COMPLETE)) {
+                                // gcm successfully registered
+                                // now subscribe to `global` topic to receive app wide notifications
+                                //FirebaseMessaging.getInstance().subscribeToTopic(AppConfig.TOPIC_GLOBAL);
+
+                                //displayFirebaseRegId();
+
+                            } else if (intent.getAction().equals(AppConfig.PUSH_NOTIFICATION)) {
+                                // new push notification is received
+
+                                String body = intent.getStringExtra("body");
+                                String title = intent.getStringExtra("title");
+                                final String category_id = intent.getStringExtra("cat_id");
+                                final String image = intent.getStringExtra("image");
+                                Toast.makeText(getApplicationContext(), "Push notification: " + body, Toast.LENGTH_LONG).show();
+
+                                Log.e("dataInRece", body + " " + title + " " + category_id + " " + image);
+
+                                notif_Relative.setVisibility(View.VISIBLE);
+
+                                if (image != null && !image.equals("") && !image.equals("null")) {
+                                    Glide.with(MainActivity.this).load(image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).placeholder(R.drawable.logoloading).into(notif_img);
+                                }
+                                if (title != null && !title.equals("") && !title.equals("null")) {
+                                    notif_title.setText(title);
+                                }
+                                if (body != null && !body.equals("") && !body.equals("null")) {
+                                    notif_body.setText(body);
+                                }
+
+                                findViewById(R.id.deny_notif).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        notif_Relative.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+
+                                notif_Relative.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (image != null && !image.equals("") && !image.equals("null") && category_id != null &&
+                                                !category_id.equals("") && !category_id.equals("null")) {
+                                            submit(category_id);
+                                        }
+                                    }
+                                });
+                                //txtMessage.setText(message);
+                            }
+                        }
+                    };
+                    //displayFirebaseRegId();
+                    initNavigationDrawer(id);
+
+                    deliver = (RelativeLayout) findViewById(R.id.motor);
+                    SharedPreferences prefs = getSharedPreferences("factor", MODE_PRIVATE);
+
+                    if (prefs.getString("motor", "deactive").equals("active")) {
+                        //deliver.setVisibility(View.VISIBLE);
+                    } else {
+                        // deliver.setVisibility(View.INVISIBLE);
+                    }
+
+                    home = (FrameLayout) findViewById(R.id.Homecontainer);
+                    product = (FrameLayout) findViewById(R.id.Productcontainer);
+                    secondcategory = (FrameLayout) findViewById(R.id.SecondCategorycontainer);
+                    productlist = (FrameLayout) findViewById(R.id.ProductListcontainer);
+                    sharje = (FrameLayout) findViewById(R.id.shajeContainer);
+                    search = (FrameLayout) findViewById(R.id.searchContainer);
+                    blogContainer = (FrameLayout) findViewById(R.id.blogContainer);
+                    category = (FrameLayout) findViewById(R.id.Categorycontainer);
+                    basketlist = (FrameLayout) findViewById(R.id.BasketListcontainer);
+                    factorcontainer = (FrameLayout) findViewById(R.id.Factorcontainer);
+                    fullbanner = (FrameLayout) findViewById(R.id.FullbannerContainer);
+                    card_banner = (FrameLayout) findViewById(R.id.CardbannerContainer);
+                    nazarsanji = (FrameLayout) findViewById(R.id.Nazarcontainer);
+                    setting = (FrameLayout) findViewById(R.id.SettingContainer);
+                    about = (FrameLayout) findViewById(R.id.AboutContainer);
+                    wait = (RelativeLayout) findViewById(R.id.WaitContainer);
+                    img_wait = findViewById(R.id.img_wait);
+                    bigtile_banner = (FrameLayout) findViewById(R.id.BigTileContainer);
+                    smalltile_banner = (FrameLayout) findViewById(R.id.SmallTileContainer);
+                    support = (FrameLayout) findViewById(R.id.SupportContainer);
+
+                    Glide.with(this).load(R.drawable.loading).into(img_wait);
+                    ///// Rss is set
+
+                    Typeface type = Typeface.createFromAsset(getAssets(), "IRANSansMobile_Bold.ttf");
+
+                    label = (MyTextView) findViewById(R.id.label);
+
+
+                    //  label.setTypeface(null, Typeface.BOLD);
+                    label.setTypeface(type);
+
+
+                    deliver.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MainActivity.factorcontainer.setVisibility(View.VISIBLE);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.Factorcontainer, new FactorFragment()).commit();
+                        }
+                    });
+
+
+                    AppConfig.fragmentManager = this.getSupportFragmentManager();
+                    homeGetRequest();
+                    getCreditRequest();
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("لطفا اتصال خود به اینترنت را بررسی نمایید");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "باشه",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                    alertDialog.show();
+                }
+
+            } else   // Refresh Bascket Frahment
+            {
+                db = new DatabaseHandler(getApplicationContext());
+
+                pro_prefs = getSharedPreferences("productsArray", MODE_PRIVATE);
+
+                notif_Relative = (RelativeLayout) findViewById(R.id.notif_main_relative);
+                notif_title = (MyTextView) findViewById(R.id.title_value);
+                notif_body = (MyTextView) findViewById(R.id.body_value);
+                notif_img = (ImageView) findViewById(R.id.notif_img);
+                phone_txt = (MyTextView) findViewById(R.id.phonenumber);
+
+                if (db.getRowCount() > 0) {
+
+                    HashMap<String, String> userDetailsHashMap = db.getUserDetails();
+
+                    id = userDetailsHashMap.get("id");
+                    nameHeader = userDetailsHashMap.get("name");
+                    phone = userDetailsHashMap.get("phone1");
+
+                }
+
+
+                Intent intent = new Intent(this, FactorList.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+                finish();
+
+
             }
-        }).into(imgMain);
+        } else {
+            wait.setVisibility(View.INVISIBLE);
+            //getSupportFragmentManager().beginTransaction().replace(R.id.BasketListcontainer, new BasketListFragment()).commit();
+        }
+
+        if (b) {
+            notif_Relative.setVisibility(View.GONE);
+        }
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MainActivity.search.getVisibility() == View.VISIBLE) {
+                    MainActivity.search.setVisibility(View.INVISIBLE);
+                    MainActivity.btnBack.setVisibility(View.GONE);
+                    MainActivity.viewLogo.setVisibility(View.VISIBLE);
+                    MainActivity.layout_search.setVisibility(View.VISIBLE);
+                    MainActivity.home.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////Token $ RegId
@@ -777,13 +751,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("idd", id);
 
         final String url = AppConfig.BASE_URL + "api/main/getHome2/" + id;
+        System.out.println("url=====" + url);
 
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-
+                            System.out.println("response=====" + response.toString());
                             if (!response.isNull("android_version") && !response.isNull("android_ver_is_critical")) {
                                 android_ver_is_critical = response.getBoolean("android_ver_is_critical");
                                 android_version = response.getInt("android_version");
@@ -894,6 +869,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         AppConfig.error(error);
+                        System.out.println("====error======" + error.toString());
+                        System.out.println("====error======" + error);
                     }
                 }
         );

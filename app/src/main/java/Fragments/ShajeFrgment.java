@@ -26,6 +26,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import net.babiran.app.MainActivity;
 import net.babiran.app.R;
 import net.babiran.app.Servic.MyInterFace;
@@ -33,13 +40,17 @@ import net.babiran.app.Servic.MyMesa;
 import net.babiran.app.Servic.MyServices;
 import net.babiran.app.Sharj.SharjHistoryActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import tools.AppConfig;
 
 public class ShajeFrgment extends Fragment {
 
-    private String Mablagh = "88", Type = "88", operator = "88"; //Type=1=>mostaghim   && operator= 1 =>irancel ,2=>hamrahaval ,3=>rightel
+    private String Mablagh = "88", Type = "88"; //Type=1=>mostaghim   && operator= 1 =>irancel ,2=>hamrahaval ,3=>rightel
+    private int operator = 0;
     private ImageView Irancell, Hamrah, Righttel;
     private LinearLayout History;
     private EditText editText;
@@ -47,6 +58,7 @@ public class ShajeFrgment extends Fragment {
     public static final int REQUEST_CODE_PAY = 101;
     private RelativeLayout layout_irancell, layout_hamrah, layout_ritel;
     private LinearLayout layout_afterSelect, pymeny_sharj;
+    private RequestQueue queue;
 
 
     public ShajeFrgment() {
@@ -82,9 +94,10 @@ public class ShajeFrgment extends Fragment {
         layout_ritel = view.findViewById(R.id.layout_ritel);
         layout_afterSelect = view.findViewById(R.id.layout_afterSelect);
         pymeny_sharj = view.findViewById(R.id.pymeny_sharj);
-        editText = (EditText) view.findViewById(R.id.ed_number);
+        editText = view.findViewById(R.id.ed_number);
         tx = (TextView) view.findViewById(R.id.txt_show_op);
         editText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "IRANSansMobile(FaNum)_Bold.ttf"));
+
         History = (LinearLayout) view.findViewById(R.id.kdjfnbgkjdfnkj);
         History.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +138,11 @@ public class ShajeFrgment extends Fragment {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(editText.getText().toString())) {
 
-                    if (!Mablagh.equals("88") && !Type.equals("88") && !operator.equals("88")) {
+                    if (!Mablagh.equals("88") && !Type.equals("88") && operator != 0) {
                         //startActivity(new Intent(getActivity(), AfterOrderActivity.class));
-                        SenDToServer();
+
+                        String number = editText.getText().toString();
+                        detectNumber(number);
                     } else {
                         Toast.makeText(getActivity(), "تمام موارد را به درستی انتخاب نمایید", Toast.LENGTH_LONG).show();
                     }
@@ -165,7 +180,7 @@ public class ShajeFrgment extends Fragment {
                 r2.setChecked(false);
                 r3.setChecked(false);
                 r4.setChecked(false);
-                Mablagh = "1000";
+                Mablagh = "5000";
             }
         });
 
@@ -176,7 +191,7 @@ public class ShajeFrgment extends Fragment {
                 r1.setChecked(false);
                 r3.setChecked(false);
                 r4.setChecked(false);
-                Mablagh = "2000";
+                Mablagh = "10000";
             }
         });
 
@@ -187,7 +202,7 @@ public class ShajeFrgment extends Fragment {
                 r2.setChecked(false);
                 r1.setChecked(false);
                 r4.setChecked(false);
-                Mablagh = "5000";
+                Mablagh = "15000";
             }
         });
 
@@ -198,7 +213,7 @@ public class ShajeFrgment extends Fragment {
                 r2.setChecked(false);
                 r3.setChecked(false);
                 r1.setChecked(false);
-                Mablagh = "10000";
+                Mablagh = "20000";
             }
         });
 
@@ -252,7 +267,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                operator = "1";
+                operator = 1;
                 tx.setText("ایرانسل");
                 tx.setVisibility(View.VISIBLE);
                 layout_irancell.setBackgroundResource(R.color.forooze_transparent);
@@ -264,7 +279,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                operator = "2";
+                operator = 2;
                 tx.setText("همراه اول");
                 tx.setVisibility(View.VISIBLE);
                 layout_hamrah.setBackgroundResource(R.drawable.hamrah_background);
@@ -276,7 +291,7 @@ public class ShajeFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 layout_afterSelect.setVisibility(View.VISIBLE);
-                operator = "3";
+                operator = 3;
                 tx.setText("رایتل");
                 tx.setVisibility(View.VISIBLE);
                 layout_ritel.setBackgroundResource(R.drawable.rigtel_background);
@@ -286,12 +301,10 @@ public class ShajeFrgment extends Fragment {
         });
     }
 
-    private void SenDToServer() {
-
-
+    private void SenDToServer(String number) {
         try {
             MyInterFace n = MyServices.createService(MyInterFace.class);
-            Call<MyMesa> call = n.BuySahrj(editText.getText().toString(), Mablagh, Type, operator);
+            Call<MyMesa> call = n.BuySahrj(number, Mablagh, Type, String.valueOf(operator));
 
             call.enqueue(new Callback<MyMesa>() {
                 @Override
@@ -301,25 +314,15 @@ public class ShajeFrgment extends Fragment {
                             Integer fetching = response.body().getSuccess();
 
                             if (fetching == 1) {
-
-                                Log.e("URL  ", response.body().getUrl());
-                          /*  Log.e("URL  ", response.body().getUrl());
-                            Intent intent = new Intent(SharjActivity.this, Actip2.class);
-                            intent.putExtra("url", response.body().getUrl());
-                            intent.putExtra("sharj", "sharj");*/
-
                                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(response.body().getUrl()));
-                                //startActivityForResult(intent, REQUEST_CODE_PAY);
                                 startActivity(browserIntent);
-                                //AppConfig.fragmentManager.beginTransaction().replace(R.id.shajeContainer, new ShajeFrgment()).commit();
-
                             } else {
                                 Toast.makeText(getActivity(), "مشکلی در ارتباط با سرور پیش امده", Toast.LENGTH_LONG).show();
                             }
                         }
 
                     } catch (Exception e) {
-                        Log.e("EX", e.getMessage());
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
 
@@ -388,4 +391,51 @@ public class ShajeFrgment extends Fragment {
         });
     }
 
+    public void detectNumber(String number) {
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        final String url = "http://babiran.net/api/checkoperator/" + number;
+
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response.toString());
+                                if (!jsonObject.isNull("OperatorID")) {
+                                    int operatorID = Integer.parseInt(jsonObject.getString("OperatorID"));
+
+                                    if (operatorID == -1) {
+                                        Toast.makeText(getActivity(), "شماره وارد شده معتبر نمی باشد", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
+                                    if (operatorID == operator) {
+                                        SenDToServer(number);
+                                    } else {
+                                        Toast.makeText(getActivity(), "شماره وارد شده با اپراتور همخوانی ندارد", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println("response====" + response.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        AppConfig.error(error);
+                    }
+                }
+        );
+
+        queue.add(getRequest);
+
+    }
 }
